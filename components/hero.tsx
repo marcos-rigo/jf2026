@@ -25,7 +25,7 @@ export function Hero() {
           <div className="absolute bottom-1/4 -right-1/4 w-[500px] h-[500px] bg-brand-pink/30 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }} />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-blue/20 rounded-full blur-[150px]" />
         </div>
-        
+
         {/* Particle Grid Effect */}
         <div className="absolute inset-0" style={{
           backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)`,
@@ -117,11 +117,11 @@ export function Hero() {
             <div className="relative">
               {/* Glow Effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-brand-blue/50 to-brand-pink/50 rounded-full blur-3xl scale-110 opacity-50" />
-              
+
               {/* Image Container */}
               <div className="relative w-[400px] h-[500px] rounded-[2rem] overflow-hidden border-2 border-white/20 shadow-2xl">
                 <Image
-                  src="https://josefarhat.com/img/jose-farhat.jpg"
+                  src="/img/jose-farhat.jpg"
                   alt="José Farhat"
                   fill
                   className="object-cover"

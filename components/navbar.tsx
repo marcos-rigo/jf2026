@@ -62,7 +62,7 @@ export function Navbar() {
             {/* Logo */}
             <Link href="/" className="relative z-10 flex-shrink-0">
               <Image
-                src={isScrolled ? "/img/marcaJF.png" : "/img/marcaJFb.png"}
+                src={isScrolled ? "/img/marcaJF.svg" : "/img/marcaJFb.svg"}
                 alt="José Farhat"
                 width={140}
                 height={40}
