@@ -2,159 +2,226 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowRight, Calendar } from "lucide-react"
+import { ArrowRight, ArrowUpRight } from "lucide-react"
 
 const newsItems = [
   {
-    category: "Ciudadanía Digital y Democracia",
-    categoryColor: "bg-blue-500",
-    title: "Conversatorio RAGA internacional 2025: Jóvenes y crisis de la democracia",
-    excerpt: "El Secretario de Participación Ciudadana reflexionó sobre el vínculo entre juventudes, participación y los nuevos desafíos democráticos en un contexto atravesado por la transformación digital.",
-    date: "2025",
+    category: "Internacional",
+    tag: "2025",
+    title: "Conversatorio RAGA: Jóvenes y crisis de la democracia",
+    excerpt: "Reflexiones sobre juventudes, participación y transformación digital en el escenario global.",
     href: "/novedades",
     featured: true,
   },
   {
-    category: "Disertación Internacional",
-    categoryColor: "bg-indigo-500",
-    title: "Participación en el webinar internacional sobre Gobierno Abierto con enfoque territorial",
-    excerpt: "En el marco de la Semana del Gobierno Abierto 2025, José Farhat participó como expositor en el webinar 'Gobierno Abierto con Sello Territorial', organizado desde Perú.",
-    date: "2025",
+    category: "Gobierno Abierto",
+    tag: "2025",
+    title: "Webinar internacional con enfoque territorial desde Perú",
     href: "/novedades",
   },
   {
-    category: "Cultura de Innovación",
-    categoryColor: "bg-pink-500",
-    title: "Premiación en la 24° Conferencia OIDP por la iniciativa Escuela de Ciudadanía",
-    excerpt: "José Farhat fue reconocido por la iniciativa 'Escuela de Ciudadanía', destacada como política pública innovadora que promueve la participación y la construcción de comunidades democráticas.",
-    date: "2024",
+    category: "Premio OIDP",
+    tag: "2024",
+    title: "Reconocimiento en la 24° Conferencia por Escuela de Ciudadanía",
     href: "/novedades",
   },
   {
     category: "Ponencia",
-    categoryColor: "bg-purple-500",
-    title: "13º Universidad Internacional Municipalidad de Rancagua",
-    excerpt: "José Farhat brindó una disertación sobre 'Mecanismos de Participación ciudadana para mejorar la transparencia Municipal'.",
-    date: "2024",
+    tag: "2024",
+    title: "Universidad Internacional — Municipalidad de Rancagua",
     href: "/novedades",
   },
   {
     category: "Ciberseguridad",
-    categoryColor: "bg-cyan-500",
-    title: "Jornada provincial de ciberseguridad 2024 — Un cambio de chip necesario",
-    excerpt: "José Farhat disertó para 300 personas en la Jornada provincial de ciberseguridad 2024, promoviendo la concientización en seguridad digital.",
-    date: "2024",
+    tag: "2024",
+    title: "Jornada provincial — 300 personas, un cambio de chip necesario",
     href: "/novedades",
   },
 ]
 
 export function NewsSection() {
-  const [featuredNews, ...otherNews] = newsItems
+  const [featured, ...rest] = newsItems
 
   return (
-    <section className="py-24 bg-white">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section
+      className="relative overflow-hidden"
+      style={{ background: "linear-gradient(160deg, #001228 0%, #002444 50%, #001e3c 100%)" }}
+    >
+
+      {/* ── FONDO ──────────────────────────────────────────────────────────── */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 right-0 w-[700px] h-[500px]" style={{
+          background: "radial-gradient(ellipse at 80% 50%, rgba(213,36,122,0.10) 0%, transparent 65%)"
+        }} />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[400px]" style={{
+          background: "radial-gradient(ellipse at 20% 80%, rgba(66,114,187,0.12) 0%, transparent 65%)"
+        }} />
+        <div className="absolute inset-0" style={{
+          backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0)",
+          backgroundSize: "40px 40px",
+        }} />
+      </div>
+
+      <div className="relative z-10 container mx-auto px-4 lg:px-8 py-24">
+
+        {/* ── HEADER ────────────────────────────────────────────────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14"
         >
-          <span className="inline-block px-4 py-2 bg-brand-pink/10 text-brand-pink text-sm font-medium rounded-full mb-4">
-            Novedades
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-navy mb-4">
-            Lo que tenés que saber...
-          </h2>
-          <p className="text-lg text-brand-navy/60 max-w-2xl mx-auto">
-            Últimas noticias y actividades sobre participación ciudadana e innovación pública
-          </p>
+          <div>
+            <span className="inline-block px-3 py-1 bg-brand-pink/15 text-brand-pink text-[11px] font-semibold rounded-full mb-4 tracking-wider uppercase">
+              Novedades
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-display leading-tight">
+              Lo que tenés que saber
+            </h2>
+          </div>
+          <Link
+            href="/novedades"
+            className="group inline-flex items-center gap-2 text-white/40 hover:text-white text-sm font-medium transition-colors duration-300 whitespace-nowrap"
+          >
+            Ver todas
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+          </Link>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Featured Article */}
+        {/* ── GRID ──────────────────────────────────────────────────────────── */}
+        <div className="grid lg:grid-cols-[1.6fr_1fr] gap-5">
+
+          {/* ── CARD FEATURED — grande ─────────────────────────────────────── */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.7 }}
           >
             <Link
-              href={featuredNews.href}
-              className="group block h-full bg-gradient-to-br from-brand-navy to-brand-dark rounded-3xl p-8 hover:shadow-2xl hover:shadow-brand-navy/20 transition-all duration-300 hover:-translate-y-1"
+              href={featured.href}
+              className="group relative flex flex-col justify-end h-full min-h-[420px] lg:min-h-[520px] rounded-3xl overflow-hidden"
+              style={{ boxShadow: "0 24px 60px rgba(0,0,0,0.40)" }}
             >
-              <span className={`inline-block px-3 py-1 ${featuredNews.categoryColor} text-white text-xs font-medium rounded-full mb-6`}>
-                {featuredNews.category}
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4 group-hover:text-brand-pink transition-colors leading-tight">
-                {featuredNews.title}
-              </h3>
-              <p className="text-white/70 mb-6 leading-relaxed">
-                {featuredNews.excerpt}
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="flex items-center gap-2 text-white/50 text-sm">
-                  <Calendar className="w-4 h-4" />
-                  {featuredNews.date}
-                </span>
-                <span className="inline-flex items-center gap-2 text-brand-pink font-medium group-hover:gap-3 transition-all">
+              {/* Fondo visual decorativo */}
+              <div className="absolute inset-0">
+                <div className="absolute inset-0" style={{
+                  background: "linear-gradient(135deg, #003a6e 0%, #002444 40%, #001228 100%)"
+                }} />
+                {/* Círculos decorativos */}
+                <div className="absolute top-0 right-0 w-80 h-80 rounded-full opacity-20" style={{
+                  background: "radial-gradient(circle, #4272BB 0%, transparent 70%)",
+                  transform: "translate(30%, -30%)"
+                }} />
+                <div className="absolute top-1/3 right-1/4 w-48 h-48 rounded-full opacity-10" style={{
+                  background: "radial-gradient(circle, #D5247A 0%, transparent 70%)",
+                }} />
+                {/* Líneas geométricas SVG */}
+                <svg className="absolute inset-0 w-full h-full opacity-[0.06]"
+                  viewBox="0 0 600 520" preserveAspectRatio="xMidYMid slice">
+                  <line x1="0" y1="130" x2="600" y2="0" stroke="white" strokeWidth="1"/>
+                  <line x1="0" y1="260" x2="600" y2="130" stroke="white" strokeWidth="0.5"/>
+                  <line x1="0" y1="390" x2="600" y2="260" stroke="white" strokeWidth="1"/>
+                  <circle cx="480" cy="80" r="120" fill="none" stroke="white" strokeWidth="0.5"/>
+                  <circle cx="480" cy="80" r="70" fill="none" stroke="white" strokeWidth="0.5"/>
+                </svg>
+                {/* Año decorativo */}
+                <div
+                  className="absolute top-6 right-8 font-display font-bold leading-none select-none pointer-events-none"
+                  style={{ fontSize: "120px", color: "rgba(255,255,255,0.04)" }}
+                >
+                  25
+                </div>
+              </div>
+
+              {/* Gradiente para legibilidad */}
+              <div className="absolute inset-0" style={{
+                background: "linear-gradient(to top, rgba(0,10,25,0.95) 0%, rgba(0,10,25,0.5) 40%, transparent 70%)"
+              }} />
+
+              {/* Contenido */}
+              <div className="relative z-10 p-8 lg:p-10">
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="px-3 py-1 rounded-full text-[11px] font-semibold tracking-wider uppercase"
+                    style={{ background: "rgba(213,36,122,0.20)", color: "#e8559a" }}>
+                    {featured.category}
+                  </span>
+                  <span className="text-white/30 text-xs">{featured.tag}</span>
+                </div>
+
+                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight font-display group-hover:text-brand-pink transition-colors duration-300">
+                  {featured.title}
+                </h3>
+                <p className="text-white/55 leading-relaxed mb-8 max-w-lg text-[15px]">
+                  {featured.excerpt}
+                </p>
+
+                <div
+                  className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 group-hover:gap-3"
+                  style={{
+                    background: "rgba(255,255,255,0.10)",
+                    border: "1px solid rgba(255,255,255,0.15)"
+                  }}
+                >
                   Leer más
-                  <ArrowRight className="w-4 h-4" />
-                </span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                </div>
               </div>
             </Link>
           </motion.div>
 
-          {/* Other Articles Grid */}
-          <div className="grid sm:grid-cols-2 gap-6">
-            {otherNews.map((news, index) => (
+          {/* ── LISTA DERECHA ─────────────────────────────────────────────── */}
+          <div className="flex flex-col gap-3">
+            {rest.map((news, index) => (
               <motion.div
                 key={news.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.08 }}
+                className="flex-1"
               >
                 <Link
                   href={news.href}
-                  className="group block h-full bg-brand-light-blue rounded-2xl p-6 hover:bg-white hover:shadow-xl hover:shadow-brand-navy/10 transition-all duration-300 hover:-translate-y-1 border border-transparent hover:border-brand-blue/20"
+                  className="group flex flex-col justify-between h-full rounded-2xl p-5 transition-all duration-300 hover:-translate-y-0.5"
+                  style={{
+                    background: "rgba(255,255,255,0.05)",
+                    border: "1px solid rgba(255,255,255,0.07)",
+                    backdropFilter: "blur(8px)",
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.background = "rgba(66,114,187,0.12)"
+                    ;(e.currentTarget as HTMLElement).style.borderColor = "rgba(66,114,187,0.25)"
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)"
+                    ;(e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)"
+                  }}
                 >
-                  <span className={`inline-block px-2.5 py-1 ${news.categoryColor} text-white text-xs font-medium rounded-full mb-4`}>
-                    {news.category}
-                  </span>
-                  <h3 className="text-lg font-bold text-brand-navy mb-2 group-hover:text-brand-pink transition-colors line-clamp-2 leading-snug">
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <span
+                      className="text-[10px] font-semibold tracking-wider uppercase px-2.5 py-0.5 rounded-full flex-shrink-0"
+                      style={{ background: "rgba(66,114,187,0.20)", color: "#7fb3e8" }}
+                    >
+                      {news.category}
+                    </span>
+                    <span className="text-white/25 text-[11px] flex-shrink-0">{news.tag}</span>
+                  </div>
+
+                  <h3 className="text-sm font-semibold text-white/80 group-hover:text-white transition-colors duration-300 leading-snug flex-1">
                     {news.title}
                   </h3>
-                  <p className="text-brand-navy/60 text-sm mb-4 line-clamp-2">
-                    {news.excerpt}
-                  </p>
-                  <span className="flex items-center gap-2 text-brand-navy/40 text-xs">
-                    <Calendar className="w-3 h-3" />
-                    {news.date}
-                  </span>
+
+                  <div className="flex justify-end mt-3">
+                    <ArrowUpRight className="w-3.5 h-3.5 text-white/20 group-hover:text-brand-pink group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                  </div>
                 </Link>
               </motion.div>
             ))}
           </div>
-        </div>
 
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-12"
-        >
-          <Link
-            href="/novedades"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-brand-navy text-white font-semibold rounded-full hover:bg-brand-dark hover:shadow-lg transition-all duration-300 group"
-          >
-            Ver todas las Novedades
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

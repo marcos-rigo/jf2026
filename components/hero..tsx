@@ -123,9 +123,8 @@ export function Hero() {
             transition={{ delay: 0.75, duration: 0.6 }}
             className="flex flex-wrap items-center gap-4"
           >
-            {/* Primario — ancla a Caja de Herramientas */}
             <Link
-              href="#herramientas"
+              href="#contenido"
               className="inline-flex items-center gap-2.5 px-7 py-3.5 font-semibold text-[15px] rounded-full transition-all duration-300"
               style={{
                 background: "linear-gradient(135deg, #003257 0%, #4272BB 100%)",
@@ -141,19 +140,22 @@ export function Hero() {
                 ;(e.currentTarget as HTMLElement).style.transform = "translateY(0)"
               }}
             >
-              📥 Descargar Caja de Herramientas
+              Explorar contenido
+              <ChevronDown className="w-4 h-4" />
             </Link>
 
-            {/* Secundario — ancla al Podcast */}
             <Link
-              href="#podcast"
+              href="https://ciudadaniadigital.josefarhat.com/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2.5 px-7 py-3.5 font-semibold text-[15px] text-white rounded-full border border-white/20 hover:border-white/40 hover:bg-white/8 transition-all duration-300"
             >
               <span className="relative flex h-2 w-2 flex-shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-pink opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-pink" />
               </span>
-              🎧 Escuchar Podcast
+              Ciudadanía Digital
+              <span className="text-brand-pink font-bold">→</span>
             </Link>
           </motion.div>
 
@@ -169,13 +171,30 @@ export function Hero() {
             2. Línea rosa sólida con filtro blur medio
             3. Núcleo blanco delgado — el "filamento" del neon
       ════════════════════════════════════════════════════════════════════════ */}
-      {/* ── DIAGONAL NEON HERO ───────────────────────────────────────────────── */}
-      <div className="absolute bottom-0 left-0 right-0 z-[10] pointer-events-none overflow-hidden">
+      {/*
+        SVG de doble diagonal — forma de "V" acostada con pico a la izquierda.
+
+        El viewBox tiene altura 240: la mitad superior (0→120) pertenece al hero,
+        la mitad inferior (120→240) pertenece a la entrada de la sección siguiente.
+
+        Diagonal 1 (existente, neon rosa):
+          izq-abajo (0,120) → der-arriba (1440,0)  — cierre del hero
+
+        Diagonal 2 (nueva, solo corte geométrico):
+          mismo pico izq (0,120) → der-abajo (1440,240) — entrada en la sección oscura
+
+        Rellenos:
+          - Arriba-derecha del pico → blanco (fondo del hero que ya no es video)
+          - Abajo-derecha del pico → oscuro #000d1a (fondo de la sección de pilares)
+          - El triángulo izquierdo queda "abierto" — es el video del hero
+      */}
+      <div className="absolute bottom-0 left-0 right-0 z-[10] pointer-events-none"
+        style={{ height: "240px", marginBottom: "-120px" }}>
         <svg
-          viewBox="0 0 1440 120"
+          viewBox="0 0 1440 240"
           preserveAspectRatio="none"
           xmlns="http://www.w3.org/2000/svg"
-          style={{ display: "block", width: "100%", height: "120px" }}
+          style={{ display: "block", width: "100%", height: "240px" }}
         >
           <defs>
             <filter id="glow-mid" x="-20%" y="-100%" width="140%" height="300%">
@@ -190,22 +209,24 @@ export function Hero() {
             </filter>
           </defs>
 
-          {/* Cuña blanca */}
+          {/* Relleno blanco — zona del hero (arriba del pico) */}
           <polygon points="0,120 1440,0 1440,120" fill="#ffffff" />
 
-          {/* Halo neon rosa */}
+          {/* Zona inferior — sin relleno, el video se ve a través */}
+
+          {/* ── Diagonal 1: neon rosa (cierre hero) ── */}
           <line x1="0" y1="123" x2="1444" y2="-3"
             stroke="#D5247A" strokeWidth="20" opacity="0.18"
             filter="url(#glow-halo)" />
-
-          {/* Línea rosa principal */}
           <line x1="0" y1="123" x2="1444" y2="-3"
             stroke="#D5247A" strokeWidth="3.5"
             filter="url(#glow-mid)" />
-
-          {/* Núcleo blanco */}
           <line x1="0" y1="123" x2="1444" y2="-3"
             stroke="rgba(255,255,255,0.95)" strokeWidth="1" />
+
+          {/* ── Diagonal 2: corte geométrico limpio (entrada pilares) ── */}
+          <line x1="0" y1="117" x2="1444" y2="243"
+            stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
         </svg>
       </div>
 

@@ -31,7 +31,7 @@ const tools = [
 
 export function ToolboxSection() {
   return (
-    <section className="py-24 bg-brand-light-blue">
+    <section id="herramientas" className="py-24 bg-brand-light-blue">
       <div className="container mx-auto px-4 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
