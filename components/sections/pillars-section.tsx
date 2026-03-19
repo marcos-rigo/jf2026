@@ -51,14 +51,33 @@ const pillars = [
 
 export function PillarsSection() {
   return (
-    <section className="relative py-24 bg-gradient-to-b from-[#003a60] to-brand-dark overflow-hidden">
-      {/* Background Elements */}
+    <section className="relative bg-gradient-to-b from-[#003a60] to-brand-dark overflow-hidden">
+
+      {/* ══ CORTE DIAGONAL SUPERIOR ════════════════════════════════════════════
+          Cuña blanca que entra desde arriba-izquierda y baja hacia abajo-derecha.
+          La sección oscura "empieza" debajo de esa cuña.
+          El SVG está en absolute top-0, no empuja el contenido.
+          paddingTop en el contenido compensa la altura del corte.
+      ════════════════════════════════════════════════════════════════════════ */}
+      <div className="absolute top-0 left-0 right-0 z-[5] pointer-events-none">
+        <svg
+          viewBox="0 0 1440 100"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style={{ display: "block", width: "100%", height: "100px" }}
+        >
+          {/* Cuña blanca — entra desde arriba-izquierda, termina abajo-derecha */}
+          <polygon points="0,0 1440,0 1440,100" fill="#ffffff" />
+        </svg>
+      </div>
+
+      {/* Background glows */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-brand-blue/10 rounded-full blur-[100px]" />
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-brand-pink/10 rounded-full blur-[80px]" />
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <div className="container mx-auto px-4 lg:px-8 relative z-10 pt-36 pb-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
