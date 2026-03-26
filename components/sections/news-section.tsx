@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowRight, ArrowUpRight } from "lucide-react"
+import Image from "next/image"
+import { ArrowRight, Calendar, Tag } from "lucide-react"
 
 const newsItems = [
   {
@@ -12,213 +13,262 @@ const newsItems = [
     excerpt: "Reflexiones sobre juventudes, participación y transformación digital en el escenario global.",
     href: "/novedades",
     featured: true,
+    image: "/img/noti/jf-clase.jfif",
+    badge: "Destacado"
   },
   {
     category: "Gobierno Abierto",
     tag: "2025",
     title: "Webinar internacional con enfoque territorial desde Perú",
     href: "/novedades",
+    image: "/img/noti/jf-legislatura.jfif",
   },
   {
     category: "Premio OIDP",
     tag: "2024",
     title: "Reconocimiento en la 24° Conferencia por Escuela de Ciudadanía",
     href: "/novedades",
+    image: "/img/noti/jf-san-martin.jfif",
   },
   {
     category: "Ponencia",
     tag: "2024",
     title: "Universidad Internacional — Municipalidad de Rancagua",
     href: "/novedades",
+    image: "/img/noti/jf-sanMartin25.jfif",
   },
   {
     category: "Ciberseguridad",
     tag: "2024",
     title: "Jornada provincial — 300 personas, un cambio de chip necesario",
     href: "/novedades",
+    image: "/img/noti/ciberseguridadd.webp",
   },
 ]
 
 export function NewsSection() {
   const [featured, ...rest] = newsItems
+  const rightColumnNews = rest.slice(0, 2)
 
   return (
-    <section
-      className="relative overflow-hidden"
-      style={{ background: "linear-gradient(160deg, #001228 0%, #002444 50%, #001e3c 100%)" }}
-    >
-
-      {/* ── FONDO ──────────────────────────────────────────────────────────── */}
+    <section className="relative overflow-hidden" style={{ background: "linear-gradient(160deg, #001228 0%, #002444 50%, #001e3c 100%)" }}>
+      
+      {/* ══ FONDO PREMIUM ═════════════════════════════════════════════════════ */}
       <div className="absolute inset-0 pointer-events-none">
+        {/* Glows decorativos */}
         <div className="absolute top-1/3 right-0 w-[700px] h-[500px]" style={{
           background: "radial-gradient(ellipse at 80% 50%, rgba(213,36,122,0.10) 0%, transparent 65%)"
         }} />
         <div className="absolute bottom-0 left-0 w-[500px] h-[400px]" style={{
           background: "radial-gradient(ellipse at 20% 80%, rgba(66,114,187,0.12) 0%, transparent 65%)"
         }} />
+        
+        {/* Grid subtle */}
         <div className="absolute inset-0" style={{
           backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0)",
           backgroundSize: "40px 40px",
         }} />
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 lg:px-8 py-24">
+      <div className="relative z-10 container mx-auto px-4 lg:px-8 py-16 lg:py-24">
 
-        {/* ── HEADER ────────────────────────────────────────────────────────── */}
+        {/* ══ HEADER PREMIUM ═════════════════════════════════════════════════ */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14"
+          className="mb-16 lg:mb-20"
         >
-          <div>
-            <span className="inline-block px-3 py-1 bg-brand-pink/15 text-brand-pink text-[11px] font-semibold rounded-full mb-4 tracking-wider uppercase">
-              Novedades
-            </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-display leading-tight">
-              Lo que tenés que saber
-            </h2>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="h-1 w-12 bg-gradient-to-r from-brand-pink to-brand-blue rounded-full" />
+            <span className="text-sm font-semibold text-brand-blue uppercase tracking-wider">Novedades</span>
           </div>
-          <Link
-            href="/novedades"
-            className="group inline-flex items-center gap-2 text-white/40 hover:text-white text-sm font-medium transition-colors duration-300 whitespace-nowrap"
-          >
-            Ver todas
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-          </Link>
+          
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+            <div>
+              <h2 className="text-4xl lg:text-5xl font-bold text-white font-display leading-tight mb-4">
+                Lo que tenés que saber
+              </h2>
+              <p className="text-lg text-white/70">
+                Descubre las últimas noticias y eventos sobre innovación ciudadana
+              </p>
+            </div>
+            
+            <Link
+              href="/novedades"
+              className="group inline-flex items-center gap-2 px-6 py-3 text-white/70 hover:text-white font-semibold transition-colors duration-300 whitespace-nowrap"
+            >
+              Ver todas
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+            </Link>
+          </div>
         </motion.div>
 
-        {/* ── GRID ──────────────────────────────────────────────────────────── */}
-        <div className="grid lg:grid-cols-[1.6fr_1fr] gap-5">
+        {/* ══ GRID NOTICIAS ═════════════════════════════════════════════════ */}
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
 
-          {/* ── CARD FEATURED — grande ─────────────────────────────────────── */}
+          {/* ══ NOTICIA DESTACADA (IZQUIERDA) ════════════════════════════════ */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
+            className="lg:col-span-2"
           >
             <Link
               href={featured.href}
-              className="group relative flex flex-col justify-end h-full min-h-[420px] lg:min-h-[520px] rounded-3xl overflow-hidden"
-              style={{ boxShadow: "0 24px 60px rgba(0,0,0,0.40)" }}
+              className="group relative flex flex-col h-full min-h-[420px] lg:min-h-[500px] rounded-2xl lg:rounded-3xl overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-blue"
             >
-              {/* Fondo visual decorativo */}
-              <div className="absolute inset-0">
-                <div className="absolute inset-0" style={{
-                  background: "linear-gradient(135deg, #003a6e 0%, #002444 40%, #001228 100%)"
-                }} />
-                {/* Círculos decorativos */}
-                <div className="absolute top-0 right-0 w-80 h-80 rounded-full opacity-20" style={{
-                  background: "radial-gradient(circle, #4272BB 0%, transparent 70%)",
-                  transform: "translate(30%, -30%)"
-                }} />
-                <div className="absolute top-1/3 right-1/4 w-48 h-48 rounded-full opacity-10" style={{
-                  background: "radial-gradient(circle, #D5247A 0%, transparent 70%)",
-                }} />
-                {/* Líneas geométricas SVG */}
-                <svg className="absolute inset-0 w-full h-full opacity-[0.06]"
-                  viewBox="0 0 600 520" preserveAspectRatio="xMidYMid slice">
-                  <line x1="0" y1="130" x2="600" y2="0" stroke="white" strokeWidth="1"/>
-                  <line x1="0" y1="260" x2="600" y2="130" stroke="white" strokeWidth="0.5"/>
-                  <line x1="0" y1="390" x2="600" y2="260" stroke="white" strokeWidth="1"/>
-                  <circle cx="480" cy="80" r="120" fill="none" stroke="white" strokeWidth="0.5"/>
-                  <circle cx="480" cy="80" r="70" fill="none" stroke="white" strokeWidth="0.5"/>
-                </svg>
-                {/* Año decorativo */}
-                <div
-                  className="absolute top-6 right-8 font-display font-bold leading-none select-none pointer-events-none"
-                  style={{ fontSize: "120px", color: "rgba(255,255,255,0.04)" }}
-                >
-                  25
-                </div>
+              {/* IMAGEN DE FONDO */}
+              <div className="absolute inset-0 overflow-hidden">
+                <Image
+                  src={featured.image}
+                  alt={featured.title}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  priority
+                />
+                
+                {/* OVERLAY GRADIENTE PREMIUM */}
+                <div className="absolute inset-0 bg-white/20 group-hover:bg-white/0 transition-colors duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent group-hover:from-black/40 group-hover:via-black/0 transition-all duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/20 to-transparent group-hover:from-brand-dark/0 transition-colors duration-500" />
               </div>
 
-              {/* Gradiente para legibilidad */}
-              <div className="absolute inset-0" style={{
-                background: "linear-gradient(to top, rgba(0,10,25,0.95) 0%, rgba(0,10,25,0.5) 40%, transparent 70%)"
-              }} />
+              {/* BADGE DESTACADO */}
+              {featured.badge && (
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className="absolute top-6 left-6 z-20"
+                >
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-pink/90 backdrop-blur-md rounded-full">
+                    <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                    <span className="text-xs font-bold text-white uppercase tracking-wider">{featured.badge}</span>
+                  </div>
+                </motion.div>
+              )}
 
-              {/* Contenido */}
-              <div className="relative z-10 p-8 lg:p-10">
-                <div className="flex items-center gap-3 mb-5">
-                  <span className="px-3 py-1 rounded-full text-[11px] font-semibold tracking-wider uppercase"
-                    style={{ background: "rgba(213,36,122,0.20)", color: "#e8559a" }}>
-                    {featured.category}
+              {/* CONTENIDO */}
+              <div className="relative z-10 flex flex-col justify-end h-full p-6 lg:p-10">
+                
+                {/* METADATA */}
+                <div className="mb-6 flex flex-wrap items-center gap-3">
+                  <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/15 backdrop-blur-md rounded-full border border-white/20">
+                    <Tag className="w-3.5 h-3.5 text-brand-pink" />
+                    <span className="text-xs font-semibold text-white uppercase">{featured.category}</span>
                   </span>
-                  <span className="text-white/30 text-xs">{featured.tag}</span>
+                  <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/15 backdrop-blur-md rounded-full border border-white/20">
+                    <Calendar className="w-3.5 h-3.5 text-brand-blue" />
+                    <span className="text-xs font-semibold text-white">{featured.tag}</span>
+                  </span>
                 </div>
 
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight font-display group-hover:text-brand-pink transition-colors duration-300">
+                {/* TÍTULO */}
+                <h3 className="text-3xl lg:text-4xl font-bold text-white mb-4 font-display leading-tight group-hover:text-brand-pink transition-colors duration-300">
                   {featured.title}
                 </h3>
-                <p className="text-white/55 leading-relaxed mb-8 max-w-lg text-[15px]">
+
+                {/* DESCRIPCIÓN */}
+                <p className="text-white/80 text-base lg:text-lg leading-relaxed mb-6 max-w-xl">
                   {featured.excerpt}
                 </p>
 
-                <div
-                  className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 group-hover:gap-3"
-                  style={{
-                    background: "rgba(255,255,255,0.10)",
-                    border: "1px solid rgba(255,255,255,0.15)"
-                  }}
-                >
-                  Leer más
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                {/* BOTÓN CTA */}
+                <div className="inline-flex items-center gap-3 px-6 py-3 bg-white text-brand-navy rounded-full font-semibold hover:bg-brand-pink hover:text-white transition-all duration-300 group-hover:gap-4 w-fit shadow-lg">
+                  Leer ahora
+                  <ArrowRight className="w-5 h-5" />
                 </div>
+              </div>
+
+              {/* EFECTO HOVER OVERLAY */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                <div className="absolute inset-0 bg-gradient-to-r from-brand-blue/0 via-white/0 to-brand-pink/0" />
               </div>
             </Link>
           </motion.div>
 
-          {/* ── LISTA DERECHA ─────────────────────────────────────────────── */}
-          <div className="flex flex-col gap-3">
-            {rest.map((news, index) => (
+          {/* ══ COLUMNA DERECHA - NOTICIAS SECUNDARIAS ══════════════════════ */}
+          <div className="flex flex-col gap-6 lg:gap-8">
+            {rightColumnNews.map((news, index) => (
               <motion.div
                 key={news.title}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-                className="flex-1"
+                transition={{ duration: 0.6, delay: index * 0.1 }}
               >
                 <Link
                   href={news.href}
-                  className="group flex flex-col justify-between h-full rounded-2xl p-5 transition-all duration-300 hover:-translate-y-0.5"
-                  style={{
-                    background: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                    backdropFilter: "blur(8px)",
-                  }}
-                  onMouseEnter={e => {
-                    (e.currentTarget as HTMLElement).style.background = "rgba(66,114,187,0.12)"
-                    ;(e.currentTarget as HTMLElement).style.borderColor = "rgba(66,114,187,0.25)"
-                  }}
-                  onMouseLeave={e => {
-                    (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)"
-                    ;(e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)"
-                  }}
+                  className="group relative flex flex-col h-full min-h-[220px] rounded-2xl overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-blue hover:shadow-2xl transition-shadow duration-300"
                 >
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <span
-                      className="text-[10px] font-semibold tracking-wider uppercase px-2.5 py-0.5 rounded-full flex-shrink-0"
-                      style={{ background: "rgba(66,114,187,0.20)", color: "#7fb3e8" }}
-                    >
-                      {news.category}
-                    </span>
-                    <span className="text-white/25 text-[11px] flex-shrink-0">{news.tag}</span>
+                  {/* IMAGEN */}
+                  <div className="relative overflow-hidden h-full">
+                    <Image
+                      src={news.image}
+                      alt={news.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    
+                    {/* OVERLAY BLANCA QUE DESAPARECE EN HOVER */}
+                    <div className="absolute inset-0 bg-white/30 group-hover:bg-white/0 transition-colors duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    {/* BORDER GRADIENT ON HOVER */}
+                    <div className="absolute inset-0 rounded-2xl border-2 border-gradient-to-r from-brand-blue/0 via-brand-blue/30 to-brand-pink/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                   </div>
 
-                  <h3 className="text-sm font-semibold text-white/80 group-hover:text-white transition-colors duration-300 leading-snug flex-1">
-                    {news.title}
-                  </h3>
+                  {/* CONTENIDO OVERLAY */}
+                  <div className="absolute inset-0 flex flex-col justify-end p-5">
+                    {/* CATEGORY BADGE */}
+                    <motion.div
+                      className="mb-3"
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      transition={{ duration: 0.4, delay: 0.2 }}
+                    >
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-blue/80 backdrop-blur-md rounded-full border border-white/20">
+                        <span className="w-1.5 h-1.5 bg-brand-pink rounded-full" />
+                        <span className="text-[10px] font-bold text-white uppercase tracking-wider">{news.category}</span>
+                      </span>
+                    </motion.div>
 
-                  <div className="flex justify-end mt-3">
-                    <ArrowUpRight className="w-3.5 h-3.5 text-white/20 group-hover:text-brand-pink group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                    {/* TÍTULO */}
+                    <h3 className="text-base lg:text-lg font-bold text-white mb-3 font-display leading-snug group-hover:text-brand-pink transition-colors duration-300 line-clamp-3">
+                      {news.title}
+                    </h3>
+
+                    {/* CTA SUBTLE */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-white/60 font-medium">{news.tag}</span>
+                      <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/20 backdrop-blur-md group-hover:bg-brand-pink/80 transition-all duration-300">
+                        <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform duration-300" />
+                      </div>
+                    </div>
                   </div>
                 </Link>
               </motion.div>
             ))}
+
+            {/* BOTÓN VER MÁS */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <Link
+                href="/novedades"
+                className="group flex items-center justify-center gap-2 w-full px-6 py-4 border-2 border-brand-navy rounded-2xl font-semibold text-brand-navy hover:bg-brand-navy hover:text-white transition-all duration-300 hover:border-brand-navy/50"
+              >
+                Ver todas las noticias
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+              </Link>
+            </motion.div>
           </div>
 
         </div>
