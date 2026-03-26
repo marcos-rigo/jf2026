@@ -17,7 +17,7 @@ export function PodcastSection() {
   }
 
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section id="podcast" className="relative overflow-hidden bg-white">
 
       {/* ── FONDO CON TEXTURA ──────────────────────────────────────────────────
           Gradiente suave desde el blanco hacia un azul muy tenue

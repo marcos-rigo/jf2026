@@ -124,37 +124,38 @@ export function Hero() {
             className="flex flex-wrap items-center gap-4"
           >
             {/* Primario — ancla a Caja de Herramientas */}
-            <Link
-              href="#herramientas"
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 font-semibold text-[15px] rounded-full transition-all duration-300"
-              style={{
-                background: "linear-gradient(135deg, #003257 0%, #4272BB 100%)",
-                color: "white",
-                boxShadow: "0 0 32px rgba(66,114,187,0.35)",
-              }}
-              onMouseEnter={e => {
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 0 48px rgba(66,114,187,0.55)"
-                ;(e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 0 32px rgba(66,114,187,0.35)"
-                ;(e.currentTarget as HTMLElement).style.transform = "translateY(0)"
-              }}
-            >
-              📥 Descargar Caja de Herramientas
-            </Link>
+            {/* Primario — ancla a Caja de Herramientas */}
+<a
+  href="#herramientas"
+  className="inline-flex items-center gap-2.5 px-7 py-3.5 font-semibold text-[15px] rounded-full transition-all duration-300"
+  style={{
+    background: "linear-gradient(135deg, #003257 0%, #4272BB 100%)",
+    color: "white",
+    boxShadow: "0 0 32px rgba(66,114,187,0.35)",
+  }}
+  onMouseEnter={e => {
+    (e.currentTarget as HTMLElement).style.boxShadow = "0 0 48px rgba(66,114,187,0.55)"
+    ;(e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"
+  }}
+  onMouseLeave={e => {
+    (e.currentTarget as HTMLElement).style.boxShadow = "0 0 32px rgba(66,114,187,0.35)"
+    ;(e.currentTarget as HTMLElement).style.transform = "translateY(0)"
+  }}
+>
+  📥 Descargar Caja de Herramientas
+</a>
 
             {/* Secundario — ancla al Podcast */}
-            <Link
-              href="#podcast"
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 font-semibold text-[15px] text-white rounded-full border border-white/20 hover:border-white/40 hover:bg-white/8 transition-all duration-300"
-            >
-              <span className="relative flex h-2 w-2 flex-shrink-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-pink opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-pink" />
-              </span>
-              🎧 Escuchar Podcast
-            </Link>
+            <a
+  href="#podcast"
+  className="inline-flex items-center gap-2.5 px-7 py-3.5 font-semibold text-[15px] text-white rounded-full border border-white/20 hover:border-white/40 hover:bg-white/8 transition-all duration-300"
+>
+  <span className="relative flex h-2 w-2 flex-shrink-0">
+    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-pink opacity-75" />
+    <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-pink" />
+  </span>
+  🎧 Escuchar Podcast
+</a>
           </motion.div>
 
         </div>

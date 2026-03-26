@@ -9,7 +9,7 @@ export function PodcastSection() {
   const [hovered, setHovered] = useState(false)
 
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section id="podcast" className="relative overflow-hidden bg-white">
 
       {/* ── FONDO ──────────────────────────────────────────────────────────── */}
       <div className="absolute inset-0 pointer-events-none">
