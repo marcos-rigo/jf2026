@@ -7,22 +7,22 @@ import { Send, Loader2, CheckCircle2 } from "lucide-react"
 // ─────────────────────────────────────────────────────────────────────────────
 // CONFIGURACIÓN — reemplazá estos valores con los tuyos
 // ─────────────────────────────────────────────────────────────────────────────
-// EmailJS (https://www.emailjs.com)
-const EMAILJS_SERVICE_ID  = "service_eg1x7l6"      // ej: "service_abc123"
-const EMAILJS_TEMPLATE_ID = "template_72zh3ni"     // ej: "template_xyz789"
-const EMAILJS_PUBLIC_KEY  = "nW_X7R6S-HTi46FRL"       // ej: "abcDEFghiJKL"
+// EmailJS 
+const EMAILJS_SERVICE_ID  = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID as string;
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID as string;
+const EMAILJS_PUBLIC_KEY  = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY as string;
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCZhHPIysFR0gxPJub0UkVfT78plrN8O0g",
-  authDomain: "ciudadania-digital-tucuman.firebaseapp.com",
-  projectId: "ciudadania-digital-tucuman",
-  storageBucket: "ciudadania-digital-tucuman.firebasestorage.app",
-  messagingSenderId: "342345759375",
-  appId: "1:342345759375:web:a970299c5f53933d754efa"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
