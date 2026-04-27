@@ -17,11 +17,10 @@ export default function HomePage() {
     <main className="relative">
       <Navbar />
       <Hero />
+      <CurrentTopicsSection />
       <PillarsSection />
       <ToolboxSection />
       <PodcastSection />
-      {/* ← NUEVA SECCIÓN DE TEMAS ACTUALES */}
-      <CurrentTopicsSection />
       <NewsSection />
       <LocalNewsSection />
       <MultimediaSection />
