@@ -5,53 +5,19 @@ import Link from "next/link"
 import { ArrowRight, Calendar, MapPin } from "lucide-react"
 import { useState } from "react"
 
-interface Topic {
+export interface Topic {
   id: string
   title: string
   description: string
   date: string
-  location: string
+  sourceName: string
   category: string
-  sourceUrl: string
+  url: string
+  imageUrl: string | null
   gradient: string
 }
 
-// ── TOPICS:START ──
-const currentTopics: Topic[] = [
-  {
-    id: "participacion-digital-tucuman-2025",
-    title: "Tucumán impulsa la participación ciudadana digital",
-    description: "La Secretaría de Estado lidera la transformación democrática con nuevas herramientas de participación ciudadana en toda la provincia.",
-    date: "15 de Abril, 2026",
-    location: "San Miguel de Tucumán",
-    category: "Innovación Democrática",
-    sourceUrl: "https://josefarhat.com",
-    gradient: "from-brand-navy to-brand-blue",
-  },
-  {
-    id: "talleres-ciudadania-activa",
-    title: "Talleres de Ciudadanía Activa en toda la provincia",
-    description: "José Farhat y su equipo recorren municipios tucumanos capacitando a ciudadanos en herramientas de participación y control democrático.",
-    date: "10 de Abril, 2026",
-    location: "Interior de Tucumán",
-    category: "Capacitación Ciudadana",
-    sourceUrl: "https://josefarhat.com",
-    gradient: "from-brand-pink to-purple-600",
-  },
-  {
-    id: "plataforma-consultas-ciudadanas",
-    title: "Nueva plataforma de consultas ciudadanas",
-    description: "La Secretaría presenta una innovadora herramienta digital que permite a todos los tucumanos opinar sobre proyectos de ley y políticas públicas.",
-    date: "5 de Abril, 2026",
-    location: "Casa de Gobierno",
-    category: "Tecnología Cívica",
-    sourceUrl: "https://josefarhat.com",
-    gradient: "from-brand-blue to-cyan-500",
-  },
-]
-// ── TOPICS:END ──
-
-export function CurrentTopicsSection() {
+export function CurrentTopicsSection({ topics }: { topics: Topic[] }) {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
 
   return (
@@ -102,7 +68,7 @@ export function CurrentTopicsSection() {
 
         {/* ── GRID DE TARJETAS ────────────────────────────────────────────────── */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {currentTopics.map((topic, idx) => (
+          {topics.map((topic, idx) => (
             <motion.div
               key={topic.id}
               initial={{ opacity: 0, y: 30 }}
@@ -113,13 +79,27 @@ export function CurrentTopicsSection() {
               onMouseLeave={() => setHoveredCard(null)}
             >
               <Link
-                href={`/temas/${topic.id}`}
+                href={topic.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group block h-full"
               >
                 <div className="relative h-full bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100">
                   
-                  {/* Imagen placeholder con gradiente */}
+                  {/* Imagen con fallback a gradiente */}
                   <div className={`relative h-48 bg-linear-to-br ${topic.gradient} overflow-hidden`}>
+                    {topic.imageUrl ? (
+                      <img
+                        src={topic.imageUrl}
+                        alt={topic.title}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          // Si la imagen falla, dejaremos el gradiente visible
+                          (e.target as HTMLImageElement).style.display = "none"
+                        }}
+                      />
+                    ) : null}
+                    
                     {/* Pattern overlay */}
                     <div className="absolute inset-0 opacity-20"
                       style={{
@@ -154,7 +134,7 @@ export function CurrentTopicsSection() {
                       </div>
                       <div className="flex items-center gap-1.5">
                         <MapPin className="w-3.5 h-3.5" />
-                        <span>{topic.location}</span>
+                        <span>{topic.sourceName}</span>
                       </div>
                     </div>
 

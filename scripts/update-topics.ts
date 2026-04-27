@@ -4,16 +4,20 @@
  * Fetches 3 recent news items about digital citizenship / civic tech using
  * Claude claude-sonnet-4-6 with the built-in web_search tool, then:
  *   1. Validates the data against the Topic schema
- *   2. Patches components/sections/current-topics-section.tsx in-place
+ *   2. Patches components/sections/current-topics-server.tsx in-place (FALLBACK_TOPICS)
  *   3. Writes a JSON backup to public/data/current-topics.json
  *
  * Run: npm run update-topics
  * Requires: ANTHROPIC_API_KEY env var
  */
 
+import dotenv from "dotenv"
 import Anthropic from "@anthropic-ai/sdk"
 import fs from "node:fs"
 import path from "node:path"
+
+// Load environment variables from .env.local
+dotenv.config({ path: ".env.local" })
 
 // ── TYPES ──────────────────────────────────────────────────────────────────
 
@@ -50,7 +54,7 @@ interface Topic {
 // ── PATHS ──────────────────────────────────────────────────────────────────
 
 const ROOT = path.resolve(process.cwd())
-const COMPONENT_PATH = path.join(ROOT, "components/sections/current-topics-section.tsx")
+const COMPONENT_PATH = path.join(ROOT, "components/sections/current-topics-server.tsx")
 const JSON_BACKUP_PATH = path.join(ROOT, "public/data/current-topics.json")
 const START_MARKER = "// ── TOPICS:START ──"
 const END_MARKER = "// ── TOPICS:END ──"

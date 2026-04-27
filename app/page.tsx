@@ -3,7 +3,7 @@ import { Hero } from "@/components/hero"
 import { PillarsSection } from "@/components/sections/pillars-section"
 import { ToolboxSection } from "@/components/sections/toolbox-section"
 import { PodcastSection } from "@/components/sections/podcast-section"
-import { CurrentTopicsSection } from "@/components/sections/current-topics-section"
+import { CurrentTopicsServer } from "@/components/sections/current-topics-server"
 import { NewsSection } from "@/components/sections/news-section"
 import { LocalNewsSection } from "@/components/sections/local-news-section"
 import { MultimediaSection } from "@/components/sections/multimedia-section"
@@ -17,7 +17,7 @@ export default function HomePage() {
     <main className="relative">
       <Navbar />
       <Hero />
-      <CurrentTopicsSection />
+      <CurrentTopicsServer />
       <PillarsSection />
       <ToolboxSection />
       <PodcastSection />
