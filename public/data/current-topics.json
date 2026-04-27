@@ -1,0 +1,35 @@
+{
+  "updatedAt": "2026-04-27T09:00:00.000Z",
+  "topics": [
+    {
+      "id": "participacion-digital-tucuman-2025",
+      "title": "Tucumán impulsa la participación ciudadana digital",
+      "description": "La Secretaría de Estado lidera la transformación democrática con nuevas herramientas de participación ciudadana en toda la provincia.",
+      "date": "15 de Abril, 2026",
+      "location": "San Miguel de Tucumán",
+      "category": "Innovación Democrática",
+      "sourceUrl": "https://josefarhat.com",
+      "gradient": "from-brand-navy to-brand-blue"
+    },
+    {
+      "id": "talleres-ciudadania-activa",
+      "title": "Talleres de Ciudadanía Activa en toda la provincia",
+      "description": "José Farhat y su equipo recorren municipios tucumanos capacitando a ciudadanos en herramientas de participación y control democrático.",
+      "date": "10 de Abril, 2026",
+      "location": "Interior de Tucumán",
+      "category": "Capacitación Ciudadana",
+      "sourceUrl": "https://josefarhat.com",
+      "gradient": "from-brand-pink to-purple-600"
+    },
+    {
+      "id": "plataforma-consultas-ciudadanas",
+      "title": "Nueva plataforma de consultas ciudadanas",
+      "description": "La Secretaría presenta una innovadora herramienta digital que permite a todos los tucumanos opinar sobre proyectos de ley y políticas públicas.",
+      "date": "5 de Abril, 2026",
+      "location": "Casa de Gobierno",
+      "category": "Tecnología Cívica",
+      "sourceUrl": "https://josefarhat.com",
+      "gradient": "from-brand-blue to-cyan-500"
+    }
+  ]
+}

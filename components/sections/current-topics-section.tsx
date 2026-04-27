@@ -5,8 +5,19 @@ import Link from "next/link"
 import { ArrowRight, Calendar, MapPin } from "lucide-react"
 import { useState } from "react"
 
-// Datos de temas actuales - estos se pueden mover a un CMS o API más adelante
-const currentTopics = [
+interface Topic {
+  id: string
+  title: string
+  description: string
+  date: string
+  location: string
+  category: string
+  sourceUrl: string
+  gradient: string
+}
+
+// ── TOPICS:START ──
+const currentTopics: Topic[] = [
   {
     id: "participacion-digital-tucuman-2025",
     title: "Tucumán impulsa la participación ciudadana digital",
@@ -14,8 +25,8 @@ const currentTopics = [
     date: "15 de Abril, 2026",
     location: "San Miguel de Tucumán",
     category: "Innovación Democrática",
-    image: "/images/topics/participacion-digital.jpg", // placeholder
-    gradient: "from-brand-navy to-brand-blue"
+    sourceUrl: "https://josefarhat.com",
+    gradient: "from-brand-navy to-brand-blue",
   },
   {
     id: "talleres-ciudadania-activa",
@@ -24,8 +35,8 @@ const currentTopics = [
     date: "10 de Abril, 2026",
     location: "Interior de Tucumán",
     category: "Capacitación Ciudadana",
-    image: "/images/topics/talleres.jpg", // placeholder
-    gradient: "from-brand-pink to-purple-600"
+    sourceUrl: "https://josefarhat.com",
+    gradient: "from-brand-pink to-purple-600",
   },
   {
     id: "plataforma-consultas-ciudadanas",
@@ -34,10 +45,11 @@ const currentTopics = [
     date: "5 de Abril, 2026",
     location: "Casa de Gobierno",
     category: "Tecnología Cívica",
-    image: "/images/topics/plataforma.jpg", // placeholder
-    gradient: "from-brand-blue to-cyan-500"
-  }
+    sourceUrl: "https://josefarhat.com",
+    gradient: "from-brand-blue to-cyan-500",
+  },
 ]
+// ── TOPICS:END ──
 
 export function CurrentTopicsSection() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)

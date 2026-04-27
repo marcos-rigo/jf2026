@@ -1,0 +1,72 @@
+name: Update Current Topics
+
+on:
+  schedule:
+    # Every 3 days at 09:00 UTC (06:00 Buenos Aires time)
+    - cron: "0 9 */3 * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run — fetch topics but skip commit"
+        required: false
+        default: "false"
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  update-topics:
+    name: Fetch & commit new topics
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run update-topics script
+        id: update
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: npm run update-topics
+
+      - name: Check for file changes
+        id: diff
+        run: |
+          git add components/sections/current-topics-section.tsx public/data/current-topics.json
+          if git diff --staged --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes detected — topics are already up to date."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Changes detected:"
+            git diff --staged --stat
+          fi
+
+      - name: Commit and push changes
+        if: steps.diff.outputs.changed == 'true' && inputs.dry_run != 'true'
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git commit -m "chore: update current topics [automated]"
+          git push
+
+      - name: Skip push (dry run)
+        if: steps.diff.outputs.changed == 'true' && inputs.dry_run == 'true'
+        run: echo "Dry run — skipping push. The script ran successfully."
+
+      - name: No changes summary
+        if: steps.diff.outputs.changed == 'false'
+        run: echo "Nothing to commit. Topics are already current."
