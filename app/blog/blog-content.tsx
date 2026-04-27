@@ -77,7 +77,7 @@ export function BlogContent() {
                 transition={{ delay: index * 0.05 }}
               >
                 <Link
-                  href={`/blog/${cat.slug}`}
+                  href={`/temas/${cat.slug}`}
                   className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full text-brand-navy hover:shadow-md transition-all"
                 >
                   <cat.icon className="w-4 h-4" />
