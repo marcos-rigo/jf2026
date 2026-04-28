@@ -133,7 +133,7 @@ export function Navbar() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-pink opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-pink"></span>
                 </span>
-                Ciudadanía Digital
+                Ciudadanía Presente
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </Link>
             </div>
