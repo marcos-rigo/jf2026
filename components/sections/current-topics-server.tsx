@@ -116,25 +116,86 @@ interface GNewsArticle {
   source: { name: string; url: string }
 }
 
-// TOPIC_TERMS simplificado para compatible con GNews free tier
-// Términos amplios pero relacionados con ciudadanía digital, sin frases complejas
-const TOPIC_TERMS = 'ciudadanía OR democracia OR participación OR gobierno OR tecnología'
+// Términos amplios en español e inglés para maximizar resultados
+const TOPIC_TERMS =
+  '"digital citizenship" OR "participación ciudadana" OR "e-government"' +
+  ' OR "gobierno digital" OR "civic tech" OR "tecnología cívica"' +
+  ' OR "smart city" OR "ciudad inteligente" OR "gobierno abierto"' +
+  ' OR "open government" OR "datos abiertos" OR "open data"'
+
+// Solo descarta contenido claramente irrelevante
+const NEGATIVE_KEYWORDS = [
+  "gol", "fútbol", "futbol", "tiro libre", "partido de fútbol",
+  "asesinato", "homicidio", "tiroteo",
+  "novio", "novia", "romance", "separación", "separacion",
+]
+
+// Acepta si el artículo menciona al menos uno de estos términos
+const POSITIVE_KEYWORDS = [
+  // tecnología
+  "digital", "tecnología", "tecnologia", "tech", "plataforma", "app",
+  "software", "inteligencia artificial", " ia ", " ai ", "machine learning",
+  // gobierno / institucional
+  "gobierno", "gobierno", "municipal", "estatal", "público", "publico",
+  "ciudad", "smart city",
+  // participación / civismo
+  "participación", "participacion", "ciudadano", "ciudadana", "civic",
+  "civic tech", "democracia",
+  // datos / transparencia
+  "datos", "información", "informacion", "transparencia", "open data",
+  // innovación
+  "innovación", "innovacion", "transformación", "transformacion",
+]
+
+// Dominios que se priorizan al ordenar cuando hay más de 3 resultados
+const PRIORITY_DOMAINS = [
+  "gov.", ".eu", "apolitical.co", "govtech", "smartcity",
+  "argentina.gob.ar", "infobae.com", "clarin.com",
+]
 
 const GEO_TIERS = [
-  { label: "Tucumán",       geoTerms: "Tucumán" },
-  { label: "Argentina",     geoTerms: "Argentina" },
-  {
-    label: "Latinoamérica",
-    geoTerms: "Chile OR Colombia OR México OR Brasil",
-  },
-  { label: "Internacional", geoTerms: null }, // sin restricción geo — DEBE traer resultados
+  { label: "Argentina",       geoTerms: "Argentina" },
+  { label: "Latinoamérica",   geoTerms: "Chile OR Colombia OR México OR Brasil OR Uruguay OR Perú" },
+  { label: "España/Portugal", geoTerms: "España OR Portugal OR Barcelona OR Madrid" },
+  { label: "Europa",          geoTerms: "Europe OR European OR EU OR Estonia OR Finland OR Denmark" },
+  { label: "Global",          geoTerms: null },
 ] as const
 
+// Devuelve true si la URL pertenece a un dominio prioritario
+function isPrioritySource(url: string): boolean {
+  return PRIORITY_DOMAINS.some((d) => url.toLowerCase().includes(d))
+}
+
+// Filtra artículos irrelevantes — permisivo: descarta solo si tiene negativa
+// Y además no tiene ninguna positiva
+function filterRelevantArticles(articles: GNewsArticle[]): GNewsArticle[] {
+  const passed: GNewsArticle[] = []
+
+  for (const article of articles) {
+    const text = `${article.title} ${article.description ?? ""}`.toLowerCase()
+
+    const negativeHit = NEGATIVE_KEYWORDS.find((kw) => text.includes(kw))
+    const positiveHit = POSITIVE_KEYWORDS.find((kw) => text.includes(kw))
+
+    if (negativeHit && !positiveHit) {
+      console.log(`[GNews] ❌ Rejected: "${article.title.slice(0, 70)}" (keywords: ${negativeHit})`)
+      continue
+    }
+
+    if (!positiveHit) {
+      console.log(`[GNews] ❌ Rejected: "${article.title.slice(0, 70)}" (no positive match)`)
+      continue
+    }
+
+    console.log(`[GNews] ✅ Accepted: "${article.title.slice(0, 70)}" (match: ${positiveHit.trim()})`)
+    passed.push(article)
+  }
+
+  return passed
+}
+
 function buildGNewsUrl(apiKey: string, geoTerms: string | null): string {
-  // Para Internacional, usa solo los términos base (más amplio)
-  // Para otras regiones, combina con términos geo
-  const query = geoTerms ? `${TOPIC_TERMS} ${geoTerms}` : TOPIC_TERMS
-  // Aumentar max a 50 para tener más opciones en each tier
+  const query = geoTerms ? `(${TOPIC_TERMS}) ${geoTerms}` : TOPIC_TERMS
   return (
     `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}` +
     `&lang=es&max=50&sortby=publishedAt&token=${apiKey}`
@@ -186,43 +247,46 @@ function mapGNewsArticle(a: GNewsArticle, idx: number): Topic {
 }
 
 async function fetchFromGNewsWaterfall(apiKey: string): Promise<Topic[]> {
-  const collected: GNewsArticle[] = []
+  const allRelevant: GNewsArticle[] = []
   const seenUrls = new Set<string>()
-  const NEED = 3
 
   try {
-    console.log(`[GNews] Starting waterfall search with terms: "${TOPIC_TERMS}"`)
-    
+    console.log("[GNews] Iniciando waterfall — ciudadanía digital / civic tech / gobierno abierto")
+
     for (const tier of GEO_TIERS) {
-      if (collected.length >= NEED) break
-
       try {
-        const articles = await fetchGNewsTier(apiKey, tier)
+        const raw = await fetchGNewsTier(apiKey, tier)
+        const filtered = filterRelevantArticles(raw)
 
-        for (const article of articles) {
-          if (collected.length >= NEED) break
+        for (const article of filtered) {
           if (!seenUrls.has(article.url)) {
             seenUrls.add(article.url)
-            collected.push(article)
-            console.log(`[GNews] Added article from "${tier.label}": "${article.title.slice(0, 50)}..."`)
+            allRelevant.push(article)
           }
         }
+
+        console.log(`[GNews] Tier "${tier.label}": fetched ${raw.length}, filtered → ${filtered.length} relevant`)
       } catch (tierErr) {
-        console.warn(`[GNews] Tier "${tier.label}" error, continuing:`, tierErr instanceof Error ? tierErr.message : String(tierErr))
+        console.warn(`[GNews] Tier "${tier.label}" error:`, tierErr instanceof Error ? tierErr.message : String(tierErr))
         continue
       }
     }
 
-    if (collected.length === 0) {
-      console.error("[GNews] ❌ Waterfall returned 0 articles across all tiers — API may be rate-limited or query too restrictive")
-      console.error(`[GNews] Query terms: ${TOPIC_TERMS}`)
+    if (allRelevant.length === 0) {
+      console.error("[GNews] ❌ Waterfall: 0 artículos relevantes en todos los tiers — usando fallback")
       return []
     }
 
-    console.log(`[GNews] ✅ Waterfall collected ${collected.length} article(s) successfully`)
-    return collected.map(mapGNewsArticle)
+    // Priorizar fuentes reconocidas de gobierno / govtech
+    const sorted = [
+      ...allRelevant.filter((a) => isPrioritySource(a.url)),
+      ...allRelevant.filter((a) => !isPrioritySource(a.url)),
+    ]
+
+    console.log(`[GNews] ✅ Waterfall completado: ${allRelevant.length} relevantes, tomando los primeros 3`)
+    return sorted.slice(0, 3).map(mapGNewsArticle)
   } catch (err) {
-    console.error("[GNews] Waterfall fatal error:", err instanceof Error ? err.message : String(err))
+    console.error("[GNews] Error fatal en waterfall:", err instanceof Error ? err.message : String(err))
     return []
   }
 }
