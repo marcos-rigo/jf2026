@@ -9,7 +9,6 @@ npm run dev              # Start development server (Next.js, localhost:3000)
 npm run build            # Production build (TypeScript errors ignored)
 npm run lint             # Run ESLint
 npm run start            # Start production server
-npm run update-topics    # Fetch live news via Claude API and patch current-topics-server.tsx
 npx tsc --noEmit         # Explicit type checking (build ignores errors)
 ```
 
@@ -21,7 +20,7 @@ Personal/political website for **José Farhat** (Secretario de Participación Ci
 
 ### Routing (App Router)
 
-Each route has a `page.tsx` (server component, exports `metadata`) and a `*-content.tsx` (client component with `"use client"` for animations and interactivity).
+Most routes follow a two-file pattern: `page.tsx` (server component, exports `metadata`) and a `*-content.tsx` (client component with `"use client"` for animations and interactivity). Exceptions: `/temas` and `/temas/[id]` are single-file fully client components with no server page wrapper.
 
 | Route | Purpose |
 |-------|---------|
@@ -30,8 +29,8 @@ Each route has a `page.tsx` (server component, exports `metadata`) and a `*-cont
 | `/blog` | Blog article listing (3 hardcoded posts) |
 | `/novedades` | News/updates listing (8 hardcoded) |
 | `/multimedia` | Videos and podcasts |
-| `/temas` | Topic listing (hardcoded, client-only) |
-| `/temas/[id]` | Dynamic topic detail (template) |
+| `/temas` | Topic listing — single client component with search/filter |
+| `/temas/[id]` | Topic detail — single client component with hardcoded example data |
 | `/caja-de-herramientas` | Toolbox/resources (6 cards) |
 | `/contacto` | Contact form |
 
@@ -91,7 +90,7 @@ Exception: `CurrentTopicsServer` fetches live news from GNews/NewsAPI with `FALL
 - **Firebase Firestore** — `QuickContactSection` saves form submissions to `contactos` collection. Lazy-imported to avoid bundle bloat. Uses `NEXT_PUBLIC_FIREBASE_*` env vars.
 - **EmailJS** — Same form sends email via `template_72zh3ni`. Lazy-imported. Uses `NEXT_PUBLIC_EMAILJS_*` env vars.
 - **GNews / NewsAPI** — `CurrentTopicsServer` fetches news with geographic waterfall (Tucumán → Argentina → LatAm → Global). ISR revalidation: 3 days. `NEWS_API_KEY` + `NEWS_API_PROVIDER` env vars.
-- **Anthropic Claude API** — `scripts/update-topics.ts` uses `claude-sonnet-4-6` with `web_search` to fetch and patch topics. `ANTHROPIC_API_KEY` env var.
+- **Anthropic Claude API** — Planned integration for auto-updating topics via `web_search`. `ANTHROPIC_API_KEY` env var reserved for this use.
 - **Vercel Analytics** — `<Analytics />` in root layout.
 - **Google Forms** — Newsletter subscription in footer.
 
@@ -108,7 +107,7 @@ Exception: `CurrentTopicsServer` fetches live news from GNews/NewsAPI with `FALL
 
 ### Important notes
 
-- **`"use client"` rule** — Any component with state, events, or Framer Motion animations must have `"use client"` at the top. Only `page.tsx` files and `CurrentTopicsServer` are server components.
+- **`"use client"` rule** — Any component with state, events, or Framer Motion animations must have `"use client"` at the top. Server components are: `app/page.tsx`, `app/layout.tsx`, most `*/page.tsx` route files, and `CurrentTopicsServer`. Exception: `/temas/page.tsx` and `/temas/[id]/page.tsx` are client components.
 - **TypeScript errors ignored at build** — Use `npx tsc --noEmit` explicitly.
 - **Remote images** — `next.config.mjs` only allows `josefarhat.com`. Add new domains to `remotePatterns` for external image sources. Always use `next/image` (`<Image>`).
 - **Known filename typos** — `app/page..tsx` (double dot) and `app/temas/[id]/]/page.tsx` (extra bracket) exist alongside correct files. Verify which is active before editing.

@@ -9,6 +9,7 @@
  */
 
 import { CurrentTopicsSection, type Topic } from "./current-topics-section"
+import { getWeekNumber } from "@/lib/weekly-content"
 
 // ── CONFIGURATION ──────────────────────────────────────────────────────────
 
@@ -380,6 +381,7 @@ async function loadTopics(): Promise<Topic[]> {
 // ── SERVER COMPONENT ───────────────────────────────────────────────────────
 
 export async function CurrentTopicsServer() {
-  const topics = await loadTopics()
-  return <CurrentTopicsSection topics={topics} />
+  await loadTopics() // mantiene el ISR activo aunque no rendericemos las cards
+  const week = getWeekNumber()
+  return <CurrentTopicsSection week={week} />
 }
