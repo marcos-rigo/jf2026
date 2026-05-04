@@ -19,8 +19,8 @@ export interface Topic {
 }
 
 export function CurrentTopicsSection({ week }: { week: string }) {
-  const basePath = `/weekly-content/${week}`
-  const bannerSrc = `${basePath}/infografiaSemanal.svg`
+  const bannerSrc = `/weekly-content/${week}/infografiaSemanal.svg`
+  const basePath = `/ciudadania-digital`
 
   return (
     <section className="relative py-24 bg-linear-to-br from-slate-50 via-white to-slate-100 overflow-hidden">
