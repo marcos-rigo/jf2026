@@ -20,7 +20,7 @@ Personal/political website for **José Farhat** (Secretario de Participación Ci
 
 ### Routing (App Router)
 
-Most routes follow a two-file pattern: `page.tsx` (server component, exports `metadata`) and a `*-content.tsx` (client component with `"use client"` for animations and interactivity). Exceptions: `/temas` and `/temas/[id]` are single-file fully client components with no server page wrapper.
+Most routes follow a two-file pattern: `page.tsx` (server component, exports `metadata`) and a `*-content.tsx` (client component with `"use client"` for animations and interactivity). Exceptions: `/temas` and `/temas/[id]` are single-file fully client components with no server page wrapper. `/blog` (`blog-content.tsx`) and `/caja-de-herramientas` (`toolbox-content.tsx`) do follow the two-file pattern despite not being listed that way historically.
 
 | Route | Purpose |
 |-------|---------|
@@ -32,11 +32,13 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 | `/temas` | Topic listing — single client component with search/filter |
 | `/temas/[id]` | Topic detail — single client component with hardcoded example data |
 | `/caja-de-herramientas` | Toolbox/resources (6 cards) |
+| `/ciudadania-digital` | Digital citizenship kit — interactive protocol on security, AI, disinformation |
 | `/contacto` | Contact form |
 
 ### Home page composition (`app/page.tsx`)
 
 ```tsx
+<WeeklyModalLoader />        // Weekly promo modal (once per ISO week, lazy via dynamic import)
 <Navbar />
 <Hero />                     // Full-screen video background
 <CurrentTopicsServer />      // Live news via GNews/NewsAPI (ISR 3 days)
@@ -57,9 +59,11 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 - `components/navbar.tsx` — Fixed header, desktop dropdowns, mobile hamburger with Framer Motion
 - `components/hero.tsx` — Video hero (`/vid/vid.mp4`) with gradient overlays
 - `components/footer.tsx` — Links, social icons, newsletter (Google Forms webhook)
+- `components/weekly-modal.tsx` + `weekly-modal-loader.tsx` — Weekly promo modal shown once per ISO week; content loaded from `public/weekly-content/YYYY-WNN/metadata.json` + a GIF; seen state tracked in `localStorage`
 - `components/sections/` — One component per homepage section
 - `components/ui/` — shadcn/ui primitives (Radix UI, generated — avoid editing directly)
 - `lib/utils.ts` — Only `cn()` (clsx + tailwind-merge)
+- `lib/weekly-content.ts` — ISO week helpers, `fetch`-based content loader, and localStorage seen-state helpers for the weekly modal
 - `hooks/use-mobile.ts` — Responsive breakpoint detection
 - `hooks/use-toast.ts` — Toast hook (Sonner)
 
@@ -84,6 +88,8 @@ All content is **hardcoded as typed arrays** at the top of section components �
 2. Map over it in JSX
 
 Exception: `CurrentTopicsServer` fetches live news from GNews/NewsAPI with `FALLBACK_TOPICS` as backup.
+
+**Weekly modal content** lives in `public/weekly-content/YYYY-WNN/` (e.g. `2026-W18/`). Each folder needs a `metadata.json` (matching the `WeeklyContent` interface in `lib/weekly-content.ts`) and a GIF referenced by `gifFileName`. The modal renders once per ISO week per browser via `localStorage`.
 
 ### Integrations
 

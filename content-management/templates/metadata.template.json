@@ -1,0 +1,16 @@
+{
+  "title": "Título del modal (máx. 50 caracteres recomendado)",
+  "description": "Descripción breve que aparece bajo el título. Máximo 150 caracteres recomendado.",
+  "ctaText": "Texto del botón",
+  "ctaLink": "/ruta-destino",
+  "gifFileName": "nombre-archivo.gif",
+
+  "theme": "blue",
+
+  "createdAt": "YYYY-MM-DDTHH:mm:ssZ",
+  "author": "Nombre del autor",
+
+  "expiresAt": null,
+  "priority": "normal",
+  "targetAudience": []
+}

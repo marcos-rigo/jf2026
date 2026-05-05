@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "create-week": "node content-management/create-week.mjs",
+    "validate-week": "node content-management/validate-content.mjs",
+    "validate-all": "node content-management/validate-content.mjs --all",
+    "preview-week": "node content-management/preview-server.mjs",
+    "archive-old": "node content-management/archive-old-weeks.mjs"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

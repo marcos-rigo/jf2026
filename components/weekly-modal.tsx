@@ -13,6 +13,12 @@ import {
   markWeeklyModalAsSeen,
 } from "@/lib/weekly-content"
 
+const CTA_THEME_CLASSES = {
+  blue: "bg-brand-blue hover:bg-brand-blue/90 focus:ring-brand-blue",
+  pink: "bg-brand-pink hover:bg-brand-pink/90 focus:ring-brand-pink",
+  navy: "bg-brand-navy hover:bg-brand-navy/90 focus:ring-brand-navy",
+} as const
+
 export default function WeeklyModal() {
   const [isOpen, setIsOpen] = useState(false)
   const [content, setContent] = useState<WeeklyContent | null>(null)
@@ -33,11 +39,9 @@ export default function WeeklyModal() {
     })
   }, [])
 
-  // Bloquear scroll del body mientras el modal está abierto
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden"
-      // Mover foco al botón X al abrir
       setTimeout(() => closeButtonRef.current?.focus(), 50)
     } else {
       document.body.style.overflow = "unset"
@@ -47,7 +51,6 @@ export default function WeeklyModal() {
     }
   }, [isOpen])
 
-  // Cerrar con ESC y trap de foco
   useEffect(() => {
     if (!isOpen) return
 
@@ -57,7 +60,6 @@ export default function WeeklyModal() {
         return
       }
 
-      // Focus trap dentro del modal
       if (e.key === "Tab" && modalRef.current) {
         const focusable = modalRef.current.querySelectorAll<HTMLElement>(
           'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -95,6 +97,9 @@ export default function WeeklyModal() {
   if (!content) return null
 
   const gifSrc = `/weekly-content/${week}/${content.gifFileName}`
+  const ctaHref = content.ctaLink ?? content.linkTo ?? "/"
+  const ctaText = content.ctaText ?? "Ver más"
+  const ctaClasses = CTA_THEME_CLASSES[content.theme ?? "blue"]
 
   return (
     <AnimatePresence mode="wait">
@@ -120,7 +125,6 @@ export default function WeeklyModal() {
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
           >
-            {/* Botón cerrar */}
             <button
               ref={closeButtonRef}
               onClick={handleClose}
@@ -130,7 +134,6 @@ export default function WeeklyModal() {
               <X className="w-5 h-5" />
             </button>
 
-            {/* Header */}
             <div className="pr-8 mb-6">
               <h2
                 id="weekly-modal-title"
@@ -146,7 +149,6 @@ export default function WeeklyModal() {
               </p>
             </div>
 
-            {/* GIF */}
             <div className="aspect-video rounded-lg overflow-hidden mb-6 bg-gray-100">
               <Image
                 src={gifSrc}
@@ -159,14 +161,13 @@ export default function WeeklyModal() {
               />
             </div>
 
-            {/* CTA */}
             <div className="flex justify-center">
               <Link
-                href={content.linkTo}
+                href={ctaHref}
                 onClick={handleClose}
-                className="inline-block w-full md:w-auto text-center bg-brand-blue hover:bg-brand-blue/90 text-white font-semibold px-8 py-3 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2"
+                className={`inline-block w-full md:w-auto text-center text-white font-semibold px-8 py-3 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${ctaClasses}`}
               >
-                Ver más
+                {ctaText}
               </Link>
             </div>
           </motion.div>

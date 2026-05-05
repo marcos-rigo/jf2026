@@ -138,3 +138,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Ambient blob animation — used by /alfabetizacion-mediatica and other AMI pages */
+@keyframes ami-float {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(20px, -20px) scale(1.05); }
+}
+
+.ami-blob {
+  position: absolute;
+  filter: blur(80px);
+  opacity: 0.6;
+  animation: ami-float 10s infinite ease-in-out alternate;
+}
