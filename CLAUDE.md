@@ -20,7 +20,10 @@ Personal/political website for **José Farhat** (Secretario de Participación Ci
 
 ### Routing (App Router)
 
-Most routes follow a two-file pattern: `page.tsx` (server component, exports `metadata`) and a `*-content.tsx` (client component with `"use client"` for animations and interactivity). Exceptions: `/temas` and `/temas/[id]` are single-file fully client components with no server page wrapper. `/blog` (`blog-content.tsx`) and `/caja-de-herramientas` (`toolbox-content.tsx`) do follow the two-file pattern despite not being listed that way historically.
+Most routes follow a two-file pattern: `page.tsx` (server component, exports `metadata`) and a `*-content.tsx` (client component with `"use client"` for animations and interactivity). Exceptions:
+- `/temas` and `/temas/[id]` are single-file fully client components with no server page wrapper; `/temas/page.tsx` includes Navbar/Footer directly.
+- The digital citizenship sub-pages (`/alfabetizacion-mediatica`, `/huella-digital`, `/violencia-digital`, `/estafas-digitales`) use the two-file pattern but their `page.tsx` omits Navbar/Footer — the content component handles layout.
+- `/blog` (`blog-content.tsx`) and `/caja-de-herramientas` (`toolbox-content.tsx`) do follow the two-file pattern despite not being listed that way historically.
 
 | Route | Purpose |
 |-------|---------|
@@ -29,10 +32,14 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 | `/blog` | Blog article listing (3 hardcoded posts) |
 | `/novedades` | News/updates listing (8 hardcoded) |
 | `/multimedia` | Videos and podcasts |
-| `/temas` | Topic listing — single client component with search/filter |
+| `/temas` | Topic listing — single client component with search/filter (includes Navbar/Footer directly) |
 | `/temas/[id]` | Topic detail — single client component with hardcoded example data |
 | `/caja-de-herramientas` | Toolbox/resources (6 cards) |
-| `/ciudadania-digital` | Digital citizenship kit — interactive protocol on security, AI, disinformation |
+| `/ciudadania-digital` | Digital citizenship hub — links to sub-pages below |
+| `/alfabetizacion-mediatica` | Media literacy — fact-checking tools and disinformation training |
+| `/huella-digital` | Digital footprint — privacy and identity management |
+| `/violencia-digital` | Digital violence — cyberbullying and online harassment guide |
+| `/estafas-digitales` | Digital scams — phishing/smishing/vishing protection guide |
 | `/contacto` | Contact form |
 
 ### Home page composition (`app/page.tsx`)
@@ -89,7 +96,7 @@ All content is **hardcoded as typed arrays** at the top of section components �
 
 Exception: `CurrentTopicsServer` fetches live news from GNews/NewsAPI with `FALLBACK_TOPICS` as backup.
 
-**Weekly modal content** lives in `public/weekly-content/YYYY-WNN/` (e.g. `2026-W18/`). Each folder needs a `metadata.json` (matching the `WeeklyContent` interface in `lib/weekly-content.ts`) and a GIF referenced by `gifFileName`. The modal renders once per ISO week per browser via `localStorage`.
+**Weekly modal content** lives in `public/weekly-content/YYYY-WNN/` (e.g. `2026-W19/`). Each folder needs a `metadata.json` (matching the `WeeklyContent` interface in `lib/weekly-content.ts`) and a GIF referenced by `gifFileName`. The modal renders once per ISO week per browser via `localStorage`. **Important:** after creating a new week folder, add the week key (e.g. `"2026-W23"`) to `public/weekly-content/manifest.json` so the loader can discover it.
 
 ### Integrations
 

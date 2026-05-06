@@ -3,7 +3,11 @@
     "allow": [
       "Bash(xargs grep *)",
       "Bash(node *)",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\public\\\\weekly-content\" -Recurse -Include \"*.png\",\"*.svg\")",
+      "Bash(Select-Object FullName, LastWriteTime)",
+      "Bash(Sort-Object LastWriteTime)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\public\\\\weekly-content\" -Recurse | Where-Object { $_.Extension -in \".png\",\".svg\",\".jpg\" } | Select-Object Name, DirectoryName | Format-Table -AutoSize)"
     ]
   }
 }

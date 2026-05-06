@@ -28,6 +28,7 @@ const navLinks = [
   },
   { label: "Caja de Herramientas", href: "/caja-de-herramientas" },
   { label: "Novedades", href: "/novedades" },
+  { label: "Temáticas", href: "/tematicas" },
   { label: "Contacto", href: "/contacto" },
 ]
 
