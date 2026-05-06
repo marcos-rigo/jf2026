@@ -68,6 +68,17 @@ const allTopics = [
     category: "Participación Digital",
     gradient: "from-blue-600 to-cyan-600",
     featured: false
+  },
+  {
+    id: "estafas-digitales",
+    title: "Estafas Digitales: Guía completa de protección",
+    description: "Aprende a detectar y combatir phishing, smishing y vishing. Descubre qué hacer en los primeros 5 minutos si eres víctima de una estafa digital.",
+    date: "6 de Mayo, 2026",
+    location: "Plataforma Digital",
+    category: "Ciberseguridad Ciudadana",
+    gradient: "from-red-600 to-blue-600",
+    featured: true,
+    customLink: "/estafas-digitales"
   }
 ]
 
@@ -78,7 +89,8 @@ const categories = [
   "Tecnología Cívica",
   "Juventud y Participación",
   "Presupuesto Participativo",
-  "Participación Digital"
+  "Participación Digital",
+  "Ciberseguridad Ciudadana"
 ]
 
 export default function TopicsIndexPage() {
@@ -293,7 +305,7 @@ function TopicCard({ topic, idx, hoveredCard, setHoveredCard }: any) {
       onMouseEnter={() => setHoveredCard(idx)}
       onMouseLeave={() => setHoveredCard(null)}
     >
-      <Link href={`/temas/${topic.id}`} className="group block h-full">
+      <Link href={(topic as any).customLink || `/temas/${topic.id}`} className="group block h-full">
         <div className="relative h-full bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100">
           
           {/* Header con gradiente */}
