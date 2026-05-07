@@ -2,10 +2,15 @@
 
 import { useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
+import Image from "next/image"
 import { Doughnut } from "react-chartjs-2"
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js"
+import { FileText, ZoomIn, Download } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
+
+const INFOGRAFIA_PATH = "/weekly-content/2026-W20/infogAlfMeInf.png"
+const PDF_PATH = "/weekly-content/2026-W20/alfMedInf.pdf"
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
@@ -161,6 +166,7 @@ export default function AlfabetizacionMediaticaContent() {
   const [activeTab, setActiveTab] = useState<TabId>("paso1")
   const [openFaq, setOpenFaq] = useState<FaqId>(null)
   const [checked, setChecked] = useState<Set<string>>(new Set())
+  const [imgExpanded, setImgExpanded] = useState(false)
 
   function toggleCheck(id: string) {
     setChecked((prev) => {
@@ -268,6 +274,53 @@ export default function AlfabetizacionMediaticaContent() {
               </div>
             </motion.div>
           </section>
+
+          {/* ── INFOGRAFÍA GENERAL ────────────────────────────────────────── */}
+          <motion.section
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="bg-white/70 backdrop-blur-xl border border-white/80 shadow-lg rounded-[2.5rem] overflow-hidden">
+              <div className="px-6 md:px-10 py-5 border-b border-slate-100 flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs font-bold text-indigo-500 tracking-widest uppercase mb-0.5">
+                    Vista General
+                  </p>
+                  <h2 className="text-xl md:text-2xl font-extrabold text-slate-900 font-display">
+                    Infografía de Alfabetización Mediática
+                  </h2>
+                </div>
+                <button
+                  onClick={() => setImgExpanded((v) => !v)}
+                  className="shrink-0 flex items-center gap-2 text-xs text-slate-500 hover:text-indigo-600 transition-colors border border-slate-200 hover:border-indigo-300 rounded-xl px-3 py-2 bg-white shadow-sm"
+                >
+                  <ZoomIn className="w-4 h-4" />
+                  <span className="hidden sm:inline">{imgExpanded ? "Reducir" : "Ampliar"}</span>
+                </button>
+              </div>
+
+              <div
+                className={`relative w-full transition-all duration-500 cursor-zoom-in overflow-hidden ${
+                  imgExpanded ? "max-h-[90vh]" : "max-h-[420px] md:max-h-[560px]"
+                }`}
+                onClick={() => setImgExpanded((v) => !v)}
+              >
+                <Image
+                  src={INFOGRAFIA_PATH}
+                  alt="Infografía general de Alfabetización Mediática e Informacional"
+                  width={1200}
+                  height={800}
+                  className="w-full h-auto object-contain"
+                  priority
+                />
+                {!imgExpanded && (
+                  <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white/90 to-transparent pointer-events-none" />
+                )}
+              </div>
+            </div>
+          </motion.section>
 
           {/* ── TRAINING TABS ─────────────────────────────────────────────── */}
           <section id="entrenamiento" className="scroll-mt-24">
@@ -615,6 +668,64 @@ export default function AlfabetizacionMediaticaContent() {
               </div>
             </div>
           </section>
+
+          {/* ── PRESENTACIÓN PDF ──────────────────────────────────────────── */}
+          <motion.section
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="bg-white/70 backdrop-blur-xl border border-white/80 shadow-lg rounded-[2.5rem] overflow-hidden">
+              <div className="px-6 md:px-10 py-5 border-b border-slate-100 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-md shrink-0">
+                    <FileText className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-indigo-500 tracking-widest uppercase mb-0.5">
+                      Presentación completa
+                    </p>
+                    <h2 className="text-xl md:text-2xl font-extrabold text-slate-900 font-display">
+                      Alfabetización Mediática — Documento
+                    </h2>
+                  </div>
+                </div>
+                <a
+                  href={PDF_PATH}
+                  download
+                  className="shrink-0 flex items-center gap-2 text-xs text-slate-500 hover:text-indigo-600 transition-colors border border-slate-200 hover:border-indigo-300 rounded-xl px-3 py-2 bg-white shadow-sm"
+                >
+                  <Download className="w-4 h-4" />
+                  <span className="hidden sm:inline">Descargar</span>
+                </a>
+              </div>
+
+              <div className="hidden sm:block w-full h-[600px] md:h-[780px] lg:h-[900px]">
+                <iframe
+                  src={`${PDF_PATH}#toolbar=1&navpanes=0&scrollbar=1&view=FitH`}
+                  className="w-full h-full border-0"
+                  title="Presentación Alfabetización Mediática"
+                />
+              </div>
+
+              <div className="flex sm:hidden flex-col items-center gap-4 p-8 text-center">
+                <FileText className="w-12 h-12 text-indigo-400 opacity-60" />
+                <p className="text-slate-500 text-sm">
+                  El visor de PDF no está disponible en pantallas pequeñas.
+                </p>
+                <a
+                  href={PDF_PATH}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-700 font-medium px-6 py-3 rounded-full transition-all text-sm"
+                >
+                  <FileText className="w-4 h-4" />
+                  Ver presentación
+                </a>
+              </div>
+            </div>
+          </motion.section>
 
           {/* ── VULNERABILITIES + FAQ ─────────────────────────────────────── */}
           <section className="grid md:grid-cols-2 gap-12 pb-16">

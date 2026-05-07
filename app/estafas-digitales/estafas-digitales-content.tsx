@@ -1,6 +1,8 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
+import Image from "next/image"
 import {
   Mail,
   MessageSquare,
@@ -15,9 +17,17 @@ import {
   MapPin,
   PhoneIcon,
   Quote,
+  FileText,
+  Download,
+  ZoomIn,
 } from "lucide-react"
 
+const INFOGRAFIA_PATH = "/weekly-content/2026-W23/infogEstaDig.png"
+const PDF_PATH = "/weekly-content/2026-W23/presentacionEstafDig.pdf"
+
 export function EstafasDigitalesContent() {
+  const [imgExpanded, setImgExpanded] = useState(false)
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -250,6 +260,58 @@ export function EstafasDigitalesContent() {
       </section>
 
       {/* ════════════════════════════════════════════════════════════════════════
+          INFOGRAFÍA GENERAL
+          ════════════════════════════════════════════════════════════════════════ */}
+      <section className="py-12 px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="max-w-7xl mx-auto"
+        >
+          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between gap-4">
+              <div>
+                <p className="text-xs font-bold text-brand-blue tracking-widest uppercase mb-0.5">
+                  Vista General
+                </p>
+                <h2 className="text-lg md:text-xl font-extrabold text-brand-navy dark:text-white font-display">
+                  Infografía de Estafas Digitales
+                </h2>
+              </div>
+              <button
+                onClick={() => setImgExpanded((v) => !v)}
+                className="shrink-0 flex items-center gap-2 text-xs text-slate-500 hover:text-brand-blue dark:hover:text-brand-blue transition-colors border border-slate-200 dark:border-slate-600 hover:border-brand-blue rounded-xl px-3 py-2"
+              >
+                <ZoomIn className="w-4 h-4" />
+                <span className="hidden sm:inline">{imgExpanded ? "Reducir" : "Ampliar"}</span>
+              </button>
+            </div>
+
+            <div
+              className={`relative w-full transition-all duration-500 cursor-zoom-in overflow-hidden ${
+                imgExpanded ? "max-h-[90vh]" : "max-h-[420px] md:max-h-[560px]"
+              }`}
+              onClick={() => setImgExpanded((v) => !v)}
+            >
+              <Image
+                src={INFOGRAFIA_PATH}
+                alt="Infografía de Estafas Digitales"
+                width={1200}
+                height={800}
+                className="w-full h-auto object-contain"
+                priority
+              />
+              {!imgExpanded && (
+                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white dark:from-slate-800 to-transparent pointer-events-none" />
+              )}
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════════════════════
           LAS 3 AMENAZAS
           ════════════════════════════════════════════════════════════════════════ */}
       <section
@@ -392,6 +454,69 @@ export function EstafasDigitalesContent() {
               </div>
             </div>
           </motion.div>
+        </motion.div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════════════════════
+          PRESENTACIÓN PDF
+          ════════════════════════════════════════════════════════════════════════ */}
+      <section className="py-12 px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="max-w-7xl mx-auto"
+        >
+          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-blue to-brand-pink flex items-center justify-center shadow-md shrink-0">
+                  <FileText className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-brand-blue tracking-widest uppercase mb-0.5">
+                    Presentación completa
+                  </p>
+                  <h2 className="text-lg md:text-xl font-extrabold text-brand-navy dark:text-white font-display">
+                    Estafas Digitales — Documento
+                  </h2>
+                </div>
+              </div>
+              <a
+                href={PDF_PATH}
+                download
+                className="shrink-0 flex items-center gap-2 text-xs text-slate-500 hover:text-brand-blue dark:hover:text-brand-blue transition-colors border border-slate-200 dark:border-slate-600 hover:border-brand-blue rounded-xl px-3 py-2"
+              >
+                <Download className="w-4 h-4" />
+                <span className="hidden sm:inline">Descargar</span>
+              </a>
+            </div>
+
+            <div className="hidden sm:block w-full h-[600px] md:h-[780px] lg:h-[900px]">
+              <iframe
+                src={`${PDF_PATH}#toolbar=1&navpanes=0&scrollbar=1&view=FitH`}
+                className="w-full h-full border-0"
+                title="Presentación Estafas Digitales"
+              />
+            </div>
+
+            <div className="flex sm:hidden flex-col items-center gap-4 p-8 text-center">
+              <FileText className="w-12 h-12 text-brand-blue opacity-60" />
+              <p className="text-slate-500 dark:text-slate-400 text-sm">
+                El visor de PDF no está disponible en pantallas pequeñas.
+              </p>
+              <a
+                href={PDF_PATH}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-brand-light-blue dark:bg-slate-700 hover:bg-blue-100 dark:hover:bg-slate-600 border border-brand-blue/30 text-brand-blue font-medium px-6 py-3 rounded-full transition-all text-sm"
+              >
+                <FileText className="w-4 h-4" />
+                Ver presentación
+              </a>
+            </div>
+          </div>
         </motion.div>
       </section>
 

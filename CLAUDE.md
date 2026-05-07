@@ -16,7 +16,7 @@ npx tsc --noEmit         # Explicit type checking (build ignores errors)
 
 ## Architecture
 
-Personal/political website for **José Farhat** (Secretario de Participación Ciudadana, Tucumán, Argentina). Built with **Next.js 16 App Router**, **React 19**, **TypeScript**, **Tailwind CSS v4**, and **Framer Motion** for animations. Full architecture in `ARCHITECTURE.md`.
+Personal/political website for **José Farhat** (Secretario de Participación Ciudadana, Tucumán, Argentina). Built with **Next.js 16 App Router**, **React 19**, **TypeScript**, **Tailwind CSS v4**, and **Framer Motion** for animations.
 
 ### Routing (App Router)
 
@@ -35,6 +35,7 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 | `/temas` | Topic listing — single client component with search/filter (includes Navbar/Footer directly) |
 | `/temas/[id]` | Topic detail — single client component with hardcoded example data |
 | `/caja-de-herramientas` | Toolbox/resources (6 cards) |
+| `/tematicas` | Digital citizenship topic listing — cards linking to sub-pages (two-file pattern, includes Navbar/Footer in `page.tsx`) |
 | `/ciudadania-digital` | Digital citizenship hub — links to sub-pages below |
 | `/alfabetizacion-mediatica` | Media literacy — fact-checking tools and disinformation training |
 | `/huella-digital` | Digital footprint — privacy and identity management |

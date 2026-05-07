@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
+import Image from "next/image"
 import {
   ShieldAlert,
   Target,
@@ -28,9 +29,13 @@ import {
   Copy,
   Check,
   PartyPopper,
+  ZoomIn,
 } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
+
+const INFOGRAFIA_PATH = "/weekly-content/2026-W22/infViolDig.png"
+const PDF_PATH = "/weekly-content/2026-W22/PresViolDig.pdf"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type FaqId = "faq1" | "faq2" | null
@@ -94,6 +99,7 @@ export default function ViolenciaDigitalContent() {
   )
   const [copied, setCopied] = useState(false)
   const [openFaq, setOpenFaq] = useState<FaqId>(null)
+  const [imgExpanded, setImgExpanded] = useState(false)
 
   const allChecked = CHECKLIST_ITEMS.every((i) => checked[i.id])
 
@@ -180,6 +186,52 @@ export default function ViolenciaDigitalContent() {
         </section>
 
         <div className="max-w-4xl mx-auto px-4 pb-20 space-y-8">
+
+          {/* ── INFOGRAFÍA GENERAL ────────────────────────────────────────── */}
+          <motion.section
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+          >
+            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+              <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs font-bold text-violet-500 tracking-widest uppercase mb-0.5">
+                    Vista General
+                  </p>
+                  <h2 className="text-lg md:text-xl font-extrabold text-slate-900 font-display">
+                    Infografía de Violencia Digital
+                  </h2>
+                </div>
+                <button
+                  onClick={() => setImgExpanded((v) => !v)}
+                  className="shrink-0 flex items-center gap-2 text-xs text-slate-500 hover:text-violet-600 transition-colors border border-slate-200 hover:border-violet-300 rounded-xl px-3 py-2"
+                >
+                  <ZoomIn className="w-4 h-4" />
+                  <span className="hidden sm:inline">{imgExpanded ? "Reducir" : "Ampliar"}</span>
+                </button>
+              </div>
+
+              <div
+                className={`relative w-full transition-all duration-500 cursor-zoom-in overflow-hidden ${
+                  imgExpanded ? "max-h-[90vh]" : "max-h-[420px] md:max-h-[560px]"
+                }`}
+                onClick={() => setImgExpanded((v) => !v)}
+              >
+                <Image
+                  src={INFOGRAFIA_PATH}
+                  alt="Infografía de Violencia Digital"
+                  width={1200}
+                  height={800}
+                  className="w-full h-auto object-contain"
+                  priority
+                />
+                {!imgExpanded && (
+                  <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+                )}
+              </div>
+            </div>
+          </motion.section>
 
           {/* ── STEP 1 ───────────────────────────────────────────────────── */}
           <motion.article
@@ -466,6 +518,59 @@ export default function ViolenciaDigitalContent() {
                   </>
                 )}
               </button>
+            </div>
+          </section>
+
+          {/* ── PRESENTACIÓN PDF ──────────────────────────────────────────── */}
+          <section>
+            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+              <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center shadow-md shrink-0">
+                    <FileText className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-violet-500 tracking-widest uppercase mb-0.5">
+                      Presentación completa
+                    </p>
+                    <h2 className="text-lg md:text-xl font-extrabold text-slate-900 font-display">
+                      Violencia Digital — Documento
+                    </h2>
+                  </div>
+                </div>
+                <a
+                  href={PDF_PATH}
+                  download
+                  className="shrink-0 flex items-center gap-2 text-xs text-slate-500 hover:text-violet-600 transition-colors border border-slate-200 hover:border-violet-300 rounded-xl px-3 py-2"
+                >
+                  <Download className="w-4 h-4" />
+                  <span className="hidden sm:inline">Descargar</span>
+                </a>
+              </div>
+
+              <div className="hidden sm:block w-full h-[600px] md:h-[780px] lg:h-[900px]">
+                <iframe
+                  src={`${PDF_PATH}#toolbar=1&navpanes=0&scrollbar=1&view=FitH`}
+                  className="w-full h-full border-0"
+                  title="Presentación Violencia Digital"
+                />
+              </div>
+
+              <div className="flex sm:hidden flex-col items-center gap-4 p-8 text-center">
+                <FileText className="w-12 h-12 text-violet-400 opacity-60" />
+                <p className="text-slate-500 text-sm">
+                  El visor de PDF no está disponible en pantallas pequeñas.
+                </p>
+                <a
+                  href={PDF_PATH}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-violet-50 hover:bg-violet-100 border border-violet-200 text-violet-700 font-medium px-6 py-3 rounded-full transition-all text-sm"
+                >
+                  <FileText className="w-4 h-4" />
+                  Ver presentación
+                </a>
+              </div>
             </div>
           </section>
 

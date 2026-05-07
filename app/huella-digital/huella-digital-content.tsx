@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { AnimatePresence, motion } from "framer-motion"
+import Image from "next/image"
 import {
   Fingerprint,
   Target,
@@ -13,9 +14,15 @@ import {
   Check,
   ChevronDown,
   Copy,
+  FileText,
+  ZoomIn,
+  Download,
 } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
+
+const INFOGRAFIA_PATH = "/weekly-content/2026-W21/infHueDig.png"
+const PDF_PATH = "/weekly-content/2026-W21/huellaDigital.pdf"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type FaqId = "faq1" | "faq2" | "faq3" | null
@@ -136,6 +143,7 @@ export default function HuellaDigitalContent() {
   })
   const [copied, setCopied] = useState(false)
   const [openFaq, setOpenFaq] = useState<FaqId>(null)
+  const [imgExpanded, setImgExpanded] = useState(false)
 
   // Persist checkboxes
   useEffect(() => {
@@ -210,6 +218,53 @@ export default function HuellaDigitalContent() {
               </div>
             </div>
           </motion.header>
+
+          {/* ── INFOGRAFÍA GENERAL ────────────────────────────────────────── */}
+          <motion.section
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="mb-16"
+          >
+            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+              <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs font-bold text-blue-500 tracking-widest uppercase mb-0.5">
+                    Vista General
+                  </p>
+                  <h2 className="text-lg md:text-xl font-extrabold text-slate-900 font-display">
+                    Infografía de Huella Digital
+                  </h2>
+                </div>
+                <button
+                  onClick={() => setImgExpanded((v) => !v)}
+                  className="shrink-0 flex items-center gap-2 text-xs text-slate-500 hover:text-blue-600 transition-colors border border-slate-200 hover:border-blue-300 rounded-xl px-3 py-2"
+                >
+                  <ZoomIn className="w-4 h-4" />
+                  <span className="hidden sm:inline">{imgExpanded ? "Reducir" : "Ampliar"}</span>
+                </button>
+              </div>
+
+              <div
+                className={`relative w-full transition-all duration-500 cursor-zoom-in overflow-hidden ${
+                  imgExpanded ? "max-h-[90vh]" : "max-h-[420px] md:max-h-[560px]"
+                }`}
+                onClick={() => setImgExpanded((v) => !v)}
+              >
+                <Image
+                  src={INFOGRAFIA_PATH}
+                  alt="Infografía de Huella Digital"
+                  width={1200}
+                  height={800}
+                  className="w-full h-auto object-contain"
+                  priority
+                />
+                {!imgExpanded && (
+                  <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+                )}
+              </div>
+            </div>
+          </motion.section>
 
           {/* ── STEPS ────────────────────────────────────────────────────── */}
           {STEPS.map((step, i) => (
@@ -387,6 +442,59 @@ export default function HuellaDigitalContent() {
               </div>
             </div>
           </div>
+
+          {/* ── PRESENTACIÓN PDF ──────────────────────────────────────────── */}
+          <section className="mb-16">
+            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+              <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-md shrink-0">
+                    <FileText className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-blue-500 tracking-widest uppercase mb-0.5">
+                      Presentación completa
+                    </p>
+                    <h2 className="text-lg md:text-xl font-extrabold text-slate-900 font-display">
+                      Huella Digital — Documento
+                    </h2>
+                  </div>
+                </div>
+                <a
+                  href={PDF_PATH}
+                  download
+                  className="shrink-0 flex items-center gap-2 text-xs text-slate-500 hover:text-blue-600 transition-colors border border-slate-200 hover:border-blue-300 rounded-xl px-3 py-2"
+                >
+                  <Download className="w-4 h-4" />
+                  <span className="hidden sm:inline">Descargar</span>
+                </a>
+              </div>
+
+              <div className="hidden sm:block w-full h-[600px] md:h-[780px] lg:h-[900px]">
+                <iframe
+                  src={`${PDF_PATH}#toolbar=1&navpanes=0&scrollbar=1&view=FitH`}
+                  className="w-full h-full border-0"
+                  title="Presentación Huella Digital"
+                />
+              </div>
+
+              <div className="flex sm:hidden flex-col items-center gap-4 p-8 text-center">
+                <FileText className="w-12 h-12 text-blue-400 opacity-60" />
+                <p className="text-slate-500 text-sm">
+                  El visor de PDF no está disponible en pantallas pequeñas.
+                </p>
+                <a
+                  href={PDF_PATH}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-700 font-medium px-6 py-3 rounded-full transition-all text-sm"
+                >
+                  <FileText className="w-4 h-4" />
+                  Ver presentación
+                </a>
+              </div>
+            </div>
+          </section>
 
           {/* ── FAQ ──────────────────────────────────────────────────────── */}
           <section className="pb-8">
