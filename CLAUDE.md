@@ -27,7 +27,7 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 
 | Route | Purpose |
 |-------|---------|
-| `/` | Home landing: 10+ section components |
+| `/` | Home landing: 9+ section components |
 | `/conoceme` | About page — bio, stats, philosophy |
 | `/blog` | Blog article listing (3 hardcoded posts) |
 | `/novedades` | News/updates listing (8 hardcoded) |
@@ -49,7 +49,6 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 <WeeklyModalLoader />        // Weekly promo modal (once per ISO week, lazy via dynamic import)
 <Navbar />
 <Hero />                     // Full-screen video background
-<CurrentTopicsServer />      // Live news via GNews/NewsAPI (ISR 3 days)
 <PillarsSection />           // 6 thematic pillars
 <ToolboxSection />
 <PodcastSection />
@@ -95,7 +94,7 @@ All content is **hardcoded as typed arrays** at the top of section components �
 1. Define a typed array at the top of the component
 2. Map over it in JSX
 
-Exception: `CurrentTopicsServer` fetches live news from GNews/NewsAPI with `FALLBACK_TOPICS` as backup.
+
 
 **Weekly modal content** lives in `public/weekly-content/YYYY-WNN/` (e.g. `2026-W19/`). Each folder needs a `metadata.json` (matching the `WeeklyContent` interface in `lib/weekly-content.ts`) and a GIF referenced by `gifFileName`. The modal renders once per ISO week per browser via `localStorage`. **Important:** after creating a new week folder, add the week key (e.g. `"2026-W23"`) to `public/weekly-content/manifest.json` so the loader can discover it.
 
@@ -103,7 +102,7 @@ Exception: `CurrentTopicsServer` fetches live news from GNews/NewsAPI with `FALL
 
 - **Firebase Firestore** — `QuickContactSection` saves form submissions to `contactos` collection. Lazy-imported to avoid bundle bloat. Uses `NEXT_PUBLIC_FIREBASE_*` env vars.
 - **EmailJS** — Same form sends email via `template_72zh3ni`. Lazy-imported. Uses `NEXT_PUBLIC_EMAILJS_*` env vars.
-- **GNews / NewsAPI** — `CurrentTopicsServer` fetches news with geographic waterfall (Tucumán → Argentina → LatAm → Global). ISR revalidation: 3 days. `NEWS_API_KEY` + `NEWS_API_PROVIDER` env vars.
+
 - **Anthropic Claude API** — Planned integration for auto-updating topics via `web_search`. `ANTHROPIC_API_KEY` env var reserved for this use.
 - **Vercel Analytics** — `<Analytics />` in root layout.
 - **Google Forms** — Newsletter subscription in footer.
@@ -121,7 +120,7 @@ Exception: `CurrentTopicsServer` fetches live news from GNews/NewsAPI with `FALL
 
 ### Important notes
 
-- **`"use client"` rule** — Any component with state, events, or Framer Motion animations must have `"use client"` at the top. Server components are: `app/page.tsx`, `app/layout.tsx`, most `*/page.tsx` route files, and `CurrentTopicsServer`. Exception: `/temas/page.tsx` and `/temas/[id]/page.tsx` are client components.
+- **`"use client"` rule** — Any component with state, events, or Framer Motion animations must have `"use client"` at the top. Server components are: `app/page.tsx`, `app/layout.tsx`, and most `*/page.tsx` route files. Exception: `/temas/page.tsx` and `/temas/[id]/page.tsx` are client components.
 - **TypeScript errors ignored at build** — Use `npx tsc --noEmit` explicitly.
 - **Remote images** — `next.config.mjs` only allows `josefarhat.com`. Add new domains to `remotePatterns` for external image sources. Always use `next/image` (`<Image>`).
 - **Known filename typos** — `app/page..tsx` (double dot) and `app/temas/[id]/]/page.tsx` (extra bracket) exist alongside correct files. Verify which is active before editing.

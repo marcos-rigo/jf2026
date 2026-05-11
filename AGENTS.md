@@ -39,10 +39,9 @@ npm run archive-old          # move past weeks to archive/
 |----------|---------|
 | `NEXT_PUBLIC_FIREBASE_*` | Firestore (contact form) |
 | `NEXT_PUBLIC_EMAILJS_*` | EmailJS (template `template_72zh3ni`) |
-| `NEWS_API_KEY` + `NEWS_API_PROVIDER` | GNews/NewsAPI for `CurrentTopicsServer` |
 | `ANTHROPIC_API_KEY` | Reserved for planned Claude integration |
 
-`.env.example` contains a live `NEWS_API_KEY` — rotate before public deploy.
+
 
 ## Data pattern
 
