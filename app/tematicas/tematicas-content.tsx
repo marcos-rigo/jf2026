@@ -72,6 +72,7 @@ export function TematicasContent() {
           src="/img/tematicas/portada.png"
           alt="Portada Temáticas"
           fill
+          sizes="100vw"
           className="object-cover"
           priority
         />
@@ -124,6 +125,8 @@ export function TematicasContent() {
                         src={tema.image}
                         alt={tema.imageAlt}
                         fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        loading="eager"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />

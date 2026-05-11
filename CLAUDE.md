@@ -7,12 +7,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 npm run dev              # Start development server (Next.js, localhost:3000)
 npm run build            # Production build (TypeScript errors ignored)
-npm run lint             # Run ESLint
+npm run lint             # Run ESLint (Next.js defaults, no custom config file)
 npm run start            # Start production server
 npx tsc --noEmit         # Explicit type checking (build ignores errors)
 ```
 
 > `next.config.mjs` sets `ignoreBuildErrors: true` — always use `npx tsc --noEmit` to verify types.
+
+### Weekly content management
+
+```bash
+npm run create-week          # Interactive scaffold: creates folder + metadata.json
+npm run validate-week WNN    # Validate a specific week (e.g. 2026-W23)
+npm run validate-all         # Validate all weeks listed in manifest.json
+npm run preview-week WNN     # Visual preview server at localhost:3001
+npm run archive-old          # Move past weeks to public/weekly-content/archive/
+npm run archive-old -- --dry-run  # Preview what would be archived
+```
+
+> **Gotcha:** `npm run create-week` does NOT auto-register the new week in `public/weekly-content/manifest.json` — add the key manually (e.g. `"2026-W23"`).
 
 ## Architecture
 
@@ -76,7 +89,7 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 
 ### Styling and brand tokens
 
-Tailwind CSS v4 configured via `app/globals.css` (no `tailwind.config.js`). Brand tokens:
+Tailwind CSS v4 configured **CSS-only** via `app/globals.css` using `@theme inline` — there is no `tailwind.config.js`. Brand tokens are CSS custom properties (`--brand-blue`, etc.) exposed as Tailwind utilities. Brand tokens:
 
 | Token | Value | Usage |
 |-------|-------|-------|
@@ -96,7 +109,9 @@ All content is **hardcoded as typed arrays** at the top of section components �
 
 
 
-**Weekly modal content** lives in `public/weekly-content/YYYY-WNN/` (e.g. `2026-W19/`). Each folder needs a `metadata.json` (matching the `WeeklyContent` interface in `lib/weekly-content.ts`) and a GIF referenced by `gifFileName`. The modal renders once per ISO week per browser via `localStorage`. **Important:** after creating a new week folder, add the week key (e.g. `"2026-W23"`) to `public/weekly-content/manifest.json` so the loader can discover it.
+**Weekly modal content** lives in `public/weekly-content/YYYY-WNN/` (e.g. `2026-W19/`). Each folder needs a `metadata.json` (matching the `WeeklyContent` interface in `lib/weekly-content.ts`) and a visual asset (`.gif`, `.webp`, or `.mp4`) referenced by `gifFileName`. The modal renders once per ISO week per browser via `localStorage`. **Important:** after creating a new week folder, add the week key (e.g. `"2026-W23"`) to `public/weekly-content/manifest.json` manually — `npm run create-week` does not do this automatically. Asset size target is < 3 MB; the container is 16:9.
+
+Detailed workflow and `metadata.json` field reference: `content-management/README.md`. Thematic modules schedule: `content-management/TEMATICAS.md`.
 
 ### Integrations
 
@@ -126,3 +141,5 @@ All content is **hardcoded as typed arrays** at the top of section components �
 - **Known filename typos** — `app/page..tsx` (double dot) and `app/temas/[id]/]/page.tsx` (extra bracket) exist alongside correct files. Verify which is active before editing.
 - **Lazy imports** — Firebase and EmailJS are dynamically imported in `QuickContactSection` to keep the initial bundle small.
 - **shadcn/ui** — Add new components with `npx shadcn add <component>`. Do not edit files in `components/ui/` directly.
+- **No CI/CD** — No GitHub Actions or CI configuration exists in this repo.
+- **`AGENTS.md`** — Condensed quick-reference for the same material in this file, plus a weekly modal workflow summary.

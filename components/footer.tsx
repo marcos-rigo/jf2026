@@ -62,7 +62,7 @@ export function Footer() {
                 alt="José Farhat"
                 width={160}
                 height={48}
-                className="h-12 w-auto"
+                style={{ height: "3rem", width: "auto" }}
               />
             </Link>
             
