@@ -7,28 +7,28 @@ import { ArrowUpRight, MapPin } from "lucide-react"
 
 const localNews = [
   {
-    category: "Educación y Ciudadanía",
-    date: "24 Mar, 2026",
-    title: "Plan integral de Ciudadanía Digital en escuelas tucumanas",
-    excerpt: "Lanzamiento de los nuevos talleres interactivos para estudiantes de nivel secundario, promoviendo el uso responsable de la tecnología.",
-    href: "/novedades",
-    image: "/img/noti/jf-sanMartin25.jfif",
+    category: "Articulación Institucional",
+    date: "2026",
+    title: "Trabajo conjunto con Educación",
+    excerpt: "Articulación con el área de Educación para potenciar la formación ciudadana y el trabajo territorial en las escuelas tucumanas.",
+    href: "https://www.facebook.com/photo/?fbid=1359594199530967&set=a.313637034126694",
+    image: "/img/noti/JF-convenio-educacion.jpeg",
   },
   {
-    category: "Seguridad Inteligente",
-    date: "18 Mar, 2026",
-    title: "Nuevas herramientas de prevención para familias",
-    excerpt: "Encuentro provincial con padres y docentes para articular estrategias frente a los desafíos del entorno digital y el ciberbullying.",
-    href: "/novedades",
-    image: "/img/noti/jf-legislatura.jfif",
+    category: "Ciudadanía Digital",
+    date: "2026",
+    title: "Agenda 2026 en prevención digital",
+    excerpt: "Definición de la agenda de trabajo para el año en materia de ciudadanía digital, con foco en la prevención y la educación en entornos digitales.",
+    href: "https://www.facebook.com/photo/?fbid=1352328820257505",
+    image: "/img/noti/agenda-digital-2026.jpg",
   },
   {
-    category: "Participación",
-    date: "10 Mar, 2026",
-    title: "Hackatón de Jóvenes por la Democracia",
-    excerpt: "Más de 500 jóvenes se reunieron para co-crear soluciones tecnológicas aplicadas a problemáticas sociales de sus municipios.",
-    href: "/novedades",
-    image: "/img/noti/jf-clase.jfif",
+    category: "Innovación Pública",
+    date: "2026",
+    title: "Planificación estratégica con el IDEP",
+    excerpt: "Reunión de planificación con el Instituto de Desarrollo Público para alinear iniciativas de innovación y participación ciudadana.",
+    href: "https://www.facebook.com/photo/?fbid=1346997967457257",
+    image: "/img/noti/jf-idep-feb.jpg",
   },
 ]
 
@@ -76,7 +76,7 @@ export function LocalNewsSection() {
         </div>
 
         {/* Cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-7 mb-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7 mb-10 lg:mb-14">
           {localNews.map((news, index) => (
             <motion.div
               key={news.title}
@@ -91,6 +91,8 @@ export function LocalNewsSection() {
 
               <Link
                 href={news.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="relative flex flex-col h-full bg-white rounded-[1.25rem] overflow-hidden border border-brand-navy/10 group-hover:border-brand-blue/20 group-hover:bg-brand-navy transition-all duration-400 group-hover:-translate-y-2 group-hover:shadow-2xl group-hover:shadow-brand-navy/25"
               >
                 {/* Image */}
@@ -99,7 +101,7 @@ export function LocalNewsSection() {
                     src={news.image}
                     alt={news.title}
                     fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                   {/* Gradient: fades to white normally, to navy on hover */}
@@ -115,9 +117,9 @@ export function LocalNewsSection() {
                 <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-brand-blue to-brand-pink scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-400" />
 
                 {/* Content */}
-                <div className="flex flex-col flex-1 p-6">
+                <div className="flex flex-col flex-1 p-5 lg:p-6">
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="text-[10px] font-bold text-brand-pink uppercase tracking-widest">
+                    <span className="text-[10px] font-bold text-brand-pink uppercase tracking-widest truncate">
                       {news.category}
                     </span>
                     <span className="w-1 h-1 rounded-full bg-brand-navy/25 group-hover:bg-white/30 transition-colors duration-400" />

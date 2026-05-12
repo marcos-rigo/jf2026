@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, Tag, Calendar } from "lucide-react"
+import { ArrowRight, Tag, Calendar, Play, Newspaper } from "lucide-react"
 
 const newsItems = [
   {
@@ -11,38 +11,43 @@ const newsItems = [
     tag: "2025",
     title: "Conversatorio RAGA: Jóvenes y crisis de la democracia",
     excerpt: "Reflexiones sobre juventudes, participación y transformación digital en el escenario global.",
-    href: "/novedades",
+    href: "https://www.youtube.com/live/u_up6zCGoT8?si=oZ3iAFsnyhToOT1S&t=1004",
     featured: true,
-    image: "/img/noti/jf-clase.jfif",
+    image: "https://img.youtube.com/vi/u_up6zCGoT8/maxresdefault.jpg",
     badge: "Destacado",
+    type: "video",
   },
   {
     category: "Gobierno Abierto",
     tag: "2025",
     title: "Webinar internacional con enfoque territorial desde Perú",
-    href: "/novedades",
-    image: "/img/noti/jf-legislatura.jfif",
+    href: "https://youtu.be/I1f_cXrxXic?si=1pmf1q8bjJnRbXdm&t=407",
+    image: "https://img.youtube.com/vi/I1f_cXrxXic/maxresdefault.jpg",
+    type: "video",
   },
   {
     category: "Premio OIDP",
     tag: "2024",
     title: "Reconocimiento en la 24° Conferencia por Escuela de Ciudadanía",
-    href: "/novedades",
-    image: "/img/noti/jf-san-martin.jfif",
+    href: "https://www.youtube.com/live/kW74SCr3DkI?si=IJiDPUd7Awy5DpjB&t=2666",
+    image: "https://img.youtube.com/vi/kW74SCr3DkI/maxresdefault.jpg",
+    type: "video",
   },
   {
     category: "Ponencia",
     tag: "2024",
     title: "Universidad Internacional — Municipalidad de Rancagua",
-    href: "/novedades",
-    image: "/img/noti/jf-sanMartin25.jfif",
+    href: "https://www.comunicaciontucuman.gob.ar/noticia/seguridad/232519/tucuman-expone-modelo-participacion-ciudadana-seguridad-digital-chile",
+    image: "https://www.comunicaciontucuman.gob.ar/fotos/cache/notas/2025/02/05/730x473_250205084215_97202.jpg",
+    type: "article",
   },
   {
     category: "Ciberseguridad",
     tag: "2024",
     title: "Jornada provincial — 300 personas, un cambio de chip necesario",
-    href: "/novedades",
-    image: "/img/noti/ciberseguridadd.webp",
+    href: "https://www.youtube.com/live/4BIwdpiFoso?si=VTdKwtRe3CgCJ7pX&t=151",
+    image: "https://img.youtube.com/vi/4BIwdpiFoso/maxresdefault.jpg",
+    type: "video",
   },
 ]
 
@@ -112,71 +117,47 @@ export function NewsSection() {
             transition={{ duration: 0.7 }}
             className="lg:col-span-2"
           >
-            <Link
-              href={featured.href}
-              className="group relative flex flex-col h-full min-h-[440px] lg:min-h-[540px] rounded-2xl lg:rounded-3xl overflow-hidden"
-            >
-              {/* Image — zoom only, no brightness change */}
-              <div className="absolute inset-0 overflow-hidden">
-                <Image
-                  src={featured.image}
-                  alt={featured.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 66vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  priority
+            <div className="relative h-full flex flex-col rounded-2xl lg:rounded-3xl overflow-hidden bg-[#001228] border border-white/[0.07]">
+
+              {/* YouTube embed */}
+              <div className="relative w-full aspect-video">
+                <iframe
+                  src="https://www.youtube.com/embed/u_up6zCGoT8?start=1004"
+                  title={featured.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
                 />
-                {/* Permanent strong bottom gradient — always guarantees legibility */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/10" />
-                {/* Left-side darkening for extra depth */}
-                <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/10 to-transparent" />
               </div>
 
-              {/* Badge */}
-              {featured.badge && (
-                <div className="absolute top-6 left-6 z-20 inline-flex items-center gap-2 px-4 py-2 bg-brand-pink/90 backdrop-blur-md rounded-full">
-                  <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                  <span className="text-xs font-bold text-white uppercase tracking-wider">{featured.badge}</span>
-                </div>
-              )}
-
-              {/* Pink left accent bar — slides in on hover */}
-              <div className="absolute left-0 top-1/4 bottom-0 w-1 bg-gradient-to-b from-brand-pink to-brand-blue rounded-r-full scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-500 z-20" />
-
-              {/* Content — sits on the dark gradient zone */}
-              <div className="relative z-10 flex flex-col justify-end h-full p-7 lg:p-10">
+              {/* Content below video */}
+              <div className="flex flex-col flex-1 p-6 lg:p-8">
                 {/* Meta badges */}
                 <div className="mb-4 flex flex-wrap items-center gap-2.5">
-                  <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-black/40 backdrop-blur-md rounded-full border border-white/20">
+                  {featured.badge && (
+                    <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-brand-pink/90 rounded-full">
+                      <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                      <span className="text-xs font-bold text-white uppercase tracking-wider">{featured.badge}</span>
+                    </span>
+                  )}
+                  <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/[0.07] rounded-full border border-white/10">
                     <Tag className="w-3.5 h-3.5 text-brand-pink" />
                     <span className="text-xs font-semibold text-white uppercase tracking-wide">{featured.category}</span>
                   </span>
-                  <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-black/40 backdrop-blur-md rounded-full border border-white/20">
+                  <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/[0.07] rounded-full border border-white/10">
                     <Calendar className="w-3.5 h-3.5 text-brand-blue" />
                     <span className="text-xs font-semibold text-white">{featured.tag}</span>
                   </span>
                 </div>
 
-                {/* Title — always white, never changes color on hover */}
-                <h3 className="text-3xl lg:text-4xl font-bold text-white mb-3 font-display leading-tight drop-shadow-lg">
+                <h3 className="text-xl lg:text-2xl font-bold text-white mb-2 font-display leading-tight">
                   {featured.title}
                 </h3>
-
-                {/* Excerpt — always white */}
-                <p className="text-white/85 text-base lg:text-lg leading-relaxed mb-7 max-w-xl drop-shadow-md">
+                <p className="text-white/65 text-sm lg:text-base leading-relaxed">
                   {featured.excerpt}
                 </p>
-
-                {/* CTA button — the only element that changes on hover */}
-                <div className="inline-flex items-center gap-3 px-6 py-3 bg-white text-brand-navy rounded-full font-semibold group-hover:bg-brand-pink group-hover:text-white transition-all duration-300 w-fit shadow-xl group-hover:shadow-brand-pink/40">
-                  Leer ahora
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                </div>
               </div>
-
-              {/* Border ring on hover */}
-              <div className="absolute inset-0 rounded-2xl lg:rounded-3xl ring-0 group-hover:ring-2 ring-brand-pink/50 transition-all duration-500 pointer-events-none" />
-            </Link>
+            </div>
           </motion.div>
 
           {/* Right column — all 4 remaining items */}
@@ -191,6 +172,8 @@ export function NewsSection() {
               >
                 <Link
                   href={news.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group flex gap-4 p-4 rounded-xl bg-white/[0.04] border border-white/[0.07] hover:bg-white hover:border-white hover:shadow-lg hover:shadow-black/20 transition-all duration-300"
                 >
                   {/* Thumbnail */}
@@ -202,6 +185,16 @@ export function NewsSection() {
                       sizes="72px"
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
                     />
+                    {news.type === "video" && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                        <Play className="w-5 h-5 text-white fill-white" />
+                      </div>
+                    )}
+                    {news.type === "article" && (
+                      <div className="absolute bottom-1 right-1">
+                        <Newspaper className="w-3.5 h-3.5 text-white drop-shadow" />
+                      </div>
+                    )}
                   </div>
 
                   {/* Text */}
