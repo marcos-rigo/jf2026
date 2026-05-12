@@ -3,127 +3,148 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, ExternalLink, Wrench } from "lucide-react"
+import { ArrowRight, ExternalLink } from "lucide-react"
 
 const tools = [
   {
     image: "/img/caja-herramientas/gana.png",
     title: "Gana Tucumán",
     description: "Innovación, Inteligencia Colectiva y Participación Ciudadana",
+    tag: "Innovación",
     href: "https://bit.ly/3F94X3N",
     external: true,
+    accent: "from-brand-blue to-cyan-400",
   },
   {
     image: "/img/caja-herramientas/manual.png",
     title: "Manual de Prevención",
     description: "Prevención en Entornos Digitales",
+    tag: "Seguridad",
     href: "http://bit.ly/manualpreventivo",
     external: true,
+    accent: "from-brand-pink to-rose-400",
   },
   {
     image: "/img/caja-herramientas/ite.png",
     title: "ITE — Innovar en tiempos de excepción",
     description: "Documento de innovación pública",
+    tag: "Documento",
     href: "https://bit.ly/doc-ite",
     external: true,
+    accent: "from-purple-500 to-violet-400",
   },
 ]
 
 export function ToolboxSection() {
   return (
-    <section id="herramientas" className="py-24 bg-brand-light-blue">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section id="herramientas" className="relative py-24 bg-brand-light-blue overflow-hidden">
+
+      {/* Ambient glows */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 right-1/4 w-[500px] h-[400px] bg-brand-blue/6 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-brand-pink/5 rounded-full blur-[90px]" />
+      </div>
+
+      <div className="container mx-auto px-4 lg:px-8 relative z-10">
+
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="mb-16"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 bg-brand-blue/10 text-brand-blue text-sm font-medium rounded-full mb-4">
-            <Wrench className="w-4 h-4" />
-            Recursos
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-navy mb-4">
-            Caja de Herramientas
-          </h2>
-          <p className="text-lg text-brand-navy/60 max-w-2xl mx-auto">
-            Recursos y documentos para la innovación ciudadana
-          </p>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="h-1 w-12 bg-gradient-to-r from-brand-blue to-brand-pink rounded-full" />
+            <span className="text-sm font-semibold text-brand-blue uppercase tracking-wider">Recursos</span>
+          </div>
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+            <div>
+              <h2 className="text-4xl lg:text-5xl font-bold text-brand-navy font-display leading-tight mb-3">
+                Caja de Herramientas
+              </h2>
+              <p className="text-lg text-brand-navy/60">
+                Recursos y documentos para la innovación ciudadana
+              </p>
+            </div>
+            <Link
+              href="/caja-de-herramientas"
+              className="group inline-flex items-center gap-2 text-brand-blue hover:text-brand-pink font-semibold transition-colors duration-300 whitespace-nowrap"
+            >
+              Ver todos los recursos
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+            </Link>
+          </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {tools.map((tool, index) => (
             <motion.div
               key={tool.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.55, delay: index * 0.1 }}
+              className="group relative"
             >
+              {/* Outer glow */}
+              <div className={`absolute -inset-px rounded-[1.25rem] bg-gradient-to-br ${tool.accent} opacity-0 group-hover:opacity-50 blur-sm transition-opacity duration-500`} />
+
               <Link
                 href={tool.href}
                 target={tool.external ? "_blank" : undefined}
                 rel={tool.external ? "noopener noreferrer" : undefined}
-                className="group block bg-white rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-brand-navy/10 transition-all duration-300 hover:-translate-y-2"
+                className="relative flex flex-col h-full bg-brand-navy rounded-[1.25rem] overflow-hidden border border-white/5 group-hover:border-transparent transition-all duration-500 group-hover:-translate-y-2"
               >
-                {/* Image Container */}
-                <div className="relative aspect-[4/3] bg-gradient-to-br from-brand-navy to-brand-dark overflow-hidden">
+                {/* Image */}
+                <div className="relative aspect-[4/3] overflow-hidden flex-shrink-0">
                   <Image
                     src={tool.image}
                     alt={tool.title}
                     fill
-                    className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover opacity-75 group-hover:opacity-95 group-hover:scale-105 transition-all duration-700"
                   />
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/20 to-transparent" />
-                  
-                  {/* Icon Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/20 to-transparent" />
+
+                  {/* Decorative number */}
+                  <span className="absolute top-3 left-5 text-[5rem] font-black leading-none text-white/[0.06] font-display tabular-nums select-none pointer-events-none">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  {/* Tag pill */}
                   <div className="absolute top-4 right-4">
-                    <span className="inline-flex items-center justify-center w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full">
-                      <ExternalLink className="w-5 h-5 text-white" />
+                    <span className={`inline-block px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white rounded-full bg-gradient-to-r ${tool.accent}`}>
+                      {tool.tag}
                     </span>
                   </div>
-                  
-                  {/* Title on Image */}
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-xl font-bold text-white group-hover:text-brand-pink transition-colors">
-                      {tool.title}
-                    </h3>
+
+                  {/* External link icon */}
+                  <div className="absolute bottom-4 right-4 w-9 h-9 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:bg-brand-pink group-hover:border-brand-pink transition-all duration-300">
+                    <ExternalLink className="w-4 h-4 text-white" />
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="p-6">
-                  <p className="text-brand-navy/70 mb-4">
+                <div className="flex flex-col flex-1 p-6">
+                  <div className={`h-[2px] w-8 rounded-full bg-gradient-to-r ${tool.accent} mb-4 group-hover:w-16 transition-all duration-500`} />
+                  <h3 className="text-lg font-bold text-white mb-2 font-display leading-snug group-hover:text-brand-pink transition-colors duration-300">
+                    {tool.title}
+                  </h3>
+                  <p className="text-white/50 text-sm leading-relaxed flex-1 group-hover:text-white/70 transition-colors duration-300">
                     {tool.description}
                   </p>
-                  <span className="inline-flex items-center gap-2 text-brand-blue font-medium group-hover:text-brand-pink transition-colors">
+                  <div className="flex items-center gap-2 mt-5 text-sm font-semibold text-brand-blue group-hover:text-brand-pink transition-colors duration-300">
                     Acceder
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                  </div>
                 </div>
               </Link>
             </motion.div>
           ))}
         </div>
-
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-12"
-        >
-          <Link
-            href="/caja-de-herramientas"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-brand-blue text-white font-semibold rounded-full hover:bg-brand-navy hover:shadow-lg transition-all duration-300 group"
-          >
-            Ver más Herramientas
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </motion.div>
       </div>
     </section>
   )

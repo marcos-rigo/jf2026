@@ -67,7 +67,7 @@ export function Navbar() {
                 alt="José Farhat"
                 width={140}
                 height={40}
-                style={{ height: "2.5rem", width: "auto" }}
+                className="h-10 w-auto"
                 priority
               />
             </Link>

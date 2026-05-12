@@ -99,7 +99,7 @@ Tailwind CSS v4 configured **CSS-only** via `app/globals.css` using `@theme inli
 | `brand-dark` | `#001228` | Dark mode backgrounds |
 | `brand-light-blue` | `#EEF4FB` | Light backgrounds, cards |
 
-Fonts: `font-sans` → DM Sans (body), `font-display` → Plus Jakarta Sans (headings). Loaded via `next/font/google`.
+Dark mode is implemented via the `.dark` CSS class, which overrides brand token CSS custom properties. Fonts: `font-sans` → DM Sans (body), `font-display` → Plus Jakarta Sans (headings). Loaded via `next/font/google`.
 
 ### Data patterns
 
@@ -109,7 +109,9 @@ All content is **hardcoded as typed arrays** at the top of section components �
 
 
 
-**Weekly modal content** lives in `public/weekly-content/YYYY-WNN/` (e.g. `2026-W19/`). Each folder needs a `metadata.json` (matching the `WeeklyContent` interface in `lib/weekly-content.ts`) and a visual asset (`.gif`, `.webp`, or `.mp4`) referenced by `gifFileName`. The modal renders once per ISO week per browser via `localStorage`. **Important:** after creating a new week folder, add the week key (e.g. `"2026-W23"`) to `public/weekly-content/manifest.json` manually — `npm run create-week` does not do this automatically. Asset size target is < 3 MB; the container is 16:9.
+**Weekly modal content** lives in `public/weekly-content/YYYY-WNN/` (e.g. `2026-W19/`). Each folder needs a `metadata.json` (matching the `WeeklyContent` interface in `lib/weekly-content.ts`) and a visual asset (`.gif`, `.webp`, or `.mp4`) referenced by `gifFileName`. Folders also typically include supplementary assets: PDF presentations and PNG infographics (not rendered by the modal, but distributed alongside). The modal renders once per ISO week per browser via `localStorage` (key prefix: `weeklyModal_`). **Important:** after creating a new week folder, add the week key (e.g. `"2026-W23"`) to `public/weekly-content/manifest.json` manually — `npm run create-week` does not do this automatically. Asset size target is < 3 MB; the container is 16:9. All fetches use `cache: "no-store"` to prevent stale content.
+
+> **`metadata.json` field note:** Use `ctaLink`/`ctaText` for call-to-action links. The `linkTo` field is deprecated (kept for backward compatibility only).
 
 Detailed workflow and `metadata.json` field reference: `content-management/README.md`. Thematic modules schedule: `content-management/TEMATICAS.md`.
 

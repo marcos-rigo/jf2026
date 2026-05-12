@@ -161,54 +161,8 @@ export function Hero() {
         </div>
       </div>
 
-      {/* ══════════════════════════════════════════════════════════════════════
-          DIAGONAL NEON
-          Corte agresivo: parte desde abajo-izquierda y sube pronunciado.
-          SVG 260px de alto para que el ángulo sea notoriamente vertical.
-          Efecto neon en 3 capas:
-            1. Halo exterior difuso (glow ancho, baja opacidad)
-            2. Línea rosa sólida con filtro blur medio
-            3. Núcleo blanco delgado — el "filamento" del neon
-      ════════════════════════════════════════════════════════════════════════ */}
-      {/* ── DIAGONAL NEON HERO ───────────────────────────────────────────────── */}
-      <div className="absolute bottom-0 left-0 right-0 z-[10] pointer-events-none overflow-hidden">
-        <svg
-          viewBox="0 0 1440 120"
-          preserveAspectRatio="none"
-          xmlns="http://www.w3.org/2000/svg"
-          style={{ display: "block", width: "100%", height: "120px" }}
-        >
-          <defs>
-            <filter id="glow-mid" x="-20%" y="-100%" width="140%" height="300%">
-              <feGaussianBlur stdDeviation="5" result="b" />
-              <feMerge>
-                <feMergeNode in="b" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-            <filter id="glow-halo" x="-40%" y="-200%" width="180%" height="500%">
-              <feGaussianBlur stdDeviation="20" />
-            </filter>
-          </defs>
-
-          {/* Cuña blanca */}
-          <polygon points="0,120 1440,0 1440,120" fill="#ffffff" />
-
-          {/* Halo neon rosa */}
-          <line x1="0" y1="123" x2="1444" y2="-3"
-            stroke="#D5247A" strokeWidth="20" opacity="0.18"
-            filter="url(#glow-halo)" />
-
-          {/* Línea rosa principal */}
-          <line x1="0" y1="123" x2="1444" y2="-3"
-            stroke="#D5247A" strokeWidth="3.5"
-            filter="url(#glow-mid)" />
-
-          {/* Núcleo blanco */}
-          <line x1="0" y1="123" x2="1444" y2="-3"
-            stroke="rgba(255,255,255,0.95)" strokeWidth="1" />
-        </svg>
-      </div>
+      {/* Fade inferior hacia la sección siguiente */}
+      <div className="absolute bottom-0 inset-x-0 h-36 bg-gradient-to-b from-transparent to-[#003a60] pointer-events-none z-[10]" />
 
       {/* ── SCROLL ───────────────────────────────────────────────────────────── */}
       <motion.div
