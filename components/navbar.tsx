@@ -86,9 +86,7 @@ export function Navbar() {
             {/* CTA Button */}
             <div className="hidden lg:flex items-center gap-4">
               <Link
-                href="https://ciudadaniadigital.josefarhat.com/"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/ciudadania-presente"
                 className="relative inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-brand-navy to-brand-blue rounded-full hover:shadow-lg hover:shadow-brand-blue/25 transition-all duration-300 group"
               >
                 <span className="relative flex h-2 w-2">
@@ -184,9 +182,7 @@ export function Navbar() {
               className="mt-8"
             >
               <Link
-                href="https://ciudadaniadigital.josefarhat.com/"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/ciudadania-presente"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="flex items-center justify-center gap-2 w-full px-6 py-4 text-base font-semibold text-white bg-gradient-to-r from-brand-navy to-brand-blue rounded-2xl"
               >
