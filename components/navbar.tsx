@@ -9,14 +9,7 @@ import { cn } from "@/lib/utils"
 
 const navLinks = [
   { label: "Inicio", href: "/" },
-  {
-    label: "Conóceme",
-    href: "/conoceme",
-    children: [
-      { label: "Sobre mí", href: "/conoceme" },
-      { label: "1+1=2 y medio", href: "/conoceme#formula" },
-    ],
-  },
+  { label: "Conóceme", href: "/conoceme" },
   { label: "Blog", href: "/blog" },
   {
     label: "Multimedia",
