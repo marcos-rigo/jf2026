@@ -3,32 +3,25 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, ChevronDown } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navLinks = [
   { label: "Inicio", href: "/" },
   { label: "Conóceme", href: "/conoceme" },
-  { label: "Blog", href: "/blog" },
-  {
-    label: "Multimedia",
-    href: "/multimedia",
-    children: [
-      { label: "Audiovisuales", href: "/multimedia" },
-      { label: "Podcast", href: "/multimedia#podcast" },
-    ],
-  },
-  { label: "Caja de Herramientas", href: "/caja-de-herramientas" },
-  { label: "Novedades", href: "/novedades" },
   { label: "Temáticas", href: "/tematicas" },
+  { label: "Caja de Herramientas", href: "/caja-de-herramientas" },
+  { label: "Multimedia", href: "/multimedia" },
+  { label: "Novedades", href: "/novedades" },
   { label: "Contacto", href: "/contacto" },
 ]
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,52 +60,27 @@ export function Navbar() {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <div
-                  key={link.label}
-                  className="relative"
-                  onMouseEnter={() => link.children && setActiveDropdown(link.label)}
-                  onMouseLeave={() => setActiveDropdown(null)}
-                >
+              {navLinks.map((link) => {
+                const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href)
+                return (
                   <Link
+                    key={link.label}
                     href={link.href}
                     className={cn(
-                      "flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors rounded-lg",
-                      isScrolled
-                        ? "text-brand-navy hover:text-brand-pink hover:bg-brand-light-blue"
-                        : "text-white/90 hover:text-white hover:bg-white/10"
+                      "px-4 py-2 text-sm font-medium transition-colors rounded-lg",
+                      isActive
+                        ? isScrolled
+                          ? "text-brand-pink bg-brand-light-blue"
+                          : "text-white bg-white/15"
+                        : isScrolled
+                          ? "text-brand-navy hover:text-brand-pink hover:bg-brand-light-blue"
+                          : "text-white/90 hover:text-white hover:bg-white/10"
                     )}
                   >
                     {link.label}
-                    {link.children && (
-                      <ChevronDown className="w-4 h-4 transition-transform duration-200" />
-                    )}
                   </Link>
-
-                  {/* Dropdown */}
-                  <AnimatePresence>
-                    {link.children && activeDropdown === link.label && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 mt-1 w-48 bg-white rounded-xl shadow-xl border border-border overflow-hidden"
-                      >
-                        {link.children.map((child) => (
-                          <Link
-                            key={child.label}
-                            href={child.href}
-                            className="block px-4 py-3 text-sm text-brand-navy hover:bg-brand-light-blue hover:text-brand-pink transition-colors"
-                          >
-                            {child.label}
-                          </Link>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
+                )
+              })}
             </div>
 
             {/* CTA Button */}
@@ -182,14 +150,30 @@ export function Navbar() {
             className="fixed inset-0 z-40 bg-white pt-24 px-6 pb-6 overflow-y-auto lg:hidden"
           >
             <div className="flex flex-col gap-2">
-              {navLinks.map((link, index) => (
-                <MobileNavItem
-                  key={link.label}
-                  link={link}
-                  index={index}
-                  onClose={() => setIsMobileMenuOpen(false)}
-                />
-              ))}
+              {navLinks.map((link, index) => {
+                const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href)
+                return (
+                  <motion.div
+                    key={link.label}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <Link
+                      href={link.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={cn(
+                        "block px-4 py-3 text-lg font-medium rounded-xl transition-colors",
+                        isActive
+                          ? "text-brand-pink bg-brand-light-blue"
+                          : "text-brand-navy hover:text-brand-pink hover:bg-brand-light-blue"
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                )
+              })}
             </div>
 
             {/* Mobile CTA */}
@@ -210,7 +194,7 @@ export function Navbar() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-pink opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-pink"></span>
                 </span>
-                Ciudadanía Digital
+                Ciudadanía Presente
                 <span>→</span>
               </Link>
             </motion.div>
@@ -218,74 +202,5 @@ export function Navbar() {
         )}
       </AnimatePresence>
     </>
-  )
-}
-
-function MobileNavItem({
-  link,
-  index,
-  onClose,
-}: {
-  link: (typeof navLinks)[0]
-  index: number
-  onClose: () => void
-}) {
-  const [isOpen, setIsOpen] = useState(false)
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: index * 0.05 }}
-    >
-      {link.children ? (
-        <div>
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center justify-between w-full px-4 py-3 text-lg font-medium text-brand-navy hover:bg-brand-light-blue rounded-xl transition-colors"
-          >
-            {link.label}
-            <ChevronDown
-              className={cn(
-                "w-5 h-5 transition-transform duration-200",
-                isOpen && "rotate-180"
-              )}
-            />
-          </button>
-          <AnimatePresence>
-            {isOpen && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="overflow-hidden"
-              >
-                <div className="pl-4 py-2 space-y-1">
-                  {link.children.map((child) => (
-                    <Link
-                      key={child.label}
-                      href={child.href}
-                      onClick={onClose}
-                      className="block px-4 py-2 text-base text-brand-navy/70 hover:text-brand-pink hover:bg-brand-light-blue rounded-lg transition-colors"
-                    >
-                      {child.label}
-                    </Link>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      ) : (
-        <Link
-          href={link.href}
-          onClick={onClose}
-          className="block px-4 py-3 text-lg font-medium text-brand-navy hover:text-brand-pink hover:bg-brand-light-blue rounded-xl transition-colors"
-        >
-          {link.label}
-        </Link>
-      )}
-    </motion.div>
   )
 }

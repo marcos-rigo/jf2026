@@ -27,27 +27,6 @@ const tools = [
     href: "https://drive.google.com/file/d/1wmSI9Pz9Z-2qSzIbjGeQX8Q17dix46P1/view",
     type: "Documento",
   },
-  {
-    image: "/img/caja-herramientas/seg-int.png",
-    title: "Guía de Participación",
-    description: "Metodologías para la participación ciudadana efectiva",
-    href: "#",
-    type: "Guía",
-  },
-  {
-    image: "/img/caja-herramientas/ideay.png",
-    title: "Toolkit de Innovación",
-    description: "Herramientas prácticas para la innovación pública",
-    href: "#",
-    type: "Toolkit",
-  },
-  {
-    image: "/img/caja-herramientas/4.png",
-    title: "Marco de Ciudadanía Digital",
-    description: "Principios y prácticas para la ciudadanía en entornos digitales",
-    href: "#",
-    type: "Framework",
-  },
 ]
 
 export function ToolboxContent() {
