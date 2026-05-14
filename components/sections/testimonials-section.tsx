@@ -11,12 +11,6 @@ const testimonials = [
     role: "Abogado y Procurador",
     quote: "Participa en intervenciones desde el inicio de la pandemia, demostrando un compromiso constante con la innovación ciudadana y la participación democrática.",
   },
-  {
-    image: "/img/comunidad/3.png",
-    name: "Margarita Heinz",
-    role: "Consejera de la Dirección de Adultos Mayores",
-    quote: "Su trabajo en la promoción de la ciudadanía digital ha sido transformador, especialmente en la inclusión de adultos mayores en el entorno tecnológico.",
-  },
 ]
 
 export function TestimonialsSection() {
@@ -42,7 +36,7 @@ export function TestimonialsSection() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="flex justify-center max-w-2xl mx-auto">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.name}

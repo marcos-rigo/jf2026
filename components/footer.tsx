@@ -71,13 +71,10 @@ export function Footer() {
                 <MapPin className="w-5 h-5 text-brand-pink flex-shrink-0" />
                 San Miguel de Tucumán, Argentina
               </p>
-              <a 
-                href="mailto:jf.josefarhat@gmail.com"
-                className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
-              >
+              <p className="flex items-center gap-3 text-white/70">
                 <Mail className="w-5 h-5 text-brand-pink flex-shrink-0" />
                 jf.josefarhat@gmail.com
-              </a>
+              </p>
             </div>
 
             {/* Social Links */}
