@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Shield, Eye, Lock, AlertTriangle, Search } from "lucide-react"
 
 const tematicas = [
   {
@@ -14,6 +14,8 @@ const tematicas = [
       "Protocolo de seguridad, netiqueta y detección de bulos. Un kit interactivo para ejercer tus derechos y responsabilidades en el mundo digital.",
     image: "/weekly-content/2026-W19/ciudDigpng.png",
     imageAlt: "Banner Ciudadanía Digital",
+    icon: Shield,
+    color: "#4272BB",
   },
   {
     href: "/alfabetizacion-mediatica",
@@ -23,6 +25,8 @@ const tematicas = [
       "Herramientas y frameworks para consumir y compartir información con criterio. Aprendé a detectar desinformación y fake news.",
     image: "/weekly-content/2026-W20/amipng.png",
     imageAlt: "Banner Alfabetización Mediática",
+    icon: Search,
+    color: "#00D4AA",
   },
   {
     href: "/huella-digital",
@@ -32,6 +36,8 @@ const tematicas = [
       "Auditá tu exposición en internet y gestioná tu identidad digital. Descubrí qué datos tuyos son públicos y cómo recuperar el control.",
     image: "/weekly-content/2026-W21/huellapng.png",
     imageAlt: "Banner Huella Digital",
+    icon: Eye,
+    color: "#D5247A",
   },
   {
     href: "/violencia-digital",
@@ -41,6 +47,8 @@ const tematicas = [
       "Guía completa sobre ciberbullying, acoso en línea y violencia de género digital. Conocé tus derechos y cómo actuar si sos víctima.",
     image: "/weekly-content/2026-W22/violenciapng.png",
     imageAlt: "Banner Violencia Digital",
+    icon: Lock,
+    color: "#FF6B35",
   },
   {
     href: "/estafas-digitales",
@@ -50,113 +58,287 @@ const tematicas = [
       "Phishing, smishing y vishing: aprendé a detectarlos antes de que sea tarde. Protocolo paso a paso para actuar si sos víctima.",
     image: "/weekly-content/2026-W23/estafapng.png",
     imageAlt: "Banner Estafas Digitales",
+    icon: AlertTriangle,
+    color: "#FFD93D",
   },
 ]
 
 const containerVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.12 } },
 }
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  hidden: { opacity: 0, y: 60, scale: 0.95 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5 } },
 }
 
 export function TematicasContent() {
   return (
-    <main className="bg-white min-h-screen">
-      {/* Hero */}
-      <section className="relative pt-28 md:pt-36 pb-16 md:pb-24 overflow-hidden min-h-[360px] sm:min-h-[480px] flex items-center">
-        <Image
-          src="/img/tematicas/portada.png"
-          alt="Portada Temáticas"
-          fill
-          sizes="100vw"
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/80 via-brand-blue/60 to-purple-900/70" />
+    <main className="relative min-h-screen overflow-hidden bg-[#050a14]">
+      <style>{`
+        @keyframes gridMove {
+          0% { background-position: 0 0; }
+          100% { background-position: 50px 50px; }
+        }
+        @keyframes pulse-glow {
+          0%, 100% { opacity: 0.4; }
+          50% { opacity: 0.8; }
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(3deg); }
+        }
+        @keyframes border-glow {
+          0%, 100% { box-shadow: 0 0 20px var(--glow-color), inset 0 0 20px rgba(255,255,255,0.03); }
+          50% { box-shadow: 0 0 40px var(--glow-color), inset 0 0 30px rgba(255,255,255,0.06); }
+        }
+        .grid-bg {
+          background-image: 
+            linear-gradient(rgba(66, 114, 187, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(66, 114, 187, 0.03) 1px, transparent 1px);
+          background-size: 50px 50px;
+          animation: gridMove 20s linear infinite;
+        }
+        .glow-pulse { animation: pulse-glow 4s ease-in-out infinite; }
+        .float-anim { animation: float 6s ease-in-out infinite; }
+        .card-glow { animation: border-glow 3s ease-in-out infinite; }
+      `}</style>
+
+      <div className="fixed inset-0 grid-bg" />
+      
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/20 via-transparent to-brand-pink/10" />
+      
+      <div className="absolute top-20 left-10 w-96 h-96 bg-brand-blue/30 rounded-full blur-[120px] glow-pulse" />
+      <div className="absolute bottom-20 right-10 w-80 h-80 bg-brand-pink/20 rounded-full blur-[100px] glow-pulse" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-blue/10 rounded-full blur-[150px]" />
+
+      <div className="absolute top-32 right-20 w-32 h-32 border border-brand-blue/20 rounded-full float-anim" />
+      <div className="absolute top-60 left-32 w-20 h-20 border border-brand-pink/20 rotate-45 float-anim" style={{ animationDelay: '1s' }} />
+      <div className="absolute bottom-40 right-40 w-24 h-24 border border-white/10 rounded-full float-anim" style={{ animationDelay: '2s' }} />
+
+      <section className="relative pt-28 md:pt-36 pb-20 md:pb-32 overflow-hidden min-h-[500px] sm:min-h-[600px] flex items-center">
+        <div className="absolute inset-0 flex items-center justify-center opacity-10">
+          <div className="w-[800px] h-[800px] border border-white/5 rounded-full" />
+          <div className="absolute w-[600px] h-[600px] border border-white/5 rounded-full" />
+          <div className="absolute w-[400px] h-[400px] border border-white/5 rounded-full" />
+        </div>
 
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 relative z-10 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 mb-6">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/[0.03] backdrop-blur-xl border border-white/10 mb-8"
+            >
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-blue opacity-60" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-blue" />
               </span>
-              <span className="text-sm font-semibold text-white uppercase tracking-wide">
+              <span className="text-sm font-medium text-white/80 uppercase tracking-widest">
                 Ciudadanía Digital
               </span>
-            </div>
+            </motion.div>
 
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 leading-tight">
-              Temáticas
-            </h1>
-            <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
-              Recursos, guías y herramientas sobre los temas más importantes
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold text-white mb-6 tracking-tight"
+            >
+              <span className="block bg-gradient-to-r from-white via-white to-white/60 bg-clip-text text-transparent">
+                Temáticas
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed"
+            >
+              Explorá recursos, guías y herramientas sobre los temas más importantes
               de la ciudadanía en el mundo digital.
-            </p>
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="mt-10 flex items-center justify-center gap-8"
+            >
+              <div className="text-center">
+                <div className="text-3xl font-display font-bold text-white">05</div>
+                <div className="text-xs text-white/40 uppercase tracking-wider">Temas</div>
+              </div>
+              <div className="w-px h-10 bg-white/10" />
+              <div className="text-center">
+                <div className="text-3xl font-display font-bold text-brand-blue">100%</div>
+                <div className="text-xs text-white/40 uppercase tracking-wider">Gratuito</div>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
+
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#050a14] to-transparent" />
       </section>
 
-      {/* Cards */}
-      <section className="py-20 bg-gradient-to-br from-slate-50 via-white to-slate-100">
+      <section className="relative py-20 md:py-32">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
           >
-            {tematicas.map((tema) => (
-              <motion.div key={tema.href} variants={cardVariants}>
-                <Link href={tema.href} className="group block h-full">
-                  <div className="h-full bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 flex flex-col">
-                    {/* Card image */}
-                    <div className="relative h-52 overflow-hidden bg-brand-light-blue">
-                      <Image
-                        src={tema.image}
-                        alt={tema.imageAlt}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        loading="eager"
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                      <div className="absolute top-4 left-4">
-                        <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-xs font-semibold text-gray-700 rounded-full">
-                          {tema.category}
-                        </span>
-                      </div>
-                    </div>
+            {tematicas.map((tema, index) => {
+              const IconComponent = tema.icon
+              return (
+                <motion.div key={tema.href} variants={cardVariants}>
+                  <Link href={tema.href} className="group block h-full">
+                    <div
+                      className="relative h-full rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02] group"
+                      style={{ '--glow-color': tema.color } as React.CSSProperties}
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#0d1a2d] to-[#0f1d35] rounded-2xl border border-white/5 group-hover:border-white/15 transition-all duration-500" />
+                      
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent rounded-2xl" />
 
-                    {/* Card body */}
-                    <div className="flex flex-col flex-1 p-6">
-                      <h2 className="text-xl font-display font-bold text-brand-dark mb-3 group-hover:text-brand-blue transition-colors duration-300">
-                        {tema.title}
-                      </h2>
-                      <p className="text-gray-600 text-sm leading-relaxed flex-1">
-                        {tema.description}
-                      </p>
-                      <div className="mt-5 flex items-center gap-2 text-brand-blue font-semibold text-sm group-hover:gap-3 transition-all duration-300">
-                        <span>Explorar</span>
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                      <div className="relative h-full flex flex-col">
+                        <div className="relative h-48 sm:h-56 overflow-hidden">
+                          <Image
+                            src={tema.image}
+                            alt={tema.imageAlt}
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            loading="lazy"
+                            className="object-cover transition-transform duration-700 group-hover:scale-110"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#0f1d35] via-[#0f1d35]/50 to-transparent" />
+                          <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
+                          
+                          <div className="absolute top-4 left-4 flex items-center gap-2">
+                            <div
+                              className="px-3 py-1.5 rounded-full backdrop-blur-xl border flex items-center gap-1.5"
+                              style={{ backgroundColor: `${tema.color}20`, borderColor: `${tema.color}40` }}
+                            >
+                              <IconComponent className="w-3.5 h-3.5" style={{ color: tema.color }} />
+                              <span className="text-xs font-medium text-white/90">
+                                {tema.category}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="absolute bottom-4 right-4 w-12 h-12 rounded-xl backdrop-blur-xl border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                            <IconComponent className="w-5 h-5 text-white/60" />
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col flex-1 p-6 md:p-7">
+                          <div className="flex items-start justify-between mb-3">
+                            <h2 className="text-xl md:text-2xl font-display font-bold text-white group-hover:text-white/90 transition-colors duration-300">
+                              {tema.title}
+                            </h2>
+                            <div className="flex-shrink-0 ml-2">
+                              <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-white/10 group-hover:border-white/20 transition-all duration-300">
+                                <ArrowRight className="w-4 h-4 text-white/50 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <p className="text-sm text-white/40 leading-relaxed flex-1 group-hover:text-white/50 transition-colors duration-300">
+                            {tema.description}
+                          </p>
+
+                          <div className="mt-5 pt-5 border-t border-white/5">
+                            <div className="flex items-center gap-2 text-sm font-medium group-hover:gap-3 transition-all duration-300" style={{ color: tema.color }}>
+                              <span>Explorar tema</span>
+                              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                            </div>
+                          </div>
+                        </div>
                       </div>
+
+                      <div
+                        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                        style={{
+                          boxShadow: `0 0 60px ${tema.color}20, inset 0 0 60px ${tema.color}08`,
+                        }}
+                      />
                     </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+                  </Link>
+                </motion.div>
+              )
+            })}
           </motion.div>
         </div>
       </section>
+
+      <section className="relative py-20 md:py-32">
+        <div className="container mx-auto px-6 lg:px-16 xl:px-24">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative rounded-3xl overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/20 via-brand-navy/30 to-brand-pink/20" />
+            <div className="absolute inset-0 backdrop-blur-xl" />
+            <div className="absolute inset-0 border border-white/10 rounded-3xl" />
+
+            <div className="relative p-8 md:p-12 lg:p-16 text-center">
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-4"
+              >
+                ¿Listo para ser un ciudadano digital?
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="text-white/50 max-w-xl mx-auto mb-8"
+              >
+                Cada tema es un paso hacia una participación más segura y consciente en el mundo digital.
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="flex flex-col sm:flex-row items-center justify-center gap-4"
+              >
+                <Link
+                  href="/ciudadania-digital"
+                  className="px-8 py-4 rounded-full bg-brand-blue hover:bg-brand-blue/90 text-white font-semibold transition-all duration-300 flex items-center gap-2 hover:gap-3"
+                >
+                  <span>Comenzar ahora</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+                <Link
+                  href="#"
+                  className="px-8 py-4 rounded-full bg-white/5 hover:bg-white/10 text-white/80 font-medium border border-white/10 hover:border-white/20 transition-all duration-300"
+                >
+                  Conocer más
+                </Link>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <div className="h-20 bg-gradient-to-t from-[#050a14] to-transparent" />
     </main>
   )
 }
