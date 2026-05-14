@@ -21,15 +21,28 @@ export const metadata: Metadata = {
   generator: 'v0.app',
   keywords: ['José Farhat', 'Ciudadanía Digital', 'Participación Ciudadana', 'Tucumán', 'Innovación Pública', 'Democracia'],
   authors: [{ name: 'José Farhat' }],
+  icons: {
+    icon: '/img/logoJF.ico',
+    shortcut: '/img/logoJF.ico',
+  },
   openGraph: {
     title: 'José Farhat | Ciudadanía Presente',
     description: 'Innovación, participación y democracia desde Tucumán para el mundo.',
     type: 'website',
     locale: 'es_AR',
+    images: [
+      {
+        url: '/img/perfil-jf.png',
+        width: 1200,
+        height: 630,
+        alt: 'José Farhat - Secretario de Participación Ciudadana',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     creator: '@JoseFarhatok',
+    images: ['/img/perfil-jf.png'],
   },
 }
 

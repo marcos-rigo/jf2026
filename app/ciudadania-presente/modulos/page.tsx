@@ -263,25 +263,49 @@ export default function ModulosPage() {
               en la vida democrática de Tucumán.
             </p>
 
-            {/* Botones de acción */}
-            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-              <Link href="/ciudadania-presente/login?mode=login">
-                <Button
-                  size="lg"
-                  className="bg-white text-[#003257] hover:bg-white/90 font-semibold px-8 transition-all duration-300 hover:scale-105 hover:shadow-lg animate-[fadeIn_0.5s_ease-out]"
+            {/* Botón Próximamente */}
+            <div className="flex items-center justify-center">
+              <button
+                className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full overflow-hidden transition-all duration-500 hover:scale-105"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-[#4272BB]/20 via-[#D5247A]/20 to-[#4272BB]/20 backdrop-blur-xl border border-white/20" />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-[#4272BB]/30 via-[#D5247A]/30 to-[#4272BB]/30" />
+
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-pink/60 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-pink" />
+                </span>
+
+                <span className="relative text-white font-semibold text-lg tracking-wide">
+                  Próximamente
+                </span>
+
+                <svg
+                  className="relative w-5 h-5 text-white/70 group-hover:text-white transition-colors duration-300"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  Iniciar Sesión
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </Link>
-              <Link href="/ciudadania-presente/login?mode=register">
-                <Button
-                  size="lg"
-                  className="bg-[#D5247A] text-white hover:bg-[#b81e68] font-semibold px-8 transition-all duration-300 hover:scale-105 hover:shadow-lg animate-[fadeIn_0.5s_ease-out_0.1s_both] border-2 border-[#D5247A]"
-                >
-                  Registrarse
-                </Button>
-              </Link>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+
+                <style>{`
+                  @keyframes shimmer {
+                    0% { background-position: -200% 0; }
+                    100% { background-position: 200% 0; }
+                  }
+                  button::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+                    animation: shimmer 3s infinite;
+                  }
+                `}</style>
+              </button>
             </div>
           </div>
         </div>
