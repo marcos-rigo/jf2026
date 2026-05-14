@@ -16,6 +16,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://josefarhat.com'),
   title: 'José Farhat | Ciudadanía Presente',
   description: 'José Farhat - Abogado, Secretario de Participación Ciudadana de Tucumán. Innovación, participación y democracia desde Tucumán para el mundo.',
   generator: 'v0.app',
