@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { Trophy, Award, GraduationCap, Globe, Briefcase, ArrowRight } from "lucide-react"
+import { Trophy, Award, GraduationCap, Globe, Briefcase, ArrowRight, Users, BookOpen } from "lucide-react"
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
@@ -90,14 +90,14 @@ const FORMACION = [
 ]
 
 const PRESENCIA = [
-  { flag: "🇨🇱", pais: "Chile",     year: "2025", evento: "Universidad Internacional del Municipio de Rancagua" },
-  { flag: "🇨🇷", pais: "Costa Rica",year: "2024", evento: "1er Congreso Internacional de Estado Abierto" },
-  { flag: "🇲🇽", pais: "México",    year: "2023", evento: "Smart City Expo LATAM Congress" },
-  { flag: "🇨🇱", pais: "Chile",     year: "2023", evento: "XIII Congreso Latinoamericano de Investigación para la Paz" },
-  { flag: "🇭🇳", pais: "Honduras",  year: "2021", evento: "XII Congreso Latinoamericano de Investigación para la Paz" },
-  { flag: "🇦🇷", pais: "Argentina", year: "2025", evento: "Congreso Educativo: IA en Educación — UTN Tucumán" },
-  { flag: "🇦🇷", pais: "Argentina", year: "2023", evento: "Congreso Internacional de Participación Ciudadana" },
-  { flag: "🇦🇷", pais: "Argentina", year: "2022", evento: "Jornadas de Estado Abierto CLAD – Red RAGA" },
+  { code: "cl", pais: "Chile",      year: "2025", evento: "Universidad Internacional del Municipio de Rancagua" },
+  { code: "cr", pais: "Costa Rica", year: "2024", evento: "1er Congreso Internacional de Estado Abierto" },
+  { code: "mx", pais: "México",     year: "2023", evento: "Smart City Expo LATAM Congress" },
+  { code: "cl", pais: "Chile",      year: "2023", evento: "XIII Congreso Latinoamericano de Investigación para la Paz" },
+  { code: "hn", pais: "Honduras",   year: "2021", evento: "XII Congreso Latinoamericano de Investigación para la Paz" },
+  { code: "ar", pais: "Argentina",  year: "2025", evento: "Congreso Educativo: IA en Educación — UTN Tucumán" },
+  { code: "ar", pais: "Argentina",  year: "2023", evento: "Congreso Internacional de Participación Ciudadana" },
+  { code: "ar", pais: "Argentina",  year: "2022", evento: "Jornadas de Estado Abierto CLAD – Red RAGA" },
 ]
 
 const TRAYECTORIA_ACCENTS = [
@@ -180,6 +180,45 @@ export function AboutContent() {
             </motion.div>
           </div>
         </div>
+      </section>
+
+      {/* ── 1b. STATS ──────────────────────────────────────────────────────── */}
+      <section className="relative py-12 bg-brand-dark overflow-hidden">
+        {/* Separator line top */}
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        {/* Ambient glow */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="w-[700px] h-[200px] bg-brand-blue/15 rounded-full blur-[100px]" />
+        </div>
+
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            {[
+              { icon: Briefcase, label: "Años de experiencia", value: "15+", color: "text-cyan-400",   bg: "bg-cyan-400/10",   border: "border-cyan-400/20"   },
+              { icon: Users,     label: "Proyectos ciudadanos", value: "50+", color: "text-brand-pink", bg: "bg-brand-pink/10", border: "border-brand-pink/20" },
+              { icon: Award,     label: "Reconocimientos",      value: "10+", color: "text-violet-400", bg: "bg-violet-400/10", border: "border-violet-400/20" },
+              { icon: BookOpen,  label: "Publicaciones",        value: "10+", color: "text-amber-400",  bg: "bg-amber-400/10",  border: "border-amber-400/20"  },
+            ].map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                className={`group flex flex-col items-center text-center p-5 sm:p-6 rounded-2xl ${stat.bg} border ${stat.border} hover:scale-[1.03] transition-transform duration-300`}
+              >
+                <div className={`w-11 h-11 rounded-xl ${stat.bg} border ${stat.border} flex items-center justify-center mb-3`}>
+                  <stat.icon className={`w-5 h-5 ${stat.color}`} />
+                </div>
+                <p className={`text-3xl sm:text-4xl font-black ${stat.color} mb-1 leading-none`}>{stat.value}</p>
+                <p className="text-white/60 text-xs font-medium leading-tight mt-1">{stat.label}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Separator line bottom */}
+        <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       </section>
 
       {/* ── 2. RECONOCIMIENTOS Y PREMIOS ───────────────────────────────────── */}
@@ -334,16 +373,32 @@ export function AboutContent() {
       </section>
 
       {/* ── 4. FORMACIÓN ACADÉMICA ─────────────────────────────────────────── */}
-      <section className="py-16 md:py-24 bg-brand-light-blue">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div {...fadeUp} className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-brand-navy/10 text-brand-navy text-sm font-medium rounded-full mb-4 border border-brand-navy/15">
-              <GraduationCap className="w-4 h-4" />
-              Formación
+      <section className="relative py-16 md:py-24 bg-brand-light-blue overflow-hidden">
+        {/* Dot grid tech pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.045] pointer-events-none"
+          style={{ backgroundImage: "radial-gradient(circle, #003257 1px, transparent 1px)", backgroundSize: "32px 32px" }}
+        />
+        {/* Ambient glow top-right */}
+        <div className="absolute -top-20 right-0 w-[420px] h-[420px] bg-brand-blue/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 -left-20 w-[300px] h-[300px] bg-brand-pink/8 rounded-full blur-[80px] pointer-events-none" />
+
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+          <motion.div {...fadeUp} className="text-center mb-14">
+            <span className="inline-flex items-center gap-2 px-4 py-2 bg-brand-blue/10 text-brand-blue text-xs font-bold rounded-full mb-5 border border-brand-blue/25 tracking-widest uppercase">
+              <GraduationCap className="w-3.5 h-3.5" />
+              Trayectoria Académica
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold font-display text-brand-navy">
-              Formación Académica
+            <h2 className="text-3xl sm:text-4xl font-bold font-display text-brand-navy mb-3">
+              Formación{" "}
+              <span className="relative inline-block">
+                Académica
+                <span className="absolute -bottom-1 left-0 w-full h-[3px] rounded-full bg-gradient-to-r from-brand-blue via-brand-pink to-brand-blue" />
+              </span>
             </h2>
+            <p className="text-brand-navy/50 text-sm mt-4 max-w-md mx-auto">
+              Especialización continua en derecho, políticas públicas e innovación gubernamental
+            </p>
           </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
@@ -354,20 +409,44 @@ export function AboutContent() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="bg-white rounded-2xl p-6 border border-brand-blue/10 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+                className="group relative bg-white rounded-2xl p-6 border border-brand-navy/8 shadow-[0_2px_16px_rgba(0,50,87,0.07)] hover:shadow-[0_8px_32px_rgba(66,114,187,0.18)] hover:-translate-y-1 transition-all duration-350 overflow-hidden"
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-brand-blue/10 flex items-center justify-center flex-shrink-0">
+                {/* Top gradient accent bar */}
+                <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-brand-blue via-cyan-400 to-brand-pink opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+                {/* Always-visible subtle top line */}
+                <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-brand-blue/30 to-brand-blue/10 group-hover:opacity-0 transition-opacity duration-400" />
+
+                {/* Ghost number */}
+                <span className="absolute -right-2 -bottom-3 text-7xl font-black text-brand-navy/[0.04] select-none leading-none pointer-events-none">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+
+                {/* Header row */}
+                <div className="flex items-start justify-between mb-4 relative z-10">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-blue/15 to-brand-blue/5 border border-brand-blue/20 flex items-center justify-center flex-shrink-0 group-hover:border-brand-blue/40 transition-colors duration-300">
                     <GraduationCap className="w-5 h-5 text-brand-blue" />
                   </div>
-                  <span className="text-xs font-bold text-brand-pink bg-brand-pink/10 px-3 py-1 rounded-full">
-                    {item.year}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[10px] font-black text-brand-pink/70 tracking-widest uppercase">
+                      {item.year}
+                    </span>
+                    <div className="w-1.5 h-1.5 rounded-full bg-brand-pink/50" />
+                  </div>
                 </div>
-                <h3 className="text-brand-navy font-semibold text-base mb-2 leading-snug">
-                  {item.titulo}
-                </h3>
-                <p className="text-brand-navy/55 text-sm">{item.institucion}</p>
+
+                {/* Content */}
+                <div className="relative z-10">
+                  <h3 className="text-brand-navy font-bold text-[15px] mb-3 leading-snug group-hover:text-brand-blue transition-colors duration-300">
+                    {item.titulo}
+                  </h3>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-[1px] bg-brand-blue/40 flex-shrink-0" />
+                    <p className="text-brand-navy/50 text-xs font-medium">{item.institucion}</p>
+                  </div>
+                </div>
+
+                {/* Bottom glow on hover */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-blue/0 to-brand-blue/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none" />
               </motion.div>
             ))}
           </div>
@@ -375,19 +454,65 @@ export function AboutContent() {
       </section>
 
       {/* ── 5. PRESENCIA INTERNACIONAL ─────────────────────────────────────── */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div {...fadeUp} className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-brand-blue/10 text-brand-blue text-sm font-medium rounded-full mb-4 border border-brand-blue/15">
-              <Globe className="w-4 h-4" />
-              Internacional
+      <section className="relative py-16 md:py-24 bg-[#001e3c] overflow-hidden">
+        {/* Subtle line grid */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(66,114,187,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(66,114,187,0.1) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+          }}
+        />
+        {/* Glows */}
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[500px] h-[280px] bg-brand-blue/30 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-[320px] h-[220px] bg-brand-pink/20 rounded-full blur-[80px] pointer-events-none" />
+
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+
+          {/* Header */}
+          <motion.div {...fadeUp} className="text-center mb-10">
+            <span className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-400/20 text-cyan-300 text-xs font-bold rounded-full mb-5 border border-cyan-400/35 tracking-widest uppercase">
+              <Globe className="w-3.5 h-3.5" />
+              Impacto Global
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold font-display text-brand-navy">
-              Presencia Internacional
+            <h2 className="text-3xl sm:text-4xl font-bold font-display text-white mb-3">
+              Presencia{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-sky-400">
+                Internacional
+              </span>
             </h2>
+            <p className="text-slate-300 text-sm mt-2 max-w-md mx-auto leading-relaxed">
+              Congresos, conferencias y misiones académicas en América Latina y Europa
+            </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+          {/* Stats strip */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-wrap justify-center gap-4 mb-12"
+          >
+            {[
+              { value: "8", label: "Eventos",     color: "text-cyan-300",    bg: "bg-cyan-400/15",   border: "border-cyan-400/30"   },
+              { value: "5", label: "Países",       color: "text-pink-300",    bg: "bg-pink-400/15",   border: "border-pink-400/30"   },
+              { value: "3", label: "Continentes",  color: "text-violet-300",  bg: "bg-violet-400/15", border: "border-violet-400/30" },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className={`flex items-center gap-3 px-6 py-3.5 rounded-2xl ${stat.bg} border ${stat.border}`}
+              >
+                <span className={`text-2xl font-black ${stat.color}`}>{stat.value}</span>
+                <div className="w-px h-5 bg-white/20" />
+                <span className="text-white/80 text-xs font-semibold tracking-widest uppercase">{stat.label}</span>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Cards grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
             {PRESENCIA.map((item, i) => (
               <motion.div
                 key={i}
@@ -395,14 +520,36 @@ export function AboutContent() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: i * 0.07 }}
-                className="border border-brand-blue/15 rounded-2xl p-5 hover:border-brand-blue/45 hover:bg-brand-light-blue transition-all duration-300"
+                className="group relative bg-white/[0.08] border border-white/20 rounded-2xl p-5 hover:bg-white/[0.14] hover:border-cyan-400/50 hover:-translate-y-1 transition-all duration-300 overflow-hidden"
               >
-                <span className="text-3xl mb-3 block">{item.flag}</span>
-                <div className="flex items-baseline gap-2 mb-1">
-                  <span className="font-bold text-brand-navy text-sm">{item.pais}</span>
-                  <span className="text-xs text-brand-blue font-semibold">{item.year}</span>
+                {/* Top accent bar on hover */}
+                <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-sky-400 via-cyan-300 to-brand-pink scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-400 rounded-t-2xl" />
+
+                {/* Flag image */}
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="w-12 h-8 rounded-md overflow-hidden border border-white/20 shadow-md flex-shrink-0">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`https://flagcdn.com/w80/${item.code}.png`}
+                      alt={item.pais}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 </div>
-                <p className="text-brand-navy/55 text-xs leading-relaxed">{item.evento}</p>
+
+                {/* Country */}
+                <p className="font-black text-white text-base mb-2 tracking-wide">{item.pais}</p>
+
+                {/* Year badge */}
+                <span className="inline-block text-[10px] font-bold text-cyan-300 bg-cyan-400/20 border border-cyan-400/35 px-2.5 py-0.5 rounded-full tracking-widest mb-3">
+                  {item.year}
+                </span>
+
+                {/* Divider */}
+                <div className="w-full h-px bg-white/20 mb-3" />
+
+                {/* Event */}
+                <p className="text-slate-300 text-xs leading-relaxed">{item.evento}</p>
               </motion.div>
             ))}
           </div>
