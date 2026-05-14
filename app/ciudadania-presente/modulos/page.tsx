@@ -227,7 +227,7 @@ export default function ModulosPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F8FC] dark:bg-[#0d1c26]">
+    <div id="top" className="min-h-screen bg-[#F5F8FC] dark:bg-[#0d1c26]">
       {/* Hero Section */}
       <div className="relative overflow-hidden bg-gradient-to-b from-[#003257] via-[#003257] to-[#F5F8FC] dark:to-[#0d1c26]">
         {/* Patrón de fondo */}

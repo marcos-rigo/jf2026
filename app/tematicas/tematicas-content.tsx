@@ -18,7 +18,7 @@ const tematicas = [
     color: "#4272BB",
   },
   {
-    href: "/alfabetizacion-mediatica",
+    href: "/ciudadania-presente/modulos#top",
     category: "Información",
     title: "Alfabetización Mediática",
     description:
@@ -29,7 +29,7 @@ const tematicas = [
     color: "#00D4AA",
   },
   {
-    href: "/huella-digital",
+    href: "/ciudadania-presente/modulos#top",
     category: "Privacidad",
     title: "Huella Digital",
     description:
@@ -40,7 +40,7 @@ const tematicas = [
     color: "#D5247A",
   },
   {
-    href: "/violencia-digital",
+    href: "/ciudadania-presente/modulos#top",
     category: "Derechos",
     title: "Violencia Digital",
     description:
@@ -51,7 +51,7 @@ const tematicas = [
     color: "#FF6B35",
   },
   {
-    href: "/estafas-digitales",
+    href: "/ciudadania-presente/modulos#top",
     category: "Seguridad",
     title: "Estafas Digitales",
     description:
@@ -200,7 +200,7 @@ export function TematicasContent() {
             {tematicas.map((tema, index) => {
               const IconComponent = tema.icon
               return (
-                <motion.div key={tema.href} variants={cardVariants}>
+                <motion.div key={tema.title} variants={cardVariants}>
                   <Link href={tema.href} className="group block h-full">
                     <div
                       className="relative h-full rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02] group"
@@ -320,7 +320,7 @@ export function TematicasContent() {
                 className="flex flex-col sm:flex-row items-center justify-center gap-4"
               >
                 <Link
-                  href="/ciudadania-digital"
+                  href="/ciudadania-presente/modulos"
                   className="px-8 py-4 rounded-full bg-brand-blue hover:bg-brand-blue/90 text-white font-semibold transition-all duration-300 flex items-center gap-2 hover:gap-3"
                 >
                   <span>Comenzar ahora</span>
