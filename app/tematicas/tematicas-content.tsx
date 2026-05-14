@@ -67,7 +67,7 @@ export function TematicasContent() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero */}
-      <section className="relative pt-36 pb-24 overflow-hidden min-h-[480px] flex items-center">
+      <section className="relative pt-28 md:pt-36 pb-16 md:pb-24 overflow-hidden min-h-[360px] sm:min-h-[480px] flex items-center">
         <Image
           src="/img/tematicas/portada.png"
           alt="Portada Temáticas"

@@ -46,7 +46,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-[#F5F8FC]">
 
       {/* ── Top bar ──────────────────────────────────────────────────────────── */}
-      <header className="sticky top-0 z-50 bg-[#003257] shadow-lg">
+      <header className="sticky top-20 z-40 bg-[#003257] shadow-lg">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-3">
 
          {/* Brand */}
@@ -111,7 +111,7 @@ export default function Dashboard() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
               <p className="text-[#4272BB] font-semibold text-xs sm:text-sm mb-1">¡Bienvenido/a al recorrido formativo!</p>
-              <h1 className="text-2xl sm:text-3xl font-black text-[#003257]">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-black text-[#003257]">
                 Hola, {user?.fullName.split(', ')[1] || user?.fullName.split(' ')[0] || 'Usuario'}
               </h1>
               <p className="text-[#5a7a8e] mt-1 text-sm">

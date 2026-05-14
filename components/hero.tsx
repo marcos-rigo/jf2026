@@ -50,7 +50,7 @@ export function Hero() {
       }} />
 
       {/* ── CONTENIDO ────────────────────────────────────────────────────────── */}
-      <div className="relative z-10 container mx-auto px-6 lg:px-16 xl:px-24 pt-32 pb-56">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-16 xl:px-24 pt-24 md:pt-32 pb-40 md:pb-56">
         <div className="max-w-[640px]">
 
           {/* Ubicación — chico, no compite */}

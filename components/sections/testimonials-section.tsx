@@ -21,7 +21,7 @@ const testimonials = [
 
 export function TestimonialsSection() {
   return (
-    <section className="py-24 bg-gradient-to-b from-brand-light-blue to-white overflow-hidden">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-brand-light-blue to-white overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

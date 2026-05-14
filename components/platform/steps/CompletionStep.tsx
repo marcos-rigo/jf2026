@@ -25,7 +25,7 @@ export default function CompletionStep({ subtopicData, subtopicState }: Props) {
 
     return (
         <div className="max-w-2xl mx-auto py-8">
-            <div className="bg-white rounded-[40px] border border-[#d3e2f0] p-10 md:p-16 shadow-2xl text-center relative overflow-hidden">
+            <div className="bg-white rounded-[40px] border border-[#d3e2f0] p-6 md:p-12 lg:p-16 shadow-2xl text-center relative overflow-hidden">
                 {/* Success burst decoration */}
                 {isPassed && (
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-green-500 to-transparent" />
@@ -39,7 +39,7 @@ export default function CompletionStep({ subtopicData, subtopicState }: Props) {
                     )}
                 </div>
 
-                <h1 className="text-3xl md:text-4xl font-black text-[#003257] mb-4">
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-[#003257] mb-4">
                     {isPassed ? '¡Felicitaciones!' : 'Seguí intentando'}
                 </h1>
 

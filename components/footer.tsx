@@ -46,9 +46,9 @@ export function Footer() {
   }
 
   return (
-    <footer className="bg-[#001e3c] pt-20 pb-8">
+    <footer className="bg-[#001e3c] pt-14 md:pt-20 pb-8">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 pb-12 border-b border-white/10">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-16 pb-12 border-b border-white/10">
           {/* Column 1: Logo & Contact */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -49,7 +49,7 @@ export default function Certificate() {
         </div>
 
         {/* ── Certificate Card ──────────────────────────────────────────────── */}
-        <div className="bg-white rounded-none border-[12px] border-slate-900 p-8 sm:p-12 lg:p-16 shadow-2xl relative overflow-hidden print:border-8 print:shadow-none print:m-0">
+        <div className="bg-white rounded-none border-[8px] sm:border-[12px] border-slate-900 p-6 sm:p-10 lg:p-16 shadow-2xl relative overflow-hidden print:border-8 print:shadow-none print:m-0">
           
           {/* Inner decorative border */}
           <div className="absolute inset-3 sm:inset-4 border-2 border-amber-500/30 pointer-events-none" />
@@ -75,7 +75,7 @@ export default function Certificate() {
               Certificado de Finalización
             </p>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 mb-10 tracking-tight font-serif">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-10 tracking-tight font-serif">
               Ciudadanía Digital
             </h1>
 

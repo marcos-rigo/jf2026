@@ -64,7 +64,7 @@ export function MultimediaContent() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 bg-gradient-to-b from-brand-dark via-[#002444] to-[#003a60]">
+      <section className="relative pt-24 md:pt-32 pb-16 md:pb-20 bg-gradient-to-b from-brand-dark via-[#002444] to-[#003a60]">
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -87,7 +87,7 @@ export function MultimediaContent() {
       </section>
 
       {/* Videos Section */}
-      <section className="py-24 bg-white">
+      <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -143,7 +143,7 @@ export function MultimediaContent() {
       </section>
 
       {/* Podcast Section */}
-      <section id="podcast" className="relative py-24 overflow-hidden" style={{ background: "linear-gradient(160deg, #001228 0%, #002444 55%, #001e3c 100%)" }}>
+      <section id="podcast" className="relative py-16 md:py-24 overflow-hidden" style={{ background: "linear-gradient(160deg, #001228 0%, #002444 55%, #001e3c 100%)" }}>
 
         {/* Ambient glows */}
         <div className="absolute inset-0 pointer-events-none">

@@ -288,7 +288,7 @@ export function NewsContent() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 bg-gradient-to-b from-brand-dark via-[#002444] to-[#003a60] overflow-hidden">
+      <section className="relative pt-24 md:pt-32 pb-16 md:pb-20 bg-gradient-to-b from-brand-dark via-[#002444] to-[#003a60] overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/4 -left-1/4 w-[500px] h-[500px] bg-brand-blue/20 rounded-full blur-[100px]" />
           <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-brand-pink/15 rounded-full blur-[80px]" />

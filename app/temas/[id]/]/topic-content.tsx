@@ -54,7 +54,7 @@ export function TopicContent({ id }: TopicContentProps) {
 
   if (!topic) {
     return (
-      <section className="pt-32 pb-20 min-h-screen">
+      <section className="pt-24 md:pt-32 pb-16 md:pb-20 min-h-screen">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-white mb-4">Tema no encontrado</h1>
@@ -73,7 +73,7 @@ export function TopicContent({ id }: TopicContentProps) {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 bg-gradient-to-b from-brand-dark via-[#002444] to-[#003a60]">
+      <section className="relative pt-24 md:pt-32 pb-16 md:pb-20 bg-gradient-to-b from-brand-dark via-[#002444] to-[#003a60]">
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

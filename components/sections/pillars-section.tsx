@@ -59,7 +59,7 @@ export function PillarsSection() {
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-brand-pink/8 rounded-full blur-[110px]" />
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 relative z-10 pt-20 pb-24">
+      <div className="container mx-auto px-4 lg:px-8 relative z-10 pt-12 md:pt-20 pb-16 md:pb-24">
 
         {/* Header */}
         <motion.div

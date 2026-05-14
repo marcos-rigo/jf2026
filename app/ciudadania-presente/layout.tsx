@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Navbar } from '@/components/navbar'
 
 export const metadata: Metadata = {
   title: 'Ciudadanía Presente - Plataforma Educativa',
@@ -10,5 +11,12 @@ export default function CiudadaniaLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <>{children}</>
+  return (
+    <>
+      <Navbar />
+      <div className="pt-20">
+        {children}
+      </div>
+    </>
+  )
 }

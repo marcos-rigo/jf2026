@@ -45,7 +45,7 @@ export function LocalNewsSection() {
         <div className="absolute top-1/2 -translate-y-1/2 right-0 w-[400px] h-[400px] bg-brand-pink/6 rounded-full blur-[100px]" />
       </div>
 
-      <div className="container relative z-20 mx-auto px-4 lg:px-8 pt-20 lg:pt-28 pb-24 lg:pb-32">
+      <div className="container relative z-20 mx-auto px-4 lg:px-8 pt-14 lg:pt-28 pb-16 lg:pb-32">
 
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">

@@ -29,7 +29,7 @@ const videos = [
 export function MultimediaSection() {
   return (
     <section
-      className="relative overflow-hidden py-24"
+      className="relative overflow-hidden py-16 md:py-24"
       style={{ background: "linear-gradient(150deg, #001228 0%, #00213d 60%, #001e3c 100%)" }}
     >
       {/* Ambient glows */}

@@ -323,7 +323,7 @@ export default function ModulosPage() {
         </div>
 
         {/* Información adicional */}
-        <div className="mt-16 rounded-2xl bg-gradient-to-r from-[#003257]/5 to-[#4272BB]/5 p-8 text-center dark:from-[#003257]/10 dark:to-[#4272BB]/10">
+        <div className="mt-16 rounded-2xl bg-gradient-to-r from-[#003257]/5 to-[#4272BB]/5 p-4 md:p-8 text-center dark:from-[#003257]/10 dark:to-[#4272BB]/10">
           <h3 className="mb-2 text-xl font-semibold text-[#003257] dark:text-white">
             ¿Necesitás más información?
           </h3>
@@ -339,7 +339,7 @@ export default function ModulosPage() {
 
       {/* Footer minimal */}
       <footer className="border-t border-gray-200 bg-white py-8 dark:border-gray-800 dark:bg-[#122233]">
-        <div className="mx-auto max-w-7xl px-6 text-center">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 text-center">
           <p className="text-sm text-gray-500 dark:text-gray-400">
             © 2024 Ciudadanía Presente - José Farhat
           </p>

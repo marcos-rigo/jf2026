@@ -53,8 +53,8 @@ export default function WizardLayout() {
     <div className="min-h-screen bg-[#F5F8FC] flex flex-col">
 
       {/* ── Top header ─────────────────────────────────────────────────────── */}
-      <header className="sticky top-0 z-50 bg-[#003257] shadow-lg">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-13 sm:h-14 flex items-center gap-3">
+      <header className="sticky top-20 z-40 bg-[#003257] shadow-lg">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-12 sm:h-14 flex items-center gap-3">
           <button
             onClick={goToDashboard}
             className="flex items-center gap-1.5 text-white/70 hover:text-white transition-colors text-xs sm:text-sm font-medium flex-shrink-0"

@@ -148,7 +148,7 @@ export function EstafasDigitalesContent() {
       {/* ════════════════════════════════════════════════════════════════════════
           HERO SECTION
           ════════════════════════════════════════════════════════════════════════ */}
-      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+      <section className="relative pt-24 md:pt-32 lg:pt-40 pb-16 md:pb-20 lg:pb-28 overflow-hidden">
         {/* Gradient Blobs */}
         <div className="absolute inset-0 -z-10 opacity-30 dark:opacity-15">
           <motion.div

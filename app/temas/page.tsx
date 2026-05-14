@@ -116,7 +116,7 @@ export default function TopicsIndexPage() {
       
       <main className="bg-white">
         {/* ── HERO ────────────────────────────────────────────────────────────── */}
-        <section className="relative bg-linear-to-br from-brand-navy via-brand-blue to-purple-900 py-24 overflow-hidden">
+        <section className="relative bg-linear-to-br from-brand-navy via-brand-blue to-purple-900 py-16 md:py-24 overflow-hidden">
           {/* Pattern */}
           <div className="absolute inset-0 opacity-10"
             style={{

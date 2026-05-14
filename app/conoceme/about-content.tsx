@@ -9,7 +9,7 @@ export function AboutContent() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 bg-gradient-to-b from-brand-dark via-[#002444] to-[#003a60] overflow-hidden">
+      <section className="relative pt-24 md:pt-32 pb-16 md:pb-20 bg-gradient-to-b from-brand-dark via-[#002444] to-[#003a60] overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 -left-1/4 w-[500px] h-[500px] bg-brand-blue/30 rounded-full blur-[100px]" />
           <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-brand-pink/20 rounded-full blur-[80px]" />
@@ -38,14 +38,6 @@ export function AboutContent() {
                 >
                   Contactar
                   <ArrowRight className="w-5 h-5" />
-                </Link>
-                <Link
-                  href="https://ciudadaniadigital.josefarhat.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-transparent border-2 border-white/30 text-white font-semibold rounded-full hover:bg-white/10 transition-colors"
-                >
-                  Ciudadanía Digital
                 </Link>
               </div>
             </motion.div>
@@ -98,7 +90,7 @@ export function AboutContent() {
       </section>
 
       {/* Bio */}
-      <section id="formula" className="relative py-24 bg-gradient-to-b from-[#002444] to-brand-dark overflow-hidden">
+      <section id="formula" className="relative py-16 md:py-24 bg-gradient-to-b from-[#002444] to-brand-dark overflow-hidden">
 
         {/* Ambient glows */}
         <div className="absolute inset-0 pointer-events-none">

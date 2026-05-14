@@ -24,12 +24,12 @@ export default function PodcastStep({ subtopicData, subtopicState }: Props) {
     <div className="space-y-6">
       {/* Header */}
       <div className="rounded-2xl overflow-hidden shadow-sm" style={{ background: 'linear-gradient(135deg, #1a1040 0%, #2d1b6e 100%)' }}>
-        <div className="p-8">
+        <div className="p-4 sm:p-6 md:p-8">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-white/90 text-xs font-semibold mb-4">
             <Headphones className="w-3.5 h-3.5" />
             Contenido de audio
           </div>
-          <h1 className="text-2xl font-black text-white mb-2">{subtopicData.podcastTitle}</h1>
+          <h1 className="text-lg sm:text-xl md:text-2xl font-black text-white mb-2">{subtopicData.podcastTitle}</h1>
           <p className="text-white/75 text-sm leading-relaxed">{subtopicData.podcastDescription}</p>
         </div>
       </div>

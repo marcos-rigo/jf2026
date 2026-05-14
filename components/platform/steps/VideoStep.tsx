@@ -24,12 +24,12 @@ export default function VideoStep({ subtopicData, subtopicState }: Props) {
     <div className="space-y-6">
       {/* Header */}
       <div className="rounded-2xl overflow-hidden shadow-sm" style={{ background: 'linear-gradient(135deg, #1a2f42 0%, #003257 100%)' }}>
-        <div className="p-8">
+        <div className="p-4 sm:p-6 md:p-8">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-white/90 text-xs font-semibold mb-4">
             <Video className="w-3.5 h-3.5" />
             Contenido audiovisual
           </div>
-          <h1 className="text-2xl font-black text-white mb-2">{subtopicData.videoTitle}</h1>
+          <h1 className="text-lg sm:text-xl md:text-2xl font-black text-white mb-2">{subtopicData.videoTitle}</h1>
           <p className="text-white/75 text-sm leading-relaxed">{subtopicData.videoDescription}</p>
         </div>
       </div>

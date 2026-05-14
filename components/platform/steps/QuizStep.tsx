@@ -71,9 +71,9 @@ export default function QuizStep({ subtopicData, subtopicState }: Props) {
                     </div>
                 </div>
 
-                <div className="p-8 md:p-10">
+                <div className="p-4 sm:p-6 md:p-10">
                     <p className="text-[#5a7a8e] text-xs font-bold uppercase tracking-widest mb-2">Pregunta {currentQuestionIdx + 1}</p>
-                    <h3 className="text-xl md:text-2xl font-black text-[#003257] leading-tight mb-8">
+                    <h3 className="text-lg md:text-xl lg:text-2xl font-black text-[#003257] leading-tight mb-6 md:mb-8">
                         {currentQuestion.question}
                     </h3>
 
@@ -102,7 +102,7 @@ export default function QuizStep({ subtopicData, subtopicState }: Props) {
                     </div>
                 </div>
 
-                <div className="px-8 pb-10 flex items-center justify-between">
+                <div className="px-4 sm:px-8 pb-6 sm:pb-10 flex items-center justify-between">
                     <button
                         onClick={handlePrev}
                         disabled={currentQuestionIdx === 0}

@@ -37,7 +37,7 @@ const tools = [
 
 export function ToolboxSection() {
   return (
-    <section id="herramientas" className="relative py-24 bg-brand-light-blue overflow-hidden">
+    <section id="herramientas" className="relative py-16 md:py-24 bg-brand-light-blue overflow-hidden">
 
       {/* Ambient glows */}
       <div className="absolute inset-0 pointer-events-none">

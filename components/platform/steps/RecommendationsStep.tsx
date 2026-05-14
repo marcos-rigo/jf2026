@@ -34,12 +34,12 @@ export default function RecommendationsStep({ subtopicData, subtopicState }: Pro
     return (
         <div className="space-y-6">
             <div className="rounded-2xl overflow-hidden shadow-sm" style={{ background: 'linear-gradient(135deg, #003257 0%, #4272BB 100%)' }}>
-                <div className="p-8 md:p-10">
+                <div className="p-4 sm:p-6 md:p-10">
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-white/90 text-xs font-semibold mb-4">
                         <Star className="w-3.5 h-3.5" />
                         Recursos recomendados
                     </div>
-                    <h1 className="text-2xl md:text-3xl font-black text-white text-balance mb-4">
+                    <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black text-white text-balance mb-4">
                         Para seguir profundizando
                     </h1>
                     <p className="text-white/80 text-sm leading-relaxed max-w-2xl">

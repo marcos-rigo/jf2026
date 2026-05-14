@@ -517,7 +517,7 @@ export default function RegistrationForm({ defaultMode = 'login' }: Registration
                   <SectionLabel>Datos personales</SectionLabel>
 
                   {/* Apellido + Nombre */}
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <FieldRow label="Apellido" required error={errors.lastName}>
                       <input type="text" placeholder="Ej: González"
                         onKeyDown={onNameKeyDown} maxLength={40} autoComplete="family-name"
@@ -531,7 +531,7 @@ export default function RegistrationForm({ defaultMode = 'login' }: Registration
                   </div>
 
                   {/* N° Documento + Fecha de nacimiento */}
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <FieldRow label="N° Documento" required hint="DNI, pasaporte…" error={errors.dni}>
                       <input type="text" inputMode="numeric" placeholder="Sin puntos ni espacios"
                         maxLength={12} onKeyDown={onNumberKeyDown} autoComplete="off"
@@ -560,7 +560,7 @@ export default function RegistrationForm({ defaultMode = 'login' }: Registration
                   <SectionLabel>Procedencia</SectionLabel>
 
                   {/* País + Provincia / Estado */}
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <FieldRow label="País" required error={errors.pais}>
                       <input type="text" placeholder="Ej: Argentina, España…"
                         autoComplete="country-name" maxLength={60}
@@ -590,7 +590,7 @@ export default function RegistrationForm({ defaultMode = 'login' }: Registration
                   </FieldRow>
 
                   {/* Teléfono + Nivel educativo */}
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <FieldRow label="Teléfono" hint="Opcional" error={errors.telefono}>
                       <input type="tel" placeholder="Ej: +54 381…" autoComplete="tel"
                         {...fieldProps('telefono')}/>
@@ -613,7 +613,7 @@ export default function RegistrationForm({ defaultMode = 'login' }: Registration
                   {/* ── Contraseña ── */}
                   <SectionLabel>Contraseña de acceso</SectionLabel>
 
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <FieldRow label="Contraseña" required error={errors.password}>
                       <input type="password" placeholder="Mínimo 6 caracteres"
                         autoComplete="new-password" {...fieldProps('password')}/>

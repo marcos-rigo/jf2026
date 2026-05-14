@@ -151,7 +151,7 @@ export default function ViolenciaDigitalContent() {
       <main className="bg-slate-50 min-h-screen">
 
         {/* ── HERO ───────────────────────────────────────────────────────── */}
-        <section className="pt-32 pb-16 px-4">
+        <section className="pt-24 md:pt-32 pb-12 md:pb-16 px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
