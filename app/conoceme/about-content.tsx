@@ -78,6 +78,11 @@ const FORMACION = [
     year: "2017–2022",
   },
   {
+    titulo: "Posgrado Internacional en Dirección Estratégica",
+    institucion: "Universidad de Belgrano",
+    year: "2020",
+  },
+  {
     titulo: "Especialización en Gestión Estratégica en Seguridad",
     institucion: "ICCE, Ministerio de Seguridad de la Nación",
     year: "2018",
@@ -277,7 +282,7 @@ export function AboutContent() {
               Carrera
             </span>
             <h2 className="text-3xl sm:text-4xl font-bold font-display text-white">
-              Trayectoria Profesional
+              Ámbitos de Incidencia en la Actualidad
             </h2>
           </motion.div>
 
@@ -483,7 +488,7 @@ export function AboutContent() {
               </span>
             </h2>
             <p className="text-slate-300 text-sm mt-2 max-w-md mx-auto leading-relaxed">
-              Congresos, conferencias y misiones académicas en América Latina y Europa
+              Congresos y conferencias en América Latina y Europa
             </p>
           </motion.div>
 

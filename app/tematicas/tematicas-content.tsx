@@ -166,22 +166,6 @@ export function TematicasContent() {
               de la ciudadanía en el mundo digital.
             </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              className="mt-10 flex items-center justify-center gap-8"
-            >
-              <div className="text-center">
-                <div className="text-3xl font-display font-bold text-white">05</div>
-                <div className="text-xs text-white/40 uppercase tracking-wider">Temas</div>
-              </div>
-              <div className="w-px h-10 bg-white/10" />
-              <div className="text-center">
-                <div className="text-3xl font-display font-bold text-brand-blue">100%</div>
-                <div className="text-xs text-white/40 uppercase tracking-wider">Gratuito</div>
-              </div>
-            </motion.div>
           </motion.div>
         </div>
 
