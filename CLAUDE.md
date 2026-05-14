@@ -55,6 +55,37 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 | `/violencia-digital` | Digital violence — cyberbullying and online harassment guide |
 | `/estafas-digitales` | Digital scams — phishing/smishing/vishing protection guide |
 | `/contacto` | Contact form |
+| `/ciudadania-presente` | Redirects to `/ciudadania-presente/modulos` |
+| `/ciudadania-presente/modulos` | Platform landing — module grid (1 active, 6 upcoming) |
+| `/ciudadania-presente/login` | Login / register form (`?mode=register` switches tab) |
+| `/ciudadania-presente/dashboard/inicio` | Authenticated dashboard — renders `Dashboard`, `WizardLayout`, or `Certificate` based on Zustand `screen` state |
+
+### Ciudadanía Presente platform (`/ciudadania-presente`)
+
+A self-contained learning platform embedded in the site. It does **not** use the site's Navbar/Footer or brand layout — it has its own UI and minimal footer.
+
+**State management:** Zustand store (`lib/ciudadania/app-store.ts`) persisted in `localStorage` (key `ciudadania-digital-state`). In `NODE_ENV=development` the store skips persistence and auto-loads a test user so registration is bypassed. The `screen` field drives which component the dashboard renders: `registration → dashboard → wizard → certificate`.
+
+**Wizard flow:** `WizardLayout` steps through `intro → video → podcast → recommendations → quiz → result`. Quiz pass threshold is **score ≥ 8**. Passing a subtopic unlocks the next one.
+
+**Backend:** MySQL via `lib/ciudadania/db.ts` (connection pool). Auth + progress sync are Next.js API routes under `app/api/ciudadania/`. Passwords hashed with `bcryptjs`. Progress is also synced server-side on quiz submit and dashboard navigation.
+
+**Key files:**
+- `lib/ciudadania/types.ts` — all shared types (`SubtopicData`, `AppState`, `WizardStep`, etc.)
+- `lib/ciudadania/app-store.ts` — Zustand store with all actions
+- `lib/ciudadania/mysql-auth.ts` — register, login, password-reset helpers
+- `lib/ciudadania/mock-data.ts` — hardcoded subtopic content (text, video URLs, quiz questions)
+- `components/platform/` — `RegistrationForm`, `Dashboard`, `WizardLayout`, `Certificate`, and step components
+
+**Required env vars (not in NEXT_PUBLIC):**
+
+| Variable | Purpose |
+|----------|---------|
+| `DB_HOST` | MySQL host |
+| `DB_PORT` | MySQL port (default 3306) |
+| `DB_USER` | MySQL user |
+| `DB_PASSWORD` | MySQL password |
+| `DB_NAME` | MySQL database name |
 
 ### Home page composition (`app/page.tsx`)
 
@@ -68,7 +99,7 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 <NewsSection />              // Hardcoded featured news
 <LocalNewsSection />
 <MultimediaSection />
-<TestimonialsSection />      // 2 hardcoded testimonials
+<TestimonialsSection />      // 1 hardcoded testimonial (Alejandro Nató)
 <QuickContactSection />      // Form → Firebase Firestore + EmailJS
 <Footer />
 <FloatingElements />
@@ -87,6 +118,8 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 - `lib/weekly-content.ts` — ISO week helpers, `fetch`-based content loader, and localStorage seen-state helpers for the weekly modal
 - `hooks/use-mobile.ts` — Responsive breakpoint detection
 - `hooks/use-toast.ts` — Toast hook (Sonner)
+- `lib/ciudadania/` — Types, Zustand store, MySQL auth helpers, and mock content for the Ciudadanía Presente platform
+- `components/platform/` — All components for the Ciudadanía Presente platform (auth, dashboard, wizard steps, certificate)
 
 ### Styling and brand tokens
 
@@ -120,14 +153,17 @@ Detailed workflow and `metadata.json` field reference: `content-management/READM
 
 - **Firebase Firestore** — `QuickContactSection` saves form submissions to `contactos` collection. Lazy-imported to avoid bundle bloat. Uses `NEXT_PUBLIC_FIREBASE_*` env vars.
 - **EmailJS** — Same form sends email via `template_72zh3ni`. Lazy-imported. Uses `NEXT_PUBLIC_EMAILJS_*` env vars.
-
+- **MySQL** — Used exclusively by the Ciudadanía Presente platform for user auth and progress sync (`lib/ciudadania/db.ts`). Uses `DB_*` env vars (server-only, not `NEXT_PUBLIC`).
 - **Anthropic Claude API** — Planned integration for auto-updating topics via `web_search`. `ANTHROPIC_API_KEY` env var reserved for this use.
 - **Vercel Analytics** — `<Analytics />` in root layout.
 - **Google Forms** — Newsletter subscription in footer.
 
 ### Key dependencies
 
-- **framer-motion** — All animations (`whileInView`, hover, entrance, `AnimatePresence`)
+- **zustand** — State management for the Ciudadanía Presente platform (`lib/ciudadania/app-store.ts`)
+- **mysql2** — MySQL client for the platform backend
+- **bcryptjs** — Password hashing in `lib/ciudadania/mysql-auth.ts`
+- **framer-motion** — All animations in the public site (`whileInView`, hover, entrance, `AnimatePresence`)
 - **shadcn/ui** (Radix UI) — UI primitives in `components/ui/`
 - **firebase** — Firestore for form submissions
 - **@emailjs/browser** — Contact form email sending

@@ -39,6 +39,7 @@ npm run archive-old          # move past weeks to archive/
 |----------|---------|
 | `NEXT_PUBLIC_FIREBASE_*` | Firestore (contact form) |
 | `NEXT_PUBLIC_EMAILJS_*` | EmailJS (template `template_72zh3ni`) |
+| `DB_HOST` / `DB_PORT` / `DB_USER` / `DB_PASSWORD` / `DB_NAME` | MySQL for Ciudadanía Presente platform (server-only) |
 | `ANTHROPIC_API_KEY` | Reserved for planned Claude integration |
 
 
