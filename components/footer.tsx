@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { Mail, MapPin, Send } from "lucide-react"
-import { useState } from "react"
+import { useRef, useState } from "react"
 
 const socialLinks = [
   { name: "X/Twitter", href: "https://x.com/JoseFarhatok", icon: XIcon },
@@ -21,25 +21,79 @@ const quickLinks = [
   { label: "Contacto", href: "/contacto" },
 ]
 
+// RFC 5321: max 254 chars total, max 64 for local part, TLD ≥ 2 letters
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/
+const RATE_LIMIT_MS = 60_000
+
+function sanitizeEmail(raw: string): string {
+  return raw.replace(/[\x00-\x1F\x7F]/g, "").trim().toLowerCase().slice(0, 254)
+}
+
+function validateEmail(raw: string): string | null {
+  const email = sanitizeEmail(raw)
+  if (!email) return "Ingresá tu email."
+  const [local] = email.split("@")
+  if (local.length > 64) return "La parte local del email no puede superar 64 caracteres."
+  if (local.startsWith(".") || local.endsWith(".")) return "Formato de email inválido."
+  if (/\.{2,}/.test(email)) return "Formato de email inválido (puntos consecutivos)."
+  if (!EMAIL_REGEX.test(email)) return "Ingresá un email con formato válido (ej: nombre@dominio.com)."
+  return null
+}
+
+async function saveSubscription(email: string) {
+  const res = await fetch("/api/subscribe", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  })
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}))
+    throw new Error(data?.error ?? `HTTP ${res.status}`)
+  }
+}
+
 export function Footer() {
   const [email, setEmail] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [validationError, setValidationError] = useState<string | null>(null)
+  const [serverError, setServerError] = useState(false)
+  const lastSubmitAt = useRef<number>(0)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value)
+    if (validationError) setValidationError(null)
+    if (serverError) setServerError(false)
+  }
+
+  const handleBlur = () => {
+    if (email) setValidationError(validateEmail(email))
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    const error = validateEmail(email)
+    if (error) { setValidationError(error); return }
+
+    const now = Date.now()
+    if (now - lastSubmitAt.current < RATE_LIMIT_MS) {
+      setValidationError("Esperá un momento antes de intentar de nuevo.")
+      return
+    }
+
     setIsSubmitting(true)
-    
+    setServerError(false)
+
     try {
-      await fetch("https://script.google.com/macros/s/AKfycbzUKHnwD0QrQylJHbvuSTxlHdUuSRkFo81iAxgx0jNotkV_1g_698lRdQSSDs4tfHs7/exec", {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify({ email }),
-      })
+      const clean = sanitizeEmail(email)
+      await saveSubscription(clean)
+      lastSubmitAt.current = now
       setIsSubmitted(true)
       setEmail("")
-    } catch {
-      // Handle error silently
+    } catch (err) {
+      console.error("[Footer] Error al guardar suscripción:", err)
+      setServerError(true)
     } finally {
       setIsSubmitting(false)
     }
@@ -133,23 +187,45 @@ export function Footer() {
                 ¡Gracias por suscribirte!
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex gap-2">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Tu email"
-                  required
-                  className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder:text-white/40 focus:outline-none focus:border-brand-pink transition-colors"
-                />
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="inline-flex items-center justify-center px-4 py-3 bg-brand-pink rounded-xl text-white font-medium hover:bg-brand-pink/90 transition-colors disabled:opacity-50"
-                >
-                  <Send className="w-5 h-5" />
-                </button>
-              </form>
+              <>
+                <form onSubmit={handleSubmit} className="flex gap-2" noValidate>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder="Tu email"
+                    required
+                    maxLength={254}
+                    autoComplete="email"
+                    aria-label="Email para suscripción"
+                    aria-describedby={validationError ? "sub-error" : undefined}
+                    aria-invalid={!!validationError}
+                    className={`flex-1 px-4 py-3 bg-white/10 border rounded-xl text-white placeholder:text-white/40 focus:outline-none transition-colors ${
+                      validationError
+                        ? "border-red-400 focus:border-red-400"
+                        : "border-white/20 focus:border-brand-pink"
+                    }`}
+                  />
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="inline-flex items-center justify-center px-4 py-3 bg-brand-pink rounded-xl text-white font-medium hover:bg-brand-pink/90 transition-colors disabled:opacity-50"
+                  >
+                    <Send className="w-5 h-5" />
+                  </button>
+                </form>
+                {validationError && (
+                  <p id="sub-error" role="alert" className="mt-2 text-red-400 text-sm">
+                    {validationError}
+                  </p>
+                )}
+                {serverError && (
+                  <p role="alert" className="mt-2 text-red-400 text-sm">
+                    Ocurrió un error al suscribirte. Intentá de nuevo.
+                  </p>
+                )}
+              </>
             )}
           </motion.div>
         </div>

@@ -36,13 +36,14 @@ Personal/political website for **José Farhat** (Secretario de Participación Ci
 Most routes follow a two-file pattern: `page.tsx` (server component, exports `metadata`) and a `*-content.tsx` (client component with `"use client"` for animations and interactivity). Exceptions:
 - `/temas` and `/temas/[id]` are single-file fully client components with no server page wrapper; `/temas/page.tsx` includes Navbar/Footer directly.
 - The digital citizenship sub-pages (`/alfabetizacion-mediatica`, `/huella-digital`, `/violencia-digital`, `/estafas-digitales`) use the two-file pattern but their `page.tsx` omits Navbar/Footer — the content component handles layout.
-- `/blog` (`blog-content.tsx`) and `/caja-de-herramientas` (`toolbox-content.tsx`) do follow the two-file pattern despite not being listed that way historically.
+- `/caja-de-herramientas` (`toolbox-content.tsx`) follows the two-file pattern.
+- `/blog` is referenced in CLAUDE.md but `app/blog/` does not exist yet — do not assume it's active.
 
 | Route | Purpose |
 |-------|---------|
 | `/` | Home landing: 9+ section components |
 | `/conoceme` | About page — bio, stats, philosophy |
-| `/blog` | Blog article listing (3 hardcoded posts) |
+| `/blog` | Blog article listing (3 hardcoded posts) — **route directory not yet created** |
 | `/novedades` | News/updates listing (8 hardcoded) |
 | `/multimedia` | Videos and podcasts |
 | `/temas` | Topic listing — single client component with search/filter (includes Navbar/Footer directly) |
@@ -143,7 +144,7 @@ All content is **hardcoded as typed arrays** at the top of section components �
 
 
 
-**Weekly modal content** lives in `public/weekly-content/YYYY-WNN/` (e.g. `2026-W19/`). Each folder needs a `metadata.json` (matching the `WeeklyContent` interface in `lib/weekly-content.ts`) and a visual asset (`.gif`, `.webp`, or `.mp4`) referenced by `gifFileName`. Folders also typically include supplementary assets: PDF presentations and PNG infographics (not rendered by the modal, but distributed alongside). The modal renders once per ISO week per browser via `localStorage` (key prefix: `weeklyModal_`). **Important:** after creating a new week folder, add the week key (e.g. `"2026-W23"`) to `public/weekly-content/manifest.json` manually — `npm run create-week` does not do this automatically. Asset size target is < 3 MB; the container is 16:9. All fetches use `cache: "no-store"` to prevent stale content.
+**Weekly modal content** lives in `public/weekly-content/YYYY-WNN/` (e.g. `2026-W19/`). Each folder needs a `metadata.json` (matching the `WeeklyContent` interface in `lib/weekly-content.ts`) and a visual asset (`.gif`, `.webp`, or `.mp4`) referenced by `gifFileName`. Folders also typically include supplementary assets — PDF presentations, PNG infographics, and SVG files (none rendered by the modal; distributed alongside for social/print use). Naming convention observed: `*Gif.gif` for the modal visual, `*png.png` for share card, `inf*.png` for infographic, `*.pdf` for presentation. The modal renders once per ISO week per browser via `localStorage` (key prefix: `weeklyModal_`). **Important:** after creating a new week folder, add the week key (e.g. `"2026-W23"`) to `public/weekly-content/manifest.json` manually — `npm run create-week` does not do this automatically. Asset size target is < 3 MB; the container is 16:9. All fetches use `cache: "no-store"` to prevent stale content.
 
 > **`metadata.json` field note:** Use `ctaLink`/`ctaText` for call-to-action links. The `linkTo` field is deprecated (kept for backward compatibility only).
 
@@ -184,3 +185,15 @@ Detailed workflow and `metadata.json` field reference: `content-management/READM
 - **shadcn/ui** — Add new components with `npx shadcn add <component>`. Do not edit files in `components/ui/` directly.
 - **No CI/CD** — No GitHub Actions or CI configuration exists in this repo.
 - **`AGENTS.md`** — Condensed quick-reference for the same material in this file, plus a weekly modal workflow summary.
+- **`ThemeProvider` not in root layout** — `app/layout.tsx` does not wrap with `ThemeProvider` from `next-themes`; the `.dark` class may need to be toggled manually or this integration is incomplete.
+
+### API routes (`app/api/ciudadania/`)
+
+All four routes are POST-only, server-side, and use the MySQL pool from `lib/ciudadania/db.ts`:
+
+| Route | Purpose |
+|-------|---------|
+| `auth/login` | Validate credentials, return user data |
+| `auth/register` | Create account, hash password with bcryptjs |
+| `auth/reset-password` | Reset password by email |
+| `progress/sync` | Read or write subtopic progress for a user |
