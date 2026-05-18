@@ -16,6 +16,7 @@ const tematicas = [
     imageAlt: "Banner Ciudadanía Digital",
     icon: Shield,
     color: "#4272BB",
+    locked: false,
   },
   {
     href: "/alfabetizacion-mediatica",
@@ -27,6 +28,7 @@ const tematicas = [
     imageAlt: "Banner Alfabetización Mediática",
     icon: Search,
     color: "#00D4AA",
+    locked: true,
   },
   {
     href: "/huella-digital",
@@ -38,6 +40,7 @@ const tematicas = [
     imageAlt: "Banner Huella Digital",
     icon: Eye,
     color: "#D5247A",
+    locked: true,
   },
   {
     href: "/violencia-digital",
@@ -49,6 +52,7 @@ const tematicas = [
     imageAlt: "Banner Violencia Digital",
     icon: Lock,
     color: "#FF6B35",
+    locked: true,
   },
   {
     href: "/estafas-digitales",
@@ -60,6 +64,7 @@ const tematicas = [
     imageAlt: "Banner Estafas Digitales",
     icon: AlertTriangle,
     color: "#FFD93D",
+    locked: true,
   },
 ]
 
@@ -181,17 +186,17 @@ export function TematicasContent() {
             viewport={{ once: true, margin: "-100px" }}
             className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
           >
-            {tematicas.map((tema, index) => {
+            {tematicas.map((tema) => {
               const IconComponent = tema.icon
+              const linkHref = tema.locked ? "/ciudadania-presente/modulos" : tema.href
               return (
                 <motion.div key={tema.title} variants={cardVariants}>
-                  <Link href={tema.href} className="group block h-full">
+                  <Link href={linkHref} className="group block h-full">
                     <div
                       className="relative h-full rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02] group"
                       style={{ '--glow-color': tema.color } as React.CSSProperties}
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#0d1a2d] to-[#0f1d35] rounded-2xl border border-white/5 group-hover:border-white/15 transition-all duration-500" />
-                      
                       <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent rounded-2xl" />
 
                       <div className="relative h-full flex flex-col">
@@ -206,16 +211,14 @@ export function TematicasContent() {
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-[#0f1d35] via-[#0f1d35]/50 to-transparent" />
                           <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
-                          
+
                           <div className="absolute top-4 left-4 flex items-center gap-2">
                             <div
                               className="px-3 py-1.5 rounded-full backdrop-blur-xl border flex items-center gap-1.5"
                               style={{ backgroundColor: `${tema.color}20`, borderColor: `${tema.color}40` }}
                             >
                               <IconComponent className="w-3.5 h-3.5" style={{ color: tema.color }} />
-                              <span className="text-xs font-medium text-white/90">
-                                {tema.category}
-                              </span>
+                              <span className="text-xs font-medium text-white/90">{tema.category}</span>
                             </div>
                           </div>
 
@@ -235,7 +238,7 @@ export function TematicasContent() {
                               </div>
                             </div>
                           </div>
-                          
+
                           <p className="text-sm text-white/40 leading-relaxed flex-1 group-hover:text-white/50 transition-colors duration-300">
                             {tema.description}
                           </p>
@@ -251,9 +254,7 @@ export function TematicasContent() {
 
                       <div
                         className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                        style={{
-                          boxShadow: `0 0 60px ${tema.color}20, inset 0 0 60px ${tema.color}08`,
-                        }}
+                        style={{ boxShadow: `0 0 60px ${tema.color}20, inset 0 0 60px ${tema.color}08` }}
                       />
                     </div>
                   </Link>
