@@ -22,6 +22,7 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const pathname = usePathname()
+  const isDark = isScrolled || pathname.startsWith("/ciudadania-presente")
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,7 +40,7 @@ export function Navbar() {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          isScrolled
+          isDark
             ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-border/50"
             : "bg-transparent"
         )}
@@ -49,7 +50,7 @@ export function Navbar() {
             {/* Logo */}
             <Link href="/" className="relative z-10 flex-shrink-0">
               <Image
-                src={isScrolled ? "/img/marcaJF.svg" : "/img/marcaJFb.svg"}
+                src={isDark ? "/img/marcaJF.svg" : "/img/marcaJFb.svg"}
                 alt="José Farhat"
                 width={140}
                 height={40}
@@ -69,10 +70,10 @@ export function Navbar() {
                     className={cn(
                       "px-4 py-2 text-sm font-medium transition-colors rounded-lg",
                       isActive
-                        ? isScrolled
+                        ? isDark
                           ? "text-brand-pink bg-brand-light-blue"
                           : "text-white bg-white/15"
-                        : isScrolled
+                        : isDark
                           ? "text-brand-navy hover:text-brand-pink hover:bg-brand-light-blue"
                           : "text-white/90 hover:text-white hover:bg-white/10"
                     )}
@@ -103,7 +104,7 @@ export function Navbar() {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className={cn(
                 "lg:hidden relative z-10 p-2 rounded-lg transition-colors",
-                isScrolled || isMobileMenuOpen
+                isDark || isMobileMenuOpen
                   ? "text-brand-navy hover:bg-brand-light-blue"
                   : "text-white hover:bg-white/10"
               )}

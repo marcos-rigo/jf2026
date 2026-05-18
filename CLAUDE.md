@@ -37,7 +37,7 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 - `/temas` and `/temas/[id]` are single-file fully client components with no server page wrapper; `/temas/page.tsx` includes Navbar/Footer directly.
 - The digital citizenship sub-pages (`/alfabetizacion-mediatica`, `/huella-digital`, `/violencia-digital`, `/estafas-digitales`) use the two-file pattern but their `page.tsx` omits Navbar/Footer — the content component handles layout.
 - `/caja-de-herramientas` (`toolbox-content.tsx`) follows the two-file pattern.
-- `/blog` is referenced in CLAUDE.md but `app/blog/` does not exist yet — do not assume it's active.
+- `/blog` is linked in the Navbar but `app/blog/` does not exist yet — do not assume it's active.
 
 | Route | Purpose |
 |-------|---------|
@@ -171,6 +171,8 @@ Detailed workflow and `metadata.json` field reference: `content-management/READM
 - **@vercel/analytics** — Page view tracking
 - **react-hook-form + zod** — Form handling and schema validation
 - **recharts** — Data visualizations in `/alfabetizacion-mediatica` and `components/ciudadania-digital/`
+- **chart.js** + **react-chartjs-2** — Also installed; usage overlaps with recharts in some components
+- **date-fns** — Date formatting utilities
 - **lucide-react** — Icons (900+)
 - **sonner** — Toast notifications
 - **next-themes** — Dark mode toggle; wraps the app via `components/theme-provider.tsx` and applies the `.dark` CSS class
@@ -180,7 +182,7 @@ Detailed workflow and `metadata.json` field reference: `content-management/READM
 - **`"use client"` rule** — Any component with state, events, or Framer Motion animations must have `"use client"` at the top. Server components are: `app/page.tsx`, `app/layout.tsx`, and most `*/page.tsx` route files. Exception: `/temas/page.tsx` and `/temas/[id]/page.tsx` are client components.
 - **TypeScript errors ignored at build** — Use `npx tsc --noEmit` explicitly.
 - **Remote images** — `next.config.mjs` only allows `josefarhat.com`. Add new domains to `remotePatterns` for external image sources. Always use `next/image` (`<Image>`).
-- **Known filename typo** — `app/temas/[id]/]/page.tsx` (extra bracket in path) exists alongside the correct `app/temas/[id]/page.tsx`. Verify which is active before editing.
+- **Known filename typo** — `app/temas/[id]/]/page.tsx` and `app/temas/[id]/]/topic-content.tsx` (extra bracket in path) exist alongside the correct files. Verify which is active before editing.
 - **Lazy imports** — Firebase and EmailJS are dynamically imported in `QuickContactSection` to keep the initial bundle small.
 - **shadcn/ui** — Add new components with `npx shadcn add <component>`. Do not edit files in `components/ui/` directly.
 - **No CI/CD** — No GitHub Actions or CI configuration exists in this repo.
