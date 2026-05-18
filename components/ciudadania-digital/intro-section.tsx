@@ -1,20 +1,47 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { FileText, ZoomIn, Download } from 'lucide-react';
+import { ZoomIn, ChevronLeft, ChevronRight, Images } from 'lucide-react';
 
 interface IntroSectionProps {
   onNavigate: (tab: 'paso1' | 'paso2' | 'paso3' | 'herramientas') => void;
 }
 
-const PDF_PATH = '/weekly-content/2026-W19/Ciudadan%C3%ADa%20Digital.pdf';
+const slideVariants = {
+  enter: (dir: number) => ({ opacity: 0, x: dir * 80 }),
+  center: { opacity: 1, x: 0 },
+  exit: (dir: number) => ({ opacity: 0, x: dir * -80 }),
+}
+
 const INFOGRAFIA_PATH = '/weekly-content/2026-W19/ciudadaniaDigitalCard.png';
+const CARRUSEL_IMAGES = [
+  '/weekly-content/2026-W19/carrusel/1.svg',
+  '/weekly-content/2026-W19/carrusel/2.svg',
+  '/weekly-content/2026-W19/carrusel/3.svg',
+  '/weekly-content/2026-W19/carrusel/4.svg',
+  '/weekly-content/2026-W19/carrusel/5.svg',
+];
 
 export default function IntroSection({ onNavigate }: IntroSectionProps) {
   const [imgExpanded, setImgExpanded] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [direction, setDirection] = useState(0);
+
+  const goTo = useCallback((index: number, dir: number) => {
+    setDirection(dir);
+    setCurrentSlide(index);
+  }, []);
+
+  const prev = useCallback(() => {
+    goTo((currentSlide - 1 + CARRUSEL_IMAGES.length) % CARRUSEL_IMAGES.length, -1);
+  }, [currentSlide, goTo]);
+
+  const next = useCallback(() => {
+    goTo((currentSlide + 1) % CARRUSEL_IMAGES.length, 1);
+  }, [currentSlide, goTo]);
 
   return (
     <motion.section
@@ -106,57 +133,84 @@ export default function IntroSection({ onNavigate }: IntroSectionProps) {
         </Button>
       </div>
 
-      {/* ── Presentación PDF embebida ── */}
+      {/* ── Carrusel inline ── */}
       <div className="backdrop-blur-xl bg-[#141A28]/70 border border-slate-800/50 rounded-3xl overflow-hidden">
+        {/* Header */}
         <div className="p-6 md:p-8 border-b border-slate-800/50 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#8B5CF6] to-blue-600 flex items-center justify-center shadow-[0_0_12px_rgba(139,92,246,0.3)] shrink-0">
-              <FileText className="w-5 h-5 text-white" />
+              <Images className="w-5 h-5 text-white" />
             </div>
             <div>
               <p className="text-xs font-mono tracking-widest uppercase text-[#8B5CF6] opacity-80 mb-0.5">
                 Presentación completa
               </p>
               <h3 className="text-lg md:text-xl font-bold text-white font-display">
-                Ciudadanía Digital — Documento
+                Ciudadanía Digital — Galería
               </h3>
             </div>
           </div>
-
-          <a
-            href={PDF_PATH}
-            download
-            className="shrink-0 flex items-center gap-2 text-xs text-slate-400 hover:text-[#8B5CF6] transition-colors border border-slate-700 hover:border-[#8B5CF6]/50 rounded-xl px-3 py-2"
-          >
-            <Download className="w-4 h-4" />
-            <span className="hidden sm:inline">Descargar</span>
-          </a>
+          <span className="text-slate-400 text-sm font-mono">
+            {currentSlide + 1} / {CARRUSEL_IMAGES.length}
+          </span>
         </div>
 
-        {/* iframe — oculto en móviles muy pequeños; fallback con link */}
-        <div className="hidden sm:block w-full h-[600px] md:h-[780px] lg:h-[900px]">
-          <iframe
-            src={`${PDF_PATH}#toolbar=1&navpanes=0&scrollbar=1&view=FitH`}
-            className="w-full h-full border-0"
-            title="Presentación Ciudadanía Digital"
-          />
+        {/* Área de imagen con flechas */}
+        <div className="relative overflow-hidden">
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={currentSlide}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.35, ease: 'easeInOut' }}
+            >
+              <Image
+                src={CARRUSEL_IMAGES[currentSlide]}
+                alt={`Lámina ${currentSlide + 1}`}
+                width={1200}
+                height={800}
+                className="w-full h-auto object-contain"
+                priority
+              />
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Flecha izquierda */}
+          <button
+            onClick={prev}
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-black/70 border border-white/20 flex items-center justify-center transition-colors backdrop-blur-sm"
+            aria-label="Anterior"
+          >
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+          </button>
+
+          {/* Flecha derecha */}
+          <button
+            onClick={next}
+            className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-black/70 border border-white/20 flex items-center justify-center transition-colors backdrop-blur-sm"
+            aria-label="Siguiente"
+          >
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+          </button>
         </div>
 
-        {/* Fallback visible solo en móviles pequeños */}
-        <div className="flex sm:hidden flex-col items-center gap-4 p-8 text-center">
-          <FileText className="w-12 h-12 text-[#8B5CF6] opacity-60" />
-          <p className="text-slate-400 text-sm">
-            El visor de PDF no está disponible en pantallas pequeñas.
-          </p>
-          <a
-            href={PDF_PATH}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#8B5CF6]/20 hover:bg-[#8B5CF6]/30 border border-[#8B5CF6]/40 text-[#8B5CF6] font-medium px-6 py-3 rounded-full transition-all text-sm"
-          >
-            <FileText className="w-4 h-4" />
-            Ver presentación
-          </a>
+        {/* Dots */}
+        <div className="flex items-center justify-center gap-2 py-5">
+          {CARRUSEL_IMAGES.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i, i > currentSlide ? 1 : -1)}
+              className={`rounded-full transition-all duration-300 ${
+                i === currentSlide
+                  ? 'w-6 h-2.5 bg-[#8B5CF6]'
+                  : 'w-2.5 h-2.5 bg-slate-600 hover:bg-slate-400'
+              }`}
+              aria-label={`Ir a lámina ${i + 1}`}
+            />
+          ))}
         </div>
       </div>
     </motion.section>
