@@ -64,7 +64,7 @@ export default function CiudadaniaDigitalContent() {
         <div className="fixed inset-0 bg-[length:40px_40px] bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] pointer-events-none opacity-20 z-0" />
 
         {/* Navegación Lateral */}
-        <nav className="w-full md:w-72 md:pt-24 backdrop-blur-xl bg-[#141A28]/70 border-r border-slate-800 flex flex-col shadow-2xl md:min-h-screen shrink-0 relative z-10">
+        <nav className="w-full md:w-72 pt-20 md:pt-24 backdrop-blur-xl bg-[#141A28]/70 border-r border-slate-800 flex flex-col shadow-2xl md:min-h-screen shrink-0 relative z-10">
           <div className="p-8 border-b border-slate-800/50 bg-slate-900/50">
             <h1 className="text-2xl font-bold text-white flex items-center gap-3 font-display">
               <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#00F0FF] to-blue-600 flex items-center justify-center shadow-[0_0_15px_rgba(0,240,255,0.3)]">

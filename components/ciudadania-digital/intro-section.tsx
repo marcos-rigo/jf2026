@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ZoomIn, ChevronLeft, ChevronRight, Images } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Images } from 'lucide-react';
 
 interface IntroSectionProps {
   onNavigate: (tab: 'paso1' | 'paso2' | 'paso3' | 'herramientas') => void;
@@ -16,7 +16,7 @@ const slideVariants = {
   exit: (dir: number) => ({ opacity: 0, x: dir * -80 }),
 }
 
-const INFOGRAFIA_PATH = '/weekly-content/2026-W19/ciudadaniaDigitalCard.png';
+const INFOGRAFIA_PATH = '/weekly-content/2026-W19/infografiaSemanal.svg';
 const CARRUSEL_IMAGES = [
   '/weekly-content/2026-W19/carrusel/1.svg',
   '/weekly-content/2026-W19/carrusel/2.svg',
@@ -26,7 +26,6 @@ const CARRUSEL_IMAGES = [
 ];
 
 export default function IntroSection({ onNavigate }: IntroSectionProps) {
-  const [imgExpanded, setImgExpanded] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
 
@@ -52,44 +51,33 @@ export default function IntroSection({ onNavigate }: IntroSectionProps) {
       className="w-full space-y-8"
     >
       {/* ── Infografía general ── */}
-      <div className="backdrop-blur-xl bg-[#141A28]/70 border border-slate-800/50 rounded-3xl overflow-hidden relative">
-        <div className="absolute top-0 left-0 w-72 h-72 bg-[#00F0FF] opacity-5 blur-[120px] rounded-full pointer-events-none" />
-
-        <div className="p-6 md:p-8 border-b border-slate-800/50 flex items-center justify-between gap-4">
-          <div>
-            <p className="text-xs font-mono tracking-widest uppercase text-[#00F0FF] opacity-80 mb-1">
-              Vista General
-            </p>
-            <h2 className="text-xl md:text-2xl font-bold text-white font-display">
-              Infografía de Ciudadanía Digital
-            </h2>
+      <div className="relative">
+        <div className="absolute -inset-4 bg-gradient-to-br from-[#00F0FF]/15 via-transparent to-[#8B5CF6]/10 blur-2xl rounded-3xl pointer-events-none" />
+        <div className="relative rounded-2xl overflow-hidden border border-[#00F0FF]/20 shadow-[0_30px_80px_rgba(0,0,0,0.5),0_0_0_1px_rgba(0,240,255,0.06)]">
+          {/* Window chrome */}
+          <div className="flex items-center gap-3 px-5 py-3.5 bg-gradient-to-r from-[#07101f] to-[#0b1830] border-b border-white/[0.07]">
+            <div className="flex gap-1.5 shrink-0">
+              <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+              <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
+              <div className="w-3 h-3 rounded-full bg-[#28c840]" />
+            </div>
+            <div className="flex-1 flex justify-center">
+              <div className="bg-white/[0.05] border border-white/[0.08] rounded-md px-4 py-1 flex items-center gap-2 max-w-xs w-full">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#00F0FF] animate-pulse shrink-0" />
+                <span className="text-xs text-white/40 font-mono truncate">infografia — Ciudadanía Digital</span>
+              </div>
+            </div>
+            <div className="w-16 shrink-0" />
           </div>
-          <button
-            onClick={() => setImgExpanded((v) => !v)}
-            className="shrink-0 flex items-center gap-2 text-xs text-slate-400 hover:text-[#00F0FF] transition-colors border border-slate-700 hover:border-[#00F0FF]/50 rounded-xl px-3 py-2"
-          >
-            <ZoomIn className="w-4 h-4" />
-            <span className="hidden sm:inline">{imgExpanded ? 'Reducir' : 'Ampliar'}</span>
-          </button>
-        </div>
-
-        <div
-          className={`relative w-full transition-all duration-500 cursor-zoom-in ${
-            imgExpanded ? 'max-h-[90vh]' : 'max-h-[420px] md:max-h-[560px]'
-          } overflow-hidden`}
-          onClick={() => setImgExpanded((v) => !v)}
-        >
-          <Image
-            src={INFOGRAFIA_PATH}
-            alt="Infografía general de Ciudadanía Digital"
-            width={1200}
-            height={800}
-            className="w-full h-auto object-contain"
-            priority
-          />
-          {!imgExpanded && (
-            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#141A28] to-transparent pointer-events-none" />
-          )}
+          {/* SVG a ancho completo */}
+          <div className="bg-white">
+            <img
+              src={INFOGRAFIA_PATH}
+              alt="Infografía de Ciudadanía Digital"
+              className="w-full h-auto block"
+            />
+          </div>
+          <div className="h-[2px] bg-gradient-to-r from-transparent via-[#00F0FF]/60 to-transparent" />
         </div>
       </div>
 

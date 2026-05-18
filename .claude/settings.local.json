@@ -27,7 +27,10 @@
       "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\app\" -Recurse -File | Where-Object { $_.Length -eq 0 } | Select-Object FullName)",
       "PowerShell(Get-FileHash *)",
       "Bash(dir *)",
-      "PowerShell($path = \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\app\\\\temas\\\\[id]\\\\]\"; [System.IO.Directory]::Delete\\($path, $true\\))"
+      "PowerShell($path = \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\app\\\\temas\\\\[id]\\\\]\"; [System.IO.Directory]::Delete\\($path, $true\\))",
+      "Bash(Get-ChildItem \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\public\\\\weekly-content\\\\2026-W19\")",
+      "Bash(Select-Object Name, Length)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\public\\\\weekly-content\" | ForEach-Object { Write-Host $_.FullName })"
     ]
   }
 }

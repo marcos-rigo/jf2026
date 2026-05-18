@@ -18,7 +18,7 @@ const tematicas = [
     color: "#4272BB",
   },
   {
-    href: "/ciudadania-presente/modulos#top",
+    href: "/alfabetizacion-mediatica",
     category: "Información",
     title: "Alfabetización Mediática",
     description:
@@ -29,7 +29,7 @@ const tematicas = [
     color: "#00D4AA",
   },
   {
-    href: "/ciudadania-presente/modulos#top",
+    href: "/huella-digital",
     category: "Privacidad",
     title: "Huella Digital",
     description:
@@ -40,7 +40,7 @@ const tematicas = [
     color: "#D5247A",
   },
   {
-    href: "/ciudadania-presente/modulos#top",
+    href: "/violencia-digital",
     category: "Derechos",
     title: "Violencia Digital",
     description:
@@ -51,7 +51,7 @@ const tematicas = [
     color: "#FF6B35",
   },
   {
-    href: "/ciudadania-presente/modulos#top",
+    href: "/estafas-digitales",
     category: "Seguridad",
     title: "Estafas Digitales",
     description:

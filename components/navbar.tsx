@@ -22,7 +22,8 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const pathname = usePathname()
-  const isDark = isScrolled || pathname.startsWith("/ciudadania-presente")
+  const TRANSPARENT_ROUTES = ["/", "/tematicas", "/ciudadania-digital"]
+  const isDark = isScrolled || !TRANSPARENT_ROUTES.some(r => r === "/" ? pathname === "/" : pathname.startsWith(r))
 
   useEffect(() => {
     const handleScroll = () => {

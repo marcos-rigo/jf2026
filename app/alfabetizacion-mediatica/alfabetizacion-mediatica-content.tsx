@@ -5,12 +5,21 @@ import { AnimatePresence, motion } from "framer-motion"
 import Image from "next/image"
 import { Doughnut } from "react-chartjs-2"
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js"
-import { FileText, ZoomIn, Download } from "lucide-react"
+import { ChevronLeft, ChevronRight, Images } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 
-const INFOGRAFIA_PATH = "/weekly-content/2026-W20/infogAlfMeInf.png"
-const PDF_PATH = "/weekly-content/2026-W20/alfMedInf.pdf"
+const INFOGRAFIA_PATH = "/weekly-content/2026-W20/infografia%202.svg"
+
+const slideVariants = {
+  enter: (dir: number) => ({ opacity: 0, x: dir * 80 }),
+  center: { opacity: 1, x: 0 },
+  exit: (dir: number) => ({ opacity: 0, x: dir * -80 }),
+}
+
+const CARRUSEL_IMAGES = Array.from({ length: 7 }, (_, i) =>
+  `/weekly-content/2026-W20/carrusel/${i + 1}.svg`
+)
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
@@ -166,7 +175,15 @@ export default function AlfabetizacionMediaticaContent() {
   const [activeTab, setActiveTab] = useState<TabId>("paso1")
   const [openFaq, setOpenFaq] = useState<FaqId>(null)
   const [checked, setChecked] = useState<Set<string>>(new Set())
-  const [imgExpanded, setImgExpanded] = useState(false)
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [direction, setDirection] = useState(0)
+
+  function goTo(index: number, dir: number) {
+    setDirection(dir)
+    setCurrentSlide(index)
+  }
+  function prevSlide() { goTo((currentSlide - 1 + CARRUSEL_IMAGES.length) % CARRUSEL_IMAGES.length, -1) }
+  function nextSlide() { goTo((currentSlide + 1) % CARRUSEL_IMAGES.length, 1) }
 
   function toggleCheck(id: string) {
     setChecked((prev) => {
@@ -211,10 +228,10 @@ export default function AlfabetizacionMediaticaContent() {
       </div>
 
       <main className="bg-slate-50 text-slate-800 antialiased min-h-screen">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12 space-y-24">
 
           {/* ── HERO ───────────────────────────────────────────────────────── */}
-          <section className="grid lg:grid-cols-2 gap-16 items-center pt-8">
+          <section className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -281,44 +298,32 @@ export default function AlfabetizacionMediaticaContent() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
+            className="relative"
           >
-            <div className="bg-white/70 backdrop-blur-xl border border-white/80 shadow-lg rounded-[2.5rem] overflow-hidden">
-              <div className="px-6 md:px-10 py-5 border-b border-slate-100 flex items-center justify-between gap-4">
-                <div>
-                  <p className="text-xs font-bold text-indigo-500 tracking-widest uppercase mb-0.5">
-                    Vista General
-                  </p>
-                  <h2 className="text-xl md:text-2xl font-extrabold text-slate-900 font-display">
-                    Infografía de Alfabetización Mediática
-                  </h2>
+            <div className="absolute -inset-4 bg-gradient-to-br from-indigo-500/15 via-transparent to-purple-500/10 blur-2xl rounded-3xl pointer-events-none" />
+            <div className="relative rounded-2xl overflow-hidden border border-indigo-300/30 shadow-[0_30px_80px_rgba(99,102,241,0.15),0_4px_24px_rgba(0,0,0,0.1)]">
+              <div className="flex items-center gap-3 px-5 py-3.5 bg-gradient-to-r from-[#1e1b4b] to-[#2e2a7a] border-b border-white/[0.07]">
+                <div className="flex gap-1.5 shrink-0">
+                  <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+                  <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
+                  <div className="w-3 h-3 rounded-full bg-[#28c840]" />
                 </div>
-                <button
-                  onClick={() => setImgExpanded((v) => !v)}
-                  className="shrink-0 flex items-center gap-2 text-xs text-slate-500 hover:text-indigo-600 transition-colors border border-slate-200 hover:border-indigo-300 rounded-xl px-3 py-2 bg-white shadow-sm"
-                >
-                  <ZoomIn className="w-4 h-4" />
-                  <span className="hidden sm:inline">{imgExpanded ? "Reducir" : "Ampliar"}</span>
-                </button>
+                <div className="flex-1 flex justify-center">
+                  <div className="bg-white/[0.07] border border-white/[0.1] rounded-md px-4 py-1 flex items-center gap-2 max-w-xs w-full">
+                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse shrink-0" />
+                    <span className="text-xs text-white/50 font-mono truncate">infografia — Alfabetización Mediática</span>
+                  </div>
+                </div>
+                <div className="w-16 shrink-0" />
               </div>
-
-              <div
-                className={`relative w-full transition-all duration-500 cursor-zoom-in overflow-hidden ${
-                  imgExpanded ? "max-h-[90vh]" : "max-h-[420px] md:max-h-[560px]"
-                }`}
-                onClick={() => setImgExpanded((v) => !v)}
-              >
-                <Image
+              <div className="bg-white">
+                <img
                   src={INFOGRAFIA_PATH}
-                  alt="Infografía general de Alfabetización Mediática e Informacional"
-                  width={1200}
-                  height={800}
-                  className="w-full h-auto object-contain"
-                  priority
+                  alt="Infografía de Alfabetización Mediática"
+                  className="w-full h-auto block"
                 />
-                {!imgExpanded && (
-                  <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white/90 to-transparent pointer-events-none" />
-                )}
               </div>
+              <div className="h-[2px] bg-gradient-to-r from-transparent via-indigo-500/60 to-transparent" />
             </div>
           </motion.section>
 
@@ -669,7 +674,7 @@ export default function AlfabetizacionMediaticaContent() {
             </div>
           </section>
 
-          {/* ── PRESENTACIÓN PDF ──────────────────────────────────────────── */}
+          {/* ── CARRUSEL INLINE ───────────────────────────────────────────── */}
           <motion.section
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -677,52 +682,80 @@ export default function AlfabetizacionMediaticaContent() {
             transition={{ duration: 0.5 }}
           >
             <div className="bg-white/70 backdrop-blur-xl border border-white/80 shadow-lg rounded-[2.5rem] overflow-hidden">
+              {/* Header */}
               <div className="px-6 md:px-10 py-5 border-b border-slate-100 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-md shrink-0">
-                    <FileText className="w-5 h-5 text-white" />
+                    <Images className="w-5 h-5 text-white" />
                   </div>
                   <div>
                     <p className="text-xs font-bold text-indigo-500 tracking-widest uppercase mb-0.5">
                       Presentación completa
                     </p>
                     <h2 className="text-xl md:text-2xl font-extrabold text-slate-900 font-display">
-                      Alfabetización Mediática — Documento
+                      Alfabetización Mediática — Galería
                     </h2>
                   </div>
                 </div>
-                <a
-                  href={PDF_PATH}
-                  download
-                  className="shrink-0 flex items-center gap-2 text-xs text-slate-500 hover:text-indigo-600 transition-colors border border-slate-200 hover:border-indigo-300 rounded-xl px-3 py-2 bg-white shadow-sm"
-                >
-                  <Download className="w-4 h-4" />
-                  <span className="hidden sm:inline">Descargar</span>
-                </a>
+                <span className="text-slate-400 text-sm font-mono shrink-0">
+                  {currentSlide + 1} / {CARRUSEL_IMAGES.length}
+                </span>
               </div>
 
-              <div className="hidden sm:block w-full h-[600px] md:h-[780px] lg:h-[900px]">
-                <iframe
-                  src={`${PDF_PATH}#toolbar=1&navpanes=0&scrollbar=1&view=FitH`}
-                  className="w-full h-full border-0"
-                  title="Presentación Alfabetización Mediática"
-                />
+              {/* Imagen con flechas */}
+              <div className="relative overflow-hidden">
+                <AnimatePresence mode="wait" custom={direction}>
+                  <motion.div
+                    key={currentSlide}
+                    custom={direction}
+                    variants={slideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.35, ease: "easeInOut" }}
+                  >
+                    <Image
+                      src={CARRUSEL_IMAGES[currentSlide]}
+                      alt={`Lámina ${currentSlide + 1}`}
+                      width={1200}
+                      height={800}
+                      className="w-full h-auto object-contain"
+                      priority
+                    />
+                  </motion.div>
+                </AnimatePresence>
+
+                <button
+                  onClick={prevSlide}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 hover:bg-black/50 border border-white/20 flex items-center justify-center transition-colors backdrop-blur-sm"
+                  aria-label="Anterior"
+                >
+                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                </button>
+
+                <button
+                  onClick={nextSlide}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 hover:bg-black/50 border border-white/20 flex items-center justify-center transition-colors backdrop-blur-sm"
+                  aria-label="Siguiente"
+                >
+                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                </button>
               </div>
 
-              <div className="flex sm:hidden flex-col items-center gap-4 p-8 text-center">
-                <FileText className="w-12 h-12 text-indigo-400 opacity-60" />
-                <p className="text-slate-500 text-sm">
-                  El visor de PDF no está disponible en pantallas pequeñas.
-                </p>
-                <a
-                  href={PDF_PATH}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-700 font-medium px-6 py-3 rounded-full transition-all text-sm"
-                >
-                  <FileText className="w-4 h-4" />
-                  Ver presentación
-                </a>
+              {/* Dots */}
+              <div className="flex items-center justify-center gap-2 py-5">
+                {CARRUSEL_IMAGES.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => goTo(i, i > currentSlide ? 1 : -1)}
+                    className={`rounded-full transition-all duration-300 ${
+                      i === currentSlide
+                        ? "w-6 h-2.5 bg-indigo-500"
+                        : "w-2.5 h-2.5 bg-slate-300 hover:bg-slate-400"
+                    }`}
+                    aria-label={`Ir a lámina ${i + 1}`}
+                  />
+                ))}
               </div>
             </div>
           </motion.section>
