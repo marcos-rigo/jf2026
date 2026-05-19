@@ -110,7 +110,7 @@ A self-contained learning platform embedded in the site. It does **not** use the
 
 - `components/navbar.tsx` — Fixed header, desktop dropdowns, mobile hamburger with Framer Motion
 - `components/hero.tsx` — Video hero (`/vid/vid.mp4`) with gradient overlays
-- `components/footer.tsx` — Links, social icons, newsletter (Google Forms webhook)
+- `components/footer.tsx` — Links, social icons, newsletter subscription (POSTs to `/api/subscribe` → MySQL `suscriptores` table)
 - `components/weekly-modal.tsx` + `weekly-modal-loader.tsx` — Weekly promo modal shown once per ISO week; content loaded from `public/weekly-content/YYYY-WNN/metadata.json` + a GIF; seen state tracked in `localStorage`
 - `components/sections/` — One component per homepage section
 - `components/ciudadania-digital/` — Components for the `/ciudadania-digital` route and its sub-pages; includes `errors-chart.tsx` and `security-chart.tsx` (Recharts)
@@ -199,3 +199,5 @@ All four routes are POST-only, server-side, and use the MySQL pool from `lib/ciu
 | `auth/register` | Create account, hash password with bcryptjs |
 | `auth/reset-password` | Reset password by email |
 | `progress/sync` | Read or write subtopic progress for a user |
+
+`app/api/subscribe/route.ts` — POST-only, saves newsletter emails to the MySQL `suscriptores` table (uses the same pool from `lib/ciudadania/db.ts`). Deduplicates via `INSERT IGNORE`.

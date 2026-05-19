@@ -52,7 +52,7 @@ const tematicas = [
     imageAlt: "Banner Violencia Digital",
     icon: Lock,
     color: "#FF6B35",
-    locked: true,
+    locked: false,
   },
   {
     href: "/estafas-digitales",
