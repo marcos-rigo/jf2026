@@ -50,14 +50,14 @@ const exampleTopic = {
       {
         title: "Tecnología al servicio de la democracia",
         paragraphs: [
-          "La plataforma desarrollada incluye módulos de consulta popular, seguimiento de proyectos legislativos, presupuesto participativo y audiencias públicas virtuales. Todo diseñado con estándares de accesibilidad y seguridad de última generación.",
+          "La plataforma desarrollada incluye módulos de consulta popular, seguimiento de proyectos legislativos, presupuesto participativo y audiencias públicas digitales. Todo diseñado con estándares de accesibilidad y seguridad de última generación.",
           "El sistema ya está siendo utilizado por más de 50,000 ciudadanos en su fase piloto, con una valoración promedio de 4.8 sobre 5 estrellas. Los municipios del interior de la provincia están integrando gradualmente estas herramientas en sus propias gestiones."
         ]
       },
       {
         title: "Capacitación ciudadana continua",
         paragraphs: [
-          "Conscientes de que la tecnología por sí sola no garantiza la participación, la Secretaría ha diseñado un programa integral de capacitación. Talleres presenciales y virtuales recorren toda la provincia, enseñando a los ciudadanos cómo utilizar estas herramientas y, más importante aún, cómo ejercer sus derechos democráticos de manera informada y efectiva.",
+          "Conscientes de que la tecnología por sí sola no garantiza la participación, la Secretaría ha diseñado un programa integral de capacitación. Talleres presenciales y digitales recorren toda la provincia, enseñando a los ciudadanos cómo utilizar estas herramientas y, más importante aún, cómo ejercer sus derechos democráticos de manera informada y efectiva.",
           "El programa 'Ciudadanía Presente' ya ha capacitado a más de 10,000 tucumanos en los primeros tres meses del año, con metas de llegar a 100,000 personas antes de fin de año."
         ]
       }

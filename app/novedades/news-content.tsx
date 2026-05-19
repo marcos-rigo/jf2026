@@ -196,8 +196,8 @@ const newsItems = [
   },
   {
     category: "Vínculo",
-    title: "\"Tucumán en Red\" busca prevenir la violencia familiar y los delitos virtuales",
-    excerpt: "\"Buscamos estrechar lazos con los vecinos para detectar potenciales situaciones de violencia familiar y virtual.\"",
+    title: "\"Tucumán en Red\" busca prevenir la violencia familiar y los delitos digitales",
+    excerpt: "\"Buscamos estrechar lazos con los vecinos para detectar potenciales situaciones de violencia familiar y digital.\"",
     image: "/img/noti/noti7.png",
     href: "https://www.lagaceta.com.ar/nota/949845/seguridad/tucuman-red-busca-prevenir-violencia-familiar-delitos-virtuales.html",
     date: "2022",

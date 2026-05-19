@@ -60,8 +60,8 @@ const allTopics = [
     featured: false
   },
   {
-    id: "audiencias-publicas-virtuales",
-    title: "Récord de participación en audiencias públicas virtuales",
+    id: "audiencias-publicas-digitales",
+    title: "Récord de participación en audiencias públicas digitales",
     description: "Más de 10,000 ciudadanos participaron en las audiencias públicas del primer trimestre, un 300% más que el año anterior.",
     date: "20 de Marzo, 2026",
     location: "Plataforma Digital",
