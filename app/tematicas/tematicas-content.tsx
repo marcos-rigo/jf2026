@@ -45,11 +45,11 @@ const tematicas = [
   {
     href: "/violencia-digital",
     category: "Derechos",
-    title: "Violencia Digital",
+    title: "Violencia Digital hacia la Mujer",
     description:
       "Guía completa sobre ciberbullying, acoso en línea y violencia de género digital. Conocé tus derechos y cómo actuar si sos víctima.",
     image: "/weekly-content/2026-W22/violenciapng.png",
-    imageAlt: "Banner Violencia Digital",
+    imageAlt: "Banner Violencia Digital hacia la Mujer",
     icon: Lock,
     color: "#FF6B35",
     locked: false,

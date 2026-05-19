@@ -71,11 +71,11 @@ const RED_FLAGS = [
   },
   {
     title: 'Creer que "es tu culpa"',
-    desc: "La violencia digital es un delito tipificado (Ley Olimpia). El único culpable es el agresor.",
+    desc: "La violencia digital hacia la mujer es un delito tipificado (Ley Olimpia). El único culpable es el agresor.",
   },
 ]
 
-const TEMPLATE = `Estimados, me comunico para reportar un caso de violencia digital (basado en la Ley Olimpia).
+const TEMPLATE = `Estimados, me comunico para reportar un caso de violencia digital hacia la mujer (basado en la Ley Olimpia).
 
 He sido víctima de [acoso / difusión no consentida de imágenes / amenazas] en la plataforma [Nombre de red social].
 Cuento con las siguientes pruebas resguardadas:
@@ -88,7 +88,7 @@ const FAQS: { id: FaqId; q: string; a: string | React.ReactNode }[] = [
   {
     id: "faq1",
     q: '¿Qué es exactamente la "Ley Olimpia"?',
-    a: "No es una sola ley, sino un conjunto de reformas legales (nacidas en México y expandidas por LatAm) que reconocen la violencia digital y sancionan penalmente delitos como la difusión de contenido íntimo sin consentimiento y el ciberacoso.",
+    a: "No es una sola ley, sino un conjunto de reformas legales (nacidas en México y expandidas por LatAm) que reconocen la violencia digital hacia la mujer y sancionan penalmente delitos como la difusión de contenido íntimo sin consentimiento y el ciberacoso.",
   },
   {
     id: "faq2",
@@ -143,7 +143,7 @@ export default function ViolenciaDigitalContent() {
 
   function downloadPlan() {
     const content = [
-      "PLAN DE ACCIÓN — VIOLENCIA DIGITAL",
+      "PLAN DE ACCIÓN — VIOLENCIA DIGITAL HACIA LA MUJER",
       "=====================================",
       "",
       "CHECKLIST:",
@@ -156,7 +156,7 @@ export default function ViolenciaDigitalContent() {
     const url = URL.createObjectURL(blob)
     const a = document.createElement("a")
     a.href = url
-    a.download = "Plan_Accion_Violencia_Digital.txt"
+    a.download = "Plan_Accion_Violencia_Digital_Hacia_La_Mujer.txt"
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
@@ -187,7 +187,7 @@ export default function ViolenciaDigitalContent() {
             <h1 className="font-display text-4xl md:text-6xl font-extrabold mb-6 tracking-tight text-slate-900">
               Tomá el control ante la{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-cyan-400">
-                Violencia Digital
+                Violencia Digital hacia la Mujer
               </span>
             </h1>
 
@@ -224,7 +224,7 @@ export default function ViolenciaDigitalContent() {
                 <div className="flex-1 flex justify-center">
                   <div className="bg-white/[0.07] border border-white/[0.1] rounded-md px-4 py-1 flex items-center gap-2 max-w-xs w-full">
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse shrink-0" />
-                    <span className="text-xs text-white/50 font-mono truncate">infografia — Violencia Digital</span>
+                    <span className="text-xs text-white/50 font-mono truncate">infografia — Violencia Digital hacia la Mujer</span>
                   </div>
                 </div>
                 <div className="w-16 shrink-0" />
@@ -232,7 +232,7 @@ export default function ViolenciaDigitalContent() {
               <div className="bg-white">
                 <img
                   src={INFOGRAFIA_PATH}
-                  alt="Infografía de Violencia Digital"
+                  alt="Infografía de Violencia Digital hacia la Mujer"
                   className="w-full h-auto block"
                 />
               </div>
@@ -541,7 +541,7 @@ export default function ViolenciaDigitalContent() {
                       Presentación completa
                     </p>
                     <h2 className="text-lg md:text-xl font-extrabold text-slate-900 font-display">
-                      Violencia Digital — Galería
+                      Violencia Digital hacia la Mujer — Galería
                     </h2>
                   </div>
                 </div>
