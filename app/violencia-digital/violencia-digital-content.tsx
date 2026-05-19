@@ -180,7 +180,7 @@ export default function ViolenciaDigitalContent() {
             <div className="inline-flex items-center gap-2 mb-6">
               <ShieldAlert className="w-8 h-8 text-violet-500" />
               <span className="font-display font-bold text-xl tracking-tight text-slate-900">
-                Protocolo<span className="text-violet-500">Escudo</span>
+                Protocolo<span className="text-violet-500">Prevención</span>
               </span>
             </div>
 
@@ -192,7 +192,7 @@ export default function ViolenciaDigitalContent() {
             </h1>
 
             <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-              Estar en internet no debería dar miedo. Esta es tu{" "}
+              Estar en internet no debería dar miedo. Este es tu{" "}
               <strong className="text-slate-800">manual táctico paso a paso</strong> basado en la Ley Olimpia
               y protocolos internacionales para protegerte, recolectar pruebas y actuar.
             </p>
@@ -316,8 +316,7 @@ export default function ViolenciaDigitalContent() {
               <li className="flex gap-2 items-start text-slate-700">
                 <Camera className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
                 <span>
-                  Tomá capturas de pantalla donde se vea claramente el{" "}
-                  <strong>usuario, fecha y hora</strong>.
+                  <strong>Guardá todas las pruebas:</strong> capturas de pantalla, conversaciones, imágenes, videos y cualquier otro elemento que pueda servir como evidencia. Asegurate de que se vea claramente el <strong>usuario, fecha y hora</strong> en cada captura. Documentá todo antes de bloquear o reportar.
                 </span>
               </li>
               <li className="flex gap-2 items-start text-slate-700">
@@ -660,9 +659,9 @@ export default function ViolenciaDigitalContent() {
             <div>
               <p className="text-sm font-semibold text-slate-800">Recursos Oficiales Recomendados:</p>
               <div className="flex flex-wrap gap-4 mt-2 text-xs text-slate-500">
-                <span className="hover:text-violet-500 transition-colors cursor-pointer">OEA Seguridad Digital</span>
-                <span className="hover:text-violet-500 transition-colors cursor-pointer">UNFPA Argentina</span>
-                <span className="hover:text-violet-500 transition-colors cursor-pointer">Ministerio Público Tutelar</span>
+                <a href="https://www.oas.org/ext/es/seguridad/prog-ciber" target="_blank" rel="noopener noreferrer" className="hover:text-violet-500 transition-colors">OEA Seguridad Digital</a>
+                <a href="https://argentina.unfpa.org/es" target="_blank" rel="noopener noreferrer" className="hover:text-violet-500 transition-colors">UNFPA Argentina</a>
+                <a href="https://mptutelar.gob.ar/" target="_blank" rel="noopener noreferrer" className="hover:text-violet-500 transition-colors">Ministerio Público Tutelar</a>
               </div>
             </div>
             <p className="text-xs text-slate-400">Guía de acción construida para empoderamiento y protección.</p>
