@@ -235,51 +235,55 @@ export function EstafasDigitalesContent() {
   const helpLines = [
     {
       number: "137",
-      title: "Violencias Digitales",
+      title: "Violencia Familiar y Sexual",
       description:
-        "Contención, orientación y acompañamiento. También por WhatsApp: 11-3133-1000.",
+        "Contención y acompañamiento ante situaciones de violencia, incluyendo violencia digital. También por WhatsApp: 11-3133-1000.",
     },
     {
       number: "149",
       title: "Asistencia a Víctimas",
       description:
-        "Centro de Asistencia a las Víctimas de Delitos (CENAVID). Abogados gratuitos.",
+        "CENAVID. Orientación legal y psicológica gratuita para víctimas de delitos.",
     },
     {
       number: "102",
       title: "Línea de los Chicos",
       description: "Atención especializada sobre derechos de niños y adolescentes.",
     },
+    {
+      number: "101",
+      title: "Policía de Tucumán",
+      description:
+        "Delitos Telemáticos: 381-438-8017. Junín 850, 1° piso, San Miguel de Tucumán.",
+    },
   ]
 
   return (
     <>
-    <main className="bg-white dark:bg-brand-dark text-brand-navy dark:text-slate-50">
+    <main className="bg-slate-50/80 text-brand-navy">
+      {/* Ambient blobs con colores de marca */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="ami-blob bg-brand-blue/20 w-[500px] h-[500px] rounded-full -top-32 -left-32 blur-[100px]" />
+        <div className="ami-blob bg-brand-pink/15 w-[600px] h-[600px] rounded-full top-[20%] -right-40 blur-[120px] [animation-delay:-5s]" />
+        <div className="ami-blob bg-brand-navy/10 w-[400px] h-[400px] rounded-full bottom-[5%] left-[10%] blur-[80px] [animation-delay:-3s]" />
+      </div>
+
+      {/* Noise texture overlay */}
+      <div className="fixed inset-0 pointer-events-none -z-10 opacity-[0.03]" 
+        style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")` }} 
+      />
+
       {/* ════════════════════════════════════════════════════════════════════════
           HERO SECTION
           ════════════════════════════════════════════════════════════════════════ */}
-      <section className="relative pt-24 md:pt-32 lg:pt-40 pb-16 md:pb-20 lg:pb-28 overflow-hidden">
-        {/* Gradient Blobs */}
-        <div className="absolute inset-0 -z-10 opacity-30 dark:opacity-15">
-          <motion.div
-            animate={{ y: [0, -20, 0] }}
-            transition={{ duration: 8, repeat: Infinity }}
-            className="absolute top-20 left-10 w-72 h-72 bg-brand-blue rounded-full mix-blend-multiply filter blur-3xl"
-          />
-          <motion.div
-            animate={{ y: [0, 20, 0] }}
-            transition={{ duration: 10, repeat: Infinity, delay: 1 }}
-            className="absolute top-20 right-10 w-72 h-72 bg-brand-pink rounded-full mix-blend-multiply filter blur-3xl"
-          />
-        </div>
-
+      <section className="relative pt-20 sm:pt-24 lg:pt-32 pb-12 sm:pb-16 lg:pb-24 overflow-hidden">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative"
         >
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
             <motion.div
               variants={itemVariants}
               initial="hidden"
@@ -289,77 +293,78 @@ export function EstafasDigitalesContent() {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 font-medium text-sm mb-6 border border-red-200 dark:border-red-800/50"
+                transition={{ delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-red-100/80 text-red-700 font-medium text-xs sm:text-sm mb-5 sm:mb-6 border border-red-200/60 shadow-sm hover:shadow-md transition-shadow"
               >
                 <AlertTriangle className="w-4 h-4 animate-pulse" />
                 Aumento de amenazas digitales en 2026
               </motion.div>
 
-              <h1 className="text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight mb-5 sm:mb-6 leading-[1.05]">
                 Prevenite de las{" "}
-                <span className="bg-gradient-to-r from-brand-blue to-brand-pink bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-brand-blue to-brand-pink bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
                   Estafas Digitales
                 </span>
               </h1>
 
-              <p className="text-lg text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
+              <p className="text-base sm:text-lg text-slate-600 mb-6 sm:mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0">
                 Los ciberdelincuentes están utilizando Inteligencia Artificial para crear fraudes
                 bancarios y móviles más sofisticados. Conoce cómo operan, cómo detectarlos y qué
                 hacer si caes en la trampa.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
                 <motion.a
                   href="#amenazas"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 rounded-xl bg-brand-blue hover:bg-blue-700 text-white font-semibold text-lg transition duration-300 shadow-lg shadow-blue-500/30 inline-flex items-center justify-center gap-2"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-brand-blue hover:bg-blue-700 text-white font-bold text-sm sm:text-lg transition duration-300 shadow-lg shadow-blue-500/25 hover:shadow-xl inline-flex items-center justify-center gap-2"
                 >
                   Conocer Amenazas
-                  <AlertTriangle className="w-5 h-5" />
+                  <AlertTriangle className="w-4 sm:w-5 h-4 sm:h-5" />
                 </motion.a>
 
                 <motion.a
                   href="#emergencia"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 rounded-xl bg-white dark:bg-slate-800 text-brand-navy dark:text-white border-2 border-slate-200 dark:border-slate-700 hover:border-brand-blue dark:hover:border-brand-blue font-semibold text-lg transition duration-300 inline-flex items-center justify-center gap-2"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-white/80 text-brand-navy border-2 border-slate-200/60 hover:border-brand-blue font-bold text-sm sm:text-lg transition duration-300 shadow-md hover:shadow-lg inline-flex items-center justify-center gap-2"
                 >
-                  <AlertTriangle className="w-5 h-5 text-red-500" />
+                  <AlertTriangle className="w-4 sm:w-5 h-4 sm:h-5 text-red-500" />
                   Fui Víctima
                 </motion.a>
               </div>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="relative hidden lg:block"
             >
               <div className="relative">
+                <div className="absolute -inset-4 bg-gradient-to-br from-brand-blue/20 via-transparent to-brand-pink/20 blur-2xl rounded-3xl" />
                 <img
                   src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1000"
                   alt="Ciberseguridad y protección digital"
-                  className="rounded-2xl shadow-2xl relative object-cover h-[500px] w-full border-4 border-white dark:border-slate-800"
+                  className="rounded-2xl shadow-2xl relative object-cover h-[420px] lg:h-[500px] w-full border-4 border-white/80"
                 />
 
                 {/* Floating Badge */}
                 <motion.div
                   animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 3, repeat: Infinity }}
-                  className="absolute -bottom-6 -left-6 bg-white dark:bg-slate-800 rounded-xl p-4 shadow-2xl border border-slate-200 dark:border-slate-700 z-20"
+                  className="absolute -bottom-5 -left-5 bg-white/90 backdrop-blur-sm rounded-xl p-3.5 sm:p-4 shadow-xl border border-slate-200/50 z-20"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/50 flex items-center justify-center text-green-600 dark:text-green-400">
-                      <Shield className="w-6 h-6" />
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 shadow-[0_0_12px_rgba(34,197,94,0.3)]">
+                      <Shield className="w-5 sm:w-6 h-5 sm:h-6" />
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-slate-800 dark:text-white">
+                      <p className="text-sm font-bold text-slate-800">
                         Navegación Segura
                       </p>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">Protección Activa</p>
+                      <p className="text-xs text-slate-500">Protección Activa</p>
                     </div>
                   </div>
                 </motion.div>
@@ -372,25 +377,25 @@ export function EstafasDigitalesContent() {
       {/* ════════════════════════════════════════════════════════════════════════
           INFOGRAFÍA GENERAL
           ════════════════════════════════════════════════════════════════════════ */}
-      <section className="py-12 px-4">
+      <section className="py-10 sm:py-12 px-4">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-7xl mx-auto relative"
         >
-          <div className="absolute -inset-4 bg-gradient-to-br from-brand-blue/15 via-transparent to-brand-pink/10 blur-2xl rounded-3xl pointer-events-none" />
-          <div className="relative rounded-2xl overflow-hidden border border-brand-blue/25 shadow-[0_30px_80px_rgba(66,114,187,0.2),0_4px_24px_rgba(0,0,0,0.1)]">
+          <div className="absolute -inset-6 bg-gradient-to-br from-brand-blue/10 via-transparent to-brand-pink/10 blur-3xl rounded-3xl pointer-events-none" />
+          <div className="relative rounded-2xl overflow-hidden border border-slate-200/60 shadow-[0_30px_80px_rgba(66,114,187,0.1),0_4px_24px_rgba(0,0,0,0.08)] bg-white">
             <div className="flex items-center gap-3 px-5 py-3.5 bg-gradient-to-r from-brand-navy to-brand-dark border-b border-white/[0.07]">
               <div className="flex gap-1.5 shrink-0">
-                <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
-                <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
-                <div className="w-3 h-3 rounded-full bg-[#28c840]" />
+                <div className="w-3 h-3 rounded-full bg-[#ff5f57] shadow-[0_0_4px_#ff5f57]" />
+                <div className="w-3 h-3 rounded-full bg-[#febc2e] shadow-[0_0_4px_#febc2e]" />
+                <div className="w-3 h-3 rounded-full bg-[#28c840] shadow-[0_0_4px_#28c840]" />
               </div>
               <div className="flex-1 flex justify-center">
                 <div className="bg-white/[0.07] border border-white/[0.1] rounded-md px-4 py-1 flex items-center gap-2 max-w-xs w-full">
-                  <div className="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse shrink-0" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse shrink-0 shadow-[0_0_6px_#4272BB]" />
                   <span className="text-xs text-white/50 font-mono truncate">infografia — Estafas Digitales</span>
                 </div>
               </div>
@@ -401,17 +406,17 @@ export function EstafasDigitalesContent() {
                 <img
                   src={INFOGRAFIA_PATH}
                   alt="Infografía de Estafas Digitales"
-                  className="w-full h-auto block lg:w-auto lg:max-h-[560px]"
+                  className="w-full h-auto block lg:w-auto lg:max-h-[560px] transition-transform duration-500 group-hover:scale-[1.01]"
                 />
-                <div className="hidden lg:flex absolute inset-0 items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors duration-300">
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2 bg-white/90 backdrop-blur-sm text-slate-800 font-semibold text-sm px-4 py-2 rounded-full shadow-lg">
+                <div className="hidden lg:flex absolute inset-0 items-center justify-center bg-black/0 group-hover:bg-black/30 transition-all duration-300">
+                  <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 flex items-center gap-2 bg-white/95 backdrop-blur-sm text-brand-navy font-semibold text-sm px-5 py-2.5 rounded-full shadow-xl border border-slate-200/50">
                     <ZoomIn className="w-4 h-4" />
                     Ver a pantalla completa
                   </div>
                 </div>
               </div>
             </div>
-            <div className="h-[2px] bg-gradient-to-r from-transparent via-brand-blue/60 to-transparent" />
+            <div className="h-[2px] bg-gradient-to-r from-transparent via-brand-blue/40 to-transparent" />
           </div>
         </motion.div>
       </section>
@@ -421,7 +426,7 @@ export function EstafasDigitalesContent() {
           ════════════════════════════════════════════════════════════════════════ */}
       <section
         id="amenazas"
-        className="py-20 bg-brand-light-blue dark:bg-slate-900 transition-colors duration-300"
+        className="py-16 sm:py-20 bg-brand-light-blue/50"
       >
         <motion.div
           initial="hidden"
@@ -430,60 +435,60 @@ export function EstafasDigitalesContent() {
           variants={containerVariants}
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         >
-          <motion.div variants={itemVariants} className="text-center max-w-3xl mx-auto mb-16">
-            <p className="text-sm font-bold text-brand-blue tracking-widest uppercase mb-2">
+          <motion.div variants={itemVariants} className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+            <p className="text-xs sm:text-sm font-bold text-brand-blue tracking-widest uppercase mb-2">
               Ingeniería Social
             </p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-brand-navy dark:text-white">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-3 sm:mb-4 text-brand-navy">
               Las 3 formas más comunes de estafa
             </h2>
-            <p className="text-slate-600 dark:text-slate-300">
+            <p className="text-slate-600 text-sm sm:text-base">
               Desde correos falsos hasta voces clonadas por IA. Entiende la diferencia fundamental
               entre estos tres métodos y cómo los atacantes juegan con tus emociones.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
             {threats.map((threat, idx) => {
               const IconComponent = threat.icon
               return (
                 <motion.div
                   key={threat.id}
                   variants={itemVariants}
-                  whileHover={{ y: -8 }}
-                  transition={{ duration: 0.3 }}
-                  className="group relative bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-sm hover:shadow-lg dark:shadow-slate-900/50 overflow-hidden border border-slate-200 dark:border-slate-700"
+                  whileHover={{ y: -6, scale: 1.01 }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  className="group relative bg-white/80 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-xl hover:shadow-slate-200/50 overflow-hidden border border-slate-200/60 hover:border-brand-blue/30 transition-all duration-300"
                 >
                   {/* Corner accent */}
                   <div
-                    className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${threat.color} opacity-10 rounded-bl-full -z-10 transition-transform group-hover:scale-110`}
+                    className={`absolute top-0 right-0 w-28 sm:w-32 h-28 sm:h-32 bg-gradient-to-br ${threat.color} opacity-10 rounded-bl-full -z-10 transition-transform duration-500 group-hover:scale-110`}
                   />
 
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    transition={{ delay: 0.2 + idx * 0.1 }}
-                    className={`w-14 h-14 rounded-2xl ${threat.bgColor} flex items-center justify-center mb-6 shadow-sm`}
+                    transition={{ delay: 0.2 + idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                    className={`w-12 sm:w-14 h-12 sm:h-14 rounded-2xl ${threat.bgColor} flex items-center justify-center mb-4 sm:mb-6 shadow-md group-hover:shadow-lg transition-shadow`}
                   >
-                    <IconComponent className={`w-7 h-7 ${threat.textColor}`} />
+                    <IconComponent className={`w-6 sm:w-7 h-6 sm:h-7 ${threat.textColor}`} />
                   </motion.div>
 
-                  <h3 className="text-2xl font-bold mb-3 text-brand-navy dark:text-white">
+                  <h3 className="text-xl sm:text-2xl font-display font-bold mb-2 sm:mb-3 text-brand-navy group-hover:text-brand-blue transition-colors">
                     {threat.title}
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-400 mb-6 text-sm leading-relaxed">
+                  <p className="text-slate-600 mb-5 sm:mb-6 text-sm leading-relaxed">
                     {threat.description}
                   </p>
 
                   {/* Example Box */}
                   <div
-                    className={`bg-slate-50 dark:bg-slate-900 rounded-lg p-4 border-l-4 ${threat.borderColor}`}
+                    className={`bg-slate-50/80 rounded-lg p-3.5 sm:p-4 border-l-4 ${threat.borderColor} group-hover:bg-white transition-colors`}
                   >
-                    <p className="font-semibold text-slate-800 dark:text-slate-200 mb-1 flex items-center gap-2 text-sm">
-                      <Quote className="w-4 h-4 text-slate-400" />
+                    <p className="font-display font-semibold text-slate-800 mb-1.5 flex items-center gap-2 text-xs sm:text-sm">
+                      <Quote className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-slate-400" />
                       Ejemplo típico:
                     </p>
-                    <p className="text-slate-600 dark:text-slate-400 italic text-sm">
+                    <p className="text-slate-600 italic text-xs sm:text-sm leading-relaxed">
                       "{threat.example}"
                     </p>
                   </div>
@@ -497,8 +502,8 @@ export function EstafasDigitalesContent() {
       {/* ════════════════════════════════════════════════════════════════════════
           EMERGENCY RESPONSE (5 MINUTOS)
           ════════════════════════════════════════════════════════════════════════ */}
-      <section id="emergencia" className="py-20 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 via-orange-500 to-red-500" />
+      <section id="emergencia" className="py-12 sm:py-16 lg:py-20 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 shadow-[0_2px_10px_rgba(239,68,68,0.5)]" />
 
         <motion.div
           initial="hidden"
@@ -509,50 +514,55 @@ export function EstafasDigitalesContent() {
         >
           <motion.div
             variants={itemVariants}
-            className="relative bg-gradient-to-br from-red-600 to-red-700 dark:from-red-900/90 dark:to-red-950 rounded-3xl p-8 md:p-12 shadow-2xl text-white overflow-hidden"
+            className="relative bg-gradient-to-br from-red-600 to-red-700 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-2xl shadow-red-600/20 text-white overflow-hidden"
           >
-            {/* Background overlay image */}
+            {/* Background overlay pattern */}
             <div className="absolute inset-0 opacity-10 mix-blend-overlay">
-              <div className="absolute inset-0 bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22none%22 stroke=%22white%22 stroke-width=%221%22 opacity=%220.2%22/></svg>')] " />
+              <div className="absolute inset-0 bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22none%22 stroke=%22white%22 stroke-width=%221%22 opacity=%220.2%22/></svg>')]" />
             </div>
+            <div className="absolute -right-20 -top-20 w-40 sm:w-60 h-40 sm:h-60 bg-red-500/30 rounded-full blur-[60px] sm:blur-[80px]" />
+            <div className="absolute -left-20 bottom-0 w-32 sm:w-48 h-32 sm:h-48 bg-orange-500/20 rounded-full blur-[50px] sm:blur-[60px]" />
 
             <div className="relative z-10">
               {/* Header */}
-              <motion.div variants={itemVariants} className="text-center mb-12">
+              <motion.div variants={itemVariants} className="text-center mb-8 sm:mb-10 md:mb-12">
                 <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.3 }}
-                  className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6 backdrop-blur-sm border border-white/30"
+                  initial={{ scale: 0, rotate: -20 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+                  className="w-16 sm:w-20 h-16 sm:h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 backdrop-blur-sm border border-white/30 shadow-lg"
                 >
-                  <AlertTriangle className="w-10 h-10" />
+                  <AlertTriangle className="w-8 sm:w-10 h-8 sm:h-10" />
                 </motion.div>
-                <h2 className="text-3xl md:text-5xl font-extrabold mb-4">¿Caíste en la trampa?</h2>
-                <p className="text-red-100 text-lg md:text-xl max-w-2xl mx-auto">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-extrabold mb-3 sm:mb-4">¿Caíste en la trampa?</h2>
+                <p className="text-red-100 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
                   No pierdas tiempo. Los primeros 5 minutos son cruciales para evitar que los
                   atacantes tomen el control de tu dinero y tu información.
                 </p>
               </motion.div>
 
               {/* Timeline Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
                 {emergencySteps.map((step, idx) => {
                   const StepIcon = step.icon
                   return (
                     <motion.div
                       key={idx}
                       variants={itemVariants}
-                      whileHover={{ scale: 1.05 }}
-                      className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6 hover:bg-white/20 transition duration-300"
+                      whileHover={{ scale: 1.03, y: -4 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 hover:bg-white/20 hover:border-white/30 transition-all duration-300 cursor-pointer group"
                     >
-                      <div className="text-red-200 font-bold text-xs mb-3 uppercase tracking-wide">
+                      <div className="text-red-200 font-bold text-xs mb-2 sm:mb-3 uppercase tracking-wide">
                         Minuto {step.minute}
                       </div>
-                      <h4 className="text-xl font-bold mb-2 flex items-center gap-2">
-                        <StepIcon className="w-5 h-5" />
+                      <div className="w-9 sm:w-10 h-9 sm:h-10 rounded-lg bg-white/10 flex items-center justify-center mb-2 sm:mb-3 group-hover:bg-white/20 transition-colors">
+                        <StepIcon className="w-4 sm:w-5 h-4 sm:h-5" />
+                      </div>
+                      <h4 className="text-sm sm:text-base md:text-lg font-display font-bold mb-1.5 sm:mb-2 flex items-center gap-1.5 sm:gap-2">
                         {step.title}
                       </h4>
-                      <p className="text-sm text-red-100 leading-relaxed">{step.description}</p>
+                      <p className="text-xs sm:text-sm text-red-100 leading-relaxed">{step.description}</p>
                     </motion.div>
                   )
                 })}
@@ -565,37 +575,37 @@ export function EstafasDigitalesContent() {
       {/* ════════════════════════════════════════════════════════════════════════
           CARRUSEL INLINE
           ════════════════════════════════════════════════════════════════════════ */}
-      <section className="py-12 px-4">
+      <section className="py-10 sm:py-12 px-4">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-7xl mx-auto"
         >
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+          <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-xl shadow-slate-200/30 rounded-[2.5rem] overflow-hidden">
             {/* Header */}
-            <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between gap-4">
+            <div className="px-5 sm:px-6 md:px-10 py-4 sm:py-5 border-b border-slate-100/60 flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-blue to-brand-pink flex items-center justify-center shadow-md shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-blue to-brand-navy flex items-center justify-center shadow-lg shadow-brand-blue/25 shrink-0 group-hover:scale-105 transition-transform">
                   <Images className="w-5 h-5 text-white" />
                 </div>
                 <div>
                   <p className="text-xs font-bold text-brand-blue tracking-widest uppercase mb-0.5">
                     Presentación
                   </p>
-                  <h2 className="text-lg md:text-xl font-extrabold text-brand-navy dark:text-white font-display">
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-display font-extrabold text-brand-navy">
                     Estafas Digitales
                   </h2>
                 </div>
               </div>
-              <span className="text-slate-400 text-sm font-mono shrink-0">
+              <span className="text-slate-400 text-sm font-mono shrink-0 bg-slate-100/50 px-3 py-1.5 rounded-full">
                 {currentSlide + 1} / {CARRUSEL_IMAGES.length}
               </span>
             </div>
 
             {/* Imagen con flechas */}
-            <div className="relative overflow-hidden lg:max-h-[560px] lg:flex lg:items-center lg:justify-center lg:bg-slate-50">
+            <div className="relative overflow-hidden lg:max-h-[500px] lg:flex lg:items-center lg:justify-center lg:bg-gradient-to-b lg:from-slate-50/50 lg:to-slate-100/30">
               <AnimatePresence mode="wait" custom={direction}>
                 <motion.div
                   key={currentSlide}
@@ -604,7 +614,7 @@ export function EstafasDigitalesContent() {
                   initial="enter"
                   animate="center"
                   exit="exit"
-                  transition={{ duration: 0.35, ease: "easeInOut" }}
+                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                   className="w-full lg:flex lg:justify-center"
                 >
                   <Image
@@ -612,7 +622,7 @@ export function EstafasDigitalesContent() {
                     alt={`Lámina ${currentSlide + 1}`}
                     width={1200}
                     height={800}
-                    className="w-full h-auto object-contain lg:w-auto lg:max-h-[560px]"
+                    className="w-full h-auto object-contain lg:w-auto lg:max-h-[500px]"
                     priority
                   />
                 </motion.div>
@@ -620,7 +630,7 @@ export function EstafasDigitalesContent() {
 
               <button
                 onClick={prevSlide}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 hover:bg-black/50 border border-white/20 flex items-center justify-center transition-colors backdrop-blur-sm"
+                className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-brand-blue border border-white/20 flex items-center justify-center transition-all duration-300 backdrop-blur-sm hover:scale-110 active:scale-95"
                 aria-label="Anterior"
               >
                 <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
@@ -628,7 +638,7 @@ export function EstafasDigitalesContent() {
 
               <button
                 onClick={nextSlide}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 hover:bg-black/50 border border-white/20 flex items-center justify-center transition-colors backdrop-blur-sm"
+                className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-brand-blue border border-white/20 flex items-center justify-center transition-all duration-300 backdrop-blur-sm hover:scale-110 active:scale-95"
                 aria-label="Siguiente"
               >
                 <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
@@ -636,15 +646,15 @@ export function EstafasDigitalesContent() {
             </div>
 
             {/* Dots */}
-            <div className="flex items-center justify-center gap-2 py-5">
+            <div className="flex items-center justify-center gap-2 sm:gap-3 py-4 sm:py-5">
               {CARRUSEL_IMAGES.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => goTo(i, i > currentSlide ? 1 : -1)}
                   className={`rounded-full transition-all duration-300 ${
                     i === currentSlide
-                      ? "w-6 h-2.5 bg-brand-blue"
-                      : "w-2.5 h-2.5 bg-slate-300 dark:bg-slate-600 hover:bg-slate-400"
+                      ? "w-6 sm:w-8 h-2.5 bg-brand-blue shadow-[0_0_8px_#4272BB]"
+                      : "w-2.5 h-2.5 bg-slate-300 hover:bg-slate-400 hover:w-4 transition-all"
                   }`}
                   aria-label={`Ir a lámina ${i + 1}`}
                 />
@@ -654,10 +664,10 @@ export function EstafasDigitalesContent() {
         </motion.div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════════════════════
+{/* ════════════════════════════════════════════════════════════════════════
           HELP & REPORTING
           ════════════════════════════════════════════════════════════════════════ */}
-      <section className="py-20 bg-brand-light-blue dark:bg-slate-900 transition-colors duration-300">
+      <section className="py-12 sm:py-16 lg:py-20 bg-brand-light-blue/50">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -668,16 +678,16 @@ export function EstafasDigitalesContent() {
           {/* Header */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-8"
+            className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-10 md:mb-12 gap-6 md:gap-8"
           >
             <div className="max-w-2xl">
-              <p className="text-sm font-bold text-brand-blue tracking-widest uppercase mb-2">
+              <p className="text-xs sm:text-sm font-bold text-brand-blue tracking-widest uppercase mb-2">
                 Asistencia Legal
               </p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-brand-navy dark:text-white">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-3 sm:mb-4 text-brand-navy">
                 Dónde denunciar en Argentina
               </h2>
-              <p className="text-slate-600 dark:text-slate-300">
+              <p className="text-slate-600 text-sm sm:text-base">
                 Si fuiste víctima de un ciberdelito, el Estado cuenta con herramientas y fiscalías
                 especializadas para asesorarte y tomar tu denuncia.
               </p>
@@ -685,29 +695,29 @@ export function EstafasDigitalesContent() {
           </motion.div>
 
           {/* Help Organizations */}
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
+          <div className="grid md:grid-cols-2 gap-5 sm:gap-6 lg:gap-8 mb-8 sm:mb-10 md:mb-12">
             {/* UFECI */}
             <motion.div
               variants={itemVariants}
-              className="bg-white dark:bg-slate-800 p-8 rounded-2xl flex flex-col md:flex-row gap-6 items-start shadow-sm hover:shadow-md dark:shadow-slate-900/50 border border-slate-200 dark:border-slate-700"
+              className="bg-white/80 backdrop-blur-sm p-6 sm:p-8 rounded-2xl flex flex-col md:flex-row gap-5 sm:gap-6 items-start shadow-sm hover:shadow-xl hover:shadow-slate-200/50 border border-slate-200/60 hover:border-brand-blue/30 transition-all duration-300 group"
             >
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={{ delay: 0.2 }}
-                className="w-16 h-16 shrink-0 rounded-2xl bg-brand-blue/10 dark:bg-brand-blue/20 flex items-center justify-center text-brand-blue"
+                transition={{ delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                className="w-14 sm:w-16 h-14 sm:h-16 shrink-0 rounded-2xl bg-brand-blue/10 flex items-center justify-center text-brand-blue shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300"
               >
-                <Building2 className="w-8 h-8" />
+                <Building2 className="w-7 sm:w-8 h-7 sm:h-8" />
               </motion.div>
               <div>
-                <h4 className="text-xl font-bold mb-2 text-brand-navy dark:text-white">
+                <h4 className="text-lg sm:text-xl font-display font-bold mb-2 text-brand-navy group-hover:text-brand-blue transition-colors">
                   UFECI (Nacional)
                 </h4>
-                <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                <p className="text-sm text-slate-600 mb-4 leading-relaxed">
                   Unidad Fiscal Especializada en Ciberdelincuencia. Para denunciar grooming u otros
                   delitos informáticos a nivel nacional.
                 </p>
-                <ul className="text-sm space-y-2 text-slate-700 dark:text-slate-300">
+                <ul className="text-sm space-y-2 text-slate-700">
                   <li className="flex items-start gap-2">
                     <MapPin className="w-4 h-4 text-brand-blue shrink-0 mt-0.5" />
                     <span>Sarmiento 663, Piso 6, CABA.</span>
@@ -724,37 +734,40 @@ export function EstafasDigitalesContent() {
               </div>
             </motion.div>
 
-            {/* UFEDyCI CABA */}
+            {/* División Delitos Telemáticos Tucumán */}
             <motion.div
               variants={itemVariants}
-              className="bg-white dark:bg-slate-800 p-8 rounded-2xl flex flex-col md:flex-row gap-6 items-start shadow-sm hover:shadow-md dark:shadow-slate-900/50 border border-slate-200 dark:border-slate-700"
+              className="bg-white/80 backdrop-blur-sm p-6 sm:p-8 rounded-2xl flex flex-col md:flex-row gap-5 sm:gap-6 items-start shadow-sm hover:shadow-xl hover:shadow-slate-200/50 border border-slate-200/60 hover:border-brand-pink/30 transition-all duration-300 group"
             >
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={{ delay: 0.3 }}
-                className="w-16 h-16 shrink-0 rounded-2xl bg-brand-pink/10 dark:bg-brand-pink/20 flex items-center justify-center text-brand-pink"
+                transition={{ delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="w-14 sm:w-16 h-14 sm:h-16 shrink-0 rounded-2xl bg-brand-pink/10 flex items-center justify-center text-brand-pink shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300"
               >
-                <MapPin className="w-8 h-8" />
+                <MapPin className="w-7 sm:w-8 h-7 sm:h-8" />
               </motion.div>
               <div>
-                <h4 className="text-xl font-bold mb-2 text-brand-navy dark:text-white">
-                  UFEDyCI (CABA)
+                <h4 className="text-lg sm:text-xl font-display font-bold mb-2 text-brand-navy group-hover:text-brand-pink transition-colors">
+                  Delitos Telemáticos (Tucumán)
                 </h4>
-                <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                  Unidad Fiscal Especializada en Delitos y Contravenciones Informáticas. Específico
-                  para CABA.
+                <p className="text-sm text-slate-600 mb-4 leading-relaxed">
+                  División especializada de la Policía de Tucumán para ciberdelitos. Podés ir
+                  personalmente o comunicarte para recibir asesoramiento.
                 </p>
-                <ul className="text-sm space-y-2 text-slate-700 dark:text-slate-300">
+                <ul className="text-sm space-y-2 text-slate-700">
+                  <li className="flex items-start gap-2">
+                    <MapPin className="w-4 h-4 text-brand-pink shrink-0 mt-0.5" />
+                    <span>Junín 850, 1° Piso, San Miguel de Tucumán.</span>
+                  </li>
                   <li className="flex items-center gap-2">
                     <PhoneIcon className="w-4 h-4 text-brand-pink" />
-                    <span>0800-33-FISCAL (347225)</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-brand-pink" />
-                    <span>denuncias@fiscalias.gob.ar</span>
+                    <span>381-438-8017</span>
                   </li>
                 </ul>
+                <p className="mt-4 text-xs text-slate-500 leading-relaxed border-t border-slate-100 pt-3">
+                  También podés hacer la denuncia en la <strong>comisaría más cercana</strong> a tu domicilio.
+                </p>
               </div>
             </motion.div>
           </div>
@@ -762,24 +775,25 @@ export function EstafasDigitalesContent() {
           {/* Helplines Grid */}
           <motion.div
             variants={itemVariants}
-            className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm dark:shadow-slate-900/50 border border-slate-200 dark:border-slate-700"
+            className="bg-white/80 backdrop-blur-xl p-6 sm:p-8 rounded-2xl shadow-lg shadow-slate-200/30 border border-slate-200/60"
           >
-            <h4 className="text-xl font-bold mb-8 text-center text-brand-navy dark:text-white">
+            <h4 className="text-lg sm:text-xl font-display font-bold mb-6 sm:mb-8 text-center text-brand-navy">
               Líneas telefónicas de asistencia 24/7
             </h4>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
               {helpLines.map((line, idx) => (
                 <motion.div
                   key={idx}
                   variants={itemVariants}
-                  whileHover={{ y: -4 }}
-                  className="text-center p-6 rounded-xl bg-brand-light-blue dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:shadow-md transition duration-300"
+                  whileHover={{ y: -4, scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="text-center p-4 sm:p-6 rounded-xl bg-brand-light-blue/50 border border-slate-200/60 hover:shadow-lg hover:border-brand-blue/30 transition-all duration-300 cursor-pointer group"
                 >
-                  <div className="text-4xl font-black text-brand-blue mb-3">{line.number}</div>
-                  <h5 className="font-bold text-sm mb-2 text-brand-navy dark:text-white">
+                  <div className="text-3xl sm:text-4xl font-black text-brand-blue mb-2 sm:mb-3 group-hover:text-brand-navy transition-colors">{line.number}</div>
+                  <h5 className="font-display font-bold text-xs sm:text-sm mb-2 text-brand-navy group-hover:text-brand-blue transition-colors">
                     {line.title}
                   </h5>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                  <p className="text-xs text-slate-600 leading-relaxed">
                     {line.description}
                   </p>
                 </motion.div>
