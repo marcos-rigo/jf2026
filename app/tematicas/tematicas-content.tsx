@@ -28,7 +28,7 @@ const tematicas = [
     imageAlt: "Banner Alfabetización Mediática",
     icon: Search,
     color: "#00D4AA",
-    locked: false,
+    locked: true,
   },
   {
     href: "/huella-digital",
@@ -64,7 +64,7 @@ const tematicas = [
     imageAlt: "Banner Estafas Digitales",
     icon: AlertTriangle,
     color: "#FFD93D",
-    locked: true,
+    locked: false,
   },
 ]
 
@@ -191,7 +191,7 @@ export function TematicasContent() {
               const linkHref = tema.locked ? "/ciudadania-presente/modulos" : tema.href
               return (
                 <motion.div key={tema.title} variants={cardVariants}>
-                  <Link href={linkHref} className="group block h-full">
+                  <Link href={linkHref} scroll={true} className="group block h-full">
                     <div
                       className="relative h-full rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02] group"
                       style={{ '--glow-color': tema.color } as React.CSSProperties}

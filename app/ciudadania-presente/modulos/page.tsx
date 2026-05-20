@@ -215,6 +215,7 @@ export default function ModulosPage() {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' })
     setMounted(true)
   }, [])
 
