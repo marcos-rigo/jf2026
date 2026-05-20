@@ -342,49 +342,54 @@ export default function AlfabetizacionMediaticaContent() {
     <>
       <Navbar />
 
-      {/* Ambient blobs */}
+      {/* Ambient blobs con colores de marca */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="ami-blob bg-blue-300/40 w-96 h-96 rounded-full -top-24 -left-24" />
-        <div className="ami-blob bg-purple-300/40 w-[500px] h-[500px] rounded-full top-[30%] -right-32 [animation-delay:-5s]" />
-        <div className="ami-blob bg-cyan-200/40 w-80 h-80 rounded-full bottom-[10%] left-[20%] [animation-delay:-3s]" />
+        <div className="ami-blob bg-brand-blue/20 w-[500px] h-[500px] rounded-full -top-32 -left-32 blur-[100px]" />
+        <div className="ami-blob bg-brand-pink/15 w-[600px] h-[600px] rounded-full top-[20%] -right-40 blur-[120px] [animation-delay:-5s]" />
+        <div className="ami-blob bg-brand-navy/10 w-[400px] h-[400px] rounded-full bottom-[5%] left-[10%] blur-[80px] [animation-delay:-3s]" />
       </div>
 
-      <main className="bg-slate-50 text-slate-800 antialiased min-h-screen">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12 space-y-24">
+      {/* Noise texture overlay */}
+      <div className="fixed inset-0 pointer-events-none -z-10 opacity-[0.03]" 
+        style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")` }} 
+      />
+
+      <main className="bg-slate-50/80 text-slate-800 antialiased min-h-screen backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-12 space-y-20 sm:space-y-24">
 
           {/* ── HERO ───────────────────────────────────────────────────────── */}
-          <section className="grid lg:grid-cols-2 gap-16 items-center">
+          <section className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="space-y-8"
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="space-y-6 sm:space-y-8"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/70 backdrop-blur-md border border-white/80 rounded-full shadow-sm">
-                <span className="flex h-2.5 w-2.5 rounded-full bg-indigo-500 animate-pulse" />
-                <span className="text-xs font-bold text-indigo-900 tracking-wider uppercase">
+              <div className="inline-flex items-center gap-2.5 px-4 py-2 bg-brand-blue/5 border border-brand-blue/10 rounded-full shadow-sm hover:shadow-md transition-shadow duration-300">
+                <span className="flex h-2 w-2 rounded-full bg-brand-pink animate-pulse shadow-[0_0_8px_#D5247A]" />
+                <span className="text-xs font-bold text-brand-navy tracking-widest uppercase">
                   Plataforma AMI
                 </span>
               </div>
 
-              <h1 className="font-display text-5xl md:text-6xl font-extrabold text-slate-900 leading-[1.1] tracking-tight">
+              <h1 className="font-display text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-[1.05] tracking-tight">
                 Optimizá tu{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-fuchsia-500">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-pink to-brand-blue bg-[length:200%_auto] animate-gradient">
                   Filtro de Información
                 </span>
               </h1>
 
-              <p className="text-lg text-slate-600 leading-relaxed max-w-lg">
+              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-lg">
                 La infoxicación satura nuestra capacidad de decisión. Este entorno de entrenamiento de{" "}
-                <strong className="text-slate-800">Alfabetización Mediática</strong> es tu herramienta para
+                <strong className="text-brand-navy">Alfabetización Mediática</strong> es tu herramienta para
                 evaluar, procesar y compartir datos con precisión en la era digital.
               </p>
 
-              <div className="bg-white/70 backdrop-blur-xl border border-white/80 shadow-lg p-6 rounded-2xl border-l-4 border-l-indigo-500">
-                <h3 className="font-bold text-slate-900 mb-1 flex items-center gap-2">
-                  <span>🎯</span> Tu Objetivo Principal
+              <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-lg shadow-slate-200/30 p-5 sm:p-6 rounded-2xl border-l-4 border-l-brand-blue hover:border-l-brand-pink transition-colors duration-300 group">
+                <h3 className="font-display font-bold text-slate-900 mb-2 flex items-center gap-2">
+                  <span className="text-lg">🎯</span> Tu Objetivo Principal
                 </h3>
-                <p className="text-slate-600 text-sm leading-relaxed">
+                <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
                   Instalar un "cortafuegos mental" para neutralizar titulares engañosos y elevar la calidad de
                   la información que consumís y distribuís.
                 </p>
@@ -392,23 +397,24 @@ export default function AlfabetizacionMediaticaContent() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="bg-white/70 backdrop-blur-xl border border-white/80 shadow-lg p-8 rounded-[2rem] flex flex-col items-center"
+              initial={{ opacity: 0, scale: 0.96, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              className="bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-xl shadow-slate-200/40 p-6 sm:p-8 rounded-[2rem] flex flex-col items-center relative overflow-hidden"
             >
-              <div className="text-center mb-6">
-                <h3 className="font-display font-extrabold text-xl text-slate-900">
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/5 via-transparent to-brand-pink/5 pointer-events-none" />
+              <div className="text-center mb-4 sm:mb-6 relative z-10">
+                <h3 className="font-display font-extrabold text-lg sm:text-xl text-slate-900">
                   El Sesgo de Superficialidad
                 </h3>
-                <p className="text-sm font-medium text-slate-500 mt-1">
+                <p className="text-xs sm:text-sm font-medium text-slate-500 mt-1.5">
                   Interacción promedio frente a un enlace
                 </p>
               </div>
-              <div className="relative w-full max-w-[400px] h-[280px] md:h-[320px]">
+              <div className="relative w-full max-w-[320px] sm:max-w-[360px] lg:max-w-[400px] h-[240px] sm:h-[280px] lg:h-[320px] z-10">
                 <Doughnut data={introChartData} options={introChartOptions} />
               </div>
-              <div className="mt-6 flex items-center gap-2 text-xs font-semibold text-slate-400 bg-slate-100/50 px-4 py-2 rounded-full">
+              <div className="mt-4 sm:mt-6 flex items-center gap-2 text-xs font-semibold text-slate-400 bg-slate-100/60 px-4 py-2 rounded-full hover:bg-slate-200/60 transition-colors">
                 <span>📊</span> Basado en métricas de consumo digital
               </div>
             </motion.div>
@@ -419,20 +425,20 @@ export default function AlfabetizacionMediaticaContent() {
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="relative"
           >
-            <div className="absolute -inset-4 bg-gradient-to-br from-indigo-500/15 via-transparent to-purple-500/10 blur-2xl rounded-3xl pointer-events-none" />
-            <div className="relative rounded-2xl overflow-hidden border border-indigo-300/30 shadow-[0_30px_80px_rgba(99,102,241,0.15),0_4px_24px_rgba(0,0,0,0.1)]">
+            <div className="absolute -inset-6 bg-gradient-to-br from-brand-blue/10 via-transparent to-brand-pink/10 blur-3xl rounded-3xl pointer-events-none" />
+            <div className="relative rounded-2xl overflow-hidden border border-slate-200/60 shadow-[0_30px_80px_rgba(66,114,187,0.1),0_4px_24px_rgba(0,0,0,0.08)] bg-white">
               <div className="flex items-center gap-3 px-5 py-3.5 bg-gradient-to-r from-[#1e1b4b] to-[#2e2a7a] border-b border-white/[0.07]">
                 <div className="flex gap-1.5 shrink-0">
-                  <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
-                  <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
-                  <div className="w-3 h-3 rounded-full bg-[#28c840]" />
+                  <div className="w-3 h-3 rounded-full bg-[#ff5f57] shadow-[0_0_4px_#ff5f57]" />
+                  <div className="w-3 h-3 rounded-full bg-[#febc2e] shadow-[0_0_4px_#febc2e]" />
+                  <div className="w-3 h-3 rounded-full bg-[#28c840] shadow-[0_0_4px_#28c840]" />
                 </div>
                 <div className="flex-1 flex justify-center">
                   <div className="bg-white/[0.07] border border-white/[0.1] rounded-md px-4 py-1 flex items-center gap-2 max-w-xs w-full">
-                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse shrink-0" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse shrink-0 shadow-[0_0_6px_#4272BB]" />
                     <span className="text-xs text-white/50 font-mono truncate">infografia — Alfabetización Mediática</span>
                   </div>
                 </div>
@@ -443,55 +449,56 @@ export default function AlfabetizacionMediaticaContent() {
                   <img
                     src={INFOGRAFIA_PATH}
                     alt="Infografía de Alfabetización Mediática"
-                    className="w-full h-auto block lg:w-auto lg:max-h-[700px]"
+                    className="w-full h-auto block lg:w-auto lg:max-h-[700px] transition-transform duration-500 group-hover:scale-[1.01]"
                   />
-                  <div className="hidden lg:flex absolute inset-0 items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors duration-300">
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2 bg-white/90 backdrop-blur-sm text-slate-800 font-semibold text-sm px-4 py-2 rounded-full shadow-lg">
+                  <div className="hidden lg:flex absolute inset-0 items-center justify-center bg-black/0 group-hover:bg-black/30 transition-all duration-300">
+                    <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 flex items-center gap-2 bg-white/95 backdrop-blur-sm text-brand-navy font-semibold text-sm px-5 py-2.5 rounded-full shadow-xl border border-slate-200/50">
                       <ZoomIn className="w-4 h-4" />
                       Ver a pantalla completa
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="h-[2px] bg-gradient-to-r from-transparent via-indigo-500/60 to-transparent" />
+              <div className="h-[2px] bg-gradient-to-r from-transparent via-brand-blue/40 to-transparent" />
             </div>
           </motion.section>
 
           {/* ── TRAINING TABS ─────────────────────────────────────────────── */}
-          <section id="entrenamiento" className="scroll-mt-24">
-            <div className="text-center max-w-2xl mx-auto mb-12">
-              <h2 className="font-display text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">
+          <section id="entrenamiento" className="scroll-mt-20 sm:scroll-mt-24">
+            <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">
                 Módulos de Entrenamiento
               </h2>
-              <p className="text-slate-600 text-lg">
+              <p className="text-slate-600 text-base sm:text-lg">
                 Procesá las tres habilidades base. Interactuá con los módulos para desplegar las metodologías.
               </p>
             </div>
 
-            <div className="bg-white/70 backdrop-blur-xl border border-white/80 shadow-lg rounded-[2.5rem] p-4 md:p-8">
+            <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-xl shadow-slate-200/30 rounded-[2.5rem] p-3 sm:p-6 md:p-8">
               {/* Tab pills */}
-              <div className="flex flex-col sm:flex-row gap-2 bg-slate-200/50 p-2 rounded-2xl md:rounded-full mb-8">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-1.5 bg-slate-100/60 p-2 rounded-2xl md:rounded-full mb-6 sm:mb-8">
                 {TABS.map((tab) => {
                   const isActive = activeTab === tab.id
                   return (
                     <button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
-                      className={`flex-1 py-3.5 px-6 text-center rounded-xl md:rounded-full text-sm sm:text-base border transition-all duration-200 cursor-pointer ${
+                      className={`flex-1 py-3 sm:py-3.5 px-4 sm:px-6 text-center rounded-xl md:rounded-full text-xs sm:text-sm border transition-all duration-300 cursor-pointer ${
                         isActive
-                          ? "bg-white text-indigo-700 border-slate-200/80 font-bold shadow-md -translate-y-0.5"
-                          : "bg-transparent text-slate-500 border-transparent font-medium hover:bg-white hover:text-indigo-600 hover:border-indigo-200 hover:shadow-sm hover:-translate-y-0.5 active:scale-95"
+                          ? "bg-white text-brand-navy border-slate-200/80 font-bold shadow-lg shadow-slate-200/40 -translate-y-0.5"
+                          : "bg-transparent text-slate-500 border-transparent font-medium hover:bg-white/80 hover:text-brand-blue hover:border-slate-200/50 hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98] transition-transform"
                       }`}
                     >
-                      <span className="mr-2">{tab.emoji}</span>
-                      {tab.label}
+                      <span className="mr-1.5 sm:mr-2">{tab.emoji}</span>
+                      <span className="hidden xs:inline">{tab.label}</span>
+                      <span className="xs:hidden">{tab.label.split(':')[0]}</span>
                     </button>
                   )
                 })}
               </div>
 
               {/* Tab content */}
-              <div className="bg-white rounded-[2rem] p-6 md:p-12 shadow-sm border border-slate-100 min-h-[420px] overflow-hidden">
+              <div className="bg-white/50 rounded-[2rem] p-5 sm:p-8 md:p-12 shadow-sm border border-slate-100/50 min-h-[380px] sm:min-h-[420px] overflow-hidden">
                 <AnimatePresence mode="wait">
                   {activeTab === "paso1" && (
                     <motion.div
@@ -499,50 +506,51 @@ export default function AlfabetizacionMediaticaContent() {
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.25 }}
+                      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                     >
-                      <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 font-bold text-xs rounded-lg mb-4">
+                      <span className="inline-block px-3 py-1 bg-brand-blue/10 text-brand-blue font-bold text-xs rounded-lg mb-3 sm:mb-4">
                         Búsqueda y Filtro
                       </span>
-                      <h3 className="font-display text-3xl font-extrabold text-slate-900 mb-3">
+                      <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2 sm:mb-3">
                         Investigá la Fuente
                       </h3>
-                      <p className="text-slate-500 text-lg mb-8 max-w-3xl">
+                      <p className="text-slate-500 text-base sm:text-lg mb-6 sm:mb-8 max-w-3xl">
                         Desarrollá el hábito de abandonar temporalmente la página de origen para verificar su
                         reputación en ecosistemas externos.
                       </p>
-                      <div className="grid md:grid-cols-2 gap-8">
-                        <div className="space-y-6">
+                      <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
+                        <div className="space-y-5 sm:space-y-6">
                           <div>
-                            <h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
-                              <span className="text-indigo-500">■</span> Metodología
+                            <h4 className="font-display font-bold text-slate-900 mb-2 flex items-center gap-2">
+                              <span className="text-brand-blue">■</span> Metodología
                             </h4>
-                            <p className="text-slate-600 leading-relaxed">
+                            <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
                               Cuando un contenido capte tu atención,{" "}
                               <strong>no asumas su veracidad por la estética del sitio</strong>. Aplicá
                               "lectura lateral": abrí nuevas pestañas y buscá qué opinan verificadores
                               independientes sobre esa fuente específica.
                             </p>
                           </div>
-                          <div className="bg-slate-50 border border-slate-200 p-5 rounded-2xl">
-                            <h4 className="font-bold text-slate-900 mb-2 text-sm uppercase tracking-wide">
+                          <div className="bg-slate-50/80 border border-slate-200/60 p-4 sm:p-5 rounded-2xl hover:border-brand-blue/30 transition-colors">
+                            <h4 className="font-display font-bold text-slate-900 mb-2 text-xs sm:text-sm uppercase tracking-wide">
                               Caso de Estudio
                             </h4>
-                            <p className="text-sm text-slate-600 italic">
+                            <p className="text-sm text-slate-600 italic leading-relaxed">
                               "El café destruye tu memoria" (Publicado en SaludTotalHoy). Al investigar en
                               otra pestaña, los resultados indican que es una granja de contenido falso
                               diseñada para generar ingresos por publicidad.
                             </p>
                           </div>
                         </div>
-                        <div className="bg-gradient-to-br from-indigo-600 to-purple-700 p-8 rounded-3xl text-white shadow-xl flex flex-col justify-center relative overflow-hidden">
-                          <span className="absolute top-4 right-4 text-6xl opacity-70">⚡</span>
-                          <h4 className="font-display font-extrabold text-xl mb-4">Laboratorio Práctico</h4>
-                          <p className="text-indigo-100 mb-6 leading-relaxed">
+                        <div className="bg-gradient-to-br from-brand-blue to-brand-navy p-6 sm:p-8 rounded-3xl text-white shadow-xl shadow-brand-blue/20 flex flex-col justify-center relative overflow-hidden group">
+                          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
+                          <span className="absolute top-3 sm:top-4 right-3 sm:right-4 text-5xl sm:text-6xl opacity-60 group-hover:scale-110 transition-transform duration-500">⚡</span>
+                          <h4 className="font-display font-extrabold text-lg sm:text-xl mb-3 sm:mb-4 relative z-10">Laboratorio Práctico</h4>
+                          <p className="text-brand-light-blue/90 mb-5 sm:mb-6 leading-relaxed text-sm sm:text-base">
                             Identificá la primera noticia que veas en tus redes. Antes de leerla, abrí una
                             pestaña nueva y buscá el nombre del sitio + "credibilidad".
                           </p>
-                          <button className="bg-white text-indigo-700 font-bold py-3 px-6 rounded-xl hover:bg-indigo-50 transition-colors w-max shadow-md">
+                          <button className="bg-white text-brand-navy font-bold py-3 px-6 rounded-xl hover:bg-brand-light-blue transition-all duration-300 w-max shadow-lg hover:shadow-xl hover:-translate-y-0.5">
                             Misión Aceptada
                           </button>
                         </div>
@@ -556,50 +564,51 @@ export default function AlfabetizacionMediaticaContent() {
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.25 }}
+                      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                     >
-                      <span className="inline-block px-3 py-1 bg-purple-100 text-purple-700 font-bold text-xs rounded-lg mb-4">
+                      <span className="inline-block px-3 py-1 bg-brand-pink/10 text-brand-pink font-bold text-xs rounded-lg mb-3 sm:mb-4">
                         Evaluación de Evidencia
                       </span>
-                      <h3 className="font-display text-3xl font-extrabold text-slate-900 mb-3">
+                      <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2 sm:mb-3">
                         El Detector Analítico
                       </h3>
-                      <p className="text-slate-500 text-lg mb-8 max-w-3xl">
+                      <p className="text-slate-500 text-base sm:text-lg mb-6 sm:mb-8 max-w-3xl">
                         Separar rigurosamente los datos empíricos de las afirmaciones emocionales o
                         especulativas.
                       </p>
-                      <div className="grid md:grid-cols-2 gap-8">
-                        <div className="space-y-6">
+                      <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
+                        <div className="space-y-5 sm:space-y-6">
                           <div>
-                            <h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
-                              <span className="text-purple-500">■</span> Metodología
+                            <h4 className="font-display font-bold text-slate-900 mb-2 flex items-center gap-2">
+                              <span className="text-brand-pink">■</span> Metodología
                             </h4>
-                            <p className="text-slate-600 leading-relaxed">
+                            <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
                               La desinformación está diseñada para hackear tus emociones. Neutralizala
                               auditando el lenguaje: buscá adjetivos dramáticos y verificá los enlaces
                               salientes. Si afirman "un estudio lo prueba" pero no hay enlace a la fuente
                               primaria, clasificalo como sospechoso.
                             </p>
                           </div>
-                          <div className="bg-slate-50 border border-slate-200 p-5 rounded-2xl">
-                            <h4 className="font-bold text-slate-900 mb-2 text-sm uppercase tracking-wide">
+                          <div className="bg-slate-50/80 border border-slate-200/60 p-4 sm:p-5 rounded-2xl hover:border-brand-pink/30 transition-colors">
+                            <h4 className="font-display font-bold text-slate-900 mb-2 text-xs sm:text-sm uppercase tracking-wide">
                               Caso de Estudio
                             </h4>
-                            <p className="text-sm text-slate-600 italic">
+                            <p className="text-sm text-slate-600 italic leading-relaxed">
                               Mensaje viral: "¡URGENTE! Ley confisca ahorros hoy". Análisis: Carencia de
                               número de ley, omisión de fechas, lenguaje alarmista. Veredicto: Intento de
                               manipulación emocional.
                             </p>
                           </div>
                         </div>
-                        <div className="bg-gradient-to-br from-purple-600 to-fuchsia-600 p-8 rounded-3xl text-white shadow-xl flex flex-col justify-center relative overflow-hidden">
-                          <span className="absolute top-4 right-4 text-6xl opacity-70">🧠</span>
-                          <h4 className="font-display font-extrabold text-xl mb-4">Laboratorio Práctico</h4>
-                          <p className="text-purple-100 mb-6 leading-relaxed">
+                        <div className="bg-gradient-to-br from-brand-pink to-brand-navy p-6 sm:p-8 rounded-3xl text-white shadow-xl shadow-brand-pink/20 flex flex-col justify-center relative overflow-hidden group">
+                          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
+                          <span className="absolute top-3 sm:top-4 right-3 sm:right-4 text-5xl sm:text-6xl opacity-60 group-hover:scale-110 transition-transform duration-500">🧠</span>
+                          <h4 className="font-display font-extrabold text-lg sm:text-xl mb-3 sm:mb-4 relative z-10">Laboratorio Práctico</h4>
+                          <p className="text-white/80 mb-5 sm:mb-6 leading-relaxed text-sm sm:text-base">
                             Tomá un mensaje polémico reciente. Aplicá la matriz de 3 puntos: 1. Autoría, 2.
                             Evidencia documentada, 3. Ganancia emocional del emisor.
                           </p>
-                          <button className="bg-white text-purple-700 font-bold py-3 px-6 rounded-xl hover:bg-purple-50 transition-colors w-max shadow-md">
+                          <button className="bg-white text-brand-pink font-bold py-3 px-6 rounded-xl hover:bg-rose-50 transition-all duration-300 w-max shadow-lg hover:shadow-xl hover:-translate-y-0.5">
                             Aplicar Matriz
                           </button>
                         </div>
@@ -613,48 +622,49 @@ export default function AlfabetizacionMediaticaContent() {
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.25 }}
+                      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                     >
-                      <span className="inline-block px-3 py-1 bg-cyan-100 text-cyan-800 font-bold text-xs rounded-lg mb-4">
+                      <span className="inline-block px-3 py-1 bg-cyan-100 text-cyan-800 font-bold text-xs rounded-lg mb-3 sm:mb-4">
                         Consumo Responsable
                       </span>
-                      <h3 className="font-display text-3xl font-extrabold text-slate-900 mb-3">
+                      <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2 sm:mb-3">
                         El Protocolo Cortafuegos
                       </h3>
-                      <p className="text-slate-500 text-lg mb-8 max-w-3xl">
+                      <p className="text-slate-500 text-base sm:text-lg mb-6 sm:mb-8 max-w-3xl">
                         Asumir responsabilidad algorítmica y detener la propagación de cadenas de datos no
                         verificados.
                       </p>
-                      <div className="grid md:grid-cols-2 gap-8">
-                        <div className="space-y-6">
+                      <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
+                        <div className="space-y-5 sm:space-y-6">
                           <div>
-                            <h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
+                            <h4 className="font-display font-bold text-slate-900 mb-2 flex items-center gap-2">
                               <span className="text-cyan-500">■</span> Metodología
                             </h4>
-                            <p className="text-slate-600 leading-relaxed">
+                            <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
                               Antes de redistribuir, asumí la autoría moral del contenido. Implementá un
                               delay cognitivo: si no lográs verificar la información en 60 segundos, abortá
                               la acción de compartir.
                             </p>
                           </div>
-                          <div className="bg-slate-50 border border-slate-200 p-5 rounded-2xl">
-                            <h4 className="font-bold text-slate-900 mb-2 text-sm uppercase tracking-wide">
+                          <div className="bg-slate-50/80 border border-slate-200/60 p-4 sm:p-5 rounded-2xl hover:border-cyan-400/30 transition-colors">
+                            <h4 className="font-display font-bold text-slate-900 mb-2 text-xs sm:text-sm uppercase tracking-wide">
                               Caso de Estudio
                             </h4>
-                            <p className="text-sm text-slate-600 italic">
+                            <p className="text-sm text-slate-600 italic leading-relaxed">
                               Foto impactante solicitando donaciones por catástrofe. Acción: búsqueda inversa
                               de imagen en Google. Resultado: la foto es de otro continente hace 5 años.
                             </p>
                           </div>
                         </div>
-                        <div className="bg-gradient-to-br from-cyan-600 to-blue-700 p-8 rounded-3xl text-white shadow-xl flex flex-col justify-center relative overflow-hidden">
-                          <span className="absolute top-4 right-4 text-6xl opacity-70">🛑</span>
-                          <h4 className="font-display font-extrabold text-xl mb-4">Laboratorio Práctico</h4>
-                          <p className="text-cyan-100 mb-6 leading-relaxed">
+                        <div className="bg-gradient-to-br from-cyan-600 to-brand-navy p-6 sm:p-8 rounded-3xl text-white shadow-xl shadow-cyan-500/20 flex flex-col justify-center relative overflow-hidden group">
+                          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
+                          <span className="absolute top-3 sm:top-4 right-3 sm:right-4 text-5xl sm:text-6xl opacity-60 group-hover:scale-110 transition-transform duration-500">🛑</span>
+                          <h4 className="font-display font-extrabold text-lg sm:text-xl mb-3 sm:mb-4 relative z-10">Laboratorio Práctico</h4>
+                          <p className="text-cyan-100 mb-5 sm:mb-6 leading-relaxed text-sm sm:text-base">
                             Configurá mentalmente un "Delay de 10 segundos". Ante un contenido que genere ira
                             o urgencia, contá hasta 10 antes de tocar compartir.
                           </p>
-                          <button className="bg-white text-cyan-800 font-bold py-3 px-6 rounded-xl hover:bg-cyan-50 transition-colors w-max shadow-md">
+                          <button className="bg-white text-cyan-800 font-bold py-3 px-6 rounded-xl hover:bg-cyan-50 transition-all duration-300 w-max shadow-lg hover:shadow-xl hover:-translate-y-0.5">
                             Activar Delay
                           </button>
                         </div>
@@ -667,50 +677,50 @@ export default function AlfabetizacionMediaticaContent() {
           </section>
 
           {/* ── CAFÉ CARDS ────────────────────────────────────────────────── */}
-          <section id="herramientas" className="scroll-mt-24 space-y-8">
+          <section id="herramientas" className="scroll-mt-20 sm:scroll-mt-24 space-y-8">
             <div className="text-center max-w-2xl mx-auto">
-              <h2 className="font-display text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">
+              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">
                 Suite de Herramientas Pro
               </h2>
-              <p className="text-slate-600 text-lg">
+              <p className="text-slate-600 text-base sm:text-lg">
                 Métodos prácticos para evaluar información en tiempo real.
               </p>
             </div>
 
             <div>
-              <div className="flex items-center justify-between mb-8">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
                 <div>
-                  <h3 className="font-display text-2xl font-bold text-slate-900">Protocolo C.A.F.E.</h3>
-                  <p className="text-slate-500 mt-1">Pasá el cursor sobre los módulos para desencriptar.</p>
+                  <h3 className="font-display text-xl sm:text-2xl font-bold text-slate-900">Protocolo C.A.F.E.</h3>
+                  <p className="text-slate-500 mt-1 text-sm">Pasá el cursor sobre los módulos para desencriptar</p>
                 </div>
-                <div className="hidden sm:block p-3 bg-white rounded-xl shadow-sm border border-slate-100">
+                <div className="hidden sm:block p-3 bg-white rounded-xl shadow-md border border-slate-100">
                   <span className="text-xl">☕</span>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
                 {CAFE_CARDS.map((card) => (
-                  <div key={card.letter} className="group h-56 [perspective:1000px]">
-                    <div className="relative w-full h-full [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] transition-all duration-700 shadow-lg shadow-slate-200/50 rounded-[2rem]">
+                  <div key={card.letter} className="group h-52 sm:h-56 [perspective:1000px]">
+                    <div className="relative w-full h-full [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] transition-all duration-500 shadow-lg shadow-slate-200/50 rounded-[2rem]">
                       {/* Front */}
                       <div
-                        className={`absolute inset-0 [backface-visibility:hidden] bg-white border border-slate-100 flex flex-col items-center justify-center rounded-[2rem] p-6 transition-all ${card.hoverBorder}`}
+                        className={`absolute inset-0 [backface-visibility:hidden] bg-white border border-slate-100 flex flex-col items-center justify-center rounded-[2rem] p-5 sm:p-6 transition-all ${card.hoverBorder}`}
                       >
                         <span
-                          className={`text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-slate-200 to-slate-300 ${card.hover} transition-colors duration-500 mb-2`}
+                          className={`text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-slate-200 to-slate-300 ${card.hover} transition-all duration-500 mb-2 group-hover:scale-110`}
                         >
                           {card.letter}
                         </span>
-                        <span className="font-extrabold text-slate-800 text-lg tracking-wide uppercase">
+                        <span className="font-display font-extrabold text-slate-800 text-base sm:text-lg tracking-wide uppercase">
                           {card.title}
                         </span>
                       </div>
                       {/* Back */}
                       <div
-                        className={`absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-gradient-to-br ${card.from} ${card.to} text-white flex flex-col items-center justify-center rounded-[2rem] p-6 text-center border ${card.border}`}
+                        className={`absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-gradient-to-br ${card.from} ${card.to} text-white flex flex-col items-center justify-center rounded-[2rem] p-5 sm:p-6 text-center border ${card.border}`}
                       >
-                        <span className="text-2xl mb-2">{card.emoji}</span>
-                        <p className="text-sm font-medium leading-relaxed">{card.back}</p>
+                        <span className="text-2xl sm:text-3xl mb-2 group-hover:scale-110 transition-transform duration-300">{card.emoji}</span>
+                        <p className="text-xs sm:text-sm font-medium leading-relaxed">{card.back}</p>
                       </div>
                     </div>
                   </div>
@@ -719,30 +729,30 @@ export default function AlfabetizacionMediaticaContent() {
             </div>
 
             {/* ── CHECKLIST + GAUGE ───────────────────────────────────────── */}
-            <div className="bg-white/70 backdrop-blur-xl border border-white/80 shadow-xl rounded-[2.5rem] p-2 sm:p-4">
-              <div className="bg-white rounded-[2rem] p-6 md:p-10 grid lg:grid-cols-5 gap-10 items-center">
-                <div className="lg:col-span-3 space-y-6">
+            <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-xl shadow-slate-200/30 rounded-[2.5rem] p-2 sm:p-4">
+              <div className="bg-white rounded-[2rem] p-5 sm:p-8 md:p-10 grid lg:grid-cols-5 gap-8 lg:gap-10 items-center">
+                <div className="lg:col-span-3 space-y-5 sm:space-y-6">
                   <div>
-                    <h3 className="font-display text-2xl font-bold text-slate-900 mb-2">
+                    <h3 className="font-display text-xl sm:text-2xl font-bold text-slate-900 mb-2">
                       Analizador de Viabilidad
                     </h3>
-                    <p className="text-slate-500">
+                    <p className="text-slate-500 text-sm sm:text-base">
                       Ejecutá esta matriz de validación antes de confirmar la distribución de cualquier dato.
                     </p>
                   </div>
 
-                  <div className="space-y-3 bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                  <div className="space-y-2.5 sm:space-y-3 bg-slate-50/80 p-4 sm:p-6 rounded-2xl border border-slate-100/60">
                     {CHECKLIST_ITEMS.map((item) => (
                       <label
                         key={item.id}
-                        className="flex items-start gap-4 p-3 hover:bg-white rounded-xl cursor-pointer border border-transparent hover:border-slate-200 transition-all hover:shadow-md"
+                        className="flex items-start gap-3 sm:gap-4 p-2.5 sm:p-3 hover:bg-white rounded-xl cursor-pointer border border-transparent hover:border-slate-200/60 transition-all hover:shadow-md group"
                       >
                         <div className="relative flex items-center justify-center mt-0.5 shrink-0">
                           <input
                             type="checkbox"
                             checked={checked.has(item.id)}
                             onChange={() => toggleCheck(item.id)}
-                            className="appearance-none w-5 h-5 border-2 border-slate-300 rounded cursor-pointer transition-colors bg-white checked:bg-indigo-500 checked:border-transparent"
+                            className="appearance-none w-5 h-5 border-2 border-slate-300 rounded-md cursor-pointer transition-all duration-200 bg-white checked:bg-brand-blue checked:border-transparent group-hover:border-brand-blue/50"
                           />
                           {checked.has(item.id) && (
                             <svg
@@ -760,42 +770,42 @@ export default function AlfabetizacionMediaticaContent() {
                             </svg>
                           )}
                         </div>
-                        <span className="text-sm font-medium text-slate-700">{item.text}</span>
+                        <span className="text-xs sm:text-sm font-medium text-slate-600 group-hover:text-slate-800 transition-colors">{item.text}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 {/* Gauge */}
-                <div className="lg:col-span-2 bg-slate-900 rounded-[2rem] p-8 text-white relative overflow-hidden flex flex-col items-center justify-center h-full shadow-2xl">
-                  <div className="absolute inset-0 bg-gradient-to-b from-indigo-500/10 to-transparent pointer-events-none" />
-                  <div className="w-full flex justify-between items-center mb-6 z-10">
+                <div className="lg:col-span-2 bg-slate-900 rounded-[2rem] p-6 sm:p-8 text-white relative overflow-hidden flex flex-col items-center justify-center h-full shadow-2xl shadow-slate-900/50">
+                  <div className="absolute inset-0 bg-gradient-to-b from-brand-blue/10 via-transparent to-brand-pink/5 pointer-events-none" />
+                  <div className="w-full flex justify-between items-center mb-4 sm:mb-6 z-10">
                     <span className="text-xs font-bold text-slate-400 tracking-widest uppercase">
                       Estatus de Sistema
                     </span>
                     <span
-                      className={`flex h-2 w-2 rounded-full transition-colors ${
+                      className={`flex h-2.5 w-2.5 rounded-full transition-all duration-300 ${
                         checkedCount === 0
                           ? "bg-slate-600"
                           : checkedCount < 5
-                          ? "bg-amber-400 animate-pulse"
-                          : "bg-emerald-400"
+                          ? "bg-amber-400 shadow-[0_0_8px_#fbbf24]"
+                          : "bg-emerald-400 shadow-[0_0_8px_#34d399]"
                       }`}
                     />
                   </div>
 
-                  <div className="relative w-full z-10" style={{ height: 220 }}>
+                  <div className="relative w-full z-10" style={{ height: 180 }}>
                     <Doughnut data={gaugeData} options={gaugeOptions} />
-                    <div className="absolute inset-0 flex items-end justify-center pb-4">
+                    <div className="absolute inset-0 flex items-end justify-center pb-3">
                       <span className="text-4xl font-black text-white">
                         {checkedCount}
-                        <span className="text-lg text-slate-500">/5</span>
+                        <span className="text-base sm:text-lg text-slate-500">/5</span>
                       </span>
                     </div>
                   </div>
 
-                  <div className="mt-6 text-center z-10 w-full bg-slate-800/50 py-3 rounded-xl border border-slate-700">
-                    <p className={`text-sm font-bold tracking-wide uppercase transition-colors ${gaugeTextColor}`}>
+                  <div className="mt-4 sm:mt-6 text-center z-10 w-full bg-slate-800/60 py-2.5 sm:py-3 rounded-xl border border-slate-700/50">
+                    <p className={`text-xs sm:text-sm font-bold tracking-wide uppercase transition-colors ${gaugeTextColor}`}>
                       {gaugeText}
                     </p>
                   </div>
@@ -809,31 +819,31 @@ export default function AlfabetizacionMediaticaContent() {
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="bg-white/70 backdrop-blur-xl border border-white/80 shadow-lg rounded-[2.5rem] overflow-hidden">
+            <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-xl shadow-slate-200/30 rounded-[2.5rem] overflow-hidden">
               {/* Header */}
-              <div className="px-6 md:px-10 py-5 border-b border-slate-100 flex items-center justify-between gap-4">
+              <div className="px-5 sm:px-6 md:px-10 py-4 sm:py-5 border-b border-slate-100/60 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-md shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-blue to-brand-navy flex items-center justify-center shadow-lg shadow-brand-blue/25 shrink-0 group-hover:scale-105 transition-transform">
                     <Images className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-indigo-500 tracking-widest uppercase mb-0.5">
+                    <p className="text-xs font-bold text-brand-blue tracking-widest uppercase mb-0.5">
                       Presentación
                     </p>
-                    <h2 className="text-xl md:text-2xl font-extrabold text-slate-900 font-display">
+                    <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 font-display">
                       Alfabetización Mediática
                     </h2>
                   </div>
                 </div>
-                <span className="text-slate-400 text-sm font-mono shrink-0">
+                <span className="text-slate-400 text-sm font-mono shrink-0 bg-slate-100/50 px-3 py-1.5 rounded-full">
                   {currentSlide + 1} / {CARRUSEL_IMAGES.length}
                 </span>
               </div>
 
               {/* Imagen con flechas */}
-              <div className="relative overflow-hidden lg:max-h-[560px] lg:flex lg:items-center lg:justify-center lg:bg-slate-50">
+              <div className="relative overflow-hidden lg:max-h-[500px] lg:flex lg:items-center lg:justify-center lg:bg-gradient-to-b lg:from-slate-50/50 lg:to-slate-100/30">
                 <AnimatePresence mode="wait" custom={direction}>
                   <motion.div
                     key={currentSlide}
@@ -842,7 +852,7 @@ export default function AlfabetizacionMediaticaContent() {
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    transition={{ duration: 0.35, ease: "easeInOut" }}
+                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                     className="w-full lg:flex lg:justify-center"
                   >
                     <Image
@@ -850,7 +860,7 @@ export default function AlfabetizacionMediaticaContent() {
                       alt={`Lámina ${currentSlide + 1}`}
                       width={1200}
                       height={800}
-                      className="w-full h-auto object-contain lg:w-auto lg:max-h-[560px]"
+                      className="w-full h-auto object-contain lg:w-auto lg:max-h-[500px]"
                       priority
                     />
                   </motion.div>
@@ -858,7 +868,7 @@ export default function AlfabetizacionMediaticaContent() {
 
                 <button
                   onClick={prevSlide}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 hover:bg-black/50 border border-white/20 flex items-center justify-center transition-colors backdrop-blur-sm"
+                  className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-brand-blue border border-white/20 flex items-center justify-center transition-all duration-300 backdrop-blur-sm hover:scale-110 active:scale-95"
                   aria-label="Anterior"
                 >
                   <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
@@ -866,7 +876,7 @@ export default function AlfabetizacionMediaticaContent() {
 
                 <button
                   onClick={nextSlide}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 hover:bg-black/50 border border-white/20 flex items-center justify-center transition-colors backdrop-blur-sm"
+                  className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-brand-blue border border-white/20 flex items-center justify-center transition-all duration-300 backdrop-blur-sm hover:scale-110 active:scale-95"
                   aria-label="Siguiente"
                 >
                   <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
@@ -874,15 +884,15 @@ export default function AlfabetizacionMediaticaContent() {
               </div>
 
               {/* Dots */}
-              <div className="flex items-center justify-center gap-2 py-5">
+              <div className="flex items-center justify-center gap-2 sm:gap-3 py-4 sm:py-5">
                 {CARRUSEL_IMAGES.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => goTo(i, i > currentSlide ? 1 : -1)}
                     className={`rounded-full transition-all duration-300 ${
                       i === currentSlide
-                        ? "w-6 h-2.5 bg-indigo-500"
-                        : "w-2.5 h-2.5 bg-slate-300 hover:bg-slate-400"
+                        ? "w-6 sm:w-8 h-2.5 bg-brand-blue shadow-[0_0_8px_#4272BB]"
+                        : "w-2.5 h-2.5 bg-slate-300 hover:bg-slate-400 hover:w-4 transition-all"
                     }`}
                     aria-label={`Ir a lámina ${i + 1}`}
                   />
@@ -892,25 +902,25 @@ export default function AlfabetizacionMediaticaContent() {
           </motion.section>
 
           {/* ── VULNERABILITIES + FAQ ─────────────────────────────────────── */}
-          <section className="grid md:grid-cols-2 gap-12 pb-16">
+          <section className="grid md:grid-cols-2 gap-8 md:gap-12 pb-12 sm:pb-16">
 
             {/* Vulnerabilities */}
             <div>
-              <h3 className="font-display text-2xl font-bold text-slate-900 mb-2">
+              <h3 className="font-display text-xl sm:text-2xl font-bold text-slate-900 mb-2">
                 Vulnerabilidades Comunes
               </h3>
-              <p className="text-slate-500 mb-8">Sesgos cognitivos que comprometen el procesamiento de datos:</p>
-              <div className="space-y-4">
+              <p className="text-slate-500 mb-6 sm:mb-8 text-sm sm:text-base">Sesgos cognitivos que comprometen el procesamiento de datos:</p>
+              <div className="space-y-3 sm:space-y-4">
                 {VULNERABILITIES.map((v) => (
                   <div
                     key={v.title}
-                    className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex gap-5 items-start group"
+                    className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:border-brand-blue/20 transition-all duration-300 flex gap-4 sm:gap-5 items-start group cursor-default"
                   >
-                    <div className={`p-3 rounded-xl transition-colors ${v.bg} ${v.hover}`}>
-                      <span className="text-xl leading-none block">{v.emoji}</span>
+                    <div className={`p-2.5 sm:p-3 rounded-xl transition-all duration-300 ${v.bg} ${v.hover} group-hover:scale-110`}>
+                      <span className="text-lg sm:text-xl leading-none block">{v.emoji}</span>
                     </div>
                     <div>
-                      <strong className="text-slate-900 block text-base mb-1">{v.title}</strong>
+                      <strong className="text-slate-900 block text-base mb-1 group-hover:text-brand-navy transition-colors">{v.title}</strong>
                       <p className="text-sm text-slate-600 leading-relaxed">{v.desc}</p>
                     </div>
                   </div>
@@ -920,10 +930,10 @@ export default function AlfabetizacionMediaticaContent() {
 
             {/* FAQ */}
             <div>
-              <h3 className="font-display text-2xl font-bold text-slate-900 mb-2">Base de Conocimiento</h3>
-              <p className="text-slate-500 mb-8">Consultas frecuentes y planes de acción.</p>
+              <h3 className="font-display text-xl sm:text-2xl font-bold text-slate-900 mb-2">Base de Conocimiento</h3>
+              <p className="text-slate-500 mb-6 sm:mb-8 text-sm sm:text-base">Consultas frecuentes y planes de acción.</p>
 
-              <div className="space-y-3 mb-10">
+              <div className="space-y-3 mb-8 sm:mb-10">
                 {(
                   [
                     {
@@ -940,17 +950,17 @@ export default function AlfabetizacionMediaticaContent() {
                 ).map((faq) => (
                   <div
                     key={faq.id}
-                    className="border border-slate-200 rounded-2xl bg-white overflow-hidden shadow-sm"
+                    className="border border-slate-200/60 rounded-2xl bg-white overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                   >
                     <button
                       onClick={() => setOpenFaq(openFaq === faq.id ? null : faq.id)}
-                      className="w-full text-left px-6 py-4 font-bold text-slate-800 hover:bg-slate-50 flex justify-between items-center transition-colors"
+                      className="w-full text-left px-5 sm:px-6 py-4 font-bold text-slate-800 hover:bg-slate-50/80 flex justify-between items-center transition-colors text-sm sm:text-base"
                     >
                       <span>{faq.q}</span>
                       <motion.div
                         animate={{ rotate: openFaq === faq.id ? 180 : 0 }}
                         transition={{ duration: 0.3 }}
-                        className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 shrink-0 ml-4"
+                        className="w-7 sm:w-8 h-7 sm:h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 shrink-0 ml-3 sm:ml-4"
                       >
                         <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -967,7 +977,7 @@ export default function AlfabetizacionMediaticaContent() {
                           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
                           className="overflow-hidden"
                         >
-                          <p className="px-6 pb-6 pt-4 text-slate-600 bg-slate-50/50 border-t border-slate-100">
+                          <p className="px-5 sm:px-6 pb-5 sm:pb-6 pt-3 sm:pt-4 text-slate-600 bg-slate-50/50 border-t border-slate-100 text-sm sm:text-base leading-relaxed">
                             {faq.a}
                           </p>
                         </motion.div>
@@ -977,18 +987,19 @@ export default function AlfabetizacionMediaticaContent() {
                 ))}
               </div>
 
-              <div className="bg-slate-900 text-white p-8 rounded-3xl shadow-xl relative overflow-hidden">
-                <div className="absolute right-0 top-0 w-32 h-32 bg-indigo-500 rounded-full blur-[60px] opacity-40" />
-                <h4 className="font-display font-extrabold text-xl mb-4 flex items-center gap-2 relative z-10">
-                  <span className="text-indigo-400">⚡</span> Secuencia de Arranque
+              <div className="bg-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-xl shadow-slate-900/30 relative overflow-hidden group">
+                <div className="absolute right-0 top-0 w-28 sm:w-32 h-28 sm:h-32 bg-brand-blue rounded-full blur-[50px] sm:blur-[60px] opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
+                <div className="absolute right-8 sm:right-12 bottom-0 w-20 sm:w-28 h-20 sm:h-28 bg-brand-pink rounded-full blur-[40px] sm:blur-[50px] opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
+                <h4 className="font-display font-extrabold text-lg sm:text-xl mb-4 flex items-center gap-2 relative z-10">
+                  <span className="text-brand-blue">⚡</span> Secuencia de Arranque
                 </h4>
-                <ul className="space-y-4 text-slate-300 relative z-10">
+                <ul className="space-y-3 sm:space-y-4 text-slate-300 relative z-10 text-sm sm:text-base">
                   <li className="flex gap-3 items-start">
                     <span className="bg-white/10 px-2 py-1 rounded-md text-xs font-mono mt-0.5 shrink-0">
                       01
                     </span>
                     <span>
-                      <strong>Limpiá tus redes:</strong> Dejá de seguir al menos 3 cuentas que compartan información sin citar fuentes confiables.
+                      <strong className="text-white">Limpiá tus redes:</strong> Dejá de seguir al menos 3 cuentas que compartan información sin citar fuentes confiables.
                     </span>
                   </li>
                   <li className="flex gap-3 items-start">
@@ -996,7 +1007,7 @@ export default function AlfabetizacionMediaticaContent() {
                       02
                     </span>
                     <span>
-                      <strong>Mejorá lo que te muestra la red:</strong> Seguí cuentas de verificadores de noticias confiables para que el algoritmo te muestre contenido de mejor calidad.
+                      <strong className="text-white">Mejorá lo que te muestra la red:</strong> Seguí cuentas de verificadores de noticias confiables para que el algoritmo te muestre contenido de mejor calidad.
                     </span>
                   </li>
                 </ul>
