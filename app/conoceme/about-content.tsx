@@ -226,7 +226,110 @@ export function AboutContent() {
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       </section>
 
-      {/* ── 2. RECONOCIMIENTOS Y PREMIOS ───────────────────────────────────── */}
+      {/* ── 2. PRESENCIA INTERNACIONAL ─────────────────────────────────────── */}
+      <section className="relative py-16 md:py-24 bg-[#001e3c] overflow-hidden">
+        {/* Subtle line grid */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(66,114,187,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(66,114,187,0.1) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+          }}
+        />
+        {/* Glows */}
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[500px] h-[280px] bg-brand-blue/30 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-[320px] h-[220px] bg-brand-pink/20 rounded-full blur-[80px] pointer-events-none" />
+
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+
+          {/* Header */}
+          <motion.div {...fadeUp} className="text-center mb-10">
+            <span className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-400/20 text-cyan-300 text-xs font-bold rounded-full mb-5 border border-cyan-400/35 tracking-widest uppercase">
+              <Globe className="w-3.5 h-3.5" />
+              Impacto Global
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold font-display text-white mb-3">
+              Presencia{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-sky-400">
+                Internacional
+              </span>
+            </h2>
+            <p className="text-slate-300 text-sm mt-2 max-w-md mx-auto leading-relaxed">
+              Congresos y conferencias en América Latina y Europa
+            </p>
+          </motion.div>
+
+          {/* Stats strip */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-wrap justify-center gap-4 mb-12"
+          >
+            {[
+              { value: "8", label: "Eventos",     color: "text-cyan-300",    bg: "bg-cyan-400/15",   border: "border-cyan-400/30"   },
+              { value: "5", label: "Países",       color: "text-pink-300",    bg: "bg-pink-400/15",   border: "border-pink-400/30"   },
+              { value: "3", label: "Continentes",  color: "text-violet-300",  bg: "bg-violet-400/15", border: "border-violet-400/30" },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className={`flex items-center gap-3 px-6 py-3.5 rounded-2xl ${stat.bg} border ${stat.border}`}
+              >
+                <span className={`text-2xl font-black ${stat.color}`}>{stat.value}</span>
+                <div className="w-px h-5 bg-white/20" />
+                <span className="text-white/80 text-xs font-semibold tracking-widest uppercase">{stat.label}</span>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Cards grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            {PRESENCIA.map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: i * 0.07 }}
+                className="group relative bg-white/[0.08] border border-white/20 rounded-2xl p-5 hover:bg-white/[0.14] hover:border-cyan-400/50 hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+              >
+                {/* Top accent bar on hover */}
+                <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-sky-400 via-cyan-300 to-brand-pink scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-400 rounded-t-2xl" />
+
+                {/* Flag image */}
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="w-12 h-8 rounded-md overflow-hidden border border-white/20 shadow-md flex-shrink-0">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`https://flagcdn.com/w80/${item.code}.png`}
+                      alt={item.pais}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+
+                {/* Country */}
+                <p className="font-black text-white text-base mb-2 tracking-wide">{item.pais}</p>
+
+                {/* Year badge */}
+                <span className="inline-block text-[10px] font-bold text-cyan-300 bg-cyan-400/20 border border-cyan-400/35 px-2.5 py-0.5 rounded-full tracking-widest mb-3">
+                  {item.year}
+                </span>
+
+                {/* Divider */}
+                <div className="w-full h-px bg-white/20 mb-3" />
+
+                {/* Event */}
+                <p className="text-slate-300 text-xs leading-relaxed">{item.evento}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 3. RECONOCIMIENTOS Y PREMIOS ───────────────────────────────────── */}
       <section className="py-16 md:py-24 bg-gradient-to-b from-brand-dark to-brand-navy overflow-hidden">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div {...fadeUp} className="text-center mb-12">
@@ -270,7 +373,7 @@ export function AboutContent() {
         </div>
       </section>
 
-      {/* ── 3. TRAYECTORIA PROFESIONAL ─────────────────────────────────────── */}
+      {/* ── 4. TRAYECTORIA PROFESIONAL ─────────────────────────────────────── */}
       <section className="py-16 md:py-28 bg-brand-navy overflow-hidden relative">
         {/* Central ambient glow */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] bg-brand-blue/[0.07] rounded-full blur-[150px] pointer-events-none" />
@@ -377,7 +480,7 @@ export function AboutContent() {
         </div>
       </section>
 
-      {/* ── 4. FORMACIÓN ACADÉMICA ─────────────────────────────────────────── */}
+      {/* ── 5. FORMACIÓN ACADÉMICA ─────────────────────────────────────────── */}
       <section className="relative py-16 md:py-24 bg-brand-light-blue overflow-hidden">
         {/* Dot grid tech pattern */}
         <div
@@ -452,109 +555,6 @@ export function AboutContent() {
 
                 {/* Bottom glow on hover */}
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-blue/0 to-brand-blue/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none" />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 5. PRESENCIA INTERNACIONAL ─────────────────────────────────────── */}
-      <section className="relative py-16 md:py-24 bg-[#001e3c] overflow-hidden">
-        {/* Subtle line grid */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(66,114,187,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(66,114,187,0.1) 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
-          }}
-        />
-        {/* Glows */}
-        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[500px] h-[280px] bg-brand-blue/30 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-[320px] h-[220px] bg-brand-pink/20 rounded-full blur-[80px] pointer-events-none" />
-
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
-
-          {/* Header */}
-          <motion.div {...fadeUp} className="text-center mb-10">
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-400/20 text-cyan-300 text-xs font-bold rounded-full mb-5 border border-cyan-400/35 tracking-widest uppercase">
-              <Globe className="w-3.5 h-3.5" />
-              Impacto Global
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold font-display text-white mb-3">
-              Presencia{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-sky-400">
-                Internacional
-              </span>
-            </h2>
-            <p className="text-slate-300 text-sm mt-2 max-w-md mx-auto leading-relaxed">
-              Congresos y conferencias en América Latina y Europa
-            </p>
-          </motion.div>
-
-          {/* Stats strip */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-wrap justify-center gap-4 mb-12"
-          >
-            {[
-              { value: "8", label: "Eventos",     color: "text-cyan-300",    bg: "bg-cyan-400/15",   border: "border-cyan-400/30"   },
-              { value: "5", label: "Países",       color: "text-pink-300",    bg: "bg-pink-400/15",   border: "border-pink-400/30"   },
-              { value: "3", label: "Continentes",  color: "text-violet-300",  bg: "bg-violet-400/15", border: "border-violet-400/30" },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                className={`flex items-center gap-3 px-6 py-3.5 rounded-2xl ${stat.bg} border ${stat.border}`}
-              >
-                <span className={`text-2xl font-black ${stat.color}`}>{stat.value}</span>
-                <div className="w-px h-5 bg-white/20" />
-                <span className="text-white/80 text-xs font-semibold tracking-widest uppercase">{stat.label}</span>
-              </div>
-            ))}
-          </motion.div>
-
-          {/* Cards grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
-            {PRESENCIA.map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: i * 0.07 }}
-                className="group relative bg-white/[0.08] border border-white/20 rounded-2xl p-5 hover:bg-white/[0.14] hover:border-cyan-400/50 hover:-translate-y-1 transition-all duration-300 overflow-hidden"
-              >
-                {/* Top accent bar on hover */}
-                <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-sky-400 via-cyan-300 to-brand-pink scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-400 rounded-t-2xl" />
-
-                {/* Flag image */}
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="w-12 h-8 rounded-md overflow-hidden border border-white/20 shadow-md flex-shrink-0">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={`https://flagcdn.com/w80/${item.code}.png`}
-                      alt={item.pais}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </div>
-
-                {/* Country */}
-                <p className="font-black text-white text-base mb-2 tracking-wide">{item.pais}</p>
-
-                {/* Year badge */}
-                <span className="inline-block text-[10px] font-bold text-cyan-300 bg-cyan-400/20 border border-cyan-400/35 px-2.5 py-0.5 rounded-full tracking-widest mb-3">
-                  {item.year}
-                </span>
-
-                {/* Divider */}
-                <div className="w-full h-px bg-white/20 mb-3" />
-
-                {/* Event */}
-                <p className="text-slate-300 text-xs leading-relaxed">{item.evento}</p>
               </motion.div>
             ))}
           </div>
