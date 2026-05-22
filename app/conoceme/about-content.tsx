@@ -329,51 +329,7 @@ export function AboutContent() {
         </div>
       </section>
 
-      {/* ── 3. RECONOCIMIENTOS Y PREMIOS ───────────────────────────────────── */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-brand-dark to-brand-navy overflow-hidden">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div {...fadeUp} className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-brand-pink/15 text-brand-pink text-sm font-medium rounded-full mb-4 border border-brand-pink/20">
-              <Trophy className="w-4 h-4" />
-              Reconocimientos
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold font-display text-white">
-              Premios e Impacto
-            </h2>
-          </motion.div>
-
-          <div className="grid sm:grid-cols-2 gap-5 max-w-4xl mx-auto">
-            {PREMIOS.map((premio, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group relative bg-white/[0.04] border border-white/10 rounded-2xl p-6 hover:border-brand-pink/40 transition-all duration-300 overflow-hidden"
-              >
-                <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-brand-pink to-brand-blue origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-brand-pink to-brand-blue flex items-center justify-center shadow-lg">
-                    <Award className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <span className="text-xs font-bold text-brand-pink/80 tracking-widest uppercase mb-1 block">
-                      {premio.year}
-                    </span>
-                    <h3 className="text-white font-semibold text-base mb-1 leading-snug">
-                      {premio.title}
-                    </h3>
-                    <p className="text-white/50 text-sm leading-relaxed">{premio.description}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 4. TRAYECTORIA PROFESIONAL ─────────────────────────────────────── */}
+      {/* ── 3. TRAYECTORIA PROFESIONAL ─────────────────────────────────────── */}
       <section className="py-16 md:py-28 bg-brand-navy overflow-hidden relative">
         {/* Central ambient glow */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] bg-brand-blue/[0.07] rounded-full blur-[150px] pointer-events-none" />
@@ -476,6 +432,50 @@ export function AboutContent() {
                 )
               })}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4. RECONOCIMIENTOS Y PREMIOS ───────────────────────────────────── */}
+      <section className="py-16 md:py-24 bg-gradient-to-b from-brand-dark to-brand-navy overflow-hidden">
+        <div className="container mx-auto px-4 lg:px-8">
+          <motion.div {...fadeUp} className="text-center mb-12">
+            <span className="inline-flex items-center gap-2 px-4 py-2 bg-brand-pink/15 text-brand-pink text-sm font-medium rounded-full mb-4 border border-brand-pink/20">
+              <Trophy className="w-4 h-4" />
+              Reconocimientos
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold font-display text-white">
+              Premios e Impacto
+            </h2>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 gap-5 max-w-4xl mx-auto">
+            {PREMIOS.map((premio, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="group relative bg-white/[0.04] border border-white/10 rounded-2xl p-6 hover:border-brand-pink/40 transition-all duration-300 overflow-hidden"
+              >
+                <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-brand-pink to-brand-blue origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-brand-pink to-brand-blue flex items-center justify-center shadow-lg">
+                    <Award className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-brand-pink/80 tracking-widest uppercase mb-1 block">
+                      {premio.year}
+                    </span>
+                    <h3 className="text-white font-semibold text-base mb-1 leading-snug">
+                      {premio.title}
+                    </h3>
+                    <p className="text-white/50 text-sm leading-relaxed">{premio.description}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
