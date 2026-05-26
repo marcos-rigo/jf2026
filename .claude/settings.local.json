@@ -31,7 +31,12 @@
       "Bash(Get-ChildItem \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\public\\\\weekly-content\\\\2026-W19\")",
       "Bash(Select-Object Name, Length)",
       "PowerShell(Get-ChildItem \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\public\\\\weekly-content\" | ForEach-Object { Write-Host $_.FullName })",
-      "WebSearch"
+      "WebSearch",
+      "Bash(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\public\\\\weekly-content\\\\2026-W24\\\\carrusel\")",
+      "Bash(Out-Null)",
+      "Bash(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\public\\\\weekly-content\\\\2026-W25\\\\carrusel\")",
+      "Bash(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\public\\\\weekly-content\\\\2026-W26\\\\carrusel\")",
+      "Bash(Write-Output \"Carpetas creadas\")"
     ]
   }
 }

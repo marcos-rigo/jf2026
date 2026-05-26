@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, Shield, Eye, Lock, AlertTriangle, Search } from "lucide-react"
+import { ArrowRight, Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain } from "lucide-react"
 
 const tematicas = [
   {
@@ -64,6 +64,42 @@ const tematicas = [
     imageAlt: "Banner Estafas Digitales",
     icon: AlertTriangle,
     color: "#FFD93D",
+    locked: false,
+  },
+  {
+    href: "/nnya-entorno-digital",
+    category: "Infancia",
+    title: "NNyA y el Entorno Digital",
+    description:
+      "Cómo interpretan los niños, niñas y adolescentes el mundo digital. Guía práctica de mediación parental para acompañarlos de forma consciente.",
+    image: "/weekly-content/2026-W24/nnyapng.png",
+    imageAlt: "Banner NNyA y el Entorno Digital",
+    icon: Baby,
+    color: "#7C3AED",
+    locked: false,
+  },
+  {
+    href: "/violencia-digital-infancias",
+    category: "Protección",
+    title: "Violencia Digital en Infancias",
+    description:
+      "Grooming, ciberbullying y exposición a riesgos: cómo identificar señales de alerta y actuar a tiempo para proteger a niñas, niños y adolescentes.",
+    image: "/weekly-content/2026-W25/infanciasviopng.png",
+    imageAlt: "Banner Violencia Digital en Infancias",
+    icon: ShieldAlert,
+    color: "#EF4444",
+    locked: false,
+  },
+  {
+    href: "/hiperconectividad-digital",
+    category: "Neurodesarrollo",
+    title: "Hiperconectividad Digital",
+    description:
+      "Impacto de las pantallas y redes sociales en el cerebro adolescente. Evidencia científica sobre FOMO, cultura del like y salud mental en la era TRIC.",
+    image: "/weekly-content/2026-W26/hiperconectividadpng.png",
+    imageAlt: "Banner Hiperconectividad Digital",
+    icon: Brain,
+    color: "#6366F1",
     locked: false,
   },
 ]

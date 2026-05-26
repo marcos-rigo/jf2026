@@ -40,7 +40,7 @@ import {
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 
-const INFOGRAFIA_PATH = "/weekly-content/2026-W22/infografia%204.svg"
+const INFOGRAFIA_PATH = "/weekly-content/2026-W22/violenciapng.png"
 
 const slideVariants = {
   enter: (dir: number) => ({ opacity: 0, x: dir * 80 }),
