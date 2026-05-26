@@ -347,7 +347,7 @@ export function AboutContent() {
 
           <div className="relative max-w-5xl mx-auto">
             {/* Center vertical line — desktop only */}
-            <div className="absolute left-1/2 -translate-x-1/2 inset-y-0 w-px bg-gradient-to-b from-brand-blue/40 via-brand-pink/30 to-brand-blue/40 hidden lg:block" />
+            <div className="absolute left-1/2 -translate-x-1/2 inset-y-0 w-[2px] bg-gradient-to-b from-brand-blue/70 via-brand-pink/60 to-brand-blue/70 hidden lg:block" />
 
             <div className="flex flex-col gap-10 lg:gap-16">
               {TRAYECTORIA.map((item, i) => {
@@ -416,7 +416,7 @@ export function AboutContent() {
                       <div className="flex flex-col items-center flex-shrink-0">
                         <div className={`w-4 h-4 rounded-full bg-gradient-to-br ${accent.bar} ring-4 ring-white/10 mt-5 flex-shrink-0`} />
                         {i < TRAYECTORIA.length - 1 && (
-                          <div className="flex-1 w-px bg-white/10 mt-2" />
+                          <div className="flex-1 w-[2px] bg-gradient-to-b from-brand-blue/60 to-brand-pink/50 mt-2" />
                         )}
                       </div>
                       <div className="group relative bg-white/[0.04] border border-white/10 rounded-2xl p-5 flex-1 overflow-hidden">
