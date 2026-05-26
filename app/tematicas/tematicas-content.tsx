@@ -28,7 +28,7 @@ const tematicas = [
     imageAlt: "Banner Alfabetización Mediática",
     icon: Search,
     color: "#00D4AA",
-    locked: true,
+    locked: false,
   },
   {
     href: "/huella-digital",
@@ -40,7 +40,7 @@ const tematicas = [
     imageAlt: "Banner Huella Digital",
     icon: Eye,
     color: "#D5247A",
-    locked: true,
+    locked: false,
   },
   {
     href: "/violencia-digital",
