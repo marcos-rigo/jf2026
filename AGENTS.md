@@ -15,10 +15,11 @@ npx tsc --noEmit         # type-check separately (build does NOT check types)
 ## Quirks
 
 - **Types**: `next.config.mjs` sets `ignoreBuildErrors: true`. Always `npx tsc --noEmit` before committing.
-- **Tailwind v4**: No `tailwind.config.js`. Theme is CSS-only in `app/globals.css` via `@theme inline`. Brand tokens are CSS custom properties (`--brand-blue`, etc.) exposed as Tailwind utilities.
+- **Tailwind v4**: No `tailwind.config.js`. Theme is CSS-only in `app/globals.css` via `@theme inline`. Brand tokens are CSS custom properties (`--brand-blue`, etc.) exposed as Tailwind utilities. Dark mode via `@custom-variant dark (&:is(.dark *))`. Also imports `tw-animate-css`.
 - **Routing**: Two-file pattern — `page.tsx` (server, exports `metadata`) + `*-content.tsx` (client, `"use client"`). Exceptions: `/temas/*` are single-file client components.
 - **shadcn/ui** (`components/ui/`): Generated — never edit directly. Add via `npx shadcn add <component>`.
-- **Remote images**: Only `josefarhat.com` in `remotePatterns`. Add new domains to `next.config.mjs`.
+- **Known typo**: `app/temas/[id]/]/` has an extra `]` in the path — check which files are active before editing.
+- **Remote images**: Domains in `remotePatterns`: `josefarhat.com`, `img.youtube.com`, `www.comunicaciontucuman.gob.ar`, `*.fbcdn.net`. Add new domains to `next.config.mjs`.
 - **Lazy imports**: Firebase + EmailJS are `dynamic(() => import(...))` in `QuickContactSection`.
 - **No CI/CD**: No GitHub Actions or CI config.
 - **`/blog` inactive**: Linked in Navbar but `app/blog/` doesn't exist yet — don't treat as active.

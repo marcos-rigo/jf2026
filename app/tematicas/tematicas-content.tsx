@@ -69,10 +69,10 @@ const tematicas = [
   {
     href: "/nnya-entorno-digital",
     category: "Infancia",
-    title: "NNyA y el Entorno Digital",
+    title: "Niñas, Niños y Adolescentes en el Entorno Digital",
     description:
       "Cómo interpretan los niños, niñas y adolescentes el mundo digital. Guía práctica de mediación parental para acompañarlos de forma consciente.",
-    image: "/weekly-content/2026-W24/nnyapng.png",
+    image: "/weekly-content/2026-W24/card6.png",
     imageAlt: "Banner NNyA y el Entorno Digital",
     icon: Baby,
     color: "#7C3AED",
@@ -84,7 +84,7 @@ const tematicas = [
     title: "Violencia Digital en Infancias",
     description:
       "Grooming, ciberbullying y exposición a riesgos: cómo identificar señales de alerta y actuar a tiempo para proteger a niñas, niños y adolescentes.",
-    image: "/weekly-content/2026-W25/infanciasviopng.png",
+    image: "/weekly-content/2026-W25/card7.png",
     imageAlt: "Banner Violencia Digital en Infancias",
     icon: ShieldAlert,
     color: "#EF4444",
@@ -96,7 +96,7 @@ const tematicas = [
     title: "Hiperconectividad Digital",
     description:
       "Impacto de las pantallas y redes sociales en el cerebro adolescente. Evidencia científica sobre FOMO, cultura del like y salud mental en la era TRIC.",
-    image: "/weekly-content/2026-W26/hiperconectividadpng.png",
+    image: "/weekly-content/2026-W26/card8.png",
     imageAlt: "Banner Hiperconectividad Digital",
     icon: Brain,
     color: "#6366F1",

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <path d="M100 15 L175 50 L175 100 C175 145 140 175 100 190 C60 175 25 145 25 100 L25 50 Z" fill="url(#shieldg)" opacity="0.12"/>
+  <path d="M100 25 L162 53 L162 98 C162 137 133 163 100 176 C67 163 38 137 38 98 L38 53 Z" stroke="url(#shieldg)" strokeWidth="1.5" opacity="0.2" fill="url(#shieldg2)"/>
+  <path d="M100 55 L100 138 M72 85 L128 85" stroke="url(#shieldg)" strokeWidth="1.5" strokeLinecap="round" opacity="0.25"/>
+  <circle cx="100" cy="96" r="12" stroke="url(#shieldg)" strokeWidth="1" opacity="0.2" fill="none"/>
+  <path d="M96 96 L99 100 L106 92" stroke="url(#shieldg)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.3"/>
+  <circle cx="100" cy="96" r="2" fill="url(#shieldg)" opacity="0.15"/>
+  <defs>
+    <linearGradient id="shieldg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#4272BB"/>
+      <stop offset="50%" stopColor="#8B5CF6"/>
+      <stop offset="100%" stopColor="#06B6D4"/>
+    </linearGradient>
+    <linearGradient id="shieldg2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#4272BB" stopOpacity="0.02"/>
+      <stop offset="100%" stopColor="#06B6D4" stopOpacity="0.06"/>
+    </linearGradient>
+  </defs>
+</svg>

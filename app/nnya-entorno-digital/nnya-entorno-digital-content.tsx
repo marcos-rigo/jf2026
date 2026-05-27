@@ -1,40 +1,20 @@
 "use client"
 
-import React, { useState, useEffect, useRef } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react"
+import { motion, AnimatePresence, useScroll, useSpring, useTransform, useMotionValue } from "framer-motion"
 import Image from "next/image"
 import {
-  Smartphone,
-  ShieldCheck,
-  HeartPulse,
-  MessageCircle,
-  Users,
-  Eye,
-  Lightbulb,
-  CheckCircle2,
-  ChevronRight,
-  BookOpen,
-  Settings,
-  Download,
-  Fingerprint,
-  Baby,
-  Wifi,
-  Brain,
-  Star,
-  TrendingUp,
-  Clock,
-  Lock,
-  Zap,
-  AlertCircle,
-  ArrowRight,
-  Play,
-  ChevronLeft,
-  Images,
-  X,
-  ZoomIn,
-  ZoomOut,
-  Maximize2,
+  Smartphone, ShieldCheck, HeartPulse, MessageCircle, Users, Eye, Lightbulb,
+  ChevronRight, BookOpen, Settings, Download, Fingerprint, Baby, Wifi, Brain,
+  Star, TrendingUp, Clock, Lock, Zap, AlertCircle, ArrowRight, Play,
+  ChevronLeft, Images, X, ZoomIn, ZoomOut, Maximize2, Sparkles, Quote,
 } from "lucide-react"
+
+// ── Constants ────────────────────────────────────────────────────────────
+const CARRUSEL_IMAGES = Array.from({ length: 7 }, (_, i) => `/weekly-content/2026-W24/carrusel/${i + 1}.svg`)
+const INFOGRAFIA_PATH = "/weekly-content/2026-W24/infografia%206.png"
+const ease = [0.22, 1, 0.36, 1] as const
+const PARTICLE_COUNT = 45
 
 const slideVariants = {
   enter: (dir: number) => ({ opacity: 0, x: dir * 80 }),
@@ -42,174 +22,222 @@ const slideVariants = {
   exit: (dir: number) => ({ opacity: 0, x: dir * -80 }),
 }
 
-const CARRUSEL_IMAGES = Array.from({ length: 7 }, (_, i) =>
-  `/weekly-content/2026-W24/carrusel/${i + 1}.svg`
-)
+// ── Particle system ──────────────────────────────────────────────────────
+const particles = Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
+  id: i,
+  x: Math.random() * 100,
+  y: Math.random() * 100,
+  size: 2 + Math.random() * 6,
+  delay: Math.random() * -8,
+  speed: 0.6 + Math.random() * 0.4,
+  opacity: 0.08 + Math.random() * 0.15,
+  color: ["#4272BB", "#D5247A", "#003257", "#8B5CF6", "#06B6D4"][Math.floor(Math.random() * 5)],
+  drift: Math.random() > 0.5 ? "particle-drift-1" : Math.random() > 0.5 ? "particle-drift-2" : "particle-drift-3",
+}))
 
-const INFOGRAFIA_PATH = "/weekly-content/2026-W24/infografia%206.png"
-
-// ── Animaciones ───────────────────────────────────────────────────────────────
-const fadeUp = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-50px" },
-  transition: { duration: 0.6, ease: "easeOut" },
+function ParticleField() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-[1]" aria-hidden>
+      {particles.map((p) => (
+        <div
+          key={p.id}
+          className="absolute rounded-full"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: p.size,
+            height: p.size,
+            backgroundColor: p.color,
+            opacity: p.opacity,
+            animation: `${p.drift} ${6 + p.speed * 4}s ease-in-out ${p.delay}s infinite`,
+          }}
+        />
+      ))}
+    </div>
+  )
 }
 
-// ── Data ──────────────────────────────────────────────────────────────────────
-type CardData = {
-  id: number
-  titulo: string
-  desc: string
-  icono: React.ElementType
-  gradient: string
+// ── 3D Tilt hook ─────────────────────────────────────────────────────────
+function useTilt(ref: React.RefObject<HTMLDivElement | null>, maxTilt = 8) {
+  const rotateX = useMotionValue(0)
+  const rotateY = useMotionValue(0)
+
+  const onMouseMove = useCallback((e: React.MouseEvent) => {
+    const el = ref.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const centerX = rect.left + rect.width / 2
+    const centerY = rect.top + rect.height / 2
+    const deltaX = (e.clientX - centerX) / (rect.width / 2)
+    const deltaY = (e.clientY - centerY) / (rect.height / 2)
+    rotateY.set(deltaX * maxTilt)
+    rotateX.set(-deltaY * maxTilt)
+  }, [ref, maxTilt])
+
+  const onMouseLeave = useCallback(() => {
+    rotateX.set(0)
+    rotateY.set(0)
+  }, [rotateX, rotateY])
+
+  return { rotateX, rotateY, onMouseMove, onMouseLeave }
 }
 
+// ── Animated counter hook ────────────────────────────────────────────────
+function useCountUp(target: number, duration = 2, start = false) {
+  const [value, setValue] = useState(0)
+  const rafRef = useRef<number>(0)
+  useEffect(() => {
+    if (!start) return
+    let startTime: number | null = null
+    function tick(now: number) {
+      if (!startTime) startTime = now
+      const elapsed = (now - startTime) / 1000
+      const progress = Math.min(elapsed / duration, 1)
+      const eased = 1 - (1 - progress) ** 3
+      setValue(Math.round(eased * target))
+      if (progress < 1) rafRef.current = requestAnimationFrame(tick)
+    }
+    rafRef.current = requestAnimationFrame(tick)
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }
+  }, [target, duration, start])
+  return value
+}
+
+// ── Circular progress ring ───────────────────────────────────────────────
+function CircularProgress({ value, size = 140, strokeWidth = 6, color }: {
+  value: number; size?: number; strokeWidth?: number; color: string
+}) {
+  const radius = (size - strokeWidth) / 2
+  const circumference = 2 * Math.PI * radius
+  const [offset, setOffset] = useState(circumference)
+
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => {
+      setOffset(circumference - (value / 100) * circumference)
+    })
+    return () => cancelAnimationFrame(raf)
+  }, [value, circumference])
+
+  return (
+    <svg width={size} height={size} className="circle-progress-ring drop-shadow-lg">
+      <circle className="bg-circle" cx={size / 2} cy={size / 2} r={radius} strokeWidth={strokeWidth} />
+      <circle
+        className="fg-circle"
+        cx={size / 2} cy={size / 2} r={radius}
+        strokeWidth={strokeWidth}
+        stroke={`url(#${color.replace(/\s/g, '')})`}
+        strokeDasharray={circumference}
+        strokeDashoffset={offset}
+        style={{ transition: "stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1)" }}
+      />
+      <defs>
+        <linearGradient id={color.replace(/\s/g, '')} x1="0%" y1="0%" x2="100%" y2="100%">
+          {color.includes("brand-blue") && <><stop offset="0%" stopColor="#4272BB" /><stop offset="100%" stopColor="#06B6D4" /></>}
+          {color.includes("brand-pink") && <><stop offset="0%" stopColor="#D5247A" /><stop offset="100%" stopColor="#F97316" /></>}
+          {color.includes("violet") && <><stop offset="0%" stopColor="#8B5CF6" /><stop offset="100%" stopColor="#4272BB" /></>}
+        </linearGradient>
+      </defs>
+    </svg>
+  )
+}
+
+// ── Scroll progress ──────────────────────────────────────────────────────
+function ScrollProgress() {
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 })
+  return (
+    <motion.div className="fixed top-0 left-0 right-0 h-[3px] z-[60] origin-left" style={{ scaleX, background: "linear-gradient(90deg, #4272BB, #D5247A, #8B5CF6)" }} />
+  )
+}
+
+// ── Wave Divider ─────────────────────────────────────────────────────────
+function WaveDivider({ flip }: { flip?: boolean }) {
+  return (
+    <div className="relative w-full h-16 sm:h-20 lg:h-24 overflow-hidden -mb-[1px]">
+      <svg className="absolute bottom-0 w-full h-full" viewBox="0 0 1440 100" preserveAspectRatio="none" fill="white">
+        <path d={flip
+          ? "M0,30 C360,100 720,0 1440,60 L1440,100 L0,100 Z"
+          : "M0,60 C360,0 720,100 1080,40 C1260,10 1350,30 1440,50 L1440,100 L0,100 Z"
+        } />
+      </svg>
+    </div>
+  )
+}
+
+// ── Data ─────────────────────────────────────────────────────────────────
+type CardData = { id: number; titulo: string; desc: string; icono: React.ElementType; gradient: string; bgLight: string; borderColor: string }
 const percepciones: CardData[] = [
-  {
-    id: 1,
-    titulo: "La plaza virtual",
-    desc: "Para los pibes no hay 'mundo virtual' y 'mundo real'. Su vida social transcurre simultáneamente en ambos espacios sin distinción.",
-    icono: Users,
-    gradient: "from-blue-500 to-cyan-400",
-  },
-  {
-    id: 2,
-    titulo: "La cámara de eco",
-    desc: "Sufren la 'adulación algorítmica': las redes les muestran contenido afín, limitando su exposición a opiniones diferentes.",
-    icono: HeartPulse,
-    gradient: "from-brand-pink to-orange-400",
-  },
-  {
-    id: 3,
-    titulo: "Privacidad en tensión",
-    desc: "Saben que cuidar sus datos es importante, pero muchas veces priorizan la exposición para sentir que pertenecen al grupo.",
-    icono: Fingerprint,
-    gradient: "from-violet-500 to-brand-blue",
-  },
-  {
-    id: 4,
-    titulo: "Huella imborrable",
-    desc: "Comparten fotos o pensamientos sin medir que esa información conforma una identidad digital que los acompañará siempre.",
-    icono: Eye,
-    gradient: "from-emerald-400 to-teal-500",
-  },
+  { id: 1, titulo: "La plaza virtual", desc: "Para los pibes no hay 'mundo virtual' y 'mundo real'. Su vida social transcurre simultáneamente en ambos espacios sin distinción.", icono: Users, gradient: "from-blue-500 to-cyan-400", bgLight: "bg-blue-50/70", borderColor: "border-blue-100" },
+  { id: 2, titulo: "La cámara de eco", desc: "Sufren la 'adulación algorítmica': las redes les muestran contenido afín, limitando su exposición a opiniones diferentes.", icono: HeartPulse, gradient: "from-brand-pink to-orange-400", bgLight: "bg-pink-50/70", borderColor: "border-pink-100" },
+  { id: 3, titulo: "Privacidad en tensión", desc: "Saben que cuidar sus datos es importante, pero muchas veces priorizan la exposición para sentir que pertenecen al grupo.", icono: Fingerprint, gradient: "from-violet-500 to-brand-blue", bgLight: "bg-violet-50/70", borderColor: "border-violet-100" },
+  { id: 4, titulo: "Huella imborrable", desc: "Comparten fotos o pensamientos sin medir que esa información conforma una identidad digital que los acompañará siempre.", icono: Eye, gradient: "from-emerald-400 to-teal-500", bgLight: "bg-emerald-50/70", borderColor: "border-emerald-100" },
 ]
-
 const estadisticas = [
-  {
-    valor: "93%",
-    texto: "De los adolescentes usa el celular para relacionarse con sus amigos.",
-    icono: Smartphone,
-    color: "from-brand-blue to-cyan-400",
-  },
-  {
-    valor: "81%",
-    texto: "Considera que proteger su privacidad en Internet es muy importante.",
-    icono: Lock,
-    color: "from-brand-pink to-orange-400",
-  },
-  {
-    valor: "55%",
-    texto: "De los padres subestima el tiempo real que sus hijos pasan conectados.",
-    icono: Clock,
-    color: "from-violet-500 to-brand-blue",
-  },
+  { valor: 93, suffix: "%", texto: "De los adolescentes usa el celular para relacionarse con sus amigos.", icono: Smartphone, color: "brand-blue to-cyan-400", iconGrad: "from-brand-blue to-cyan-400", numGrad: "from-brand-blue to-cyan-500", cardBg: "bg-blue-50/60", cardBorder: "border-blue-100" },
+  { valor: 81, suffix: "%", texto: "Considera que proteger su privacidad en Internet es muy importante.", icono: Lock, color: "brand-pink to-orange-400", iconGrad: "from-brand-pink to-orange-400", numGrad: "from-brand-pink to-orange-500", cardBg: "bg-pink-50/60", cardBorder: "border-pink-100" },
+  { valor: 55, suffix: "%", texto: "De los padres subestima el tiempo real que sus hijos pasan conectados.", icono: Clock, color: "violet-500 to-brand-blue", iconGrad: "from-violet-500 to-brand-blue", numGrad: "from-violet-500 to-violet-700", cardBg: "bg-violet-50/60", cardBorder: "border-violet-100" },
 ]
-
 const pasosMediacion = [
-  {
-    id: 1,
-    titulo: "Dialogá sin juzgar",
-    desc: "Preguntales a qué juegan, a quiénes siguen en TikTok o Instagram y qué les divierte. Mostrar interés genuino abre las puertas para hablar de temas más difíciles después.",
-    icono: MessageCircle,
-    color: "bg-gradient-to-br from-brand-blue to-cyan-400",
-  },
-  {
-    id: 2,
-    titulo: "Configuren juntos",
-    desc: "Sentate con ellos a revisar la privacidad de sus perfiles. Enseñales a poner cuentas en privado, desactivar la ubicación y gestionar quién puede comentar sus fotos.",
-    icono: Settings,
-    color: "bg-gradient-to-br from-emerald-400 to-teal-500",
-  },
-  {
-    id: 3,
-    titulo: "Pensamiento crítico",
-    desc: "Ayudalos a dudar. ¿Esa noticia es real? ¿Ese influencer está sponsoreado? Fomentar la duda es la mejor defensa contra la desinformación y el grooming.",
-    icono: Lightbulb,
-    color: "bg-gradient-to-br from-amber-400 to-orange-500",
-  },
-  {
-    id: 4,
-    titulo: "Pacten los límites",
-    desc: "La prohibición total rara vez funciona. Es mejor acordar horarios libres de pantallas (ej: durante la cena o antes de dormir) para cuidar su higiene del sueño.",
-    icono: ShieldCheck,
-    color: "bg-gradient-to-br from-brand-pink to-violet-500",
-  },
+  { id: 1, titulo: "Dialogá sin juzgar", desc: "Preguntales a qué juegan, a quiénes siguen en TikTok o Instagram y qué les divierte. Mostrar interés genuino abre las puertas para hablar de temas más difíciles después.", icono: MessageCircle, color: "bg-gradient-to-br from-brand-blue to-cyan-400" },
+  { id: 2, titulo: "Configuren juntos", desc: "Sentate con ellos a revisar la privacidad de sus perfiles. Enseñales a poner cuentas en privado, desactivar la ubicación y gestionar quién puede comentar sus fotos.", icono: Settings, color: "bg-gradient-to-br from-emerald-400 to-teal-500" },
+  { id: 3, titulo: "Pensamiento crítico", desc: "Ayudalos a dudar. ¿Esa noticia es real? ¿Ese influencer está sponsoreado? Fomentar la duda es la mejor defensa contra la desinformación y el grooming.", icono: Lightbulb, color: "bg-gradient-to-br from-amber-400 to-orange-500" },
+  { id: 4, titulo: "Pacten los límites", desc: "La prohibición total rara vez funciona. Es mejor acordar horarios libres de pantallas (ej: durante la cena o antes de dormir) para cuidar su higiene del sueño.", icono: ShieldCheck, color: "bg-gradient-to-br from-brand-pink to-violet-500" },
 ]
-
 const herramientas = [
-  {
-    titulo: "Guía de Privacidad",
-    desc: "Paso a paso para configurar la seguridad en TikTok, Instagram y WhatsApp junto a tus hijos.",
-    icono: ShieldCheck,
-    gradient: "from-brand-blue/10 to-cyan-400/10",
-    border: "border-brand-blue/20",
-    iconBg: "bg-brand-blue/10",
-    iconColor: "text-brand-blue",
-    tag: "Descargable",
-  },
-  {
-    titulo: "Glosario Digital",
-    desc: "Grooming, Sharenting, Sexting... ¿Qué significan y cómo detectarlos antes de que sea tarde?",
-    icono: BookOpen,
-    gradient: "from-brand-pink/10 to-orange-400/10",
-    border: "border-brand-pink/20",
-    iconBg: "bg-brand-pink/10",
-    iconColor: "text-brand-pink",
-    tag: "Lectura",
-  },
-  {
-    titulo: "Control Parental",
-    desc: "Apps y configuraciones recomendadas para acompañar sin invadir. El equilibrio entre protección y autonomía.",
-    icono: Smartphone,
-    gradient: "from-violet-500/10 to-brand-blue/10",
-    border: "border-violet-400/20",
-    iconBg: "bg-violet-500/10",
-    iconColor: "text-violet-600",
-    tag: "Herramientas",
-  },
+  { titulo: "Guía de Privacidad", desc: "Paso a paso para configurar la seguridad en TikTok, Instagram y WhatsApp junto a tus hijos.", icono: ShieldCheck, gradient: "from-brand-blue to-cyan-400", tag: "Descargable" },
+  { titulo: "Glosario Digital", desc: "Grooming, Sharenting, Sexting... ¿Qué significan y cómo detectarlos antes de que sea tarde?", icono: BookOpen, gradient: "from-brand-pink to-orange-400", tag: "Lectura" },
+  { titulo: "Control Parental", desc: "Apps y configuraciones recomendadas para acompañar sin invadir. El equilibrio entre protección y autonomía.", icono: Smartphone, gradient: "from-violet-500 to-brand-blue", tag: "Herramientas" },
 ]
-
 const consejosRapidos = [
-  { texto: "No compartas fotos de ellos sin pedirles permiso (Sharenting)", icono: "📸" },
+  { texto: "No compartas fotos de ellos sin pedirles permiso", icono: "📸" },
   { texto: "Enseñales a bloquear y reportar", icono: "🚫" },
-  { texto: "El 'Modo Avión' ayuda a desconectar", icono: "✈️" },
+  { texto: "El modo avión ayuda a desconectar", icono: "✈️" },
   { texto: "Vos sos su principal modelo a seguir", icono: "⭐" },
   { texto: "Hablen sobre el cyberbullying", icono: "💬" },
   { texto: "No todo lo que brilla en redes es real", icono: "🔍" },
 ]
-
 const señalesAlerta = [
-  { titulo: "Cambios de humor al salir de las redes", icono: AlertCircle, color: "text-rose-500", bg: "bg-rose-50" },
-  { titulo: "Secretismo extremo con el teléfono", icono: Lock, color: "text-amber-500", bg: "bg-amber-50" },
-  { titulo: "Dificultad para dormir o relajarse", icono: Brain, color: "text-violet-500", bg: "bg-violet-50" },
-  { titulo: "Pérdida de interés en actividades offline", icono: TrendingUp, color: "text-brand-blue", bg: "bg-blue-50" },
+  { titulo: "Cambios de humor al salir de las redes", icono: AlertCircle, color: "text-rose-500", bar: "bg-rose-400", iconBg: "bg-rose-100", cardBg: "bg-rose-50/70", cardBorder: "border-rose-200/60", desc: "Irritabilidad o tristeza profunda que aparece justo al cerrar las apps." },
+  { titulo: "Secretismo extremo con el teléfono", icono: Lock, color: "text-amber-600", bar: "bg-amber-400", iconBg: "bg-amber-100", cardBg: "bg-amber-50/70", cardBorder: "border-amber-200/60", desc: "Apaga la pantalla al acercarse un adulto o crea perfiles anónimos." },
+  { titulo: "Dificultad para dormir o relajarse", icono: Brain, color: "text-violet-500", bar: "bg-violet-400", iconBg: "bg-violet-100", cardBg: "bg-violet-50/70", cardBorder: "border-violet-200/60", desc: "Insomnio, ansiedad o imposibilidad de estar offline sin angustia." },
+  { titulo: "Pérdida de interés en actividades offline", icono: TrendingUp, color: "text-brand-blue", bar: "bg-brand-blue", iconBg: "bg-blue-100", cardBg: "bg-blue-50/70", cardBorder: "border-blue-200/60", desc: "Abandona deportes, amigos o hobbies que antes disfrutaba con entusiasmo." },
 ]
 
-// ── Componente ────────────────────────────────────────────────────────────────
+// ── Main component ──────────────────────────────────────────────────────
 export function NnyaEntornoDigitalContent() {
   const [pasoActivo, setPasoActivo] = useState(1)
+  const heroRef = useRef<HTMLDivElement>(null)
 
-  // ── Carrusel ──────────────────────────────────────────────────────────────
+  const { scrollYProgress: heroProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] })
+  const heroY = useTransform(heroProgress, [0, 1], [0, 120])
+  const heroFade = useTransform(heroProgress, [0, 0.7], [1, 0])
+
+  const [statsVisible, setStatsVisible] = useState(false)
+  const ringsRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = ringsRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setStatsVisible(true); obs.disconnect() } },
+      { threshold: 0.2 }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
+  const counterVal0 = useCountUp(estadisticas[0].valor, 2.2, statsVisible)
+  const counterVal1 = useCountUp(estadisticas[1].valor, 2.2, statsVisible)
+  const counterVal2 = useCountUp(estadisticas[2].valor, 2.2, statsVisible)
+  const counterVals = [counterVal0, counterVal1, counterVal2]
+
+  // ── Carrusel ──────────────────────────────────────────────────────────
   const [currentSlide, setCurrentSlide] = useState(0)
   const [direction, setDirection] = useState(0)
-
   function goTo(index: number, dir: number) { setDirection(dir); setCurrentSlide(index) }
   function prevSlide() { goTo((currentSlide - 1 + CARRUSEL_IMAGES.length) % CARRUSEL_IMAGES.length, -1) }
   function nextSlide() { goTo((currentSlide + 1) % CARRUSEL_IMAGES.length, 1) }
 
-  // ── Infografía — lightbox ─────────────────────────────────────────────────
+  // ── Lightbox ──────────────────────────────────────────────────────────
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [zoom, setZoom] = useState(1)
   const [pan, setPan] = useState({ x: 0, y: 0 })
@@ -223,375 +251,495 @@ export function NnyaEntornoDigitalContent() {
   useEffect(() => { zoomRef.current = zoom }, [zoom])
 
   function closeLightbox() { setLightboxOpen(false); setZoom(1); setPan({ x: 0, y: 0 }) }
-  function zoomIn() { setZoom(prev => Math.min(4, parseFloat((prev + 0.5).toFixed(1)))) }
-  function zoomOut() {
-    setZoom(prev => {
-      const next = parseFloat((prev - 0.5).toFixed(1))
-      if (next <= 1) { setPan({ x: 0, y: 0 }); return 1 }
-      return next
-    })
-  }
+  function zoomIn() { setZoom(prev => Math.min(4, +(prev + 0.5).toFixed(1))) }
+  function zoomOut() { setZoom(prev => { const n = +(prev - 0.5).toFixed(1); if (n <= 1) { setPan({ x: 0, y: 0 }); return 1 }; return n }) }
   function resetZoom() { setZoom(1); setPan({ x: 0, y: 0 }) }
-  function onMouseDown(e: React.MouseEvent) {
-    if (zoomRef.current <= 1) return
-    e.preventDefault()
-    setIsDragging(true)
+
+  const ldMouseDown = useCallback((e: React.MouseEvent) => {
+    if (zoomRef.current <= 1) return; e.preventDefault(); setIsDragging(true)
     dragStartRef.current = { mx: e.clientX, my: e.clientY, px: panRef.current.x, py: panRef.current.y }
-  }
-  function onMouseMove(e: React.MouseEvent) {
+  }, [])
+  const ldMouseMove = useCallback((e: React.MouseEvent) => {
     if (!isDragging || !dragStartRef.current) return
-    setPan({
-      x: dragStartRef.current.px + (e.clientX - dragStartRef.current.mx),
-      y: dragStartRef.current.py + (e.clientY - dragStartRef.current.my),
-    })
-  }
-  function onMouseUp() { setIsDragging(false); dragStartRef.current = null }
+    setPan({ x: dragStartRef.current.px + (e.clientX - dragStartRef.current.mx), y: dragStartRef.current.py + (e.clientY - dragStartRef.current.my) })
+  }, [isDragging])
+  const ldMouseUp = useCallback(() => { setIsDragging(false); dragStartRef.current = null }, [])
 
   useEffect(() => {
-    const el = lightboxAreaRef.current
-    if (!el || !lightboxOpen) return
-    const wheelHandler = (e: WheelEvent) => {
+    const el = lightboxAreaRef.current; if (!el || !lightboxOpen) return
+    const wheelHandler = (e: WheelEvent) => { e.preventDefault(); const d = e.deltaY < 0 ? 0.3 : -0.3; setZoom(p => { const n = +(p + d).toFixed(1); if (n <= 1) { setPan({ x: 0, y: 0 }); return 1 }; return Math.min(4, n) }) }
+    const ts = (e: TouchEvent) => { if (e.touches.length === 2) { e.preventDefault(); lastTouchDistRef.current = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY) } else if (e.touches.length === 1) { dragStartRef.current = { mx: e.touches[0].clientX, my: e.touches[0].clientY, px: panRef.current.x, py: panRef.current.y } } }
+    const tm = (e: TouchEvent) => {
       e.preventDefault()
-      const delta = e.deltaY < 0 ? 0.3 : -0.3
-      setZoom(prev => {
-        const next = parseFloat((prev + delta).toFixed(1))
-        if (next <= 1) { setPan({ x: 0, y: 0 }); return 1 }
-        return Math.min(4, next)
-      })
+      if (e.touches.length === 2 && lastTouchDistRef.current !== null) { const nd = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY); const r = nd / lastTouchDistRef.current; lastTouchDistRef.current = nd; setZoom(p => { const n = +(p * r).toFixed(2); if (n <= 1) { setPan({ x: 0, y: 0 }); return 1 }; return Math.min(4, n) }) }
+      else if (e.touches.length === 1 && dragStartRef.current && zoomRef.current > 1) { setPan({ x: dragStartRef.current.px + (e.touches[0].clientX - dragStartRef.current.mx), y: dragStartRef.current.py + (e.touches[0].clientY - dragStartRef.current.my) }) }
     }
-    const touchStartHandler = (e: TouchEvent) => {
-      if (e.touches.length === 2) {
-        e.preventDefault()
-        lastTouchDistRef.current = Math.hypot(
-          e.touches[0].clientX - e.touches[1].clientX,
-          e.touches[0].clientY - e.touches[1].clientY
-        )
-      } else if (e.touches.length === 1) {
-        dragStartRef.current = {
-          mx: e.touches[0].clientX, my: e.touches[0].clientY,
-          px: panRef.current.x, py: panRef.current.y,
-        }
-      }
-    }
-    const touchMoveHandler = (e: TouchEvent) => {
-      e.preventDefault()
-      if (e.touches.length === 2 && lastTouchDistRef.current !== null) {
-        const newDist = Math.hypot(
-          e.touches[0].clientX - e.touches[1].clientX,
-          e.touches[0].clientY - e.touches[1].clientY
-        )
-        const ratio = newDist / lastTouchDistRef.current
-        lastTouchDistRef.current = newDist
-        setZoom(prev => {
-          const next = parseFloat((prev * ratio).toFixed(2))
-          if (next <= 1) { setPan({ x: 0, y: 0 }); return 1 }
-          return Math.min(4, next)
-        })
-      } else if (e.touches.length === 1 && dragStartRef.current && zoomRef.current > 1) {
-        setPan({
-          x: dragStartRef.current.px + (e.touches[0].clientX - dragStartRef.current.mx),
-          y: dragStartRef.current.py + (e.touches[0].clientY - dragStartRef.current.my),
-        })
-      }
-    }
-    const touchEndHandler = () => { dragStartRef.current = null; lastTouchDistRef.current = null; setIsDragging(false) }
+    const te = () => { dragStartRef.current = null; lastTouchDistRef.current = null; setIsDragging(false) }
     el.addEventListener("wheel", wheelHandler, { passive: false })
-    el.addEventListener("touchstart", touchStartHandler, { passive: false })
-    el.addEventListener("touchmove", touchMoveHandler, { passive: false })
-    el.addEventListener("touchend", touchEndHandler)
-    return () => {
-      el.removeEventListener("wheel", wheelHandler)
-      el.removeEventListener("touchstart", touchStartHandler)
-      el.removeEventListener("touchmove", touchMoveHandler)
-      el.removeEventListener("touchend", touchEndHandler)
-    }
+    el.addEventListener("touchstart", ts, { passive: false })
+    el.addEventListener("touchmove", tm, { passive: false })
+    el.addEventListener("touchend", te)
+    return () => { el.removeEventListener("wheel", wheelHandler); el.removeEventListener("touchstart", ts); el.removeEventListener("touchmove", tm); el.removeEventListener("touchend", te) }
   }, [lightboxOpen])
+  useEffect(() => { if (!lightboxOpen) return; const k = (e: KeyboardEvent) => { if (e.key === "Escape") closeLightbox() }; window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k) }, [lightboxOpen])
 
-  useEffect(() => {
-    if (!lightboxOpen) return
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeLightbox() }
-    window.addEventListener("keydown", onKey)
-    return () => window.removeEventListener("keydown", onKey)
-  }, [lightboxOpen])
-
+  // ── Render ────────────────────────────────────────────────────────────
   return (
-    <div className="w-full bg-slate-50 font-sans text-brand-navy overflow-hidden">
+    <div className="w-full bg-white font-sans text-brand-navy overflow-hidden bg-noise">
+      <ScrollProgress />
 
-      {/* ── HERO ─────────────────────────────────────────────────────────────── */}
-      <section className="relative w-full min-h-[92vh] flex items-center justify-center pt-24 pb-16 px-6 lg:px-12 overflow-hidden bg-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-light-blue via-white to-blue-50 z-0 pointer-events-none" />
-        <div className="absolute top-[-8%] right-[-4%] w-[600px] h-[600px] rounded-full bg-gradient-to-r from-brand-blue to-cyan-400 blur-[140px] opacity-15 pointer-events-none" />
-        <div className="absolute bottom-[-8%] left-[-4%] w-[500px] h-[500px] rounded-full bg-gradient-to-r from-brand-pink to-orange-300 blur-[140px] opacity-15 pointer-events-none" />
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[300px] rounded-full bg-violet-300/10 blur-[100px] pointer-events-none" />
+      {/* ════════════════════════════════════════════════════════════════════
+         HERO — mesh gradient + particles + parallax
+      ════════════════════════════════════════════════════════════════════ */}
+      <section ref={heroRef} className="relative w-full min-h-screen flex items-center justify-center pt-28 pb-16 px-6 lg:px-12 overflow-hidden">
+        {/* Animated mesh gradient */}
+        <div className="absolute inset-0 bg-mesh-animated z-0 pointer-events-none"
+          style={{ backgroundImage: "linear-gradient(135deg, #EEF4FB 0%, #ffffff 25%, #f0f4ff 50%, #ffffff 75%, #EEF4FB 100%)" }}
+        />
+        <div className="absolute inset-0 bg-tech-pattern z-0 pointer-events-none" />
+        <div className="absolute inset-0 bg-network-nodes z-0 pointer-events-none" />
 
-        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Texto */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-          >
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-brand-blue/20 shadow-sm mb-7">
-              <span className="w-2 h-2 rounded-full bg-brand-pink animate-pulse" />
-              <span className="text-sm font-semibold tracking-widest text-brand-blue uppercase">
-                Ciudadanía Digital
-              </span>
-            </div>
+        {/* Gradient orbs */}
+        <div className="absolute top-[-8%] right-[-4%] w-[800px] h-[800px] rounded-full bg-gradient-to-r from-brand-blue/15 via-cyan-400/10 to-transparent blur-[160px] pointer-events-none animate-scale-breath" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[700px] h-[700px] rounded-full bg-gradient-to-r from-brand-pink/12 via-orange-300/8 to-transparent blur-[150px] pointer-events-none animate-float-slower" />
+        <div className="absolute top-[15%] left-[20%] w-[500px] h-[500px] rounded-full bg-gradient-to-r from-violet-300/6 via-blue-200/4 to-transparent blur-[130px] pointer-events-none animate-float-slow" />
 
-            <h1 className="text-5xl lg:text-[4.5rem] font-display font-extrabold text-brand-navy leading-[1.05] tracking-tight mb-6">
-              ¿Cómo ven los pibes el{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-violet-500 to-brand-pink">
-                mundo digital?
-              </span>
-            </h1>
+        {/* Particle field */}
+        <ParticleField />
 
-            <p className="text-lg lg:text-xl text-slate-600 mb-4 leading-relaxed">
-              Para los <strong className="text-brand-navy">niños, niñas y adolescentes</strong>, Internet no es una herramienta más: es el lugar donde aprenden, juegan, construyen su identidad y se relacionan.
-            </p>
-            <p className="text-lg text-slate-500 mb-10 leading-relaxed">
-              Entender su mirada es el primer paso para acompañarlos de manera consciente y efectiva.
-            </p>
+        {/* Parallax layer */}
+        <motion.div style={{ y: heroY }} className="relative z-10 w-full max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            {/* ── Texto ── */}
+            <motion.div style={{ opacity: heroFade }}>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1, duration: 0.6 }}
+                className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-brand-blue/15 shadow-sm mb-8"
+              >
+                <span className="w-2 h-2 rounded-full bg-brand-pink animate-ping" />
+                <Sparkles className="w-3.5 h-3.5 text-brand-pink" />
+                <span className="text-sm font-semibold tracking-widest text-brand-blue uppercase">Ciudadanía Digital</span>
+              </motion.div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="px-8 py-4 rounded-full font-bold text-white shadow-lg shadow-brand-blue/25 bg-gradient-to-r from-brand-blue to-violet-600 hover:scale-[1.03] hover:shadow-brand-blue/40 transition-all duration-300 flex items-center justify-center gap-2">
-                <Play className="w-4 h-4" />
-                Conocé la guía
-              </button>
-              <button className="px-8 py-4 rounded-full font-bold text-brand-navy bg-white border-2 border-slate-200 shadow-sm hover:border-brand-blue/40 hover:shadow-md transition-all duration-300 flex items-center justify-center gap-2">
-                Ver datos <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </motion.div>
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.8, ease }}
+                className="text-[2.75rem] sm:text-5xl lg:text-[4.5rem] font-display font-extrabold text-brand-navy leading-[1.02] tracking-tight mb-6"
+              >
+                ¿Cómo ven los chicos el{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-violet-500 to-brand-pink bg-[length:200%_auto] animate-gradient">
+                  entorno digital?
+                </span>
+              </motion.h1>
 
-          {/* Visual */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.15 }}
-            className="relative hidden lg:block"
-          >
-            <div className="relative w-full aspect-square max-w-[420px] mx-auto">
-              {/* Capas decorativas */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-brand-blue to-cyan-400 rounded-[3rem] rotate-6 shadow-2xl opacity-70" />
-              <div className="absolute inset-0 bg-gradient-to-bl from-violet-500 to-brand-blue rounded-[3rem] -rotate-3 opacity-90 overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1621274283134-f0a57b39cf49?q=80&w=800&auto=format&fit=crop"
-                  alt="Adolescente usando tecnología"
-                  className="w-full h-full object-cover mix-blend-overlay opacity-50"
-                />
-              </div>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+                className="text-lg lg:text-xl text-slate-600 mb-3 leading-relaxed"
+              >
+                Para los <strong className="text-brand-navy">niños, niñas y adolescentes</strong>, Internet no es una herramienta más: es el lugar donde aprenden, juegan, construyen su identidad y se relacionan.
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35, duration: 0.6 }}
+                className="text-lg text-slate-500 mb-10 leading-relaxed"
+              >
+                Entender su mirada es el primer paso para acompañarlos de manera consciente y efectiva.
+              </motion.p>
 
-              {/* Badge flotante — izquierda */}
-              <div className="absolute -bottom-6 -left-8 bg-white p-5 rounded-3xl shadow-xl border border-slate-100 flex items-center gap-4">
-                <div className="p-3 bg-brand-light-blue rounded-2xl text-brand-blue shrink-0">
-                  <Smartphone className="w-7 h-7" />
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.45, duration: 0.6 }}
+                className="flex flex-col sm:flex-row gap-4"
+              >
+                <motion.a href="#guia" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+                  className="group px-8 py-4 rounded-full font-bold text-white shadow-lg shadow-brand-blue/30 bg-gradient-to-r from-brand-blue to-violet-600 hover:shadow-xl hover:shadow-brand-blue/40 transition-all duration-300 flex items-center justify-center gap-2"
+                >
+                  <Play className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  Conocé la guía
+                </motion.a>
+              </motion.div>
+            </motion.div>
+
+            {/* ── Visual 3D stack ── */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.88, rotateY: 10 }}
+              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+              transition={{ duration: 1, delay: 0.25, ease }}
+              className="relative hidden lg:block"
+              style={{ perspective: 1000 }}
+            >
+              <div className="relative w-full aspect-square max-w-[460px] mx-auto tilt-3d">
+                {/* Floating decorative rings */}
+                <div className="absolute -top-10 -right-10 w-28 h-28 rounded-full border-2 border-brand-blue/8 animate-float-slow" style={{ animationDelay: "-2s" }} />
+                <div className="absolute -bottom-6 -left-12 w-20 h-20 rounded-full border-2 border-brand-pink/8 animate-float-slower" style={{ animationDelay: "-4s" }} />
+                <div className="absolute top-[30%] -left-8 w-8 h-8 rounded-lg border border-cyan-200/20 rotate-45 animate-spin-slow" />
+
+                {/* Layer 1 — decorativo trasero */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-brand-blue/50 to-cyan-400/40 rounded-[3rem] rotate-6 shadow-xl" />
+
+                {/* Layer 2 — imagen principal */}
+                <div className="absolute inset-0 rounded-[3rem] -rotate-3 overflow-hidden shadow-2xl">
+                  <img
+                    src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=800&auto=format&fit=crop"
+                    alt="Adolescentes en entorno digital"
+                    className="w-full h-full object-cover object-top scale-105"
+                  />
+                  {/* Overlay de marca sutil encima de la imagen */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/35 via-brand-blue/15 to-violet-500/25" />
                 </div>
-                <div>
-                  <p className="text-3xl font-display font-black text-brand-navy leading-none">+90%</p>
-                  <p className="text-xs font-medium text-slate-500 mt-0.5">Conectados a diario</p>
-                </div>
-              </div>
 
-              {/* Badge flotante — derecha */}
-              <div className="absolute -top-4 -right-6 bg-white p-4 rounded-2xl shadow-lg border border-slate-100 flex items-center gap-3">
-                <div className="p-2.5 bg-pink-50 rounded-xl text-brand-pink shrink-0">
-                  <Star className="w-5 h-5" />
+                {/* Layer 3 — red de nodos SVG decorativa */}
+                <div className="absolute inset-0 rounded-[3rem] -rotate-3 overflow-hidden pointer-events-none opacity-20">
+                  <svg className="w-full h-full" viewBox="0 0 200 200">
+                    {[0,1,2,3,4,5,6,7].map(i => (
+                      <circle key={i} cx={20 + i * 25} cy={30 + (i % 3) * 30} r={2.5} fill="white" />
+                    ))}
+                    {[0,1,2,3,4,5].map(i => (
+                      <line key={i} x1={30 + i * 28} y1={40} x2={40 + i * 25} y2={80 + (i % 2) * 20} stroke="white" strokeWidth="0.6" />
+                    ))}
+                  </svg>
                 </div>
-                <div>
-                  <p className="text-xl font-display font-black text-brand-navy leading-none">6h+</p>
-                  <p className="text-xs font-medium text-slate-500 mt-0.5">Por día en pantallas</p>
-                </div>
-              </div>
 
-              {/* Wifi icon flotante */}
-              <div className="absolute top-1/2 -right-10 -translate-y-1/2 w-14 h-14 bg-white rounded-2xl shadow-lg border border-slate-100 flex items-center justify-center">
-                <Wifi className="w-7 h-7 text-cyan-500" />
+                {/* Badge flotante — izquierda */}
+                <motion.div
+                  initial={{ opacity: 0, x: -30, y: 10 }}
+                  animate={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{ delay: 0.7, duration: 0.6, ease }}
+                  className="absolute -bottom-5 -left-6 bg-white/70 backdrop-blur-xl p-5 rounded-3xl shadow-xl border border-white/50 flex items-center gap-4"
+                >
+                  <div className="p-3 bg-gradient-to-br from-brand-light-blue to-blue-100 rounded-2xl text-brand-blue shrink-0 shadow-inner">
+                    <Smartphone className="w-7 h-7" />
+                  </div>
+                  <div>
+                    <p className="text-3xl font-display font-black text-brand-navy leading-none">+90%</p>
+                    <p className="text-xs font-medium text-slate-500 mt-0.5">Conectados a diario</p>
+                  </div>
+                </motion.div>
+
+                {/* Badge flotante — derecha */}
+                <motion.div
+                  initial={{ opacity: 0, x: 30, y: -10 }}
+                  animate={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{ delay: 0.8, duration: 0.6, ease }}
+                  className="absolute -top-3 -right-5 bg-white/70 backdrop-blur-xl p-4 rounded-2xl shadow-lg border border-white/50 flex items-center gap-3"
+                >
+                  <div className="p-2.5 bg-gradient-to-br from-pink-50 to-pink-100 rounded-xl text-brand-pink shrink-0 shadow-inner">
+                    <Star className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-xl font-display font-black text-brand-navy leading-none">6h+</p>
+                    <p className="text-xs font-medium text-slate-500 mt-0.5">Por día en pantallas</p>
+                  </div>
+                </motion.div>
+
+                {/* Wifi flotante */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0, rotate: -45 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  transition={{ delay: 1, duration: 0.5, type: "spring", stiffness: 150 }}
+                  className="absolute top-1/2 -right-8 -translate-y-1/2 w-14 h-14 bg-white/60 backdrop-blur-md rounded-2xl shadow-lg border border-white/30 flex items-center justify-center"
+                >
+                  <Wifi className="w-7 h-7 text-cyan-500" />
+                </motion.div>
               </div>
-            </div>
-          </motion.div>
-        </div>
+            </motion.div>
+          </div>
+        </motion.div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-          <span className="text-xs text-slate-500 font-medium tracking-wider uppercase">Explorá</span>
-          <div className="w-px h-8 bg-gradient-to-b from-brand-blue to-transparent" />
-        </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        >
+          <motion.div animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }} className="w-5 h-8 rounded-full border-2 border-slate-300 flex items-start justify-center p-1">
+            <motion.div className="w-1 h-2 rounded-full bg-brand-blue" />
+          </motion.div>
+          <span className="text-[10px] text-slate-400 font-semibold tracking-[0.2em] uppercase mt-1">Scroll</span>
+        </motion.div>
       </section>
 
-      {/* ── PERCEPCIÓN ───────────────────────────────────────────────────────── */}
-      <section className="py-24 px-6 lg:px-12 bg-brand-light-blue relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-blue/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-brand-pink/5 rounded-full blur-3xl pointer-events-none" />
+      {/* ── Wave divider ── */}
+      <WaveDivider flip />
+
+      {/* ════════════════════════════════════════════════════════════════════
+         PERCEPCIÓN — 3D tilt cards
+      ════════════════════════════════════════════════════════════════════ */}
+      <section className="py-28 px-6 lg:px-12 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-network-nodes pointer-events-none" />
+        <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-brand-blue/[0.03] rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-brand-pink/[0.03] rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div {...fadeUp} className="text-center max-w-3xl mx-auto mb-16">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-brand-blue/20 text-brand-blue text-sm font-semibold mb-5 shadow-sm">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease }}
+            className="text-center max-w-3xl mx-auto mb-16"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-light-blue/60 backdrop-blur-sm border border-brand-blue/15 text-brand-blue text-sm font-semibold mb-5 shadow-sm">
               <Brain className="w-4 h-4" />
               Su lógica propia
-            </span>
-            <h2 className="text-4xl lg:text-5xl font-display font-bold text-brand-navy mb-5">
-              Así perciben el entorno digital
+            </div>
+            <h2 className="text-4xl lg:text-6xl font-display font-bold text-brand-navy mb-5 leading-tight">
+              Así perciben el{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-cyan-500 bg-[length:200%_auto] animate-gradient">
+                entorno digital
+              </span>
             </h2>
-            <p className="text-lg text-slate-600 leading-relaxed">
-              A diferencia de los adultos, las nuevas generaciones tienen una relación naturalizada con la tecnología. Así es como interpretan el entorno en el que viven todos los días.
+            <p className="text-xl text-slate-500 leading-relaxed max-w-2xl mx-auto">
+              A diferencia de los adultos, las nuevas generaciones tienen una relación naturalizada con la tecnología.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {percepciones.map((item, i) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-white rounded-3xl p-8 shadow-sm shadow-slate-200/60 border border-white hover:-translate-y-2 hover:shadow-xl hover:shadow-slate-200/80 transition-all duration-300 group"
-              >
-                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.gradient} flex items-center justify-center text-white mb-6 shadow-md group-hover:scale-110 transition-transform duration-300`}>
-                  <item.icono className="w-7 h-7" />
-                </div>
-                <h3 className="text-xl font-bold font-display text-brand-navy mb-3 group-hover:text-brand-blue transition-colors duration-300">
-                  {item.titulo}
-                </h3>
-                <p className="text-slate-500 leading-relaxed text-sm">
-                  {item.desc}
-                </p>
-              </motion.div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
+            {percepciones.map((item, i) => {
+              const cardRef = useRef<HTMLDivElement>(null!)
+              const { rotateX, rotateY, onMouseMove, onMouseLeave } = useTilt(cardRef)
+              return (
+                <motion.div
+                  key={item.id}
+                  ref={cardRef}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: i * 0.1, ease }}
+                  style={{ rotateX, rotateY }}
+                  onMouseMove={onMouseMove}
+                  onMouseLeave={onMouseLeave}
+                  className={`tilt-3d group relative ${item.bgLight} rounded-3xl p-8 shadow-md border ${item.borderColor} hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-default overflow-hidden`}
+                >
+                  {/* Top gradient bar */}
+                  <div className={`absolute top-0 inset-x-0 h-1 bg-gradient-to-r ${item.gradient} rounded-t-3xl`} />
+                  {/* Subtle glow on hover */}
+                  <div className={`absolute -bottom-8 -right-8 w-32 h-32 bg-gradient-to-br ${item.gradient} rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none`} />
+                  <div className="relative z-10">
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.gradient} flex items-center justify-center text-white mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-[-3deg] transition-all duration-300`}>
+                      <item.icono className="w-7 h-7" />
+                    </div>
+                    <h3 className="text-xl font-bold font-display text-brand-navy mb-3 group-hover:text-brand-blue transition-colors duration-300">
+                      {item.titulo}
+                    </h3>
+                    <p className="text-slate-600 leading-relaxed text-base">
+                      {item.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            )}
           </div>
         </div>
       </section>
 
-      {/* ── ESTADÍSTICAS ─────────────────────────────────────────────────────── */}
-      <section className="py-24 px-6 lg:px-12 bg-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-brand-light-blue/60 via-transparent to-transparent pointer-events-none" />
+      {/* ── Wave divider ── */}
+      <WaveDivider />
+
+      {/* ════════════════════════════════════════════════════════════════════
+         ESTADÍSTICAS — circular progress rings
+      ════════════════════════════════════════════════════════════════════ */}
+      <section ref={ringsRef} className="py-28 px-6 lg:px-12 bg-gradient-to-b from-brand-light-blue/30 via-white to-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-tech-pattern pointer-events-none" />
+        <div className="absolute inset-0 bg-dot-grid pointer-events-none" />
+        <img src="/img/nnya/stats-bg.svg" alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none opacity-60" aria-hidden />
 
         <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div {...fadeUp} className="text-center mb-16">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-light-blue border border-brand-blue/20 text-brand-blue text-sm font-semibold mb-5">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-brand-blue/15 text-brand-blue text-sm font-semibold mb-5 shadow-sm">
               <TrendingUp className="w-4 h-4" />
               Datos reales
-            </span>
-            <h2 className="text-4xl lg:text-5xl font-display font-bold text-brand-navy mb-4">
-              Lo que nos dicen los números
+            </div>
+            <h2 className="text-4xl lg:text-6xl font-display font-bold text-brand-navy mb-5 leading-tight">
+              Lo que nos dicen los{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-orange-400 bg-[length:200%_auto] animate-gradient">
+                números
+              </span>
             </h2>
-            <p className="text-slate-500 max-w-xl mx-auto">
+            <p className="text-lg text-slate-500 max-w-xl mx-auto">
               Datos extraídos de estudios recientes sobre consumo digital adolescente en Iberoamérica.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             {estadisticas.map((stat, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.15 }}
-                className="relative bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group overflow-hidden"
+                transition={{ duration: 0.6, delay: i * 0.12, ease }}
+                className={`group flex flex-col items-center text-center ${stat.cardBg} rounded-3xl p-8 lg:p-10 border ${stat.cardBorder} shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300`}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-[0.04] transition-opacity duration-300`} />
-                <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${stat.color} flex items-center justify-center text-white mb-6 shadow-md`}>
-                  <stat.icono className="w-6 h-6" />
+                <div className="relative mb-8">
+                  <CircularProgress value={statsVisible ? counterVals[i] : 0} size={160} strokeWidth={8} color={stat.color} />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${stat.iconGrad} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                      <stat.icono className="w-7 h-7" />
+                    </div>
+                  </div>
                 </div>
-                <div className={`text-6xl lg:text-7xl font-display font-black text-transparent bg-clip-text bg-gradient-to-b ${stat.color} mb-3 leading-none`}>
-                  {stat.valor}
+                <div className="flex items-baseline gap-0.5 mb-3">
+                  <span className={`text-6xl lg:text-7xl font-display font-black text-transparent bg-clip-text bg-gradient-to-b ${stat.numGrad} leading-none`}>
+                    {counterVals[i]}
+                  </span>
+                  <span className={`text-3xl lg:text-4xl font-display font-black text-transparent bg-clip-text bg-gradient-to-b ${stat.numGrad}`}>
+                    {stat.suffix}
+                  </span>
                 </div>
-                <div className="w-10 h-1 bg-slate-100 rounded-full mb-5" />
-                <p className="text-slate-700 font-medium leading-relaxed">
-                  {stat.texto}
-                </p>
+                <div className={`w-10 h-1 bg-gradient-to-r ${stat.iconGrad} rounded-full mb-5 opacity-40`} />
+                <p className="text-slate-700 font-medium leading-relaxed text-base max-w-xs">{stat.texto}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── SEÑALES DE ALERTA ─────────────────────────────────────────────────── */}
-      <section className="py-20 px-6 lg:px-12 bg-slate-50 border-y border-slate-200/60">
-        <div className="max-w-5xl mx-auto">
-          <motion.div {...fadeUp} className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-rose-50 border border-rose-200 text-rose-600 text-sm font-semibold mb-5">
+      {/* ── Wave divider ── */}
+      <WaveDivider flip />
+
+      {/* ════════════════════════════════════════════════════════════════════
+         SEÑALES DE ALERTA
+      ════════════════════════════════════════════════════════════════════ */}
+      <section className="py-24 px-6 lg:px-12 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-network-nodes pointer-events-none" />
+        <div className="max-w-5xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease }}
+            className="text-center mb-14"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-rose-50/60 backdrop-blur-sm border border-rose-200/60 text-rose-600 text-sm font-semibold mb-5 shadow-sm">
               <AlertCircle className="w-4 h-4" />
               Prestá atención
-            </span>
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-brand-navy mb-4">
-              Señales de alerta que no ignorar
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-display font-bold text-brand-navy mb-5 leading-tight">
+              Señales de alerta<br className="hidden sm:block" /> que no ignorar
             </h2>
-            <p className="text-slate-500 max-w-xl mx-auto">
-              Si notás alguna de estas conductas de forma sostenida, es momento de iniciar una conversación.
-            </p>
+            <p className="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">Si notás alguna de estas conductas de forma sostenida, es momento de iniciar una conversación.</p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-6">
             {señalesAlerta.map((señal, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="flex items-center gap-4 bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-slate-200 transition-all duration-300"
+                transition={{ duration: 0.5, delay: i * 0.08, ease }}
+                whileHover={{ y: -4 }}
+                className={`group relative ${señal.cardBg} rounded-2xl p-7 border ${señal.cardBorder} shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden`}
               >
-                <div className={`w-11 h-11 rounded-xl ${señal.bg} flex items-center justify-center shrink-0`}>
-                  <señal.icono className={`w-5 h-5 ${señal.color}`} />
+                <div className={`absolute top-0 inset-x-0 h-1 ${señal.bar} rounded-t-2xl opacity-70`} />
+                <div className={`w-14 h-14 rounded-2xl ${señal.iconBg} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 shadow-sm`}>
+                  <señal.icono className={`w-7 h-7 ${señal.color}`} />
                 </div>
-                <p className="font-medium text-slate-700">{señal.titulo}</p>
+                <p className="font-bold text-brand-navy text-xl mb-2 leading-snug">{señal.titulo}</p>
+                <p className="text-slate-500 text-base leading-relaxed">{señal.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── MEDIACIÓN — STEPPER ──────────────────────────────────────────────── */}
-      <section className="py-24 px-6 lg:px-12 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <motion.div {...fadeUp} className="mb-14">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-light-blue border border-brand-blue/20 text-brand-blue text-sm font-semibold mb-5">
+      {/* ── Wave divider ── */}
+      <WaveDivider />
+
+      {/* ════════════════════════════════════════════════════════════════════
+         MEDIACIÓN — STEPPER
+      ════════════════════════════════════════════════════════════════════ */}
+      <section id="guia" className="py-28 px-6 lg:px-12 bg-gradient-to-b from-brand-light-blue/20 via-white to-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-dot-grid pointer-events-none" />
+        <div className="max-w-6xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease }}
+            className="mb-14 max-w-2xl"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-light-blue/60 backdrop-blur-sm border border-brand-blue/15 text-brand-blue text-sm font-semibold mb-5 shadow-sm">
               <ShieldCheck className="w-4 h-4" />
               Guía práctica
-            </span>
-            <h2 className="text-4xl lg:text-5xl font-display font-bold text-brand-navy mb-4">
-              ¿Cómo acompañarlos?
+            </div>
+            <h2 className="text-4xl lg:text-6xl font-display font-bold text-brand-navy mb-5 leading-tight">
+              ¿Cómo{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-violet-500 bg-[length:200%_auto] animate-gradient">
+                acompañarlos?
+              </span>
             </h2>
-            <p className="text-lg text-slate-500 max-w-2xl leading-relaxed">
-              La mediación parental no se trata de espiar o prohibir, sino de educar y acompañar. Estos son los pasos clave para construir confianza digital.
-            </p>
+            <p className="text-xl text-slate-500 leading-relaxed">La mediación parental no se trata de espiar o prohibir, sino de educar y acompañar.</p>
           </motion.div>
 
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Tabs */}
-            <div className="flex flex-col gap-3 lg:w-[38%]">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+            {/* Step buttons */}
+            <div className="flex flex-col gap-3 lg:w-[36%]">
               {pasosMediacion.map((paso) => {
                 const isActive = pasoActivo === paso.id
                 return (
-                  <button
+                  <motion.button
                     key={paso.id}
                     onClick={() => setPasoActivo(paso.id)}
-                    className={`text-left px-6 py-5 rounded-2xl transition-all duration-300 flex items-center gap-4 ${
+                    whileHover={!isActive ? { scale: 1.02, x: 4 } : {}}
+                    whileTap={{ scale: 0.98 }}
+                    className={`group text-left px-6 py-5 rounded-2xl transition-all duration-400 flex items-center gap-4 ${
                       isActive
-                        ? "bg-white shadow-lg shadow-slate-200/60 border border-slate-100"
-                        : "bg-slate-50 hover:bg-slate-100/80 text-slate-500 border border-transparent"
+                        ? "bg-white/70 backdrop-blur-sm shadow-lg shadow-slate-200/50 border border-slate-100"
+                        : "bg-slate-50/50 hover:bg-slate-100/50 text-slate-500 border border-transparent"
                     }`}
                   >
-                    <div className={`w-11 h-11 rounded-full flex items-center justify-center font-bold font-display text-lg transition-all duration-300 ${
-                      isActive ? `${paso.color} text-white shadow-md` : "bg-slate-200 text-slate-500"
-                    }`}>
+                    <div className={`relative w-11 h-11 rounded-full flex items-center justify-center font-bold font-display text-lg shrink-0 transition-all duration-400 ${isActive ? `${paso.color} text-white shadow-lg scale-110` : "bg-slate-200/50 text-slate-400 group-hover:bg-slate-200"}`}>
                       {paso.id}
+                      {isActive && (
+                        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute -inset-1 rounded-full border-2 border-brand-blue/20" />
+                      )}
                     </div>
-                    <span className={`font-semibold text-lg transition-colors ${isActive ? "text-brand-navy" : ""}`}>
-                      {paso.titulo}
-                    </span>
-                    {isActive && <ArrowRight className="w-4 h-4 text-brand-blue ml-auto shrink-0" />}
-                  </button>
+                    <div className="flex-1 min-w-0">
+                      <span className={`font-semibold text-base transition-colors block truncate ${isActive ? "text-brand-navy" : ""}`}>
+                        {paso.titulo}
+                      </span>
+                      {isActive && (
+                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xs text-slate-400 mt-0.5 block">
+                          Paso {paso.id} de {pasosMediacion.length}
+                        </motion.span>
+                      )}
+                    </div>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${isActive ? "bg-brand-blue/10 text-brand-blue" : "opacity-0 group-hover:opacity-100 text-slate-300"}`}>
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
+                  </motion.button>
                 )
               })}
             </div>
 
             {/* Panel */}
-            <div className="lg:flex-1 bg-white rounded-3xl p-8 lg:p-12 shadow-xl shadow-slate-200/50 border border-slate-100 relative overflow-hidden min-h-[320px]">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-brand-light-blue to-transparent opacity-60 rounded-bl-full pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-blue-50 to-transparent rounded-tr-full pointer-events-none" />
+            <motion.div
+              layout
+              className="lg:flex-1 bg-white/40 backdrop-blur-md rounded-3xl p-8 lg:p-12 shadow-xl shadow-slate-200/20 border border-slate-100/60 relative overflow-hidden min-h-[360px]"
+            >
+              <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-brand-light-blue/50 to-transparent rounded-bl-full pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-56 h-56 bg-gradient-to-tr from-brand-blue/[0.02] to-transparent rounded-tr-full pointer-events-none" />
+
+              <div className="absolute top-6 right-6 flex gap-1.5 z-10">
+                {pasosMediacion.map((p) => (
+                  <div key={p.id} className={`h-1.5 rounded-full transition-all duration-500 ${p.id === pasoActivo ? "w-10 bg-brand-blue" : "w-1.5 bg-slate-200"}`} />
+                ))}
+              </div>
 
               <AnimatePresence mode="wait">
                 {pasosMediacion.map(
@@ -599,181 +747,89 @@ export function NnyaEntornoDigitalContent() {
                     paso.id === pasoActivo && (
                       <motion.div
                         key={paso.id}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
-                        transition={{ duration: 0.3 }}
+                        initial={{ opacity: 0, x: 30, rotateY: 5 }}
+                        animate={{ opacity: 1, x: 0, rotateY: 0 }}
+                        exit={{ opacity: 0, x: -30, rotateY: -5 }}
+                        transition={{ duration: 0.4, ease }}
                         className="relative z-10 h-full flex flex-col justify-center"
+                        style={{ perspective: 600 }}
                       >
-                        <div className={`w-16 h-16 rounded-2xl ${paso.color} text-white flex items-center justify-center mb-8 shadow-lg`}>
+                        <div className={`w-16 h-16 rounded-2xl ${paso.color} text-white flex items-center justify-center mb-8 shadow-xl animate-glow-ring`}>
                           <paso.icono className="w-8 h-8" />
                         </div>
-                        <div className="flex items-center gap-3 mb-3">
-                          <span className="text-xs font-bold tracking-widest text-slate-400 uppercase">
-                            Paso {paso.id} de {pasosMediacion.length}
-                          </span>
-                          <div className="flex gap-1">
-                            {pasosMediacion.map((p) => (
-                              <div
-                                key={p.id}
-                                className={`h-1 rounded-full transition-all duration-300 ${
-                                  p.id === pasoActivo ? "w-6 bg-brand-blue" : "w-2 bg-slate-200"
-                                }`}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                        <h3 className="text-3xl font-display font-bold text-brand-navy mb-4">
-                          {paso.titulo}
-                        </h3>
-                        <p className="text-lg text-slate-600 leading-relaxed">
-                          {paso.desc}
-                        </p>
+                        <h3 className="text-3xl font-display font-bold text-brand-navy mb-4">{paso.titulo}</h3>
+                        <p className="text-lg text-slate-600 leading-relaxed max-w-xl">{paso.desc}</p>
                       </motion.div>
                     )
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ── HERRAMIENTAS ─────────────────────────────────────────────────────── */}
-      <section className="py-24 px-6 lg:px-12 bg-slate-50">
-        <div className="max-w-7xl mx-auto">
-          <motion.div {...fadeUp} className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-16">
-            <div className="max-w-2xl">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 text-brand-navy text-sm font-semibold mb-5 shadow-sm">
-                <Zap className="w-4 h-4 text-amber-500" />
-                Para implementar hoy
-              </span>
-              <h2 className="text-4xl lg:text-5xl font-display font-bold text-brand-navy mb-4">
-                Recursos útiles para vos
-              </h2>
-              <p className="text-lg text-slate-500 leading-relaxed">
-                Material y configuraciones recomendadas para que puedas implementar hoy mismo en casa o en la escuela.
-              </p>
+      {/* ── Wave divider ── */}
+      <WaveDivider flip />
+
+      {/* ════════════════════════════════════════════════════════════════════
+         CONSEJOS RÁPIDOS
+      ════════════════════════════════════════════════════════════════════ */}
+      <section className="py-24 px-6 lg:px-12 bg-gradient-to-b from-brand-light-blue/20 to-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-dot-grid pointer-events-none" />
+        <div className="absolute inset-0 bg-network-nodes pointer-events-none" />
+        <img src="/img/nnya/pattern-bubbles.svg" alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none opacity-50" aria-hidden />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-brand-light-blue/30 via-transparent to-violet-100/20 blur-3xl pointer-events-none rounded-full" />
+
+        <div className="max-w-5xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease }}
+            className="text-center mb-12"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-brand-blue/15 text-brand-blue text-sm font-semibold mb-6 shadow-sm">
+              <Lightbulb className="w-4 h-4" />
+              Para tener siempre a mano
             </div>
-            <button className="flex items-center gap-2 text-brand-pink font-bold hover:text-brand-blue transition-colors shrink-0 group">
-              Ver todos los recursos
-              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
+            <h2 className="text-4xl lg:text-5xl font-display font-bold text-brand-navy mb-4 leading-tight">
+              Consejos rápidos al paso
+            </h2>
+            <p className="text-lg text-slate-500 max-w-xl mx-auto">Acciones concretas que podés aplicar desde hoy en casa o en el aula.</p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {herramientas.map((item, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+            {consejosRapidos.map((consejo, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className={`group relative bg-white rounded-3xl p-8 border-2 ${item.border} hover:border-transparent hover:shadow-2xl hover:shadow-slate-200/60 transition-all duration-300 overflow-hidden cursor-pointer`}
+                transition={{ delay: i * 0.07, type: "spring", stiffness: 130, damping: 14 }}
+                whileHover={{ y: -5 }}
+                className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-100/80 shadow-sm hover:shadow-xl hover:border-brand-blue/20 hover:bg-white transition-all duration-300 flex items-start gap-4"
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                <div className="relative z-10">
-                  <div className="flex items-start justify-between mb-6">
-                    <div className={`w-14 h-14 rounded-2xl ${item.iconBg} flex items-center justify-center`}>
-                      <item.icono className={`w-7 h-7 ${item.iconColor}`} />
-                    </div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400 bg-slate-50 px-3 py-1 rounded-full border border-slate-200">
-                      {item.tag}
-                    </span>
-                  </div>
-                  <h3 className="text-2xl font-bold font-display text-brand-navy mb-3 group-hover:text-brand-blue transition-colors duration-300">
-                    {item.titulo}
-                  </h3>
-                  <p className="text-slate-500 mb-8 leading-relaxed">
-                    {item.desc}
-                  </p>
-                  <div className="flex items-center gap-2 text-brand-blue font-semibold group-hover:gap-3 transition-all duration-300">
-                    <Download className="w-4 h-4" />
-                    Acceder
-                  </div>
-                </div>
+                <span className="text-3xl shrink-0 group-hover:scale-110 transition-transform duration-200">{consejo.icono}</span>
+                <p className="font-semibold text-brand-navy text-base leading-relaxed">{consejo.texto}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── CONSEJOS RÁPIDOS ─────────────────────────────────────────────────── */}
-      <section className="py-20 px-6 lg:px-12 bg-brand-light-blue">
-        <div className="max-w-5xl mx-auto text-center">
-          <motion.div {...fadeUp}>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-brand-blue/20 text-brand-blue text-sm font-semibold mb-6 shadow-sm">
-              <Lightbulb className="w-4 h-4" />
-              Para tener siempre a mano
-            </span>
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-brand-navy mb-10">
-              Consejos rápidos al paso
-            </h2>
-            <div className="flex flex-wrap justify-center gap-4">
-              {consejosRapidos.map((consejo, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08, type: "spring", stiffness: 120 }}
-                  className="bg-white px-5 py-3 rounded-full shadow-sm border border-white hover:shadow-md hover:border-brand-blue/20 hover:-translate-y-0.5 transition-all duration-300 cursor-default flex items-center gap-3"
-                >
-                  <span className="text-lg">{consejo.icono}</span>
-                  <span className="font-medium text-brand-navy text-sm">{consejo.texto}</span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* ── Wave divider ── */}
+      <WaveDivider flip />
 
-      {/* ── CONEXIÓN CON OTRAS TEMÁTICAS ─────────────────────────────────────── */}
-      <section className="py-20 px-6 lg:px-12 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <motion.div {...fadeUp} className="text-center mb-12">
-            <h2 className="text-3xl font-display font-bold text-brand-navy mb-4">
-              Temas relacionados
-            </h2>
-            <p className="text-slate-500">Explorá las demás guías de ciudadanía digital</p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {[
-              { label: "Huella Digital", href: "/huella-digital", color: "from-brand-pink to-orange-400", desc: "Identidad y privacidad" },
-              { label: "Violencia Digital", href: "/violencia-digital", color: "from-violet-500 to-brand-blue", desc: "Protección y derechos" },
-              { label: "Alfabetización Mediática", href: "/alfabetizacion-mediatica", color: "from-emerald-400 to-teal-500", desc: "Información y criterio" },
-            ].map((tema, i) => (
-              <motion.a
-                key={i}
-                href={tema.href}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group flex items-center justify-between p-5 rounded-2xl bg-slate-50 border border-slate-100 hover:border-slate-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
-              >
-                <div className="flex items-center gap-4">
-                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${tema.color} shadow-sm`} />
-                  <div>
-                    <p className="font-bold text-brand-navy text-sm">{tema.label}</p>
-                    <p className="text-xs text-slate-400">{tema.desc}</p>
-                  </div>
-                </div>
-                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-brand-blue group-hover:translate-x-1 transition-all duration-300" />
-              </motion.a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── INFOGRAFÍA ───────────────────────────────────────────────────────── */}
+      {/* ════════════════════════════════════════════════════════════════════
+         INFOGRAFÍA
+      ════════════════════════════════════════════════════════════════════ */}
       <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-12 bg-white">
         <div className="max-w-4xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.6, ease }}
             className="relative"
           >
             <div className="absolute -inset-4 sm:-inset-6 bg-gradient-to-br from-brand-blue/10 via-transparent to-violet-400/10 blur-3xl rounded-3xl pointer-events-none" />
@@ -795,11 +851,7 @@ export function NnyaEntornoDigitalContent() {
               <div className="bg-white flex justify-center">
                 <div className="relative group w-full lg:cursor-zoom-in" onClick={() => setLightboxOpen(true)}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={INFOGRAFIA_PATH}
-                    alt="Infografía NNyA y el Entorno Digital"
-                    className="w-full h-auto block transition-transform duration-500 group-hover:scale-[1.01]"
-                  />
+                  <img src={INFOGRAFIA_PATH} alt="Infografía NNyA y el Entorno Digital" className="w-full h-auto block transition-transform duration-500 group-hover:scale-[1.01]" />
                   <div className="hidden lg:flex absolute inset-0 items-center justify-center bg-black/0 group-hover:bg-black/30 transition-all duration-300">
                     <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 flex items-center gap-2 bg-white/95 backdrop-blur-sm text-brand-navy font-semibold text-sm px-5 py-2.5 rounded-full shadow-xl border border-slate-200/50">
                       <ZoomIn className="w-4 h-4" />
@@ -814,19 +866,21 @@ export function NnyaEntornoDigitalContent() {
         </div>
       </section>
 
-      {/* ── CARRUSEL ─────────────────────────────────────────────────────────── */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-12 bg-brand-light-blue">
+      {/* ════════════════════════════════════════════════════════════════════
+         CARRUSEL
+      ════════════════════════════════════════════════════════════════════ */}
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-12 bg-gradient-to-b from-white to-brand-light-blue/20">
         <div className="max-w-4xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.6, ease }}
           >
-            <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-xl shadow-slate-200/30 rounded-[2.5rem] overflow-hidden">
+            <div className="bg-white/60 backdrop-blur-xl border border-slate-200/50 shadow-xl shadow-slate-200/20 rounded-[2.5rem] overflow-hidden">
               <div className="px-5 sm:px-6 md:px-10 py-4 sm:py-5 border-b border-slate-100/60 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-blue to-brand-navy flex items-center justify-center shadow-lg shadow-brand-blue/25 shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-blue to-brand-navy flex items-center justify-center shadow-lg shadow-brand-blue/20 shrink-0">
                     <Images className="w-5 h-5 text-white" />
                   </div>
                   <div>
@@ -834,49 +888,30 @@ export function NnyaEntornoDigitalContent() {
                     <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 font-display">NNyA y el Entorno Digital</h2>
                   </div>
                 </div>
-                <span className="text-slate-400 text-sm font-mono shrink-0 bg-slate-100/50 px-3 py-1.5 rounded-full">
-                  {currentSlide + 1} / {CARRUSEL_IMAGES.length}
-                </span>
+                <span className="text-slate-400 text-sm font-mono shrink-0 bg-slate-50/60 px-3 py-1.5 rounded-full">{currentSlide + 1} / {CARRUSEL_IMAGES.length}</span>
               </div>
               <div className="relative overflow-hidden lg:max-h-[500px] lg:flex lg:items-center lg:justify-center lg:bg-gradient-to-b lg:from-slate-50/50 lg:to-slate-100/30">
                 <AnimatePresence mode="wait" custom={direction}>
                   <motion.div
-                    key={currentSlide}
-                    custom={direction}
-                    variants={slideVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                    key={currentSlide} custom={direction} variants={slideVariants}
+                    initial="enter" animate="center" exit="exit"
+                    transition={{ duration: 0.35, ease }}
                     className="w-full lg:flex lg:justify-center"
                   >
-                    <Image
-                      src={CARRUSEL_IMAGES[currentSlide]}
-                      alt={`Lámina ${currentSlide + 1}`}
-                      width={1200}
-                      height={800}
-                      className="w-full h-auto object-contain lg:w-auto lg:max-h-[500px]"
-                      priority
-                    />
+                    <Image src={CARRUSEL_IMAGES[currentSlide]} alt={`Lámina ${currentSlide + 1}`} width={1200} height={800} className="w-full h-auto object-contain lg:w-auto lg:max-h-[500px]" priority />
                   </motion.div>
                 </AnimatePresence>
-                <button onClick={prevSlide} className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-brand-blue border border-white/20 flex items-center justify-center transition-all duration-300 backdrop-blur-sm hover:scale-110 active:scale-95" aria-label="Anterior">
+                <button onClick={prevSlide} className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 hover:bg-brand-blue border border-white/20 flex items-center justify-center transition-all duration-300 backdrop-blur-sm hover:scale-110 active:scale-95" aria-label="Anterior">
                   <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </button>
-                <button onClick={nextSlide} className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-brand-blue border border-white/20 flex items-center justify-center transition-all duration-300 backdrop-blur-sm hover:scale-110 active:scale-95" aria-label="Siguiente">
+                <button onClick={nextSlide} className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 hover:bg-brand-blue border border-white/20 flex items-center justify-center transition-all duration-300 backdrop-blur-sm hover:scale-110 active:scale-95" aria-label="Siguiente">
                   <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </button>
               </div>
               <div className="flex items-center justify-center gap-2 sm:gap-3 py-4 sm:py-5">
                 {CARRUSEL_IMAGES.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => goTo(i, i > currentSlide ? 1 : -1)}
-                    className={`rounded-full transition-all duration-300 ${
-                      i === currentSlide
-                        ? "w-6 sm:w-8 h-2.5 bg-brand-blue shadow-[0_0_8px_#4272BB]"
-                        : "w-2.5 h-2.5 bg-slate-300 hover:bg-slate-400"
-                    }`}
+                  <button key={i} onClick={() => goTo(i, i > currentSlide ? 1 : -1)}
+                    className={`rounded-full transition-all duration-300 ${i === currentSlide ? "w-6 sm:w-8 h-2.5 bg-brand-blue shadow-[0_0_8px_#4272BB]" : "w-2.5 h-2.5 bg-slate-300 hover:bg-slate-400"}`}
                     aria-label={`Ir a lámina ${i + 1}`}
                   />
                 ))}
@@ -886,67 +921,139 @@ export function NnyaEntornoDigitalContent() {
         </div>
       </section>
 
-      {/* ── CTA FINAL ────────────────────────────────────────────────────────── */}
-      <section className="py-24 px-6 lg:px-12 bg-slate-50">
+      {/* ── Wave divider ── */}
+      <WaveDivider />
+
+      {/* ════════════════════════════════════════════════════════════════════
+         TEMAS RELACIONADOS
+      ════════════════════════════════════════════════════════════════════ */}
+      <section className="py-20 px-6 lg:px-12 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl font-display font-bold text-brand-navy mb-4 leading-tight">Temas relacionados</h2>
+            <p className="text-slate-500">Explorá las demás guías de ciudadanía digital</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {[
+              { label: "Huella Digital", href: "/huella-digital", color: "from-brand-pink to-orange-400", desc: "Identidad y privacidad" },
+              { label: "Violencia Digital", href: "/violencia-digital", color: "from-violet-500 to-brand-blue", desc: "Protección y derechos" },
+              { label: "Alfabetización Mediática", href: "/alfabetizacion-mediatica", color: "from-emerald-400 to-teal-500", desc: "Información y criterio" },
+            ].map((tema, i) => (
+              <motion.a
+                key={i} href={tema.href}
+                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ delay: i * 0.08, ease }}
+                whileHover={{ y: -3 }}
+                className="group flex items-center justify-between p-5 rounded-2xl bg-white/60 backdrop-blur-sm border border-slate-100 hover:shadow-lg hover:border-slate-200 transition-all duration-300"
+              >
+                <div className="flex items-center gap-4">
+                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${tema.color} shadow-md shrink-0 group-hover:scale-110 transition-transform duration-300`} />
+                  <div>
+                    <p className="font-bold text-brand-navy text-sm">{tema.label}</p>
+                    <p className="text-xs text-slate-400">{tema.desc}</p>
+                  </div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-brand-blue group-hover:translate-x-1 transition-all duration-300" />
+              </motion.a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Wave divider ── */}
+      <WaveDivider flip />
+
+      {/* ════════════════════════════════════════════════════════════════════
+         CTA FINAL
+      ════════════════════════════════════════════════════════════════════ */}
+      <section className="py-24 px-6 lg:px-12">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.8, ease }}
           className="max-w-6xl mx-auto rounded-[2.5rem] p-10 lg:p-16 text-center relative overflow-hidden"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-brand-navy via-brand-blue to-violet-700 rounded-[2.5rem]" />
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-pink rounded-full mix-blend-multiply filter blur-[130px] opacity-40 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-cyan-400 rounded-full mix-blend-screen filter blur-[120px] opacity-20 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-navy via-[#1a3a6a] to-violet-800 rounded-[2.5rem]" />
+          <div className="absolute inset-0 bg-dot-grid-dark rounded-[2.5rem] pointer-events-none" />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-pink/20 rounded-full mix-blend-soft-light filter blur-[130px] pointer-events-none animate-float-slow" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-cyan-400/15 rounded-full mix-blend-screen filter blur-[120px] pointer-events-none animate-float-slower" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[700px] h-[300px] rounded-full bg-violet-500/10 blur-[100px] pointer-events-none animate-pulse-soft" />
+
+          {/* Floating particles in CTA */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-[2.5rem]" aria-hidden>
+            {[0,1,2,3,4,5].map(i => (
+              <div key={i} className="absolute w-1.5 h-1.5 rounded-full bg-white/10"
+                style={{
+                  left: `${10 + i * 18}%`, top: `${20 + (i % 3) * 30}%`,
+                  animation: `float-${i % 2 === 0 ? 'slow' : 'slower'} ${4 + i}s ease-in-out ${-i * 2}s infinite`
+                }}
+              />
+            ))}
+          </div>
 
           <div className="relative z-10 flex flex-col items-center">
-            <div className="w-20 h-20 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center mb-8 shadow-xl">
-              <Baby className="w-10 h-10 text-cyan-300" />
-            </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, ease }}
+              className="relative w-20 h-20 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center mb-8 shadow-xl shadow-black/10 overflow-hidden"
+            >
+              <img src="/img/nnya/shield-illustration.svg" alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none" aria-hidden />
+              <Baby className="w-10 h-10 text-cyan-300 relative z-10" />
+            </motion.div>
+
             <h2 className="text-4xl lg:text-5xl font-display font-bold text-white mb-6 leading-tight max-w-3xl">
-              Construyamos un entorno digital más seguro para los pibes
+              Construyamos un entorno digital{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-200 bg-[length:200%_auto] animate-gradient">
+                más seguro
+              </span>{" "}
+              para los pibes
             </h2>
-            <p className="text-xl text-blue-100/80 max-w-2xl mb-10 leading-relaxed">
+
+            <p className="text-xl text-blue-100/70 max-w-2xl mb-10 leading-relaxed">
               La tecnología avanza rápido, pero el diálogo y el acompañamiento no pasan de moda. Involucrate hoy en la vida digital de tus hijos.
             </p>
+
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="px-10 py-4 rounded-full font-bold text-brand-navy bg-white shadow-xl hover:scale-105 hover:shadow-white/20 transition-all duration-300 flex items-center gap-3">
-                Descargá el Manual
-                <Download className="w-5 h-5" />
-              </button>
-              <a
-                href="/tematicas"
-                className="px-10 py-4 rounded-full font-bold text-white bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 flex items-center gap-2 backdrop-blur-sm"
+              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
+                className="group px-10 py-4 rounded-full font-bold text-brand-navy bg-white shadow-xl hover:shadow-white/20 transition-all duration-300 flex items-center gap-3"
               >
+                Descargá el Manual
+                <Download className="w-5 h-5 group-hover:translate-y-[-1px] transition-transform" />
+              </motion.button>
+              <a href="/tematicas" className="group px-10 py-4 rounded-full font-bold text-white bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 flex items-center gap-2 backdrop-blur-sm">
                 Ver todas las temáticas
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
           </div>
         </motion.div>
       </section>
 
+      {/* ════════════════════════════════════════════════════════════════════
+         LIGHTBOX
+      ════════════════════════════════════════════════════════════════════ */}
       <AnimatePresence>
         {lightboxOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm"
             onClick={closeLightbox}
           >
-            <button
-              onClick={closeLightbox}
-              className="absolute top-4 right-4 z-20 flex items-center gap-2 bg-white text-slate-800 font-bold text-sm px-4 py-2.5 rounded-full shadow-xl hover:bg-slate-100 transition-colors"
-            >
-              <X className="w-4 h-4" />
-              Cerrar
+            <button onClick={closeLightbox} className="absolute top-4 right-4 z-20 flex items-center gap-2 bg-white text-slate-800 font-bold text-sm px-4 py-2.5 rounded-full shadow-xl hover:bg-slate-100 transition-colors">
+              <X className="w-4 h-4" /> Cerrar
             </button>
-            <div
-              className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3 bg-black/60 backdrop-blur-md border border-white/10 px-5 py-2.5 rounded-full shadow-xl"
-              onClick={e => e.stopPropagation()}
-            >
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3 bg-black/60 backdrop-blur-md border border-white/10 px-5 py-2.5 rounded-full shadow-xl" onClick={e => e.stopPropagation()}>
               <button onClick={zoomOut} disabled={zoom <= 1} className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors" aria-label="Reducir zoom">
                 <ZoomOut className="w-4 h-4" />
               </button>
@@ -956,38 +1063,19 @@ export function NnyaEntornoDigitalContent() {
               </button>
               {zoom > 1 && (
                 <button onClick={resetZoom} className="ml-1 flex items-center gap-1.5 text-xs text-white/70 hover:text-white transition-colors border-l border-white/20 pl-3" aria-label="Restablecer zoom">
-                  <Maximize2 className="w-3.5 h-3.5" />
-                  Restablecer
+                  <Maximize2 className="w-3.5 h-3.5" /> Restablecer
                 </button>
               )}
             </div>
-            <div
-              ref={lightboxAreaRef}
-              className="absolute inset-0 flex items-center justify-center overflow-hidden"
-              onMouseMove={onMouseMove}
-              onMouseUp={onMouseUp}
-              onMouseLeave={onMouseUp}
+            <div ref={lightboxAreaRef} className="absolute inset-0 flex items-center justify-center overflow-hidden"
+              onMouseDown={ldMouseDown} onMouseMove={ldMouseMove} onMouseUp={ldMouseUp} onMouseLeave={ldMouseUp}
             >
-              <motion.div
-                initial={{ scale: 0.92, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.92, opacity: 0 }}
-                transition={{ duration: 0.25 }}
-                onClick={e => e.stopPropagation()}
-              >
+              <motion.div initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.92, opacity: 0 }} transition={{ duration: 0.25 }} onClick={e => e.stopPropagation()}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={INFOGRAFIA_PATH}
-                  alt="Infografía NNyA y el Entorno Digital — pantalla completa"
+                <img src={INFOGRAFIA_PATH} alt="Infografía NNyA y el Entorno Digital — pantalla completa"
                   className="max-w-full max-h-[90vh] w-auto h-auto rounded-xl shadow-2xl select-none"
-                  style={{
-                    transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
-                    transformOrigin: "center center",
-                    transition: isDragging ? "none" : "transform 0.15s ease",
-                    cursor: zoom > 1 ? (isDragging ? "grabbing" : "grab") : "default",
-                  }}
-                  onMouseDown={onMouseDown}
-                  draggable={false}
+                  style={{ transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`, transformOrigin: "center center", transition: isDragging ? "none" : "transform 0.15s ease", cursor: zoom > 1 ? (isDragging ? "grabbing" : "grab") : "default" }}
+                  onMouseDown={ldMouseDown} draggable={false}
                 />
               </motion.div>
             </div>

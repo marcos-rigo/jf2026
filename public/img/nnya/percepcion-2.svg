@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" fill="none">
+  <circle cx="200" cy="112" r="90" stroke="url(#g2)" strokeWidth="0.5" opacity="0.06"/>
+  <circle cx="200" cy="112" r="65" stroke="url(#g2)" strokeWidth="0.5" opacity="0.08"/>
+  <circle cx="200" cy="112" r="40" stroke="url(#g2)" strokeWidth="0.5" opacity="0.1"/>
+  <circle cx="200" cy="112" r="20" stroke="url(#g2)" strokeWidth="0.5" opacity="0.12"/>
+  <circle cx="80" cy="60" r="3" fill="url(#g2)" opacity="0.15"/>
+  <circle cx="320" cy="80" r="2" fill="url(#g2)" opacity="0.12"/>
+  <circle cx="120" cy="170" r="2.5" fill="url(#g2)" opacity="0.1"/>
+  <circle cx="300" cy="160" r="1.5" fill="url(#g2)" opacity="0.14"/>
+  <circle cx="150" cy="45" r="1.5" fill="url(#g2)" opacity="0.18"/>
+  <circle cx="260" cy="190" r="2" fill="url(#g2)" opacity="0.1"/>
+  <path d="M80 60 Q140 30 200 50 Q260 70 320 80" stroke="url(#g2)" strokeWidth="0.3" opacity="0.06" fill="none"/>
+  <path d="M120 170 Q160 150 200 160 Q240 170 300 160" stroke="url(#g2)" strokeWidth="0.3" opacity="0.05" fill="none"/>
+  <defs>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#D5247A"/>
+      <stop offset="100%" stopColor="#F97316"/>
+    </linearGradient>
+  </defs>
+</svg>

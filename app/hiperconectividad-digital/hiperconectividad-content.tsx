@@ -612,7 +612,7 @@ export function HiperconectividadContent() {
                   <Smartphone className="w-5 h-5" />
                 </div>
                 <p className="text-8xl lg:text-9xl font-display font-black text-white leading-none mb-3">94.8%</p>
-                <p className="text-white/70 text-base">de los adolescentes tiene dispositivo móvil con conexión a internet.</p>
+                <p className="text-white text-base">de los adolescentes tiene dispositivo móvil con conexión a internet.</p>
               </div>
             </motion.div>
 
@@ -626,7 +626,7 @@ export function HiperconectividadContent() {
               </div>
               <p className="text-5xl font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-violet-600 to-brand-blue mb-2 leading-none">11</p>
               <p className="text-sm font-bold text-brand-navy mb-1">años de edad</p>
-              <p className="text-slate-500 text-xs leading-relaxed">edad media del primer dispositivo con internet.</p>
+              <p className="text-slate-500 text-base leading-relaxed">edad media del primer dispositivo con internet.</p>
             </motion.div>
 
             {/* Card — 8 horas */}
@@ -639,7 +639,7 @@ export function HiperconectividadContent() {
               </div>
               <p className="text-5xl font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-brand-pink to-orange-500 mb-2 leading-none">8h</p>
               <p className="text-sm font-bold text-brand-navy mb-1">diarias en pantallas</p>
-              <p className="text-slate-600 text-xs leading-relaxed">promedio en adolescentes de 13 a 17 años.</p>
+              <p className="text-slate-600 text-base leading-relaxed">promedio en adolescentes de 13 a 17 años.</p>
             </motion.div>
 
             {/* Card — 77% */}
@@ -650,7 +650,7 @@ export function HiperconectividadContent() {
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <p className="text-5xl font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-500 to-orange-500 mb-2 leading-none">77%</p>
-              <p className="text-xs text-slate-500 leading-relaxed">sin ningún límite de tiempo de uso establecido.</p>
+              <p className="text-base text-slate-500 leading-relaxed">sin ningún límite de tiempo de uso establecido.</p>
             </motion.div>
 
             {/* Card — 4 de 10 */}
@@ -661,7 +661,7 @@ export function HiperconectividadContent() {
                 <Heart className="w-5 h-5" />
               </div>
               <p className="text-5xl font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-emerald-500 to-teal-600 mb-2 leading-none">4/10</p>
-              <p className="text-xs text-slate-500 leading-relaxed">se conecta específicamente para no sentirse solo.</p>
+              <p className="text-base text-slate-500 leading-relaxed">se conecta específicamente para no sentirse solo.</p>
             </motion.div>
 
             {/* Card — solo 29.1% */}
@@ -672,11 +672,11 @@ export function HiperconectividadContent() {
               <div className="absolute bottom-0 left-0 w-40 h-40 bg-brand-blue/20 rounded-full blur-3xl" />
               <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-6">
                 <div>
-                  <p className="text-6xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60 leading-none mb-2">29.1%</p>
-                  <p className="text-white/60 text-sm max-w-xs">de los hogares cuenta con normas claras de uso digital. La brecha de supervisión es el punto de quiebre estratégico.</p>
+                  <p className="text-6xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-orange-400 leading-none mb-2">29.1%</p>
+                  <p className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-orange-400 text-base max-w-xs leading-relaxed font-medium">de los hogares cuenta con normas claras de uso digital. La brecha de supervisión es el punto de quiebre estratégico.</p>
                 </div>
-                <div className="shrink-0 hidden sm:flex items-center justify-center w-20 h-20 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                  <ShieldCheck className="w-9 h-9 text-white/40" />
+                <div className="shrink-0 hidden sm:flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-brand-pink/30 to-orange-400/20 border border-brand-pink/30 backdrop-blur-sm">
+                  <ShieldCheck className="w-9 h-9 text-brand-pink" />
                 </div>
               </div>
             </motion.div>
@@ -697,11 +697,11 @@ export function HiperconectividadContent() {
               <Zap className="w-4 h-4" />
               Cambio de paradigma
             </span>
-            <h2 className="text-4xl lg:text-5xl font-display font-bold text-brand-navy mb-5">
+            <h2 className="text-5xl lg:text-6xl font-display font-bold text-brand-navy mb-5">
               De las <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-cyan-500">TIC</span> a las{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-brand-pink">TRIC</span>
             </h2>
-            <p className="text-slate-600 text-lg leading-relaxed">
+            <p className="text-slate-600 text-xl leading-relaxed">
               La llegada de las redes sociales cambió el paradigma. Ya no son solo tecnologías de información y comunicación: el nuevo componente central es la <strong className="text-brand-navy">Relación</strong>.
             </p>
           </motion.div>
@@ -730,8 +730,8 @@ export function HiperconectividadContent() {
                       {item.letra}
                     </span>
                   </div>
-                  <h3 className="text-xl font-display font-bold text-brand-navy mb-3 group-hover:text-brand-blue transition-colors">{item.titulo}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
+                  <h3 className="text-2xl font-display font-bold text-brand-navy mb-3 group-hover:text-brand-blue transition-colors">{item.titulo}</h3>
+                  <p className="text-slate-500 text-base leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -762,7 +762,7 @@ export function HiperconectividadContent() {
                     neurobiológica
                   </span>
                 </h2>
-                <p className="text-white/50 text-lg max-w-2xl mx-auto">
+                <p className="text-white text-xl max-w-2xl mx-auto">
                   La adolescencia es un período crítico de máxima plasticidad cerebral. La arquitectura de las plataformas digitales explota esta ventana de vulnerabilidad biológica.
                 </p>
               </motion.div>
@@ -786,15 +786,15 @@ export function HiperconectividadContent() {
                           Riesgo {item.riesgo}
                         </span>
                       </div>
-                      <h3 className="text-xl font-display font-bold text-white mb-3">{item.estructura}</h3>
+                      <h3 className="text-2xl font-display font-bold text-white mb-3">{item.estructura}</h3>
                       <div className="space-y-3">
                         <div className="p-3 bg-white/[0.04] rounded-xl border border-white/[0.05]">
-                          <p className="text-xs font-bold text-white/40 uppercase tracking-wider mb-1">Función</p>
-                          <p className="text-white/70 text-sm">{item.funcion}</p>
+                          <p className="text-xs font-bold text-white uppercase tracking-wider mb-1">Función</p>
+                          <p className="text-white text-base">{item.funcion}</p>
                         </div>
                         <div className="p-3 bg-white/[0.04] rounded-xl border border-white/[0.05]">
-                          <p className="text-xs font-bold text-rose-400/70 uppercase tracking-wider mb-1">Impacto digital</p>
-                          <p className="text-white/60 text-sm">{item.impacto}</p>
+                          <p className="text-xs font-bold text-rose-400 uppercase tracking-wider mb-1">Impacto digital</p>
+                          <p className="text-white text-base">{item.impacto}</p>
                         </div>
                       </div>
                     </div>
@@ -811,8 +811,8 @@ export function HiperconectividadContent() {
                   <AlertTriangle className="w-6 h-6 text-amber-400" />
                 </div>
                 <div>
-                  <p className="font-bold text-white/90 mb-1">"Demencia Digital": la poda sináptica bajo el algoritmo</p>
-                  <p className="text-white/40 text-sm leading-relaxed">
+                  <p className="font-bold text-white text-lg mb-1">"Demencia Digital": la poda sináptica bajo el algoritmo</p>
+                  <p className="text-white text-base leading-relaxed">
                     La poda sináptica adolescente está siendo moldeada por consumo superficial. Al externalizar funciones cognitivas al mundo digital, se produce una atrofia funcional del hipocampo y una reducción de la capacidad atencional a largo plazo.
                   </p>
                 </div>
@@ -862,17 +862,17 @@ export function HiperconectividadContent() {
                   <Heart className="w-4 h-4" />
                   Identidad en la era algorítmica
                 </span>
-                <h2 className="text-4xl lg:text-5xl font-display font-bold text-brand-navy leading-tight">
+                <h2 className="text-5xl lg:text-6xl font-display font-bold text-brand-navy leading-tight">
                   La Cultura del Like y la{" "}
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-orange-400">Identidad</span>
                 </h2>
               </motion.div>
 
-              <motion.p variants={fadeUp} className="text-lg font-semibold text-brand-navy">
+              <motion.p variants={fadeUp} className="text-xl font-semibold text-brand-navy">
                 La adolescencia es una etapa crucial para el desarrollo individual y la búsqueda de aceptación social.
               </motion.p>
 
-              <motion.p variants={fadeUp} className="text-slate-500 leading-relaxed">
+              <motion.p variants={fadeUp} className="text-slate-500 text-lg leading-relaxed">
                 En el entorno digital, los adolescentes construyen <strong className="text-brand-navy">identidades múltiples</strong>. Los perfiles online muestran versiones idealizadas que generan comparación constante con estándares inalcanzables. El éxito en métricas (seguidores/likes) se convierte en un falso sinónimo de valor personal que erosiona la autenticidad.
               </motion.p>
 
@@ -885,8 +885,8 @@ export function HiperconectividadContent() {
                       <item.icon className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="font-bold text-brand-navy text-sm mb-1">{item.titulo}</p>
-                      <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
+                      <p className="font-bold text-brand-navy text-base mb-1">{item.titulo}</p>
+                      <p className="text-slate-500 text-base leading-relaxed">{item.desc}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -918,7 +918,7 @@ export function HiperconectividadContent() {
                     salud mental
                   </span>
                 </h2>
-                <p className="text-white/50 text-lg max-w-2xl mx-auto">
+                <p className="text-white text-xl max-w-2xl mx-auto">
                   Las tasas de autolesiones se triplicaron. Casi el 50% de los jóvenes reportó pensamientos autolíticos. La evidencia es concluyente.
                 </p>
               </motion.div>
@@ -935,12 +935,12 @@ export function HiperconectividadContent() {
                       <div className={`w-11 h-11 rounded-2xl bg-gradient-to-br ${item.accent} flex items-center justify-center text-white shadow-lg mb-5`}>
                         <item.icon className="w-5 h-5" />
                       </div>
-                      <h3 className="text-xl font-display font-bold text-white mb-1">{item.titulo}</h3>
-                      <p className={`text-xs font-semibold mb-4 ${item.textAccent}`}>{item.subtitulo}</p>
-                      <p className="text-white/50 text-sm leading-relaxed mb-5">{item.desc}</p>
+                      <h3 className="text-2xl font-display font-bold text-white mb-1">{item.titulo}</h3>
+                      <p className={`text-sm font-semibold mb-4 ${item.textAccent}`}>{item.subtitulo}</p>
+                      <p className="text-white text-base leading-relaxed mb-5">{item.desc}</p>
                       <ul className="space-y-2">
                         {item.items.map((li, j) => (
-                          <li key={j} className="flex items-start gap-2.5 text-white/40 text-sm">
+                          <li key={j} className="flex items-start gap-2.5 text-white text-base">
                             <CheckCircle2 className={`w-4 h-4 ${item.textAccent} shrink-0 mt-0.5`} />
                             {li}
                           </li>
@@ -966,11 +966,11 @@ export function HiperconectividadContent() {
                 <AlertTriangle className="w-4 h-4" />
                 Entornos de alto riesgo
               </span>
-              <h2 className="text-4xl lg:text-5xl font-display font-bold text-brand-navy leading-tight">
+              <h2 className="text-5xl lg:text-6xl font-display font-bold text-brand-navy leading-tight">
                 Ecosistemas de riesgo
               </h2>
             </div>
-            <p className="text-slate-500 max-w-sm lg:text-right text-sm leading-relaxed">
+            <p className="text-brand-navy max-w-sm lg:text-right text-base leading-relaxed font-medium">
               El ocio digital ha mutado hacia entornos donde los peligros éticos y económicos se normalizan.
             </p>
           </motion.div>
@@ -992,11 +992,11 @@ export function HiperconectividadContent() {
 
                   <div className="mb-5">
                     <p className={`text-4xl font-display font-black text-transparent bg-clip-text bg-gradient-to-br ${item.color} leading-none`}>{item.stat}</p>
-                    <p className="text-xs text-slate-400 mt-1">{item.statLabel}</p>
+                    <p className="text-base text-brand-navy font-medium mt-1">{item.statLabel}</p>
                   </div>
 
-                  <h3 className="text-xl font-display font-bold text-brand-navy mb-3 group-hover:text-brand-blue transition-colors duration-300">{item.titulo}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
+                  <h3 className="text-2xl font-display font-bold text-brand-navy mb-3 group-hover:text-brand-blue transition-colors duration-300">{item.titulo}</h3>
+                  <p className="text-brand-navy text-base leading-relaxed">{item.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -1014,10 +1014,10 @@ export function HiperconectividadContent() {
               <Star className="w-4 h-4" />
               Guía para familias y educadores
             </span>
-            <h2 className="text-4xl lg:text-5xl font-display font-bold text-brand-navy mb-5">
+            <h2 className="text-5xl lg:text-6xl font-display font-bold text-brand-navy mb-5">
               Hoja de ruta para la salud digital
             </h2>
-            <p className="text-slate-500 text-lg max-w-2xl mx-auto">
+            <p className="text-brand-navy text-xl max-w-2xl mx-auto font-medium">
               La familia es el mayor influencer. Cinco pasos para pasar de la restricción pasiva al acompañamiento activo.
             </p>
           </motion.div>
@@ -1040,7 +1040,7 @@ export function HiperconectividadContent() {
                   }`}>
                     {step.id}
                   </div>
-                  <span className={`font-semibold text-sm transition-colors ${activeRoadmap === i ? "text-brand-navy" : "text-slate-500"}`}>
+                  <span className={`font-semibold text-base transition-colors ${activeRoadmap === i ? "text-brand-navy" : "text-brand-navy/60"}`}>
                     {step.titulo}
                   </span>
                   {activeRoadmap === i && <ChevronRight className="w-4 h-4 text-brand-blue ml-auto shrink-0" />}
@@ -1065,7 +1065,7 @@ export function HiperconectividadContent() {
                         <step.icon className="w-7 h-7" />
                       </div>
                       <div className="flex items-center gap-3 mb-3">
-                        <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Paso {step.id} de {roadmapData.length}</span>
+                        <span className="text-xs font-bold text-brand-navy/50 uppercase tracking-widest">Paso {step.id} de {roadmapData.length}</span>
                         <div className="flex gap-1">
                           {roadmapData.map((_, j) => (
                             <div key={j} className={`h-1 rounded-full transition-all duration-300 ${
@@ -1074,8 +1074,8 @@ export function HiperconectividadContent() {
                           ))}
                         </div>
                       </div>
-                      <h3 className="text-2xl lg:text-3xl font-display font-bold text-brand-navy mb-4">{step.titulo}</h3>
-                      <p className="text-slate-500 leading-relaxed">{step.desc}</p>
+                      <h3 className="text-3xl lg:text-4xl font-display font-bold text-brand-navy mb-4">{step.titulo}</h3>
+                      <p className="text-brand-navy text-lg leading-relaxed">{step.desc}</p>
                     </motion.div>
                   ) : null
                 )}
@@ -1279,11 +1279,7 @@ export function HiperconectividadContent() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="px-9 py-4 bg-white text-brand-navy rounded-2xl font-bold text-lg shadow-2xl hover:scale-[1.03] transition-transform duration-300 flex items-center gap-3">
-                <Lock className="w-5 h-5 text-violet-600" />
-                Descargar Guía Completa
-              </button>
-              <a href="/tematicas"
+<a href="/tematicas"
                 className="px-9 py-4 rounded-2xl font-semibold text-white bg-white/[0.07] backdrop-blur-sm border border-white/10 hover:bg-white/[0.13] hover:border-white/20 transition-all duration-300 flex items-center gap-2"
               >
                 Ver todas las temáticas

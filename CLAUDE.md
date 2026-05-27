@@ -55,6 +55,9 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 | `/huella-digital` | Digital footprint — privacy and identity management |
 | `/violencia-digital` | Digital violence — cyberbullying and online harassment guide |
 | `/estafas-digitales` | Digital scams — phishing/smishing/vishing protection guide |
+| `/hiperconectividad-digital` | Hyperconnectivity — in Navbar, route exists, two-file pattern |
+| `/nnya-entorno-digital` | Children & digital environments — in Navbar, route exists, two-file pattern |
+| `/violencia-digital-infancias` | Digital violence against children — in Navbar, route exists, two-file pattern |
 | `/contacto` | Contact form |
 | `/ciudadania-presente` | Redirects to `/ciudadania-presente/modulos` |
 | `/ciudadania-presente/modulos` | Platform landing — module grid (1 active, 6 upcoming) |
@@ -142,8 +145,6 @@ All content is **hardcoded as typed arrays** at the top of section components �
 1. Define a typed array at the top of the component
 2. Map over it in JSX
 
-
-
 **Weekly modal content** lives in `public/weekly-content/YYYY-WNN/` (e.g. `2026-W19/`). Each folder needs a `metadata.json` (matching the `WeeklyContent` interface in `lib/weekly-content.ts`) and a visual asset (`.gif`, `.webp`, or `.mp4`) referenced by `gifFileName`. Folders also typically include supplementary assets — PDF presentations, PNG infographics, and SVG files (none rendered by the modal; distributed alongside for social/print use). Naming convention observed: `*Gif.gif` for the modal visual, `*png.png` for share card, `inf*.png` for infographic, `*.pdf` for presentation. The modal renders once per ISO week per browser via `localStorage` (key prefix: `weeklyModal_`). **Important:** after creating a new week folder, add the week key (e.g. `"2026-W23"`) to `public/weekly-content/manifest.json` manually — `npm run create-week` does not do this automatically. Asset size target is < 3 MB; the container is 16:9. All fetches use `cache: "no-store"` to prevent stale content.
 
 > **`metadata.json` field note:** Use `ctaLink`/`ctaText` for call-to-action links. The `linkTo` field is deprecated (kept for backward compatibility only). Optional fields: `theme` (`blue`/`pink`/`navy`, controls CTA button color; defaults to `blue`), `author`, `expiresAt` (ISO date), `priority` (`high`/`normal`/`low`), `targetAudience` (array of tags).
@@ -170,6 +171,8 @@ Detailed workflow and `metadata.json` field reference: `content-management/READM
 | `DB_USER` | Server | MySQL user |
 | `DB_PASSWORD` | Server | MySQL password |
 | `DB_NAME` | Server | MySQL database name |
+| `NEWS_API_KEY` | Server | News API key for `LocalNewsSection` |
+| `NEWS_API_PROVIDER` | Server | News API provider for `LocalNewsSection` |
 | `ANTHROPIC_API_KEY` | Server | Reserved for planned Claude integration |
 
 ### Key dependencies

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" fill="none">
+  <rect x="80" y="200" width="40" height="120" rx="4" fill="url(#sblue)" opacity="0.06"/>
+  <rect x="150" y="150" width="40" height="170" rx="4" fill="url(#spink)" opacity="0.06"/>
+  <rect x="220" y="100" width="40" height="220" rx="4" fill="url(#sviolet)" opacity="0.06"/>
+  <rect x="290" y="180" width="40" height="140" rx="4" fill="url(#sblue)" opacity="0.05"/>
+  <rect x="360" y="80" width="40" height="240" rx="4" fill="url(#spink)" opacity="0.05"/>
+  <rect x="430" y="140" width="40" height="180" rx="4" fill="url(#sviolet)" opacity="0.05"/>
+  <rect x="500" y="60" width="40" height="260" rx="4" fill="url(#sblue)" opacity="0.04"/>
+  <rect x="570" y="190" width="40" height="130" rx="4" fill="url(#spink)" opacity="0.04"/>
+  <rect x="640" y="120" width="40" height="200" rx="4" fill="url(#sviolet)" opacity="0.04"/>
+  <circle cx="200" cy="280" r="2" fill="url(#sblue)" opacity="0.08"/>
+  <circle cx="400" cy="200" r="2" fill="url(#spink)" opacity="0.08"/>
+  <circle cx="600" cy="250" r="2" fill="url(#sviolet)" opacity="0.08"/>
+  <circle cx="300" cy="150" r="1.5" fill="url(#sblue)" opacity="0.06"/>
+  <circle cx="500" cy="300" r="1.5" fill="url(#spink)" opacity="0.06"/>
+  <circle cx="700" cy="180" r="1.5" fill="url(#sviolet)" opacity="0.06"/>
+  <defs>
+    <linearGradient id="sblue" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#4272BB"/><stop offset="1" stopColor="#06B6D4"/></linearGradient>
+    <linearGradient id="spink" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#D5247A"/><stop offset="1" stopColor="#F97316"/></linearGradient>
+    <linearGradient id="sviolet" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#8B5CF6"/><stop offset="1" stopColor="#4272BB"/></linearGradient>
+  </defs>
+</svg>
