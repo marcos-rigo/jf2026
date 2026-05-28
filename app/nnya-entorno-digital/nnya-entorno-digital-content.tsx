@@ -164,6 +164,36 @@ function WaveDivider({ flip }: { flip?: boolean }) {
   )
 }
 
+// ── Sources data ─────────────────────────────────────────────────────
+const fuentes = [
+  {
+    titulo: "Infancia y Adolescencia en Entornos Digitales",
+    autores: "Save the Children & GAD3",
+    tipo: "Informe",
+    datos: [
+      { stat: "4,7 h", desc: "Uso diario de móvil reportado por adultos sin hijos", detalle: "frente a las 4,2 horas diarias de los propios adolescentes" },
+      { stat: "45 %", desc: "De los adolescentes considera a sus padres como la figura de mayor credibilidad", detalle: "para formarlos en el uso responsable de plataformas digitales" },
+    ],
+    color: "from-brand-blue to-cyan-400",
+    colorLight: "bg-blue-50/70",
+    colorBorder: "border-blue-100",
+    colorTag: "bg-brand-blue/10 text-brand-blue",
+  },
+  {
+    titulo: "Uso de TikTok e Instagram en adolescentes",
+    autores: "Redalyc",
+    tipo: "Estudio",
+    datos: [
+      { stat: "1 h 30 min", desc: "Tiempo medio diario dedicado a TikTok", detalle: "por adolescentes como plataforma de video de corta duración" },
+      { stat: "1 h 10 min", desc: "Tiempo medio diario dedicado a Instagram", detalle: "segunda red social más utilizada en tiempo de uso cotidiano" },
+    ],
+    color: "from-brand-pink to-orange-400",
+    colorLight: "bg-pink-50/70",
+    colorBorder: "border-pink-100",
+    colorTag: "bg-brand-pink/10 text-brand-pink",
+  },
+]
+
 // ── Data ─────────────────────────────────────────────────────────────────
 type CardData = { id: number; titulo: string; desc: string; icono: React.ElementType; gradient: string; bgLight: string; borderColor: string }
 const percepciones: CardData[] = [
@@ -869,6 +899,49 @@ export function NnyaEntornoDigitalContent() {
               </div>
               <div className="h-[2px] bg-gradient-to-r from-transparent via-brand-blue/40 to-transparent" />
             </div>
+
+            {/* Fuentes de la infografía */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1, ease }}
+              className="mt-5"
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <BookOpen className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Fuentes de los datos</span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {fuentes.map((fuente, i) => (
+                  <div key={i} className={`${fuente.colorLight} rounded-xl border ${fuente.colorBorder} p-4 relative overflow-hidden`}>
+                    <div className={`absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r ${fuente.color} rounded-t-xl`} />
+                    <div className="flex items-start gap-2.5 mb-3">
+                      <span className={`inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${fuente.colorTag} shrink-0 mt-0.5`}>
+                        {fuente.tipo}
+                      </span>
+                      <div>
+                        <p className="font-bold text-brand-navy text-xs leading-snug">{fuente.titulo}</p>
+                        <p className="text-slate-400 text-[11px] mt-0.5">{fuente.autores}</p>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      {fuente.datos.map((dato, j) => (
+                        <div key={j} className="flex items-start gap-2 bg-white/70 rounded-lg p-2.5 border border-white/80">
+                          <span className={`text-base font-display font-black text-transparent bg-clip-text bg-gradient-to-r ${fuente.color} leading-none shrink-0 pt-px`}>
+                            {dato.stat}
+                          </span>
+                          <div>
+                            <p className="text-slate-700 font-semibold text-[11px] leading-snug">{dato.desc}</p>
+                            <p className="text-slate-400 text-[10px] mt-0.5 leading-relaxed">{dato.detalle}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
