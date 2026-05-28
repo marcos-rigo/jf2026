@@ -66,7 +66,7 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 
 ### Ciudadanía Presente platform (`/ciudadania-presente`)
 
-A self-contained learning platform embedded in the site. It does **not** use the site's Navbar/Footer or brand layout — it has its own UI and minimal footer.
+A self-contained learning platform embedded in the site. `app/ciudadania-presente/layout.tsx` wraps all platform routes with the site `<Navbar />` and `pt-20` padding — the platform does **not** include a Footer, but it does share the site's Navbar via this layout.
 
 **State management:** Zustand store (`lib/ciudadania/app-store.ts`) persisted in `localStorage` (key `ciudadania-digital-state`). In `NODE_ENV=development` the store skips persistence and auto-loads a test user so registration is bypassed. The `screen` field drives which component the dashboard renders: `registration → dashboard → wizard → certificate`.
 
@@ -198,7 +198,6 @@ Detailed workflow and `metadata.json` field reference: `content-management/READM
 - **`"use client"` rule** — Any component with state, events, or Framer Motion animations must have `"use client"` at the top. Server components are: `app/page.tsx`, `app/layout.tsx`, and most `*/page.tsx` route files. Exception: `/temas/page.tsx` and `/temas/[id]/page.tsx` are client components.
 - **TypeScript errors ignored at build** — Use `npx tsc --noEmit` explicitly.
 - **Remote images** — `next.config.mjs` allows `josefarhat.com`, `img.youtube.com`, `www.comunicaciontucuman.gob.ar`, and `*.fbcdn.net`. Add new domains to `remotePatterns` for other external image sources. Always use `next/image` (`<Image>`).
-- **Known filename typo** — `app/temas/[id]/]/page.tsx` and `app/temas/[id]/]/topic-content.tsx` (extra bracket in path) exist alongside the correct files. Verify which is active before editing.
 - **Lazy imports** — Firebase and EmailJS are dynamically imported in `QuickContactSection` to keep the initial bundle small.
 - **shadcn/ui** — Add new components with `npx shadcn add <component>`. Do not edit files in `components/ui/` directly.
 - **No CI/CD** — No GitHub Actions or CI configuration exists in this repo.

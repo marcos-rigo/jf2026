@@ -167,21 +167,24 @@ function WaveDivider({ flip }: { flip?: boolean }) {
 // ── Data ─────────────────────────────────────────────────────────────────
 type CardData = { id: number; titulo: string; desc: string; icono: React.ElementType; gradient: string; bgLight: string; borderColor: string }
 const percepciones: CardData[] = [
-  { id: 1, titulo: "La plaza virtual", desc: "Para los pibes no hay 'mundo virtual' y 'mundo real'. Su vida social transcurre simultáneamente en ambos espacios sin distinción.", icono: Users, gradient: "from-blue-500 to-cyan-400", bgLight: "bg-blue-50/70", borderColor: "border-blue-100" },
+  { id: 1, titulo: "La plaza digital", desc: "Para los chicos no hay 'mundo digital' y 'mundo real'. Su vida social transcurre simultáneamente en ambos espacios sin distinción.", icono: Users, gradient: "from-blue-500 to-cyan-400", bgLight: "bg-blue-50/70", borderColor: "border-blue-100" },
   { id: 2, titulo: "La cámara de eco", desc: "Sufren la 'adulación algorítmica': las redes les muestran contenido afín, limitando su exposición a opiniones diferentes.", icono: HeartPulse, gradient: "from-brand-pink to-orange-400", bgLight: "bg-pink-50/70", borderColor: "border-pink-100" },
   { id: 3, titulo: "Privacidad en tensión", desc: "Saben que cuidar sus datos es importante, pero muchas veces priorizan la exposición para sentir que pertenecen al grupo.", icono: Fingerprint, gradient: "from-violet-500 to-brand-blue", bgLight: "bg-violet-50/70", borderColor: "border-violet-100" },
   { id: 4, titulo: "Huella imborrable", desc: "Comparten fotos o pensamientos sin medir que esa información conforma una identidad digital que los acompañará siempre.", icono: Eye, gradient: "from-emerald-400 to-teal-500", bgLight: "bg-emerald-50/70", borderColor: "border-emerald-100" },
 ]
 const estadisticas = [
-  { valor: 93, suffix: "%", texto: "De los adolescentes usa el celular para relacionarse con sus amigos.", icono: Smartphone, color: "brand-blue to-cyan-400", iconGrad: "from-brand-blue to-cyan-400", numGrad: "from-brand-blue to-cyan-500", cardBg: "bg-blue-50/60", cardBorder: "border-blue-100" },
-  { valor: 81, suffix: "%", texto: "Considera que proteger su privacidad en Internet es muy importante.", icono: Lock, color: "brand-pink to-orange-400", iconGrad: "from-brand-pink to-orange-400", numGrad: "from-brand-pink to-orange-500", cardBg: "bg-pink-50/60", cardBorder: "border-pink-100" },
-  { valor: 55, suffix: "%", texto: "De los padres subestima el tiempo real que sus hijos pasan conectados.", icono: Clock, color: "violet-500 to-brand-blue", iconGrad: "from-violet-500 to-brand-blue", numGrad: "from-violet-500 to-violet-700", cardBg: "bg-violet-50/60", cardBorder: "border-violet-100" },
+  { valor: 93, suffix: "%", texto: "De los adolescentes usa el celular para relacionarse con sus amigos.", fuente: "UNICEF – Kids Online Iberoamérica (2019)", icono: Smartphone, color: "brand-blue to-cyan-400", iconGrad: "from-brand-blue to-cyan-400", numGrad: "from-brand-blue to-cyan-500", cardBg: "bg-blue-50/60", cardBorder: "border-blue-100" },
+  { valor: 81, suffix: "%", texto: "Considera que proteger su privacidad en Internet es muy importante.", fuente: "UNICEF – Encuesta de Ciudadanía Digital Argentina (2022)", icono: Lock, color: "brand-pink to-orange-400", iconGrad: "from-brand-pink to-orange-400", numGrad: "from-brand-pink to-orange-500", cardBg: "bg-pink-50/60", cardBorder: "border-pink-100" },
+  { valor: 55, suffix: "%", texto: "De los padres subestima el tiempo real que sus hijos pasan conectados.", fuente: "Fundación Telefónica – Generación Interactiva en Iberoamérica (2020)", icono: Clock, color: "violet-500 to-brand-blue", iconGrad: "from-violet-500 to-brand-blue", numGrad: "from-violet-500 to-violet-700", cardBg: "bg-violet-50/60", cardBorder: "border-violet-100" },
 ]
 const pasosMediacion = [
   { id: 1, titulo: "Dialogá sin juzgar", desc: "Preguntales a qué juegan, a quiénes siguen en TikTok o Instagram y qué les divierte. Mostrar interés genuino abre las puertas para hablar de temas más difíciles después.", icono: MessageCircle, color: "bg-gradient-to-br from-brand-blue to-cyan-400" },
   { id: 2, titulo: "Configuren juntos", desc: "Sentate con ellos a revisar la privacidad de sus perfiles. Enseñales a poner cuentas en privado, desactivar la ubicación y gestionar quién puede comentar sus fotos.", icono: Settings, color: "bg-gradient-to-br from-emerald-400 to-teal-500" },
-  { id: 3, titulo: "Pensamiento crítico", desc: "Ayudalos a dudar. ¿Esa noticia es real? ¿Ese influencer está sponsoreado? Fomentar la duda es la mejor defensa contra la desinformación y el grooming.", icono: Lightbulb, color: "bg-gradient-to-br from-amber-400 to-orange-500" },
-  { id: 4, titulo: "Pacten los límites", desc: "La prohibición total rara vez funciona. Es mejor acordar horarios libres de pantallas (ej: durante la cena o antes de dormir) para cuidar su higiene del sueño.", icono: ShieldCheck, color: "bg-gradient-to-br from-brand-pink to-violet-500" },
+  { id: 3, titulo: "Chequeá su huella digital", desc: "Búscalos en Google juntos: revisá qué fotos, comentarios o perfiles son visibles para cualquier persona. Esa información conforma su reputación digital y puede acompañarlos durante años.", icono: Fingerprint, color: "bg-gradient-to-br from-cyan-500 to-brand-blue" },
+  { id: 4, titulo: "Pensamiento crítico", desc: "Ayudalos a dudar. ¿Esa noticia es real? ¿Ese influencer está sponsoreado? Fomentar la duda es la mejor defensa contra la desinformación y el grooming.", icono: Lightbulb, color: "bg-gradient-to-br from-amber-400 to-orange-500" },
+  { id: 5, titulo: "Confianza cero", desc: "Enseñales a no compartir datos personales —dirección, colegio, número de teléfono— con desconocidos en línea, aunque parezcan amigos. En Internet, la identidad de alguien no siempre es la que muestra.", icono: Lock, color: "bg-gradient-to-br from-rose-400 to-pink-500" },
+  { id: 6, titulo: "Higiene digital", desc: "Establecé rutinas saludables: sin pantallas durante las comidas, activar el modo descanso antes de dormir y reservar espacios offline en familia. Pequeños hábitos que mejoran la concentración y el bienestar general.", icono: HeartPulse, color: "bg-gradient-to-br from-indigo-400 to-violet-500" },
+  { id: 7, titulo: "Pacten los límites", desc: "La prohibición total rara vez funciona. Es mejor acordar horarios libres de pantallas (ej: durante la cena o antes de dormir) para cuidar su calidad del sueño.", icono: ShieldCheck, color: "bg-gradient-to-br from-brand-pink to-violet-500" },
 ]
 const herramientas = [
   { titulo: "Guía de Privacidad", desc: "Paso a paso para configurar la seguridad en TikTok, Instagram y WhatsApp junto a tus hijos.", icono: ShieldCheck, gradient: "from-brand-blue to-cyan-400", tag: "Descargable" },
@@ -189,15 +192,18 @@ const herramientas = [
   { titulo: "Control Parental", desc: "Apps y configuraciones recomendadas para acompañar sin invadir. El equilibrio entre protección y autonomía.", icono: Smartphone, gradient: "from-violet-500 to-brand-blue", tag: "Herramientas" },
 ]
 const consejosRapidos = [
-  { texto: "No compartas fotos de ellos sin pedirles permiso", icono: "📸" },
+  { texto: "Cuidá las fotos y videos que publicás de tus hijos", icono: "📸" },
+  { texto: "El sharenting expone la identidad digital de tus hijos sin que ellos lo elijan", icono: "🧒" },
   { texto: "Enseñales a bloquear y reportar", icono: "🚫" },
   { texto: "El modo avión ayuda a desconectar", icono: "✈️" },
-  { texto: "Vos sos su principal modelo a seguir", icono: "⭐" },
+  { texto: "Tu ejemplo también educa: los hábitos digitales se aprenden mirándote a vos", icono: "⭐" },
+  { texto: "Si usás el teléfono en la cena, les mostrás que está bien hacerlo", icono: "📱" },
   { texto: "Hablen sobre el cyberbullying", icono: "💬" },
-  { texto: "No todo lo que brilla en redes es real", icono: "🔍" },
+  { texto: "No todo lo que brilla en las plataformas digitales es real", icono: "🔍" },
+  { texto: "Enseñales a verificar la información antes de creerla y compartirla", icono: "✅" },
 ]
 const señalesAlerta = [
-  { titulo: "Cambios de humor al salir de las redes", icono: AlertCircle, color: "text-rose-500", bar: "bg-rose-400", iconBg: "bg-rose-100", cardBg: "bg-rose-50/70", cardBorder: "border-rose-200/60", desc: "Irritabilidad o tristeza profunda que aparece justo al cerrar las apps." },
+  { titulo: "Cambios de humor al salir de las redes", icono: AlertCircle, color: "text-rose-500", bar: "bg-rose-400", iconBg: "bg-rose-100", cardBg: "bg-rose-50/70", cardBorder: "border-rose-200/60", desc: "Irritabilidad o tristeza profunda que aparece al alejarse del dispositivo."},
   { titulo: "Secretismo extremo con el teléfono", icono: Lock, color: "text-amber-600", bar: "bg-amber-400", iconBg: "bg-amber-100", cardBg: "bg-amber-50/70", cardBorder: "border-amber-200/60", desc: "Apaga la pantalla al acercarse un adulto o crea perfiles anónimos." },
   { titulo: "Dificultad para dormir o relajarse", icono: Brain, color: "text-violet-500", bar: "bg-violet-400", iconBg: "bg-violet-100", cardBg: "bg-violet-50/70", cardBorder: "border-violet-200/60", desc: "Insomnio, ansiedad o imposibilidad de estar offline sin angustia." },
   { titulo: "Pérdida de interés en actividades offline", icono: TrendingUp, color: "text-brand-blue", bar: "bg-brand-blue", iconBg: "bg-blue-100", cardBg: "bg-blue-50/70", cardBorder: "border-blue-200/60", desc: "Abandona deportes, amigos o hobbies que antes disfrutaba con entusiasmo." },
@@ -601,7 +607,8 @@ export function NnyaEntornoDigitalContent() {
                   </span>
                 </div>
                 <div className={`w-10 h-1 bg-gradient-to-r ${stat.iconGrad} rounded-full mb-5 opacity-40`} />
-                <p className="text-slate-700 font-medium leading-relaxed text-base max-w-xs">{stat.texto}</p>
+                <p className="text-slate-700 font-medium leading-relaxed text-base max-w-xs mb-4">{stat.texto}</p>
+                <p className="text-xs text-slate-400 italic max-w-xs">Fuente: {stat.fuente}</p>
               </motion.div>
             ))}
           </div>
@@ -1016,7 +1023,7 @@ export function NnyaEntornoDigitalContent() {
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-200 bg-[length:200%_auto] animate-gradient">
                 más seguro
               </span>{" "}
-              para los pibes
+              para los chicos
             </h2>
 
             <p className="text-xl text-blue-100/70 max-w-2xl mb-10 leading-relaxed">
