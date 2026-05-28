@@ -1031,12 +1031,6 @@ export function NnyaEntornoDigitalContent() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
-                className="group px-10 py-4 rounded-full font-bold text-brand-navy bg-white shadow-xl hover:shadow-white/20 transition-all duration-300 flex items-center gap-3"
-              >
-                Descargá el Manual
-                <Download className="w-5 h-5 group-hover:translate-y-[-1px] transition-transform" />
-              </motion.button>
               <a href="/tematicas" className="group px-10 py-4 rounded-full font-bold text-white bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 flex items-center gap-2 backdrop-blur-sm">
                 Ver todas las temáticas
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
