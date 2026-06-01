@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain } from "lucide-react"
+import { ArrowDown, ArrowRight, Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain } from "lucide-react"
 
 const tematicas = [
   {
@@ -207,13 +207,26 @@ export function TematicasContent() {
               de la ciudadanía en el mundo digital.
             </motion.p>
 
+            <motion.a
+              href="#tematicas-list"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="mt-10 inline-flex items-center gap-3 text-white transition-colors"
+            >
+              <span className="inline-flex items-center gap-2 rounded-full bg-brand-blue px-5 py-3 text-sm font-semibold tracking-wide shadow-lg shadow-brand-blue/30">
+                <ArrowDown className="w-4 h-4" />
+                Desliza para ver más
+              </span>
+            </motion.a>
+
           </motion.div>
         </div>
 
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#050a14] to-transparent" />
       </section>
 
-      <section className="relative py-20 md:py-32">
+      <section id="tematicas-list" className="relative py-20 md:py-32">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24">
           <motion.div
             variants={containerVariants}
