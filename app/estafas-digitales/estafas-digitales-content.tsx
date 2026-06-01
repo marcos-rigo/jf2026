@@ -137,6 +137,20 @@ export function EstafasDigitalesContent() {
   function prevSlide() { goTo((currentSlide - 1 + CARRUSEL_IMAGES.length) % CARRUSEL_IMAGES.length, -1) }
   function nextSlide() { goTo((currentSlide + 1) % CARRUSEL_IMAGES.length, 1) }
 
+  useEffect(() => {
+    const images = CARRUSEL_IMAGES.map((src) => {
+      const img = new window.Image()
+      img.src = src
+      return img
+    })
+
+    return () => {
+      images.forEach((img) => {
+        img.src = ""
+      })
+    }
+  }, [])
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -605,7 +619,7 @@ export function EstafasDigitalesContent() {
             </div>
 
             {/* Imagen con flechas */}
-            <div className="relative overflow-hidden lg:max-h-[500px] lg:flex lg:items-center lg:justify-center lg:bg-gradient-to-b lg:from-slate-50/50 lg:to-slate-100/30">
+            <div className="relative overflow-hidden lg:bg-gradient-to-b lg:from-slate-50/50 lg:to-slate-100/30">
               <AnimatePresence mode="wait" custom={direction}>
                 <motion.div
                   key={currentSlide}
@@ -615,14 +629,13 @@ export function EstafasDigitalesContent() {
                   animate="center"
                   exit="exit"
                   transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                  className="w-full lg:flex lg:justify-center"
+                  className="relative w-full h-[320px] sm:h-[380px] lg:h-[500px] flex items-center justify-center"
                 >
                   <Image
                     src={CARRUSEL_IMAGES[currentSlide]}
                     alt={`Lámina ${currentSlide + 1}`}
-                    width={1200}
-                    height={800}
-                    className="w-full h-auto object-contain lg:w-auto lg:max-h-[500px]"
+                    fill
+                    className="object-contain"
                     priority
                   />
                 </motion.div>
@@ -772,34 +785,6 @@ export function EstafasDigitalesContent() {
             </motion.div>
           </div>
 
-          {/* Helplines Grid */}
-          <motion.div
-            variants={itemVariants}
-            className="bg-white/80 backdrop-blur-xl p-6 sm:p-8 rounded-2xl shadow-lg shadow-slate-200/30 border border-slate-200/60"
-          >
-            <h4 className="text-lg sm:text-xl font-display font-bold mb-6 sm:mb-8 text-center text-brand-navy">
-              Líneas telefónicas de asistencia 24/7
-            </h4>
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
-              {helpLines.map((line, idx) => (
-                <motion.div
-                  key={idx}
-                  variants={itemVariants}
-                  whileHover={{ y: -4, scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="text-center p-4 sm:p-6 rounded-xl bg-brand-light-blue/50 border border-slate-200/60 hover:shadow-lg hover:border-brand-blue/30 transition-all duration-300 cursor-pointer group"
-                >
-                  <div className="text-3xl sm:text-4xl font-black text-brand-blue mb-2 sm:mb-3 group-hover:text-brand-navy transition-colors">{line.number}</div>
-                  <h5 className="font-display font-bold text-xs sm:text-sm mb-2 text-brand-navy group-hover:text-brand-blue transition-colors">
-                    {line.title}
-                  </h5>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    {line.description}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
         </motion.div>
       </section>
     </main>
