@@ -23,19 +23,23 @@ const slideVariants = {
 }
 
 // ── Particle system ──────────────────────────────────────────────────────
-const particles = Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: 2 + Math.random() * 6,
-  delay: Math.random() * -8,
-  speed: 0.6 + Math.random() * 0.4,
-  opacity: 0.08 + Math.random() * 0.15,
-  color: ["#4272BB", "#D5247A", "#003257", "#8B5CF6", "#06B6D4"][Math.floor(Math.random() * 5)],
-  drift: Math.random() > 0.5 ? "particle-drift-1" : Math.random() > 0.5 ? "particle-drift-2" : "particle-drift-3",
-}))
+function makeParticles() {
+  return Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: 2 + Math.random() * 6,
+    delay: Math.random() * -8,
+    speed: 0.6 + Math.random() * 0.4,
+    opacity: 0.08 + Math.random() * 0.15,
+    color: ["#4272BB", "#D5247A", "#003257", "#8B5CF6", "#06B6D4"][Math.floor(Math.random() * 5)],
+    drift: Math.random() > 0.5 ? "particle-drift-1" : Math.random() > 0.5 ? "particle-drift-2" : "particle-drift-3",
+  }))
+}
 
 function ParticleField() {
+  const [particles, setParticles] = useState<ReturnType<typeof makeParticles>>([])
+  useEffect(() => { setParticles(makeParticles()) }, [])
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-[1]" aria-hidden>
       {particles.map((p) => (
@@ -666,7 +670,7 @@ export function NnyaEntornoDigitalContent() {
               Prestá atención
             </div>
             <h2 className="text-4xl lg:text-5xl font-display font-bold text-brand-navy mb-5 leading-tight">
-              Señales de alerta<br className="hidden sm:block" /> que no ignorar
+              Señales de alerta<br className="hidden sm:block" /> que no podemos ignorar
             </h2>
             <p className="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">Si notás alguna de estas conductas de forma sostenida, es momento de iniciar una conversación.</p>
           </motion.div>
@@ -698,10 +702,14 @@ export function NnyaEntornoDigitalContent() {
       <WaveDivider />
 
       {/* ════════════════════════════════════════════════════════════════════
-         MEDIACIÓN — STEPPER
+         GUÍA PRÁCTICA
       ════════════════════════════════════════════════════════════════════ */}
-      <section id="guia" className="py-28 px-6 lg:px-12 bg-gradient-to-b from-brand-light-blue/20 via-white to-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-dot-grid pointer-events-none" />
+      <section id="guia" className="py-28 px-4 sm:px-6 lg:px-12 bg-gradient-to-b from-brand-light-blue/10 via-white to-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(66,114,187,0.15),_transparent_25%),radial-gradient(circle_at_bottom_right,_rgba(213,36,122,0.12),_transparent_22%)] pointer-events-none" />
+        <div className="absolute left-1/2 top-20 -translate-x-1/2 w-[420px] h-[420px] rounded-full bg-brand-blue/5 blur-3xl pointer-events-none" />
+        <div className="absolute right-10 top-36 w-40 h-40 rounded-full bg-brand-pink/15 blur-3xl pointer-events-none" />
+        <div className="absolute left-10 bottom-10 w-44 h-44 rounded-full bg-violet-200/10 blur-3xl pointer-events-none" />
+
         <div className="max-w-6xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -710,97 +718,210 @@ export function NnyaEntornoDigitalContent() {
             transition={{ duration: 0.7, ease }}
             className="mb-14 max-w-2xl"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-light-blue/60 backdrop-blur-sm border border-brand-blue/15 text-brand-blue text-sm font-semibold mb-5 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 backdrop-blur-xl border border-slate-200/70 text-brand-blue text-sm font-semibold mb-5 shadow-lg shadow-brand-blue/10">
               <ShieldCheck className="w-4 h-4" />
               Guía práctica
             </div>
-            <h2 className="text-4xl lg:text-6xl font-display font-bold text-brand-navy mb-5 leading-tight">
-              ¿Cómo{" "}
+            <h2 className="text-4xl lg:text-5xl font-display font-bold text-brand-navy mb-5 leading-tight">
+              ¿Cómo{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-violet-500 bg-[length:200%_auto] animate-gradient">
                 acompañarlos?
               </span>
             </h2>
-            <p className="text-xl text-slate-500 leading-relaxed">La mediación parental no se trata de espiar o prohibir, sino de educar y acompañar.</p>
+            <p className="text-base md:text-lg text-slate-500 leading-relaxed">Siete acciones concretas para construir confianza, establecer límites saludables y acompañar su autonomía digital.</p>
           </motion.div>
 
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-            {/* Step buttons */}
-            <div className="flex flex-col gap-3 lg:w-[36%]">
-              {pasosMediacion.map((paso) => {
+          {/* ── Mobile: acordeón vertical ─────────────────────────────── */}
+          <div className="lg:hidden space-y-3">
+            {pasosMediacion.map((paso, idx) => {
+              const isOpen = pasoActivo === paso.id
+              const Icon = paso.icono
+              return (
+                <motion.div
+                  key={paso.id}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.06, duration: 0.45, ease }}
+                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                    isOpen
+                      ? 'border-brand-blue/30 bg-white shadow-xl shadow-brand-blue/8'
+                      : 'border-slate-200/70 bg-white/90 shadow-sm'
+                  }`}
+                >
+                  <button
+                    onClick={() => setPasoActivo(isOpen ? 0 : paso.id)}
+                    className="flex w-full items-center gap-4 px-5 py-4 text-left"
+                  >
+                    <div className={`flex-shrink-0 flex h-11 w-11 items-center justify-center rounded-2xl ${paso.color} text-white text-sm font-bold shadow-md`}>
+                      {paso.id}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className={`text-sm font-semibold leading-snug ${isOpen ? 'text-brand-navy' : 'text-slate-700'}`}>
+                        {paso.titulo}
+                      </p>
+                      <p className="text-[11px] text-slate-400 uppercase tracking-widest mt-0.5">Paso {paso.id} de 7</p>
+                    </div>
+                    <div className={`flex-shrink-0 flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 ${isOpen ? 'bg-brand-blue text-white rotate-180' : 'bg-slate-100 text-slate-400'}`}>
+                      <ChevronRight className="w-4 h-4 -rotate-90" />
+                    </div>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        key="content"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-5 pb-5 pt-1 border-t border-slate-100">
+                          <div className="flex items-start gap-4 pt-4">
+                            <div className={`flex-shrink-0 flex h-12 w-12 items-center justify-center rounded-2xl ${paso.color} text-white shadow-lg`}>
+                              <Icon className="w-6 h-6" />
+                            </div>
+                            <p className="text-sm leading-7 text-slate-600">{paso.desc}</p>
+                          </div>
+                          <div className="mt-4 rounded-xl bg-brand-navy/95 px-4 py-3 text-white">
+                            <p className="text-[10px] uppercase tracking-[0.25em] text-slate-400 mb-1">Tip clave</p>
+                            <p className="text-xs leading-relaxed text-slate-200">Escuchá sin interrumpir: el acompañamiento digital debe ser una conversación, no un interrogatorio.</p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              )
+            })}
+          </div>
+
+          {/* ── Desktop: sidebar numérico + panel de contenido ────────── */}
+          <div className="hidden lg:grid lg:grid-cols-[300px_1fr] xl:grid-cols-[320px_1fr] gap-6 items-start">
+
+            {/* Sidebar con los 7 pasos */}
+            <div className="space-y-2 sticky top-28">
+              {pasosMediacion.map((paso, idx) => {
                 const isActive = pasoActivo === paso.id
+                const Icon = paso.icono
                 return (
                   <motion.button
                     key={paso.id}
                     onClick={() => setPasoActivo(paso.id)}
-                    whileHover={!isActive ? { scale: 1.02, x: 4 } : {}}
-                    whileTap={{ scale: 0.98 }}
-                    className={`group text-left px-6 py-5 rounded-2xl transition-all duration-400 flex items-center gap-4 ${
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.07, duration: 0.45, ease }}
+                    className={`group w-full flex items-center gap-4 rounded-2xl border px-4 py-3.5 text-left transition-all duration-300 ${
                       isActive
-                        ? "bg-white/70 backdrop-blur-sm shadow-lg shadow-slate-200/50 border border-slate-100"
-                        : "bg-slate-50/50 hover:bg-slate-100/50 text-slate-500 border border-transparent"
+                        ? 'border-brand-blue/35 bg-white shadow-xl shadow-brand-blue/10 scale-[1.02]'
+                        : 'border-transparent bg-white/60 hover:bg-white hover:border-slate-200/80 hover:shadow-md'
                     }`}
                   >
-                    <div className={`relative w-11 h-11 rounded-full flex items-center justify-center font-bold font-display text-lg shrink-0 transition-all duration-400 ${isActive ? `${paso.color} text-white shadow-lg scale-110` : "bg-slate-200/50 text-slate-400 group-hover:bg-slate-200"}`}>
-                      {paso.id}
-                      {isActive && (
-                        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute -inset-1 rounded-full border-2 border-brand-blue/20" />
-                      )}
+                    <div className={`flex-shrink-0 flex h-10 w-10 items-center justify-center rounded-xl ${paso.color} text-white text-sm font-bold shadow-md transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-105'}`}>
+                      {isActive ? <Icon className="w-5 h-5" /> : paso.id}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <span className={`font-semibold text-base transition-colors block truncate ${isActive ? "text-brand-navy" : ""}`}>
+                      <p className={`text-sm font-semibold leading-snug truncate transition-colors ${isActive ? 'text-brand-navy' : 'text-slate-600 group-hover:text-slate-800'}`}>
                         {paso.titulo}
-                      </span>
-                      {isActive && (
-                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xs text-slate-400 mt-0.5 block">
-                          Paso {paso.id} de {pasosMediacion.length}
-                        </motion.span>
-                      )}
+                      </p>
+                      <p className={`text-[10px] uppercase tracking-widest mt-0.5 transition-colors ${isActive ? 'text-brand-blue' : 'text-slate-400'}`}>
+                        Paso {paso.id}
+                      </p>
                     </div>
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${isActive ? "bg-brand-blue/10 text-brand-blue" : "opacity-0 group-hover:opacity-100 text-slate-300"}`}>
-                      <ArrowRight className="w-4 h-4" />
-                    </div>
+                    <div className={`flex-shrink-0 w-1.5 h-8 rounded-full transition-all duration-300 ${isActive ? 'bg-brand-blue opacity-100' : 'opacity-0'}`} />
                   </motion.button>
                 )
               })}
             </div>
 
-            {/* Panel */}
-            <motion.div
-              layout
-              className="lg:flex-1 bg-white/40 backdrop-blur-md rounded-3xl p-8 lg:p-12 shadow-xl shadow-slate-200/20 border border-slate-100/60 relative overflow-hidden min-h-[360px]"
-            >
-              <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-brand-light-blue/50 to-transparent rounded-bl-full pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-56 h-56 bg-gradient-to-tr from-brand-blue/[0.02] to-transparent rounded-tr-full pointer-events-none" />
-
-              <div className="absolute top-6 right-6 flex gap-1.5 z-10">
-                {pasosMediacion.map((p) => (
-                  <div key={p.id} className={`h-1.5 rounded-full transition-all duration-500 ${p.id === pasoActivo ? "w-10 bg-brand-blue" : "w-1.5 bg-slate-200"}`} />
-                ))}
-              </div>
-
-              <AnimatePresence mode="wait">
-                {pasosMediacion.map(
-                  (paso) =>
-                    paso.id === pasoActivo && (
-                      <motion.div
-                        key={paso.id}
-                        initial={{ opacity: 0, x: 30, rotateY: 5 }}
-                        animate={{ opacity: 1, x: 0, rotateY: 0 }}
-                        exit={{ opacity: 0, x: -30, rotateY: -5 }}
-                        transition={{ duration: 0.4, ease }}
-                        className="relative z-10 h-full flex flex-col justify-center"
-                        style={{ perspective: 600 }}
-                      >
-                        <div className={`w-16 h-16 rounded-2xl ${paso.color} text-white flex items-center justify-center mb-8 shadow-xl animate-glow-ring`}>
-                          <paso.icono className="w-8 h-8" />
+            {/* Panel de contenido activo */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={pasoActivo}
+                initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="space-y-5"
+              >
+                {(() => {
+                  const paso = pasosMediacion[pasoActivo - 1]
+                  const Icon = paso.icono
+                  return (
+                    <>
+                      {/* Card principal */}
+                      <div className="rounded-3xl border border-slate-200/70 bg-white shadow-2xl shadow-slate-200/60 p-8 xl:p-10">
+                        <div className="flex items-start justify-between gap-6 mb-6">
+                          <div>
+                            <span className="inline-flex items-center gap-2 rounded-full bg-brand-blue/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.28em] text-brand-blue mb-4">
+                              Paso {pasoActivo} de 7
+                            </span>
+                            <h3 className="text-3xl xl:text-4xl font-display font-bold text-brand-navy leading-tight">
+                              {paso.titulo}
+                            </h3>
+                          </div>
+                          <div className={`flex-shrink-0 flex h-16 w-16 items-center justify-center rounded-3xl ${paso.color} text-white shadow-2xl`}>
+                            <Icon className="w-8 h-8" />
+                          </div>
                         </div>
-                        <h3 className="text-3xl font-display font-bold text-brand-navy mb-4">{paso.titulo}</h3>
-                        <p className="text-lg text-slate-600 leading-relaxed max-w-xl">{paso.desc}</p>
-                      </motion.div>
-                    )
-                )}
-              </AnimatePresence>
-            </motion.div>
+                        <p className="text-base xl:text-lg leading-8 text-slate-600">{paso.desc}</p>
+
+                        {/* Progress dots */}
+                        <div className="flex gap-2 mt-8">
+                          {pasosMediacion.map((p) => (
+                            <button
+                              key={p.id}
+                              onClick={() => setPasoActivo(p.id)}
+                              className={`rounded-full transition-all duration-300 ${
+                                p.id === pasoActivo ? 'w-8 h-2.5 bg-brand-blue' : 'w-2.5 h-2.5 bg-slate-200 hover:bg-slate-300'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Cards secundarias */}
+                      <div className="grid grid-cols-2 gap-5">
+                        <div className="rounded-2xl border border-brand-blue/15 bg-gradient-to-br from-brand-blue/5 to-violet-50 p-6 shadow-sm">
+                          <span className="inline-flex rounded-full bg-brand-blue/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.28em] text-brand-blue">
+                            Qué lográs
+                          </span>
+                          <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                            Cada paso es una acción concreta con foco en confianza, límites saludables y autonomía digital.
+                          </p>
+                        </div>
+                        <div className="rounded-2xl border border-slate-800/10 bg-slate-950/95 p-6 text-white shadow-lg">
+                          <p className="text-[10px] uppercase tracking-[0.28em] text-slate-400">Consejo clave</p>
+                          <p className="mt-3 text-sm leading-relaxed text-slate-200">
+                            Empezá con preguntas abiertas y escuchá sin interrumpir: el acompañamiento digital es una conversación, no un interrogatorio.
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Nav anterior / siguiente */}
+                      <div className="flex gap-3">
+                        <button
+                          onClick={() => setPasoActivo(Math.max(1, pasoActivo - 1))}
+                          disabled={pasoActivo === 1}
+                          className="flex-1 flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white py-3 text-sm font-semibold text-slate-600 shadow-sm transition-all hover:border-brand-blue/30 hover:text-brand-blue disabled:opacity-30 disabled:cursor-not-allowed"
+                        >
+                          <ChevronLeft className="w-4 h-4" /> Anterior
+                        </button>
+                        <button
+                          onClick={() => setPasoActivo(Math.min(7, pasoActivo + 1))}
+                          disabled={pasoActivo === 7}
+                          className="flex-1 flex items-center justify-center gap-2 rounded-2xl border border-brand-blue/30 bg-brand-blue py-3 text-sm font-semibold text-white shadow-md shadow-brand-blue/20 transition-all hover:bg-brand-blue/90 disabled:opacity-30 disabled:cursor-not-allowed"
+                        >
+                          Siguiente <ChevronRight className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </>
+                  )
+                })()}
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </section>
