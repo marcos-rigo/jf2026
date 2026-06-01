@@ -17,9 +17,9 @@ const ease = [0.22, 1, 0.36, 1] as const
 const PARTICLE_COUNT = 45
 
 const slideVariants = {
-  enter: (dir: number) => ({ opacity: 0, x: dir * 80 }),
-  center: { opacity: 1, x: 0 },
-  exit: (dir: number) => ({ opacity: 0, x: dir * -80 }),
+  enter: (dir: number) => ({ opacity: 0, x: dir > 0 ? '100%' : '-100%' }),
+  center: { opacity: 1, x: '0%' },
+  exit: (dir: number) => ({ opacity: 0, x: dir > 0 ? '-100%' : '100%' }),
 }
 
 // ── Particle system ──────────────────────────────────────────────────────
@@ -750,7 +750,7 @@ export function NnyaEntornoDigitalContent() {
                   }`}
                 >
                   <button
-                    onClick={() => setPasoActivo(isOpen ? 0 : paso.id)}
+                    onClick={() => setPasoActivo(paso.id)}
                     className="flex w-full items-center gap-4 px-5 py-4 text-left"
                   >
                     <div className={`flex-shrink-0 flex h-11 w-11 items-center justify-center rounded-2xl ${paso.color} text-white text-sm font-bold shadow-md`}>
@@ -762,8 +762,8 @@ export function NnyaEntornoDigitalContent() {
                       </p>
                       <p className="text-[11px] text-slate-400 uppercase tracking-widest mt-0.5">Paso {paso.id} de 7</p>
                     </div>
-                    <div className={`flex-shrink-0 flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 ${isOpen ? 'bg-brand-blue text-white rotate-180' : 'bg-slate-100 text-slate-400'}`}>
-                      <ChevronRight className="w-4 h-4 -rotate-90" />
+                    <div className={`flex-shrink-0 flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 ${isOpen ? 'bg-brand-blue text-white' : 'bg-slate-100 text-slate-400'}`}>
+                      <ChevronRight className={`w-4 h-4 transition-transform duration-300 ${isOpen ? 'rotate-90' : '-rotate-90'}`} />
                     </div>
                   </button>
 
@@ -847,7 +847,7 @@ export function NnyaEntornoDigitalContent() {
                 className="space-y-5"
               >
                 {(() => {
-                  const paso = pasosMediacion[pasoActivo - 1]
+                  const paso = pasosMediacion[pasoActivo - 1] ?? pasosMediacion[0]
                   const Icon = paso.icono
                   return (
                     <>
@@ -1091,15 +1091,15 @@ export function NnyaEntornoDigitalContent() {
                 </div>
                 <span className="text-slate-400 text-sm font-mono shrink-0 bg-slate-50/60 px-3 py-1.5 rounded-full">{currentSlide + 1} / {CARRUSEL_IMAGES.length}</span>
               </div>
-              <div className="relative overflow-hidden lg:max-h-[500px] lg:flex lg:items-center lg:justify-center lg:bg-gradient-to-b lg:from-slate-50/50 lg:to-slate-100/30">
-                <AnimatePresence mode="wait" custom={direction}>
+              <div className="relative overflow-hidden" style={{ aspectRatio: '3 / 2' }}>
+                <AnimatePresence mode="sync" custom={direction}>
                   <motion.div
                     key={currentSlide} custom={direction} variants={slideVariants}
                     initial="enter" animate="center" exit="exit"
-                    transition={{ duration: 0.35, ease }}
-                    className="w-full lg:flex lg:justify-center"
+                    transition={{ duration: 0.45, ease }}
+                    className="absolute inset-0 flex items-center justify-center"
                   >
-                    <Image src={CARRUSEL_IMAGES[currentSlide]} alt={`Lámina ${currentSlide + 1}`} width={1200} height={800} className="w-full h-auto object-contain lg:w-auto lg:max-h-[500px]" priority />
+                    <Image src={CARRUSEL_IMAGES[currentSlide]} alt={`Lámina ${currentSlide + 1}`} width={1200} height={800} className="w-full h-full object-contain" priority />
                   </motion.div>
                 </AnimatePresence>
                 <button onClick={prevSlide} className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 hover:bg-brand-blue border border-white/20 flex items-center justify-center transition-all duration-300 backdrop-blur-sm hover:scale-110 active:scale-95" aria-label="Anterior">
