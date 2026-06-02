@@ -3,9 +3,21 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowDown, ArrowRight, Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain } from "lucide-react"
+import { ArrowDown, ArrowRight, Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users } from "lucide-react"
 
 const tematicas = [
+  {
+    href: "/tematicas/cibercrianza",
+    category: "Cibercrianza",
+    title: "¿Sabés dónde interactúan tus hijos?",
+    description:
+      "Cibercrianza: datos reales, quiz interactivo y claves para acompañar a tus hijos en el entorno digital.",
+    image: "/tematicas/cibercrianza/card.jpg",
+    imageAlt: "Banner Cibercrianza",
+    icon: Users,
+    color: "#14B8A6",
+    locked: false,
+  },
   {
     href: "/ciudadania-digital",
     category: "Kit de Acción",

@@ -36,7 +36,8 @@
       "Bash(Out-Null)",
       "Bash(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\public\\\\weekly-content\\\\2026-W25\\\\carrusel\")",
       "Bash(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\public\\\\weekly-content\\\\2026-W26\\\\carrusel\")",
-      "Bash(Write-Output \"Carpetas creadas\")"
+      "Bash(Write-Output \"Carpetas creadas\")",
+      "Bash(findstr \"cibercrianza\")"
     ]
   }
 }
