@@ -431,7 +431,7 @@ const preguntasLimites: PreguntaLimite[] = [
     { texto:"Le saco el celular sin más explicaciones", tipo:"restrictivo" },
   ]},
   { id:3, situacion:"Tu hijo/a llega angustiado/a a casa por algo que pasó en un grupo de WhatsApp. ¿Qué hacés?", opciones:[
-    { texto:"Le digo que no le dé bola y que se olvide", tipo:"permisivo" },
+    { texto:"Le explico que le reste importancia y que busque una alternativa constructiva", tipo:"permisivo" },
     { texto:"Lo escucho sin juzgar, le pregunto qué necesita y pensamos juntos qué hacer", tipo:"acompanante" },
     { texto:"Le pido que me muestre el teléfono para ver qué pasó", tipo:"restrictivo" },
   ]},
@@ -485,11 +485,11 @@ const ecosistema: Ecosistema[] = [
 ]
 
 const compromisos: Compromiso[] = [
-  { numero:"1", icono:Search,       accion:"CONOCER",   detalle:"Esta semana le pregunto a mi hijo/a que me muestre qué hace cuando agarra el teléfono. Lo escucho sin juzgar." },
+  { numero:"1", icono:Search,       accion:"CONOCER",   detalle:"Esta semana le pregunto si podemos compartir juntos la actividad vinculada al dispositivo." },
   { numero:"2", icono:Handshake,    accion:"ACORDAR",   detalle:"Propongo en familia revisar juntos los acuerdos digitales que tenemos — o construir los que no tenemos aún." },
   { numero:"3", icono:MessageCircle,accion:"DIALOGAR",  detalle:"Incorporo una pregunta sobre lo digital en alguna conversación cotidiana, sin que sea un interrogatorio." },
   { numero:"4", icono:Link,         accion:"COORDINAR", detalle:"Me comunico con la escuela para saber qué espacios existen para hablar sobre lo digital y cómo podemos articular." },
-  { numero:"5", icono:Smartphone,   accion:"CUIDARME",  detalle:"Reviso mi propio uso del teléfono. Los adultos también somos parte del ecosistema digital de nuestros hijos." },
+  { numero:"5", icono:Smartphone,   accion:"CUIDARME",  detalle:"Reviso mi propio uso del teléfono. Los adultos también somos parte del ecosistema digital de nuestros hijos. Somos un ejemplo." },
 ]
 
 // ─── useCountUp ───
@@ -624,7 +624,7 @@ export function CibercrianzaContent() {
                       <span className="absolute inset-0 rounded-full lc-ping-blue" style={{ background:"var(--neon-blue)" }} />
                       <span className="relative rounded-full h-2.5 w-2.5" style={{ background:"var(--neon-blue)" }} />
                     </span>
-                    Cibercrianza · Kids Online Argentina 2025
+                    Cibercrianza
                   </div>
                 </motion.div>
 
@@ -852,7 +852,7 @@ export function CibercrianzaContent() {
                       ))}
                     </div>
                     <p className="text-slate-700 text-lg md:text-xl leading-relaxed font-bold">
-                      El mundo digital interactivo: socialización sin barreras físicas, recompensa inmediata, influencia algorítmica y opacidad ante la mirada adulta.
+                      El mundo digital interactivo: socialización sin barreras físicas, recompensa inmediata, influencia algorítmica y falta de visibilidad ante la mirada adulta.
                     </p>
                   </div>
                 </motion.div>
@@ -1647,7 +1647,7 @@ export function CibercrianzaContent() {
                   Ninguna familia puede sola
                 </h2>
                 <blockquote className="max-w-2xl mx-auto text-lg md:text-xl italic text-slate-700 font-extrabold leading-relaxed">
-                  "Un ecosistema de cuidado no es un conjunto de adultos preocupados. Es un conjunto de adultos coordinados." — <span className="font-black text-brand-navy">José Farhat</span>
+                  "Un ecosistema de cuidado no es un conjunto de adultos preocupados. Es un conjunto de adultos, instituciones y recursos coordinados." — <span className="font-black text-brand-navy">José Farhat</span>
                 </blockquote>
                 <div className="w-24 h-1.5 bg-gradient-to-r from-cyan-400 to-pink-500 mx-auto mt-6 rounded-full" />
               </motion.div>
