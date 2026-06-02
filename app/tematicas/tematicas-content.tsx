@@ -12,7 +12,7 @@ const tematicas = [
     title: "¿Sabés dónde interactúan tus hijos?",
     description:
       "Cibercrianza: datos reales, quiz interactivo y claves para acompañar a tus hijos en el entorno digital.",
-    image: "/tematicas/cibercrianza/card.jpg",
+    image: "/img/tematicas/cibercrianza_card.png",
     imageAlt: "Banner Cibercrianza",
     icon: Users,
     color: "#14B8A6",
