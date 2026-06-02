@@ -400,7 +400,7 @@ const tabla: TablaRow[] = [
   { adulto:"Se enoja muchísimo si le sacamos el celular",      realidad:"Siente que lo alejamos de su espacio de pertenencia y vínculos más cercanos" },
   { adulto:"Habla con personas que no conocemos",              realidad:"Puede estar construyendo comunidades de interés o buscando apoyo emocional" },
   { adulto:"Se queda hasta tarde con el teléfono",             realidad:"El tiempo nocturno es cuando tiene más privacidad digital para socializar" },
-  { adulto:"No quiere mostrarnos lo que hace",                 realidad:"Necesita un espacio propio; la opacidad también puede ser señal de riesgo" },
+  { adulto:"No quiere mostrarnos lo que hace",                 realidad:"Necesita un espacio propio; la falta de visibilidad también puede ser señal de riesgo" },
 ]
 
 const desafios: Desafio[] = [
