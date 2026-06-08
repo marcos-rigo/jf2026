@@ -50,6 +50,7 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 | `/temas/[id]` | Topic detail — single client component with hardcoded example data |
 | `/caja-de-herramientas` | Toolbox/resources (6 cards) |
 | `/tematicas` | Digital citizenship topic listing — cards linking to sub-pages (two-file pattern, includes Navbar/Footer in `page.tsx`) |
+| `/tematicas/cibercrianza` | Cyber-parenting sub-page — two-file pattern (`page.tsx` + `cibercrianza-content.tsx`) |
 | `/ciudadania-digital` | Digital citizenship hub — links to sub-pages below |
 | `/alfabetizacion-mediatica` | Media literacy — fact-checking tools and disinformation training |
 | `/huella-digital` | Digital footprint — privacy and identity management |

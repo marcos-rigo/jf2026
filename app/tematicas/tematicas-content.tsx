@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowDown, ArrowRight, Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users } from "lucide-react"
+import { ArrowDown, ArrowRight, Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, LockKeyhole } from "lucide-react"
 
 const tematicas = [
   {
@@ -28,7 +28,7 @@ const tematicas = [
     imageAlt: "Banner Ciudadanía Digital",
     icon: Shield,
     color: "#4272BB",
-    locked: false,
+    locked: true,
   },
   {
     href: "/alfabetizacion-mediatica",
@@ -40,7 +40,7 @@ const tematicas = [
     imageAlt: "Banner Alfabetización Mediática",
     icon: Search,
     color: "#00D4AA",
-    locked: false,
+    locked: true,
   },
   {
     href: "/huella-digital",
@@ -52,7 +52,7 @@ const tematicas = [
     imageAlt: "Banner Huella Digital",
     icon: Eye,
     color: "#D5247A",
-    locked: false,
+    locked: true,
   },
   {
     href: "/violencia-digital",
@@ -64,7 +64,7 @@ const tematicas = [
     imageAlt: "Banner Violencia Digital hacia la Mujer",
     icon: Lock,
     color: "#FF6B35",
-    locked: false,
+    locked: true,
   },
   {
     href: "/estafas-digitales",
@@ -76,7 +76,7 @@ const tematicas = [
     imageAlt: "Banner Estafas Digitales",
     icon: AlertTriangle,
     color: "#FFD93D",
-    locked: false,
+    locked: true,
   },
   {
     href: "/nnya-entorno-digital",
@@ -88,7 +88,7 @@ const tematicas = [
     imageAlt: "Banner NNyA y el Entorno Digital",
     icon: Baby,
     color: "#7C3AED",
-    locked: false,
+    locked: true,
   },
   {
     href: "/violencia-digital-infancias",
@@ -100,7 +100,7 @@ const tematicas = [
     imageAlt: "Banner Violencia Digital en Infancias",
     icon: ShieldAlert,
     color: "#EF4444",
-    locked: false,
+    locked: true,
   },
   {
     href: "/hiperconectividad-digital",
@@ -112,7 +112,7 @@ const tematicas = [
     imageAlt: "Banner Hiperconectividad Digital",
     icon: Brain,
     color: "#6366F1",
-    locked: false,
+    locked: true,
   },
 ]
 
@@ -268,10 +268,23 @@ export function TematicasContent() {
                             fill
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                             loading="lazy"
-                            className="object-cover transition-transform duration-700 group-hover:scale-110"
+                            className={`object-cover transition-transform duration-700 group-hover:scale-110${tema.locked ? " brightness-50" : ""}`}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-[#0f1d35] via-[#0f1d35]/50 to-transparent" />
                           <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
+
+                          {tema.locked && (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <div className="flex flex-col items-center gap-2">
+                                <div className="w-14 h-14 rounded-full bg-black/60 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                                  <LockKeyhole className="w-6 h-6 text-white/70" />
+                                </div>
+                                <span className="text-xs font-medium text-white/60 bg-black/40 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10">
+                                  Próximamente
+                                </span>
+                              </div>
+                            </div>
+                          )}
 
                           <div className="absolute top-4 left-4 flex items-center gap-2">
                             <div
@@ -284,7 +297,10 @@ export function TematicasContent() {
                           </div>
 
                           <div className="absolute bottom-4 right-4 w-12 h-12 rounded-xl backdrop-blur-xl border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                            <IconComponent className="w-5 h-5 text-white/60" />
+                            {tema.locked
+                              ? <LockKeyhole className="w-5 h-5 text-white/40" />
+                              : <IconComponent className="w-5 h-5 text-white/60" />
+                            }
                           </div>
                         </div>
 
@@ -305,10 +321,17 @@ export function TematicasContent() {
                           </p>
 
                           <div className="mt-5 pt-5 border-t border-white/5">
-                            <div className="flex items-center gap-2 text-sm font-medium group-hover:gap-3 transition-all duration-300" style={{ color: tema.color }}>
-                              <span>Explorar tema</span>
-                              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                            </div>
+                            {tema.locked ? (
+                              <div className="flex items-center gap-2 text-sm font-medium text-white/30">
+                                <LockKeyhole className="w-4 h-4" />
+                                <span>Disponible próximamente</span>
+                              </div>
+                            ) : (
+                              <div className="flex items-center gap-2 text-sm font-medium group-hover:gap-3 transition-all duration-300" style={{ color: tema.color }}>
+                                <span>Explorar tema</span>
+                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>

@@ -37,7 +37,10 @@
       "Bash(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\public\\\\weekly-content\\\\2026-W25\\\\carrusel\")",
       "Bash(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\public\\\\weekly-content\\\\2026-W26\\\\carrusel\")",
       "Bash(Write-Output \"Carpetas creadas\")",
-      "Bash(findstr \"cibercrianza\")"
+      "Bash(findstr \"cibercrianza\")",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\" -Force)",
+      "Bash(Select-Object Name, PSIsContainer)",
+      "Bash(Format-Table -AutoSize)"
     ]
   }
 }
