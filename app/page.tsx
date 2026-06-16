@@ -9,12 +9,9 @@ import { MultimediaSection } from "@/components/sections/multimedia-section"
 import { TestimonialsSection } from "@/components/sections/testimonials-section"
 import { Footer } from "@/components/footer"
 import { FloatingElements } from "@/components/floating-elements"
-import WeeklyModalLoader from "@/components/weekly-modal-loader"
-
 export default function HomePage() {
   return (
     <main className="relative">
-      <WeeklyModalLoader />
       <Navbar />
       <Hero />
       <PillarsSection />

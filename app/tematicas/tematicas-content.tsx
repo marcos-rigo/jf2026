@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowDown, ArrowRight, Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, LockKeyhole } from "lucide-react"
+import { ArrowDown, ArrowRight, Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, LockKeyhole, Scale } from "lucide-react"
 
 const tematicas = [
   {
@@ -113,6 +113,18 @@ const tematicas = [
     icon: Brain,
     color: "#6366F1",
     locked: true,
+  },
+  {
+    href: "/tematicas/ia-etica-ciudadania",
+    category: "IA & Ética",
+    title: "IA, Ética y Ciudadanía Digital",
+    description:
+      "La integración de la Inteligencia Artificial en el tejido social: economía del conocimiento, humanidad ampliada, AI Act 2024 y justicia digital con perspectiva de género.",
+    image: "/weekly-content/2026-W19/ciudDigpng.png",
+    imageAlt: "Banner IA, Ética y Ciudadanía Digital",
+    icon: Scale,
+    color: "#00A99D",
+    locked: false,
   },
 ]
 
