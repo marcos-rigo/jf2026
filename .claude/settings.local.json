@@ -40,7 +40,13 @@
       "Bash(findstr \"cibercrianza\")",
       "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\" -Force)",
       "Bash(Select-Object Name, PSIsContainer)",
-      "Bash(Format-Table -AutoSize)"
+      "Bash(Format-Table -AutoSize)",
+      "Skill(run)",
+      "Bash(npm run *)",
+      "Bash(ls .vercel)",
+      "Bash(cat .vercel/project.json)",
+      "Bash(ls vercel.json)",
+      "PowerShell(ls \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\.vercel\" -ErrorAction SilentlyContinue; ls \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\vercel.json\" -ErrorAction SilentlyContinue; \\(Get-Command vercel -ErrorAction SilentlyContinue\\).Source)"
     ]
   }
 }
