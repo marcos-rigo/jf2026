@@ -46,7 +46,12 @@
       "Bash(ls .vercel)",
       "Bash(cat .vercel/project.json)",
       "Bash(ls vercel.json)",
-      "PowerShell(ls \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\.vercel\" -ErrorAction SilentlyContinue; ls \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\vercel.json\" -ErrorAction SilentlyContinue; \\(Get-Command vercel -ErrorAction SilentlyContinue\\).Source)"
+      "PowerShell(ls \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\.vercel\" -ErrorAction SilentlyContinue; ls \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Escritorio\\\\josefarhat.v2\\\\vercel.json\" -ErrorAction SilentlyContinue; \\(Get-Command vercel -ErrorAction SilentlyContinue\\).Source)",
+      "Bash(git checkout *)",
+      "Bash(git merge *)",
+      "Bash(git stash *)",
+      "Bash(git push *)",
+      "Bash(git *)"
     ]
   }
 }
