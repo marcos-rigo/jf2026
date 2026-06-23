@@ -128,7 +128,7 @@ A self-contained learning platform embedded in the site. `app/ciudadania-present
 
 ### Styling and brand tokens
 
-Tailwind CSS v4 configured **CSS-only** via `app/globals.css` using `@theme inline` — there is no `tailwind.config.js`. Brand tokens are CSS custom properties (`--brand-blue`, etc.) exposed as Tailwind utilities. Brand tokens:
+Tailwind CSS v4 configured **CSS-only** via `app/globals.css` using `@theme inline` — there is no `tailwind.config.js`. Brand tokens are CSS custom properties (`--brand-blue`, etc.) exposed as Tailwind utilities. Dark mode variant is declared as `@custom-variant dark (&:is(.dark *))` — the `.dark` class on a parent enables it. Also imports `tw-animate-css`. Brand tokens:
 
 | Token | Value | Usage |
 |-------|-------|-------|

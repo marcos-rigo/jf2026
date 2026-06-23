@@ -28,7 +28,7 @@ const pillars = [
   },
   {
     icon: Brain,
-    title: "Inteligencia Colectiva",
+    title: "Inteligencia Múltiple",
     description: "El poder de la colaboración para resolver desafíos complejos y transformadores.",
     gradient: "from-purple-500 to-fuchsia-400",
     image: "/img/pilares/inteli-colectiva.png",

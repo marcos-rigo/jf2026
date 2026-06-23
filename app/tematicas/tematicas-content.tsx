@@ -6,18 +6,7 @@ import Image from "next/image"
 import { ArrowDown, ArrowRight, Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, LockKeyhole, Scale } from "lucide-react"
 
 const tematicas = [
-  {
-    href: "/tematicas/cibercrianza",
-    category: "Cibercrianza",
-    title: "¿Sabés dónde interactúan tus hijos?",
-    description:
-      "Cibercrianza: datos reales, quiz interactivo y claves para acompañar a tus hijos en el entorno digital.",
-    image: "/img/tematicas/cibercrianza_card.png",
-    imageAlt: "Banner Cibercrianza",
-    icon: Users,
-    color: "#14B8A6",
-    locked: false,
-  },
+  // Ciudadanía Digital
   {
     href: "/ciudadania-digital",
     category: "Kit de Acción",
@@ -28,18 +17,6 @@ const tematicas = [
     imageAlt: "Banner Ciudadanía Digital",
     icon: Shield,
     color: "#4272BB",
-    locked: true,
-  },
-  {
-    href: "/alfabetizacion-mediatica",
-    category: "Información",
-    title: "Alfabetización Mediática",
-    description:
-      "Herramientas y frameworks para consumir y compartir información con criterio. Aprendé a detectar desinformación y fake news.",
-    image: "/weekly-content/2026-W20/amipng.png",
-    imageAlt: "Banner Alfabetización Mediática",
-    icon: Search,
-    color: "#00D4AA",
     locked: true,
   },
   {
@@ -55,17 +32,43 @@ const tematicas = [
     locked: true,
   },
   {
-    href: "/violencia-digital",
-    category: "Derechos",
-    title: "Violencia Digital hacia la Mujer",
+    href: "/hiperconectividad-digital",
+    category: "Neurodesarrollo",
+    title: "Hiperconectividad Digital",
     description:
-      "Guía completa sobre ciberbullying, acoso en línea y violencia de género digital. Conocé tus derechos y cómo actuar si sos víctima.",
-    image: "/weekly-content/2026-W22/violenciapng.png",
-    imageAlt: "Banner Violencia Digital hacia la Mujer",
-    icon: Lock,
-    color: "#FF6B35",
+      "Impacto de las pantallas y redes sociales en el cerebro adolescente. Evidencia científica sobre FOMO, cultura del like y salud mental en la era TRIC.",
+    image: "/weekly-content/2026-W26/card8.png",
+    imageAlt: "Banner Hiperconectividad Digital",
+    icon: Brain,
+    color: "#6366F1",
     locked: true,
   },
+  // Alfabetización
+  {
+    href: "/alfabetizacion-mediatica",
+    category: "Información",
+    title: "Alfabetización Mediática",
+    description:
+      "Herramientas y frameworks para consumir y compartir información con criterio. Aprendé a detectar desinformación y fake news.",
+    image: "/weekly-content/2026-W20/amipng.png",
+    imageAlt: "Banner Alfabetización Mediática",
+    icon: Search,
+    color: "#00D4AA",
+    locked: true,
+  },
+  {
+    href: "/tematicas/ia-etica-ciudadania",
+    category: "IA & Ética",
+    title: "IA, Ética y Ciudadanía Digital",
+    description:
+      "La integración de la Inteligencia Artificial en el tejido social: economía del conocimiento, humanidad ampliada, AI Act 2024 y justicia digital con perspectiva de género.",
+    image: "/weekly-content/2026-W19/ciudDigpng.png",
+    imageAlt: "Banner IA, Ética y Ciudadanía Digital",
+    icon: Scale,
+    color: "#00A99D",
+    locked: false,
+  },
+  // Seguridad
   {
     href: "/estafas-digitales",
     category: "Seguridad",
@@ -78,16 +81,17 @@ const tematicas = [
     color: "#FFD93D",
     locked: true,
   },
+  // Violencia
   {
-    href: "/nnya-entorno-digital",
-    category: "Infancia",
-    title: "Niñas, Niños y Adolescentes en el Entorno Digital",
+    href: "/violencia-digital",
+    category: "Derechos",
+    title: "Violencia Digital hacia la Mujer",
     description:
-      "Cómo interpretan los niños, niñas y adolescentes el mundo digital. Guía práctica de mediación parental para acompañarlos de forma consciente.",
-    image: "/weekly-content/2026-W24/card6.png",
-    imageAlt: "Banner NNyA y el Entorno Digital",
-    icon: Baby,
-    color: "#7C3AED",
+      "Guía completa sobre ciberbullying, acoso en línea y violencia de género digital. Conocé tus derechos y cómo actuar si sos víctima.",
+    image: "/weekly-content/2026-W22/violenciapng.png",
+    imageAlt: "Banner Violencia Digital hacia la Mujer",
+    icon: Lock,
+    color: "#FF6B35",
     locked: true,
   },
   {
@@ -102,29 +106,30 @@ const tematicas = [
     color: "#EF4444",
     locked: true,
   },
+  // Infancia y Crianza
   {
-    href: "/hiperconectividad-digital",
-    category: "Neurodesarrollo",
-    title: "Hiperconectividad Digital",
+    href: "/tematicas/cibercrianza",
+    category: "Cibercrianza",
+    title: "¿Sabés dónde interactúan tus hijos?",
     description:
-      "Impacto de las pantallas y redes sociales en el cerebro adolescente. Evidencia científica sobre FOMO, cultura del like y salud mental en la era TRIC.",
-    image: "/weekly-content/2026-W26/card8.png",
-    imageAlt: "Banner Hiperconectividad Digital",
-    icon: Brain,
-    color: "#6366F1",
-    locked: true,
+      "Cibercrianza: datos reales, quiz interactivo y claves para acompañar a tus hijos en el entorno digital.",
+    image: "/img/tematicas/cibercrianza_card.png",
+    imageAlt: "Banner Cibercrianza",
+    icon: Users,
+    color: "#14B8A6",
+    locked: false,
   },
   {
-    href: "/tematicas/ia-etica-ciudadania",
-    category: "IA & Ética",
-    title: "IA, Ética y Ciudadanía Digital",
+    href: "/nnya-entorno-digital",
+    category: "Infancia",
+    title: "Niñas, Niños y Adolescentes en el Entorno Digital",
     description:
-      "La integración de la Inteligencia Artificial en el tejido social: economía del conocimiento, humanidad ampliada, AI Act 2024 y justicia digital con perspectiva de género.",
-    image: "/weekly-content/2026-W19/ciudDigpng.png",
-    imageAlt: "Banner IA, Ética y Ciudadanía Digital",
-    icon: Scale,
-    color: "#00A99D",
-    locked: false,
+      "Cómo interpretan los niños, niñas y adolescentes el mundo digital. Guía práctica de mediación parental para acompañarlos de forma consciente.",
+    image: "/weekly-content/2026-W24/card6.png",
+    imageAlt: "Banner NNyA y el Entorno Digital",
+    icon: Baby,
+    color: "#7C3AED",
+    locked: true,
   },
 ]
 
