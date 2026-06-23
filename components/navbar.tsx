@@ -22,7 +22,7 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const pathname = usePathname()
-  const TRANSPARENT_ROUTES = ["/", "/tematicas", "/ciudadania-digital"]
+  const TRANSPARENT_ROUTES = ["/", "/ciudadania-digital"]
   const isDark = isScrolled || !TRANSPARENT_ROUTES.some((route) => pathname === route)
 
   useEffect(() => {
