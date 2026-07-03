@@ -49,7 +49,7 @@ const INFOGRAFIA_PATH = "/weekly-content/2026-W26/infografia%208.png"
 // ── Animaciones ───────────────────────────────────────────────────────────────
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const } },
 }
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
 
