@@ -1,6 +1,5 @@
 import { Navbar } from "@/components/navbar"
 import { Hero } from "@/components/hero"
-import NarrativeSection from "@/components/sections/narrative-section"
 import { PillarsSection } from "@/components/sections/pillars-section"
 import { ToolboxSection } from "@/components/sections/toolbox-section"
 import { PodcastSection } from "@/components/sections/podcast-section"
@@ -15,7 +14,6 @@ export default function HomePage() {
     <main className="relative">
       <Navbar />
       <Hero />
-      <NarrativeSection />
       <PillarsSection />
       <ToolboxSection />
       <PodcastSection />

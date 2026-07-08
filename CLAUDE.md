@@ -51,6 +51,8 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 | `/caja-de-herramientas` | Toolbox/resources (6 cards) |
 | `/tematicas` | Digital citizenship topic listing — cards linking to sub-pages (two-file pattern, includes Navbar/Footer in `page.tsx`) |
 | `/tematicas/cibercrianza` | Cyber-parenting sub-page — two-file pattern (`page.tsx` + `cibercrianza-content.tsx`) |
+| `/tematicas/ia-etica-ciudadania` | "IA, Ética y Ciudadanía Digital" sub-page — two-file pattern (`page.tsx` + `IaEticaCiudadaniaContent`) |
+| `/etica-ia` | Near-duplicate of `/tematicas/ia-etica-ciudadania` (separate `EticaIAContent` component, near-identical content) — likely leftover, reconcile/remove before adding more content here |
 | `/ciudadania-digital` | Digital citizenship hub — links to sub-pages below |
 | `/alfabetizacion-mediatica` | Media literacy — fact-checking tools and disinformation training |
 | `/huella-digital` | Digital footprint — privacy and identity management |
@@ -95,9 +97,9 @@ A self-contained learning platform embedded in the site. `app/ciudadania-present
 ### Home page composition (`app/page.tsx`)
 
 ```tsx
-<WeeklyModalLoader />        // Weekly promo modal (once per ISO week, lazy via dynamic import)
 <Navbar />
 <Hero />                     // Full-screen video background
+<NarrativeSection />         // components/sections/narrative-section.tsx
 <PillarsSection />           // 6 thematic pillars
 <ToolboxSection />
 <PodcastSection />
@@ -105,17 +107,19 @@ A self-contained learning platform embedded in the site. `app/ciudadania-present
 <LocalNewsSection />
 <MultimediaSection />
 <TestimonialsSection />      // 1 hardcoded testimonial (Alejandro Nató)
-<QuickContactSection />      // Form → Firebase Firestore + EmailJS
 <Footer />
 <FloatingElements />
 ```
+
+> `WeeklyModalLoader` and `QuickContactSection` are currently **not rendered** in `app/page.tsx` — both components still exist (`components/weekly-modal-loader.tsx`, `components/sections/quick-contact-section.tsx`) but are unused on the homepage as of the latest changes.
 
 ### Component structure
 
 - `components/navbar.tsx` — Fixed header, desktop dropdowns, mobile hamburger with Framer Motion
 - `components/hero.tsx` — Video hero (`/vid/vid.mp4`) with gradient overlays
 - `components/footer.tsx` — Links, social icons, newsletter subscription (POSTs to `/api/subscribe` → MySQL `suscriptores` table)
-- `components/weekly-modal.tsx` + `weekly-modal-loader.tsx` — Weekly promo modal shown once per ISO week; content loaded from `public/weekly-content/YYYY-WNN/metadata.json` + a GIF; seen state tracked in `localStorage`
+- `components/weekly-modal.tsx` + `weekly-modal-loader.tsx` — Weekly promo modal shown once per ISO week; content loaded from `public/weekly-content/YYYY-WNN/metadata.json` + a GIF; seen state tracked in `localStorage`. **Not currently mounted in `app/page.tsx`.**
+- `components/sections/narrative-section.tsx` — Multi-block scroll narrative rendered between `Hero` and `PillarsSection` on the homepage; tells José's thesis (three territories, gaps matrix, methodology, impact stats, 6-step method, CTA) as a series of full-bleed sections joined by SVG curve dividers
 - `components/sections/` — One component per homepage section
 - `components/ciudadania-digital/` — Components for the `/ciudadania-digital` route and its sub-pages; includes `errors-chart.tsx` and `security-chart.tsx` (Recharts)
 - `components/ui/` — shadcn/ui primitives (Radix UI, generated — avoid editing directly)

@@ -51,7 +51,16 @@
       "Bash(git merge *)",
       "Bash(git stash *)",
       "Bash(git push *)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "WebFetch(domain:www.naranjax.com)",
+      "Bash(npx skills *)",
+      "Bash(python *)",
+      "Bash(npm install *)",
+      "Bash(npx playwright *)",
+      "Skill(stealth-browser)",
+      "Bash(npx eslint *)",
+      "Bash(taskkill //F //IM node.exe)",
+      "PowerShell(npx tsc --noEmit 2>&1 | Select-Object -First 30)"
     ]
   }
 }

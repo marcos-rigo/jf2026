@@ -116,8 +116,8 @@ const territories: Territory[] = [
   {
     number: "03",
     tag: "⚠ El más urgente",
-    title: "El territorio del cambio cultural",
-    body: "El espacio donde ocurren las transformaciones en los vínculos, los valores, las identidades, las democracias y las instituciones. No es tecnológico: es humano. Y es donde menos estamos.",
+    title: "El territorio algorítmico",
+    body: "El espacio donde los algoritmos deciden qué vemos, qué pensamos y cómo nos vinculamos. Ahí ocurren las transformaciones en los vínculos, los valores, las identidades, las democracias y las instituciones. No es tecnológico: es humano. Y es donde menos estamos.",
     status: "Sin nombre, sin mapa, sin política pública específica. Ahí comienza el trabajo real.",
     accent: "pink",
   },
@@ -1252,8 +1252,8 @@ export default function NarrativeSection() {
                 color: NAVY,
               }}
             >
-              Mapas obsoletos para territorios{" "}
-              <span style={{ borderBottom: "3px solid #4272BB" }}>nuevos</span>
+              Herramientas innovadoras para{" "}
+              <span style={{ borderBottom: "3px solid #4272BB" }}>nuevos territorios</span>
             </h2>
             <p className="font-sans mt-3" style={{ fontSize: 16, lineHeight: 1.6, color: "#6B7280", maxWidth: 640 }}>
               El mismo diagnóstico en cada nivel del ecosistema — sin excepción.

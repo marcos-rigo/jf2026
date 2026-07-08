@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { Trophy, Award, GraduationCap, Globe, Briefcase, ArrowRight, Users, BookOpen, ChevronDown } from "lucide-react"
+import { Trophy, Award, GraduationCap, Globe, Briefcase, ArrowRight, Users, BookOpen } from "lucide-react"
+import NarrativeSection from "@/components/sections/narrative-section"
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
@@ -106,69 +106,6 @@ const PRESENCIA = [
   { code: "ar", pais: "Argentina",  year: "2022", evento: "Jornadas de Estado Abierto CLAD – Red RAGA" },
 ]
 
-const ACTS = [
-  {
-    number: "I",
-    title: "El origen",
-    content:
-      "Quince años trabajando con niñas, niños, adolescentes, docentes, familias, funcionarios y comunidades. Y en cada encuentro el mismo patrón: las personas viven en un territorio que no pueden nombrar, con herramientas que no conocen, para desafíos que nadie les enseñó a enfrentar.",
-  },
-  {
-    number: "II",
-    title: "El diagnóstico original",
-    content:
-      "La mayoría habla de dos territorios: el físico y el digital. Hay un tercero — casi invisible — que es donde ocurre la transformación más profunda y donde menos estamos presentes.",
-  },
-  {
-    number: "III",
-    title: "El problema real",
-    content:
-      "No falta información. Sobra. El problema es que nadie jerarquizó cuál importa primero. Nadie diseñó la secuencia. Nadie construyó la hoja de ruta para que una persona, una familia, una institución pueda actualizarse de manera coherente y sostenida.",
-  },
-  {
-    number: "IV",
-    title: "La tesis",
-    content:
-      "El desafío no es tecnológico. Es profundamente humano. Cuidar lo humano en una realidad atravesada por tecnología exige una nueva cultura ciudadana. La ciudadanía digital no es saber usar dispositivos. Es aprender a habitar los tres territorios con criterio, empatía, responsabilidad y conciencia de comunidad.",
-  },
-  {
-    number: "V",
-    title: "Por qué este trabajo",
-    content:
-      "Hay muchas personas hablando de ciudadanía digital. Lo que hace diferente este trabajo es una combinación que no se improvisa: diseñé el contenido, construí la metodología y fui personalmente quien capacitó. Quince años de retroalimentación directa, sin intermediarios, con todos los actores del ecosistema simultáneamente.",
-  },
-  {
-    number: "VI",
-    title: "Metodología propia",
-    content:
-      "No aplicamos marcos importados. Construimos una metodología desde la práctica, verificada en territorio: IDEAY+, Escuela de Ciudadanía, Tucumán Lab y Seguridad Inteligente.",
-  },
-  {
-    number: "VII",
-    title: "Innovación & Acción",
-    content:
-      "Una tesis sin acción es un mapa sin viajero. Cada diagnóstico tiene una respuesta concreta: nombrar lo invisible, co-diseñar soluciones en laboratorio, instalar culturas vivas en vez de charlas puntuales, y convertir a cada participante en un multiplicador.",
-  },
-  {
-    number: "VIII",
-    title: "Inteligencia artificial",
-    content:
-      "La IA ya llegó al tercer territorio sin que nadie nos avisara. Ya toma decisiones que afectan vidas. Sin criterio humano, sin marcos éticos y sin formación ciudadana, esas decisiones amplían desigualdades y erosionan democracias. La IA más poderosa no es la que más procesa: es la que mejor sirve a lo humano.",
-  },
-  {
-    number: "IX",
-    title: "Líneas de trabajo",
-    content:
-      "Ciudadanía digital, convivencia escolar, prevención de violencias digitales, seguridad democrática, innovación pública, participación ciudadana, derecho y tecnología, inteligencia artificial responsable. Ocho líneas. Un solo horizonte.",
-  },
-  {
-    number: "X",
-    title: "El método",
-    content:
-      "Escuchar el territorio → Leer el problema → Traducir la complejidad → Diseñar estrategia → Activar corresponsabilidad → Transformar cultura. La prevención no se improvisa: se diseña.",
-  },
-]
-
 const TRAYECTORIA_ACCENTS = [
   { bar: "from-brand-blue to-cyan-400",   text: "text-cyan-400"   },
   { bar: "from-brand-pink to-rose-400",   text: "text-brand-pink" },
@@ -186,8 +123,6 @@ const fadeUp = {
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export function AboutContent() {
-  const [openAct, setOpenAct] = useState<number | null>(null)
-
   return (
     <>
       {/* ── 1. HERO PERSONAL ───────────────────────────────────────────────── */}
@@ -252,6 +187,11 @@ export function AboutContent() {
           </div>
         </div>
       </section>
+
+      {/* ── 1a. TESIS COMPLETA ──────────────────────────────────────────────── */}
+      <div id="tesis" className="scroll-mt-24">
+        <NarrativeSection />
+      </div>
 
       {/* ── 1b. STATS ──────────────────────────────────────────────────────── */}
       <section className="relative py-12 bg-brand-dark overflow-hidden">
@@ -623,86 +563,6 @@ export function AboutContent() {
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-blue/0 to-brand-blue/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none" />
               </motion.div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 6. TESIS — LOS ACTOS ──────────────────────────────────────────── */}
-      <section
-        id="tesis"
-        className="scroll-mt-24 relative py-16 md:py-24 bg-brand-light-blue overflow-hidden"
-      >
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-14"
-          >
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-brand-blue/10 text-brand-blue text-xs font-bold rounded-full mb-5 border border-brand-blue/25 tracking-widest uppercase">
-              Ciudadanía Presente
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold font-display text-brand-navy mb-3">
-              Los actos de la tesis
-            </h2>
-            <p className="text-brand-navy/50 text-sm max-w-md mx-auto">
-              Diez argumentos que construyen una forma de entender y transformar la ciudadanía en el nuevo territorio.
-            </p>
-          </motion.div>
-
-          <div className="max-w-3xl mx-auto flex flex-col gap-3">
-            {ACTS.map((act, i) => {
-              const isOpen = openAct === i
-              return (
-                <motion.div
-                  key={act.number}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.45, delay: i * 0.04 }}
-                  className="rounded-2xl bg-white border border-brand-navy/8 shadow-sm overflow-hidden"
-                  style={{ borderLeft: "3px solid #4272BB" }}
-                >
-                  <button
-                    onClick={() => setOpenAct(isOpen ? null : i)}
-                    aria-expanded={isOpen}
-                    className="w-full flex items-center justify-between px-6 py-4 text-left gap-4 hover:bg-brand-light-blue/50 transition-colors duration-150"
-                  >
-                    <div className="flex items-center gap-4">
-                      <span className="font-display text-sm font-bold text-brand-blue/40 w-6 flex-shrink-0">
-                        {act.number}
-                      </span>
-                      <span className="font-display text-base font-bold text-brand-navy">{act.title}</span>
-                    </div>
-                    <motion.div
-                      animate={{ rotate: isOpen ? 180 : 0 }}
-                      transition={{ duration: 0.25 }}
-                      className="flex-shrink-0"
-                    >
-                      <ChevronDown className="w-5 h-5 text-brand-navy/30" />
-                    </motion.div>
-                  </button>
-
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        key="body"
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                        className="overflow-hidden"
-                      >
-                        <p className="font-sans text-sm text-slate-600 leading-relaxed px-6 pb-5 pt-1">
-                          {act.content}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              )
-            })}
           </div>
         </div>
       </section>
