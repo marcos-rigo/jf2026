@@ -3,9 +3,9 @@ import { registerUser } from '@/lib/ciudadania/mysql-auth'
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, password, fullName, dni, ciudad } = await req.json()
+    const { email, password, fullName, dni, ciudad, pais, provincia, telefono, birthDate, nivelEducativo, genero } = await req.json()
 
-    if (!email || !password || !fullName || !dni || !ciudad) {
+    if (!email || !password || !fullName || !dni || !ciudad || !pais) {
       return NextResponse.json({ error: 'Todos los campos obligatorios deben completarse.' }, { status: 400 })
     }
 
@@ -13,9 +13,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'La contraseña debe tener al menos 6 caracteres.' }, { status: 400 })
     }
 
-    await registerUser({ email, password, fullName, dni, ciudad })
+    const user = await registerUser({ email, password, fullName, dni, ciudad, pais, provincia, telefono, birthDate, nivelEducativo, genero })
 
-    return NextResponse.json({ success: true, message: 'Usuario registrado correctamente.' })
+    return NextResponse.json({ success: true, message: 'Usuario registrado correctamente.', user })
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Error al registrar el usuario.'
     const status = message.includes('Ya existe') ? 409 : 500

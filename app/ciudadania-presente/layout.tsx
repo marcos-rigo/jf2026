@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Navbar } from '@/components/navbar'
+import { Toaster } from '@/components/ui/sonner'
 
 export const metadata: Metadata = {
   title: 'Ciudadanía Presente - Plataforma Educativa',
@@ -17,6 +18,7 @@ export default function CiudadaniaLayout({
       <div className="pt-20">
         {children}
       </div>
+      <Toaster />
     </>
   )
 }

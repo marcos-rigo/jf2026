@@ -60,7 +60,26 @@
       "Skill(stealth-browser)",
       "Bash(npx eslint *)",
       "Bash(taskkill //F //IM node.exe)",
-      "PowerShell(npx tsc --noEmit 2>&1 | Select-Object -First 30)"
+      "PowerShell(npx tsc --noEmit 2>&1 | Select-Object -First 30)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(where mysql *)",
+      "Bash(mysql --version)",
+      "Bash(where docker *)",
+      "Bash(docker --version)",
+      "Bash('/c/Program Files/MySQL/MySQL Server 5.7/bin/mysql.exe' -u root -e 'SELECT VERSION\\(\\);')",
+      "Bash(echo \"exit:$?\")",
+      "Bash($MYSQL *)",
+      "Bash('/c/Program Files/MySQL/MySQL Server 5.7/bin/mysql.exe' -u root -padmin ciudadania_presente_local)",
+      "Bash('/c/Program Files/MySQL/MySQL Server 5.7/bin/mysql.exe' -u root -padmin ciudadania_presente_local -e 'SHOW TABLES;')",
+      "Bash(cd *)",
+      "Bash(taskkill *)",
+      "Bash('/c/Program Files/MySQL/MySQL Server 5.7/bin/mysql.exe' -u root -padmin ciudadania_presente_local -e 'DESCRIBE usuarios;')",
+      "Bash(powershell -Command \"Get-CimInstance Win32_Process -Filter \\\\\"Name='node.exe'\\\\\" | Select-Object ProcessId,CommandLine\")",
+      "Bash(powershell -Command \"Stop-Process -Id 4604 -Force -ErrorAction SilentlyContinue; Stop-Process -Id 15168 -Force -ErrorAction SilentlyContinue; Stop-Process -Id 2572 -Force -ErrorAction SilentlyContinue\")",
+      "Bash(powershell -Command \"Stop-Process -Id 15168 -Force -ErrorAction SilentlyContinue\")",
+      "Bash(rm -f scripts/_tmp_migration_runner.mjs)",
+      "Bash(rmdir scripts *)",
+      "Bash(python3 -m json.tool)"
     ]
   }
 }

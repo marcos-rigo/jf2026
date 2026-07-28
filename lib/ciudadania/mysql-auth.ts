@@ -4,11 +4,17 @@ import { query, withTransaction, queryConn } from './db'
 import type { SubtopicState, WizardStep } from './types'
 
 export interface RegisterData {
-  email:    string
-  password: string
-  fullName: string
-  dni:      string
-  ciudad:   string
+  email:          string
+  password:       string
+  fullName:       string
+  dni:            string
+  ciudad:         string
+  pais:           string
+  provincia?:     string
+  telefono?:      string
+  birthDate?:     string
+  nivelEducativo?: string
+  genero?:        string
 }
 
 export interface MysqlUserData {
@@ -17,8 +23,28 @@ export interface MysqlUserData {
   fullName:      string
   dni:           string
   ciudad:        string
+  pais:          string | null
+  provincia:     string | null
+  telefono:      string | null
+  birthDate:     string | null
+  nivelEducativo: string | null
+  genero:        string | null
+  fotoPerfil:    string | null
   emailVerified: boolean
   consent:       boolean
+  memberSince?:  string
+}
+
+// Solo los campos que el usuario puede modificar desde su perfil.
+// Nombre completo, DNI y email quedan fijados en el alta.
+export interface EditableProfileData {
+  ciudad:         string
+  pais?:          string
+  provincia?:     string
+  telefono?:      string
+  birthDate?:     string
+  nivelEducativo?: string
+  genero?:        string
 }
 
 export interface ProgressData {
@@ -62,8 +88,48 @@ function rowToSubtopicState(row: SubtemaRow): SubtopicState {
   }
 }
 
+interface UsuarioRow {
+  id: number
+  email: string
+  nombre_completo: string
+  dni: string
+  ciudad: string
+  pais: string | null
+  provincia: string | null
+  telefono: string | null
+  fecha_nacimiento: string | null
+  nivel_educativo: string | null
+  genero: string | null
+  foto_perfil: string | null
+  email_verificado: number
+  creado_en: string
+}
+
+const USUARIO_COLUMNS = `id, email, nombre_completo, dni, ciudad, pais, provincia, telefono,
+  fecha_nacimiento, nivel_educativo, genero, foto_perfil, email_verificado, creado_en`
+
+function rowToUserData(row: UsuarioRow): MysqlUserData {
+  return {
+    id:             row.id,
+    email:          row.email,
+    fullName:       row.nombre_completo,
+    dni:            row.dni,
+    ciudad:         row.ciudad,
+    pais:           row.pais,
+    provincia:      row.provincia,
+    telefono:       row.telefono,
+    birthDate:      row.fecha_nacimiento,
+    nivelEducativo: row.nivel_educativo,
+    genero:         row.genero,
+    fotoPerfil:     row.foto_perfil,
+    emailVerified:  Boolean(row.email_verificado),
+    consent:        true,
+    memberSince:    row.creado_en,
+  }
+}
+
 export async function registerUser(data: RegisterData): Promise<MysqlUserData> {
-  const { email, password, fullName, dni, ciudad } = data
+  const { email, password, fullName, dni, ciudad, pais, provincia, telefono, birthDate, nivelEducativo, genero } = data
   const normalizedEmail = email.toLowerCase().trim()
 
   const existing = await query<unknown[]>(
@@ -78,8 +144,14 @@ export async function registerUser(data: RegisterData): Promise<MysqlUserData> {
 
   const userId = await withTransaction(async (conn) => {
     const [insertResult] = await conn.execute(
-      'INSERT INTO usuarios (email, password_hash, nombre_completo, dni, ciudad) VALUES (?, ?, ?, ?, ?)',
-      [normalizedEmail, passwordHash, fullName.trim(), dni.trim(), ciudad.trim()]
+      `INSERT INTO usuarios
+         (email, password_hash, nombre_completo, dni, ciudad, pais, provincia, telefono, fecha_nacimiento, nivel_educativo, genero)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        normalizedEmail, passwordHash, fullName.trim(), dni.trim(), ciudad.trim(),
+        pais?.trim() || null, provincia?.trim() || null, telefono?.trim() || null,
+        birthDate || null, nivelEducativo?.trim() || null, genero?.trim() || null,
+      ]
     ) as [{ insertId: number }, unknown]
 
     const newUserId = insertResult.insertId
@@ -107,29 +179,15 @@ export async function registerUser(data: RegisterData): Promise<MysqlUserData> {
     return newUserId
   })
 
-  return {
-    id:            userId,
-    email:         normalizedEmail,
-    fullName:      fullName.trim(),
-    dni:           dni.trim(),
-    ciudad:        ciudad.trim(),
-    emailVerified: false,
-    consent:       true,
-  }
+  const rows = await query<UsuarioRow[]>(`SELECT ${USUARIO_COLUMNS} FROM usuarios WHERE id = ?`, [userId])
+  return rowToUserData(rows[0])
 }
 
 export async function loginUser(email: string, password: string): Promise<LoginResponse> {
   const normalizedEmail = email.toLowerCase().trim()
 
-  const rows = await query<{
-    id: number
-    password_hash: string
-    nombre_completo: string
-    dni: string
-    ciudad: string
-    email_verificado: number
-  }[]>(
-    'SELECT id, password_hash, nombre_completo, dni, ciudad, email_verificado FROM usuarios WHERE email = ?',
+  const rows = await query<(UsuarioRow & { password_hash: string })[]>(
+    `SELECT ${USUARIO_COLUMNS}, password_hash FROM usuarios WHERE email = ?`,
     [normalizedEmail]
   )
 
@@ -143,18 +201,66 @@ export async function loginUser(email: string, password: string): Promise<LoginR
     throw new Error('Correo o contraseña incorrectos.')
   }
 
-  const user: MysqlUserData = {
-    id:            dbUser.id,
-    email:         normalizedEmail,
-    fullName:      dbUser.nombre_completo,
-    dni:           dbUser.dni,
-    ciudad:        dbUser.ciudad,
-    emailVerified: Boolean(dbUser.email_verificado),
-    consent:       true,
-  }
-
+  const user = rowToUserData(dbUser)
   const progress = await getUserProgress(dbUser.id)
   return { user, progress }
+}
+
+// Solo actualiza campos editables: nombre completo, DNI y email quedan fijados en el alta.
+export async function updateProfile(userId: number, data: EditableProfileData): Promise<MysqlUserData> {
+  const { ciudad, pais, provincia, telefono, birthDate, nivelEducativo, genero } = data
+
+  await query(
+    `UPDATE usuarios
+     SET ciudad = ?, pais = ?, provincia = ?, telefono = ?, fecha_nacimiento = ?, nivel_educativo = ?, genero = ?
+     WHERE id = ?`,
+    [
+      ciudad.trim(), pais?.trim() || null, provincia?.trim() || null, telefono?.trim() || null,
+      birthDate || null, nivelEducativo?.trim() || null, genero?.trim() || null, userId,
+    ]
+  )
+
+  const rows = await query<UsuarioRow[]>(`SELECT ${USUARIO_COLUMNS} FROM usuarios WHERE id = ?`, [userId])
+  if (rows.length === 0) {
+    throw new Error('Usuario no encontrado.')
+  }
+  return rowToUserData(rows[0])
+}
+
+export async function getProfilePhotoUrl(userId: number): Promise<string | null> {
+  const rows = await query<{ foto_perfil: string | null }[]>(
+    'SELECT foto_perfil FROM usuarios WHERE id = ?',
+    [userId]
+  )
+  return rows[0]?.foto_perfil ?? null
+}
+
+export async function updateProfilePhoto(userId: number, fotoPerfil: string | null): Promise<MysqlUserData> {
+  await query('UPDATE usuarios SET foto_perfil = ? WHERE id = ?', [fotoPerfil, userId])
+
+  const rows = await query<UsuarioRow[]>(`SELECT ${USUARIO_COLUMNS} FROM usuarios WHERE id = ?`, [userId])
+  if (rows.length === 0) {
+    throw new Error('Usuario no encontrado.')
+  }
+  return rowToUserData(rows[0])
+}
+
+export async function changePassword(userId: number, currentPassword: string, newPassword: string): Promise<void> {
+  const rows = await query<{ password_hash: string }[]>(
+    'SELECT password_hash FROM usuarios WHERE id = ?',
+    [userId]
+  )
+  if (rows.length === 0) {
+    throw new Error('Usuario no encontrado.')
+  }
+
+  const valid = await bcrypt.compare(currentPassword, rows[0].password_hash)
+  if (!valid) {
+    throw new Error('La contraseña actual es incorrecta.')
+  }
+
+  const passwordHash = await bcrypt.hash(newPassword, 10)
+  await query('UPDATE usuarios SET password_hash = ? WHERE id = ?', [passwordHash, userId])
 }
 
 export async function getUserProgress(userId: number): Promise<ProgressData> {

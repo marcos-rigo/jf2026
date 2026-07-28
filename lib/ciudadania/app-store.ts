@@ -12,6 +12,7 @@ interface ProgressData {
 
 interface AppStore extends AppState {
   registerUser:        (user: UserData) => void
+  updateUser:          (user: Partial<UserData>) => void
   setScreen:           (screen: AppState['screen']) => void
   startSubtopic:       (id: number) => void
   setWizardStep:       (id: number, step: WizardStep) => void
@@ -32,11 +33,21 @@ const INITIAL_SUBTOPICS: SubtopicState[] = [
 ]
 
 const DEV_USER: UserData = {
-  id:       0,
-  fullName: 'Usuario de Prueba',
-  dni:      '12345678',
-  email:    'test@test.com',
-  consent:  true,
+  id:             0,
+  fullName:       'Usuario de Prueba',
+  dni:            '12345678',
+  email:          'test@test.com',
+  consent:        true,
+  ciudad:         'San Miguel de Tucumán',
+  pais:           'Argentina',
+  provincia:      'Tucumán',
+  telefono:       null,
+  birthDate:      null,
+  nivelEducativo: null,
+  genero:         null,
+  fotoPerfil:     null,
+  emailVerified:  false,
+  memberSince:    new Date().toISOString(),
 }
 
 async function pushProgressSync(userId: number, state: Pick<AppState, 'screen' | 'activeSubtopicId' | 'subtopics'>) {
@@ -67,6 +78,8 @@ export const useAppStore = create<AppStore>()(
       subtopics:       INITIAL_SUBTOPICS,
 
       registerUser: (user) => set({ user, screen: 'dashboard' }),
+
+      updateUser: (partial) => set((state) => ({ user: state.user ? { ...state.user, ...partial } : state.user })),
 
       setScreen: (screen) => set({ screen }),
 

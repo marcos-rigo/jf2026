@@ -66,6 +66,7 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 | `/ciudadania-presente/modulos` | Platform landing — module grid (1 active, 6 upcoming) |
 | `/ciudadania-presente/login` | Login / register form (`?mode=register` switches tab) |
 | `/ciudadania-presente/dashboard/inicio` | Authenticated dashboard — renders `Dashboard`, `WizardLayout`, or `Certificate` based on Zustand `screen` state |
+| `/ciudadania-presente/dashboard/perfil` | User profile — edit contact/demographic fields, change password, upload profile photo |
 
 ### Ciudadanía Presente platform (`/ciudadania-presente`)
 
@@ -75,14 +76,19 @@ A self-contained learning platform embedded in the site. `app/ciudadania-present
 
 **Wizard flow:** `WizardLayout` steps through `intro → video → podcast → recommendations → quiz → result`. Quiz pass threshold is **score ≥ 8**. Passing a subtopic unlocks the next one.
 
-**Backend:** MySQL via `lib/ciudadania/db.ts` (connection pool). Auth + progress sync are Next.js API routes under `app/api/ciudadania/`. Passwords hashed with `bcryptjs`. Progress is also synced server-side on quiz submit and dashboard navigation.
+**Backend:** MySQL via `lib/ciudadania/db.ts` (connection pool). Auth + profile + progress sync are Next.js API routes under `app/api/ciudadania/`. Passwords hashed with `bcryptjs`. Progress is also synced server-side on quiz submit and dashboard navigation.
+
+**Profile management (`/ciudadania-presente/dashboard/perfil`):** Editable fields (`ciudad`, `pais`, `provincia`, `telefono`, `birthDate`, `nivelEducativo`, `genero`) go through `app/api/ciudadania/profile/update`; full name, DNI, and email are fixed at registration and rejected client-side even if resubmitted. Password changes go through `profile/change-password` (requires current password, new password ≥ 6 chars). `components/platform/PasswordField.tsx` is a shared show/hide password input used across login, registration, and the profile password form. The `usuarios` table needs the columns added by `lib/ciudadania/migrations/001_add_profile_fields.sql` (`provincia`, `pais`, `telefono`, `fecha_nacimiento`, `nivel_educativo`, `genero`, `foto_perfil`) — run it once against any existing database; `lib/ciudadania/schema.sql` has the full current table definition for fresh setups.
+
+**Profile photo storage (Vercel Blob):** `lib/utils/compress-image.ts` resizes/compresses the image client-side (max 512×512, WebP q0.8, falls back to JPEG, manually corrects EXIF orientation via a hand-rolled APP1 parser — no external libs) before it's ever sent to the server. The compressed `Blob` is posted as `FormData` to `app/api/ciudadania/profile/photo`, which uploads it server-side with `put()` from `@vercel/blob` (`access: 'public'`, pathname `perfil/{userId}-{timestamp}.{ext}`), deletes the previous blob with `del()` (best-effort — failures are logged, not fatal), and stores only the resulting URL in `usuarios.foto_perfil` (`VARCHAR(500)`, migrated from the old `LONGTEXT` base64 column by `lib/ciudadania/migrations/002_foto_perfil_url.sql`). The upload token is never exposed to the browser — only the already-compressed file crosses the network to the API route. `RegistrationForm` offers the same optional photo picker; since there's no `userId` until registration succeeds, the photo uploads in a second request right after `auth/register` returns and never blocks account creation on failure (`sonner` toast reports upload failure — `<Toaster />` is mounted in `app/ciudadania-presente/layout.tsx`, added because the project's sonner primitive existed but wasn't rendered anywhere before).
 
 **Key files:**
 - `lib/ciudadania/types.ts` — all shared types (`SubtopicData`, `AppState`, `WizardStep`, etc.)
 - `lib/ciudadania/app-store.ts` — Zustand store with all actions
-- `lib/ciudadania/mysql-auth.ts` — register, login, password-reset helpers
+- `lib/ciudadania/mysql-auth.ts` — register, login, password-reset, profile update/photo/change-password helpers
 - `lib/ciudadania/mock-data.ts` — hardcoded subtopic content (text, video URLs, quiz questions)
-- `components/platform/` — `RegistrationForm`, `Dashboard`, `WizardLayout`, `Certificate`, and step components
+- `lib/ciudadania/schema.sql` / `lib/ciudadania/migrations/` — MySQL schema and incremental migrations for the platform's tables
+- `components/platform/` — `RegistrationForm`, `Dashboard`, `WizardLayout`, `Certificate`, `PasswordField`, and step components
 
 **Required env vars (not in NEXT_PUBLIC):**
 
@@ -93,6 +99,7 @@ A self-contained learning platform embedded in the site. `app/ciudadania-present
 | `DB_USER` | MySQL user |
 | `DB_PASSWORD` | MySQL password |
 | `DB_NAME` | MySQL database name |
+| `BLOB_READ_WRITE_TOKEN` | Vercel Blob write access for profile photo uploads (`app/api/ciudadania/profile/photo`) — set automatically when a Blob store is connected to the project; run `vercel env pull` for local dev |
 
 ### Home page composition (`app/page.tsx`)
 
@@ -176,6 +183,7 @@ Detailed workflow and `metadata.json` field reference: `content-management/READM
 | `DB_USER` | Server | MySQL user |
 | `DB_PASSWORD` | Server | MySQL password |
 | `DB_NAME` | Server | MySQL database name |
+| `BLOB_READ_WRITE_TOKEN` | Server | Vercel Blob write access for profile photo uploads |
 | `NEWS_API_KEY` | Server | News API key for `LocalNewsSection` |
 | `NEWS_API_PROVIDER` | Server | News API provider for `LocalNewsSection` |
 | `ANTHROPIC_API_KEY` | Server | Reserved for planned Claude integration |
@@ -184,6 +192,7 @@ Detailed workflow and `metadata.json` field reference: `content-management/READM
 
 - **zustand** — State management for the Ciudadanía Presente platform (`lib/ciudadania/app-store.ts`)
 - **mysql2** — MySQL client for the platform backend
+- **@vercel/blob** — Stores profile photo uploads server-side (`app/api/ciudadania/profile/photo`); `usuarios.foto_perfil` holds only the resulting URL
 - **bcryptjs** — Password hashing in `lib/ciudadania/mysql-auth.ts`
 - **framer-motion** — All animations in the public site (`whileInView`, hover, entrance, `AnimatePresence`)
 - **shadcn/ui** (Radix UI) — UI primitives in `components/ui/`
@@ -211,7 +220,7 @@ Detailed workflow and `metadata.json` field reference: `content-management/READM
 
 ### API routes (`app/api/ciudadania/`)
 
-All four routes are POST-only, server-side, and use the MySQL pool from `lib/ciudadania/db.ts`:
+All routes are POST-only, server-side, and use the MySQL pool from `lib/ciudadania/db.ts`:
 
 | Route | Purpose |
 |-------|---------|
@@ -219,5 +228,8 @@ All four routes are POST-only, server-side, and use the MySQL pool from `lib/ciu
 | `auth/register` | Create account, hash password with bcryptjs |
 | `auth/reset-password` | Reset password by email |
 | `progress/sync` | Read or write subtopic progress for a user |
+| `profile/update` | Update editable profile fields (city, country, province, phone, birth date, education level, gender) — name/DNI/email are immutable after registration |
+| `profile/change-password` | Change password given the current password |
+| `profile/photo` | Accepts `FormData` (not JSON): uploads the client-compressed file to Vercel Blob, deletes the old blob, stores the URL — or clears the photo if no file is sent |
 
 `app/api/subscribe/route.ts` — POST-only, saves newsletter emails to the MySQL `suscriptores` table (uses the same pool from `lib/ciudadania/db.ts`). Deduplicates via `INSERT IGNORE`.

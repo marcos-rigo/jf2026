@@ -1,13 +1,27 @@
 ﻿'use client'
 
-import { useState, useEffect, KeyboardEvent, ChangeEvent, FormEvent } from 'react'
+import { useState, useEffect, useRef, KeyboardEvent, ChangeEvent, FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 import {
   BookOpen, BrainCircuit, BadgeCheck, ShieldCheck,
   Info, ChevronRight, Loader2, CheckCircle2, GraduationCap,
-  type LucideIcon,
+  Camera, X, type LucideIcon,
 } from 'lucide-react'
 import { useAppStore } from '@/lib/ciudadania/app-store'
+import { PasswordField } from './PasswordField'
+import { compressImage } from '@/lib/utils/compress-image'
+
+async function uploadProfilePhoto(userId: number, file: Blob) {
+  const formData = new FormData()
+  formData.append('userId', String(userId))
+  formData.append('file', file, 'avatar')
+  const res = await fetch('/api/ciudadania/profile/photo', { method: 'POST', body: formData })
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}))
+    throw new Error(data.error || 'No se pudo subir la foto.')
+  }
+}
 
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -255,8 +269,42 @@ export default function RegistrationForm({ defaultMode = 'login' }: Registration
   const [isSubmitting, setIsSubmitting]     = useState(false)
   const [focused, setFocused]               = useState<keyof FormState | null>(null)
   const [visible, setVisible]               = useState(false)
+  const [showPassword, setShowPassword]         = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [photoFile, setPhotoFile]           = useState<Blob | null>(null)
+  const [photoPreview, setPhotoPreview]     = useState<string | null>(null)
+  const [photoProcessing, setPhotoProcessing] = useState(false)
+  const photoInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => { const t = setTimeout(() => setVisible(true), 60); return () => clearTimeout(t) }, [])
+  useEffect(() => () => { if (photoPreview) URL.revokeObjectURL(photoPreview) }, [photoPreview])
+
+  const onPhotoSelect = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    e.target.value = ''
+    if (!file) return
+    if (!file.type.startsWith('image/')) {
+      setAuthError('Elegí un archivo de imagen.')
+      return
+    }
+    setPhotoProcessing(true)
+    try {
+      const compressed = await compressImage(file)
+      setPhotoFile(compressed)
+      if (photoPreview) URL.revokeObjectURL(photoPreview)
+      setPhotoPreview(URL.createObjectURL(compressed))
+    } catch (err: unknown) {
+      setAuthError(err instanceof Error ? err.message : 'No se pudo procesar la imagen.')
+    } finally {
+      setPhotoProcessing(false)
+    }
+  }
+
+  const removePhoto = () => {
+    if (photoPreview) URL.revokeObjectURL(photoPreview)
+    setPhotoFile(null)
+    setPhotoPreview(null)
+  }
 
   const onNameKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key.length === 1 && !/^[a-zA-ZÀ-ÿ\u00f1\u00d1\s''\-]$/.test(e.key)) e.preventDefault()
@@ -317,7 +365,13 @@ export default function RegistrationForm({ defaultMode = 'login' }: Registration
         const data = await res.json()
         if (!res.ok) throw new Error(data.error)
 
-        registerUser({ id: data.user.id, fullName: data.user.fullName, email: data.user.email, dni: data.user.dni, consent: true })
+        registerUser({
+          id: data.user.id, fullName: data.user.fullName, email: data.user.email, dni: data.user.dni,
+          consent: true, ciudad: data.user.ciudad, emailVerified: data.user.emailVerified, memberSince: data.user.memberSince,
+          pais: data.user.pais, provincia: data.user.provincia, telefono: data.user.telefono,
+          birthDate: data.user.birthDate, nivelEducativo: data.user.nivelEducativo, genero: data.user.genero,
+          fotoPerfil: data.user.fotoPerfil,
+        })
         if (data.progress) loadProgress(data.progress)
         router.push('/ciudadania-presente/dashboard/inicio')
       } else {
@@ -326,15 +380,29 @@ export default function RegistrationForm({ defaultMode = 'login' }: Registration
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
           body:    JSON.stringify({
-            email:    form.email.trim(),
-            password: form.password,
+            email:          form.email.trim(),
+            password:       form.password,
             fullName,
-            dni:      form.dni.trim(),
-            ciudad:   form.ciudad.trim(),
+            dni:            form.dni.trim(),
+            ciudad:         form.ciudad.trim(),
+            pais:           form.pais.trim(),
+            provincia:      form.provincia.trim(),
+            telefono:       form.telefono.trim(),
+            birthDate:      form.birthDate,
+            nivelEducativo: form.nivelEducativo,
+            genero:         form.genero,
           }),
         })
         const data = await res.json()
         if (!res.ok) throw new Error(data.error)
+
+        if (photoFile && data.user?.id) {
+          try {
+            await uploadProfilePhoto(data.user.id, photoFile)
+          } catch (photoErr: unknown) {
+            toast.error(photoErr instanceof Error ? photoErr.message : 'No se pudo subir la foto de perfil. Podés agregarla después desde tu perfil.')
+          }
+        }
 
         setSuccessMessage('Cuenta creada. Ya podés iniciar sesión.')
         setIsLogin(true)
@@ -345,6 +413,7 @@ export default function RegistrationForm({ defaultMode = 'login' }: Registration
           password: '', confirmPassword: '', consent: false,
         })
         setErrors({})
+        removePhoto()
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Ocurrió un error inesperado. Intentá de nuevo.'
@@ -368,45 +437,6 @@ export default function RegistrationForm({ defaultMode = 'login' }: Registration
         .rf-spin { animation: rf-spin 0.7s linear infinite; }
         input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0.5; cursor: pointer; }
       `}</style>
-
-      {/* ── Topbar ─────────────────────────────────────────────────────────── */}
-      <header className="flex-shrink-0 h-14 flex items-center justify-between border-b border-white/[0.08] px-4 sm:px-6 lg:px-8">
-
-        {/* Mobile: logo centrado */}
-        <div className="flex lg:hidden w-full justify-center relative">
-          <a href="https://josefarhat.com/" rel="noopener noreferrer">
-            <img src="/img/marcaJFb.png" alt="José Farhat" className="h-8 w-auto object-contain" />
-          </a>
-          <a
-            href="/ciudadania-presente/modulos"
-            className="absolute right-0 flex items-center gap-1.5 text-white/60 hover:text-white text-xs font-medium transition-colors"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
-            Módulos
-          </a>
-        </div>
-
-        {/* Desktop: logo a la izquierda + subtítulo */}
-        <div className="hidden lg:flex items-center gap-3">
-          <a href="https://josefarhat.com/" rel="noopener noreferrer"
-            className="flex-shrink-0 transition-opacity hover:opacity-80">
-            <img src="/img/marcaJFb.png" alt="José Farhat" className="h-9 w-auto object-contain" />
-          </a>
-          <span className="text-sm font-bold text-[#D5247A] tracking-tight whitespace-nowrap">
-            — Ciudadanía Presente
-          </span>
-        </div>
-
-        {/* Desktop: botón volver */}
-        <a
-          href="/ciudadania-presente/modulos"
-          className="hidden lg:flex items-center gap-2 text-white/60 hover:text-white text-sm font-medium transition-colors"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
-          Volver a módulos
-        </a>
-
-      </header>
 
       {/* ── Main grid ──────────────────────────────────────────────────────── */}
       <main className="flex-1 flex flex-col lg:grid lg:grid-cols-[1fr_450px] xl:grid-cols-[1fr_480px] gap-6 lg:gap-8 px-4 sm:px-6 lg:px-8 py-4 lg:py-3 lg:items-center overflow-y-auto lg:overflow-hidden">
@@ -516,6 +546,45 @@ export default function RegistrationForm({ defaultMode = 'login' }: Registration
                   {/* ── Datos personales ── */}
                   <SectionLabel>Datos personales</SectionLabel>
 
+                  {/* Foto de perfil (opcional) */}
+                  <div className="flex items-center gap-3">
+                    <div className="relative flex-shrink-0">
+                      <div className="w-14 h-14 rounded-2xl overflow-hidden flex items-center justify-center bg-[#F5F8FC] border-2 border-[#d3e2f0]">
+                        {photoPreview ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={photoPreview} alt="Vista previa" className="w-full h-full object-cover" />
+                        ) : (
+                          <Camera size={18} className="text-[#8ca9be]" />
+                        )}
+                      </div>
+                      {photoPreview && (
+                        <button
+                          type="button"
+                          onClick={removePhoto}
+                          className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-white border border-[#d3e2f0] flex items-center justify-center text-[#5a7a8e] hover:text-red-500"
+                          aria-label="Quitar foto"
+                        >
+                          <X size={11} />
+                        </button>
+                      )}
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <button
+                        type="button"
+                        onClick={() => photoInputRef.current?.click()}
+                        disabled={photoProcessing}
+                        className="text-[11px] font-bold text-[#4272BB] hover:underline self-start disabled:opacity-60"
+                      >
+                        {photoProcessing ? 'Procesando…' : photoPreview ? 'Cambiar foto' : 'Agregar foto de perfil'}
+                      </button>
+                      <span className="text-[10px] text-[#8ca9be]">Opcional. Podés agregarla después desde tu perfil.</span>
+                    </div>
+                    <input
+                      ref={photoInputRef} type="file" accept="image/png,image/jpeg,image/webp"
+                      className="hidden" onChange={onPhotoSelect}
+                    />
+                  </div>
+
                   {/* Apellido + Nombre */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <FieldRow label="Apellido" required error={errors.lastName}>
@@ -615,12 +684,12 @@ export default function RegistrationForm({ defaultMode = 'login' }: Registration
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <FieldRow label="Contraseña" required error={errors.password}>
-                      <input type="password" placeholder="Mínimo 6 caracteres"
-                        autoComplete="new-password" {...fieldProps('password')}/>
+                      <PasswordField placeholder="Mínimo 6 caracteres" autoComplete="new-password"
+                        show={showPassword} onToggle={() => setShowPassword(v => !v)} {...fieldProps('password')}/>
                     </FieldRow>
                     <FieldRow label="Confirmar contraseña" required error={errors.confirmPassword}>
-                      <input type="password" placeholder="Repetir contraseña"
-                        autoComplete="new-password" {...fieldProps('confirmPassword')}/>
+                      <PasswordField placeholder="Repetir contraseña" autoComplete="new-password"
+                        show={showConfirmPassword} onToggle={() => setShowConfirmPassword(v => !v)} {...fieldProps('confirmPassword')}/>
                     </FieldRow>
                   </div>
 
@@ -670,8 +739,8 @@ export default function RegistrationForm({ defaultMode = 'login' }: Registration
                   
                   <div className="flex flex-col">
                     <FieldRow label="Contraseña" required error={errors.password}>
-                      <input type="password" placeholder="Tu contraseña" autoComplete="current-password"
-                        {...fieldProps('password')}/>
+                      <PasswordField placeholder="Tu contraseña" autoComplete="current-password"
+                        show={showPassword} onToggle={() => setShowPassword(v => !v)} {...fieldProps('password')}/>
                     </FieldRow>
                     <button
                       type="button"

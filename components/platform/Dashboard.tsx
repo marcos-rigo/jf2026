@@ -2,7 +2,7 @@
 
 import { useAppStore } from '@/lib/ciudadania/app-store'
 import { SUBTOPICS_DATA } from '@/lib/ciudadania/mock-data'
-import { Shield, Lock, CheckCircle2, Circle, ChevronRight, Award, Brain, LogOut } from 'lucide-react'
+import { Shield, Lock, CheckCircle2, Circle, ChevronRight, Award, Brain } from 'lucide-react'
 import type { SubtopicStatus } from '@/lib/ciudadania/types'
 
 const STATUS_CONFIG = {
@@ -37,7 +37,6 @@ export default function Dashboard() {
   const subtopics    = useAppStore((s) => s.subtopics)
   const startSubtopic = useAppStore((s) => s.startSubtopic)
   const setScreen    = useAppStore((s) => s.setScreen)
-  const reset        = useAppStore((s) => s.reset)
 
   const allCompleted   = subtopics.every((s) => s.passed)
   const completedCount = subtopics.filter((s) => s.passed).length
@@ -60,7 +59,8 @@ export default function Dashboard() {
           </div>
 
           {/* Progress bar — md+ */}
-          <div className="hidden md:flex items-center gap-3 flex-1 max-w-[260px] mx-4">
+          <div className="hidden md:flex items-center gap-3 flex-1 max-w-[300px] mx-4">
+            <span className="text-white/70 text-xs font-semibold whitespace-nowrap">Progreso</span>
             <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
               <div
                 className="h-full bg-[#D5247A] rounded-full transition-all duration-700"
@@ -82,13 +82,6 @@ export default function Dashboard() {
                 <span className="sm:hidden">Cert.</span>
               </button>
             )}
-            <button
-              onClick={reset}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl bg-white/10 text-white/70 text-xs hover:bg-white/20 transition-colors border border-white/20"
-            >
-              <LogOut className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Salir</span>
-            </button>
           </div>
         </div>
 

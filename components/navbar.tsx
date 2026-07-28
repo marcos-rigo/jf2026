@@ -3,10 +3,18 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
+import { Menu, X, ChevronDown, User, Settings, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useAppStore } from "@/lib/ciudadania/app-store"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 const navLinks = [
   { label: "Inicio", href: "/" },
@@ -18,12 +26,33 @@ const navLinks = [
   { label: "Contacto", href: "/contacto" },
 ]
 
+function getInitials(fullName: string) {
+  const parts = fullName.trim().split(/\s+/).filter(Boolean)
+  if (parts.length === 0) return "?"
+  if (parts.length === 1) return parts[0][0].toUpperCase()
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+}
+
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
+  const platformUser = useAppStore((s) => s.user)
+  const logout = useAppStore((s) => s.reset)
   const TRANSPARENT_ROUTES = ["/", "/ciudadania-digital"]
   const isDark = isScrolled || !TRANSPARENT_ROUTES.some((route) => pathname === route)
+  const isCiudadaniaModulos = pathname === "/ciudadania-presente/modulos"
+  const isCiudadaniaLogin = pathname === "/ciudadania-presente/login"
+  const isCiudadaniaDashboard = pathname.startsWith("/ciudadania-presente/dashboard")
+  const ctaHref = isCiudadaniaModulos ? "/ciudadania-presente/login" : "/ciudadania-presente"
+  const ctaLabel = isCiudadaniaModulos ? "Ingresar" : "Ciudadanía Presente"
+  const showUserMenu = isCiudadaniaDashboard && !!platformUser
+
+  const handleLogout = () => {
+    logout()
+    router.push("/ciudadania-presente/modulos")
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,20 +114,68 @@ export function Navbar() {
               })}
             </div>
 
+            {/* User menu (logged into Ciudadanía Presente) */}
+            {showUserMenu && platformUser && (
+              <div className="hidden lg:flex items-center">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button
+                      className={cn(
+                        "flex items-center gap-2 pl-1.5 pr-3 py-1.5 rounded-full border transition-colors",
+                        isDark
+                          ? "border-[#d3e2f0] hover:bg-brand-light-blue"
+                          : "border-white/20 hover:bg-white/10"
+                      )}
+                    >
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-brand-navy to-brand-blue text-xs font-bold text-white flex-shrink-0 overflow-hidden">
+                        {platformUser.fotoPerfil ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={platformUser.fotoPerfil} alt={platformUser.fullName} className="w-full h-full object-cover" />
+                        ) : (
+                          getInitials(platformUser.fullName)
+                        )}
+                      </span>
+                      <span className={cn("text-sm font-semibold max-w-[140px] truncate", isDark ? "text-brand-navy" : "text-white")}>
+                        {platformUser.fullName.split(" ")[0]}
+                      </span>
+                      <ChevronDown className={cn("w-4 h-4 flex-shrink-0", isDark ? "text-brand-navy/60" : "text-white/70")} />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuItem onClick={() => router.push('/ciudadania-presente/dashboard/perfil')}>
+                      <User className="w-4 h-4" />
+                      Mi perfil
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => router.push('/ciudadania-presente/dashboard/perfil#seguridad')}>
+                      <Settings className="w-4 h-4" />
+                      Configuración
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem variant="destructive" onClick={handleLogout}>
+                      <LogOut className="w-4 h-4" />
+                      Cerrar sesión
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            )}
+
             {/* CTA Button */}
+            {!isCiudadaniaLogin && !showUserMenu && (
             <div className="hidden lg:flex items-center gap-4">
               <Link
-                href="/ciudadania-presente"
+                href={ctaHref}
                 className="relative inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-brand-navy to-brand-blue rounded-full hover:shadow-lg hover:shadow-brand-blue/25 transition-all duration-300 group"
               >
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-pink opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-pink"></span>
                 </span>
-                Ciudadanía Presente
+                {ctaLabel}
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </Link>
             </div>
+            )}
 
             {/* Mobile Menu Button */}
             <button
@@ -176,7 +253,48 @@ export function Navbar() {
               })}
             </div>
 
+            {/* Mobile user menu (logged into Ciudadanía Presente) */}
+            {showUserMenu && platformUser && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="mt-8 rounded-2xl border border-[#d3e2f0] overflow-hidden"
+              >
+                <div className="flex items-center gap-3 px-4 py-3 bg-brand-light-blue">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-r from-brand-navy to-brand-blue text-xs font-bold text-white flex-shrink-0 overflow-hidden">
+                    {platformUser.fotoPerfil ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={platformUser.fotoPerfil} alt={platformUser.fullName} className="w-full h-full object-cover" />
+                    ) : (
+                      getInitials(platformUser.fullName)
+                    )}
+                  </span>
+                  <span className="text-sm font-bold text-brand-navy truncate">{platformUser.fullName}</span>
+                </div>
+                <button
+                  onClick={() => { setIsMobileMenuOpen(false); router.push('/ciudadania-presente/dashboard/perfil') }}
+                  className="flex items-center gap-2 w-full px-4 py-3 text-sm font-medium text-brand-navy hover:bg-brand-light-blue transition-colors"
+                >
+                  <User className="w-4 h-4" /> Mi perfil
+                </button>
+                <button
+                  onClick={() => { setIsMobileMenuOpen(false); router.push('/ciudadania-presente/dashboard/perfil#seguridad') }}
+                  className="flex items-center gap-2 w-full px-4 py-3 text-sm font-medium text-brand-navy hover:bg-brand-light-blue transition-colors"
+                >
+                  <Settings className="w-4 h-4" /> Configuración
+                </button>
+                <button
+                  onClick={() => { setIsMobileMenuOpen(false); handleLogout() }}
+                  className="flex items-center gap-2 w-full px-4 py-3 text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors border-t border-[#d3e2f0]"
+                >
+                  <LogOut className="w-4 h-4" /> Cerrar sesión
+                </button>
+              </motion.div>
+            )}
+
             {/* Mobile CTA */}
+            {!isCiudadaniaLogin && !showUserMenu && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -184,7 +302,7 @@ export function Navbar() {
               className="mt-8"
             >
               <Link
-                href="/ciudadania-presente"
+                href={ctaHref}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="flex items-center justify-center gap-2 w-full px-6 py-4 text-base font-semibold text-white bg-gradient-to-r from-brand-navy to-brand-blue rounded-2xl"
               >
@@ -192,10 +310,11 @@ export function Navbar() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-pink opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-pink"></span>
                 </span>
-                Ciudadanía Presente
+                {ctaLabel}
                 <span>→</span>
               </Link>
             </motion.div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

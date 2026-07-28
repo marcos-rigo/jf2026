@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { LogIn } from 'lucide-react'
+import { Footer } from '@/components/footer'
 
 // ── Componente principal ─────────────────────────────────────────────────────
 export default function ModulosPage() {
@@ -57,9 +59,10 @@ export default function ModulosPage() {
               en la vida democrática de Tucumán.
             </p>
 
-            {/* Botón Próximamente */}
+            {/* Botón Iniciar sesión */}
             <div className="flex items-center justify-center">
-              <button
+              <Link
+                href="/ciudadania-presente/login"
                 className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full overflow-hidden transition-all duration-500 hover:scale-105"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-[#4272BB]/20 via-[#D5247A]/20 to-[#4272BB]/20 backdrop-blur-xl border border-white/20" />
@@ -71,24 +74,20 @@ export default function ModulosPage() {
                 </span>
 
                 <span className="relative text-white font-semibold text-lg tracking-wide">
-                  Próximamente
+                  Iniciar sesión
                 </span>
 
-                <svg
+                <LogIn
                   className="relative w-5 h-5 text-white/70 group-hover:text-white transition-colors duration-300"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+                  strokeWidth={2}
+                />
 
                 <style>{`
                   @keyframes shimmer {
                     0% { background-position: -200% 0; }
                     100% { background-position: 200% 0; }
                   }
-                  button::before {
+                  a::before {
                     content: '';
                     position: absolute;
                     top: 0;
@@ -99,7 +98,7 @@ export default function ModulosPage() {
                     animation: shimmer 3s infinite;
                   }
                 `}</style>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -121,17 +120,7 @@ export default function ModulosPage() {
       </div>
 
 
-{/* Footer minimal */}
-      <footer className="border-t border-gray-200 bg-white py-8 dark:border-gray-800 dark:bg-[#122233]">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            © 2026 Ciudadanía Presente - José Farhat
-          </p>
-          <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
-            Secretaría: José Farhat
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

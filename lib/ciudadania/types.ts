@@ -1,9 +1,19 @@
 export interface UserData {
-  id:       number
-  fullName: string
-  email:    string
-  dni:      string
-  consent:  boolean
+  id:            number
+  fullName:      string
+  email:         string
+  dni:           string
+  consent:       boolean
+  ciudad?:       string
+  pais?:         string | null
+  provincia?:    string | null
+  telefono?:     string | null
+  birthDate?:    string | null
+  nivelEducativo?: string | null
+  genero?:       string | null
+  fotoPerfil?:   string | null
+  emailVerified?: boolean
+  memberSince?:  string
 }
 
 export type SubtopicStatus = 'locked' | 'in-progress' | 'completed'
