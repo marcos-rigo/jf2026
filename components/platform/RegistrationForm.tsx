@@ -6,11 +6,17 @@ import { toast } from 'sonner'
 import {
   BookOpen, BrainCircuit, BadgeCheck, ShieldCheck,
   Info, ChevronRight, Loader2, CheckCircle2, GraduationCap,
-  Camera, X, type LucideIcon,
+  Camera, X, Clock, type LucideIcon,
 } from 'lucide-react'
 import { useAppStore } from '@/lib/ciudadania/app-store'
 import { PasswordField } from './PasswordField'
 import { compressImage } from '@/lib/utils/compress-image'
+
+// TEMPORAL: registro deshabilitado hasta terminar de validar el schema en
+// producción — ver sesión del 2026-07-28. El login de cuentas existentes
+// sigue funcionando normal; solo se oculta el formulario de alta.
+// Para reactivar el registro: cambiar esto a `false`.
+const REGISTRATION_DISABLED = true
 
 async function uploadProfilePhoto(userId: number, file: Blob) {
   const formData = new FormData()
@@ -507,13 +513,37 @@ export default function RegistrationForm({ defaultMode = 'login' }: Registration
             {/* Title */}
             <div>
               <h2 className="text-lg font-black text-[#003257] tracking-tight m-0">
-                {isLogin ? 'Ingresar a la plataforma' : 'Inscripción al Módulo'}
+                {isLogin ? 'Ingresar a la plataforma' : REGISTRATION_DISABLED ? 'Muy pronto' : 'Inscripción al Módulo'}
               </h2>
               <p className="text-[11px] text-[#5a7a8e] mt-0.5 leading-relaxed">
-                {isLogin ? 'Ingresá tus credenciales para continuar.' : 'Completá tus datos para darte de alta.'}
+                {isLogin ? 'Ingresá tus credenciales para continuar.' : REGISTRATION_DISABLED ? 'Las inscripciones abren en breve.' : 'Completá tus datos para darte de alta.'}
               </p>
             </div>
 
+            {!isLogin && REGISTRATION_DISABLED ? (
+              /* TEMPORAL: mensaje de "próximamente" en vez del form de alta — ver comentario junto a REGISTRATION_DISABLED */
+              <div className="flex flex-col items-center text-center gap-3 py-6 px-2">
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0"
+                  style={{ background: 'linear-gradient(135deg,#003257,#4272BB)' }}>
+                  <Clock size={24} color="white" strokeWidth={1.8} />
+                </div>
+                <h3 className="font-[family-name:var(--font-display)] text-base font-black text-[#003257] tracking-tight m-0">
+                  Las inscripciones abren muy pronto
+                </h3>
+                <p className="text-[13px] text-[#5a7a8e] leading-relaxed max-w-xs">
+                  Todavía estamos terminando de preparar la plataforma. Si ya tenés una cuenta, podés ingresar con normalidad.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => { setIsLogin(true); setErrors({}); setAuthError(null); setSuccessMessage(null) }}
+                  className="mt-1 flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all hover:opacity-90 active:scale-[0.98]"
+                  style={{ background: 'linear-gradient(135deg,#001e3c 0%,#4272BB 100%)' }}
+                >
+                  Ir a iniciar sesión <ChevronRight size={15} strokeWidth={2.5}/>
+                </button>
+              </div>
+            ) : (
+            <>
             {/* Firebase error — solo errores reales */}
             {authError && (
               <div className="flex gap-2 items-start p-3 rounded-xl bg-red-50 border border-red-200">
@@ -768,6 +798,8 @@ export default function RegistrationForm({ defaultMode = 'login' }: Registration
                 }
               </button>
             </form>
+            </>
+            )}
           </div>
         </div>
       </main>
