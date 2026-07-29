@@ -16,8 +16,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
   nivel_educativo VARCHAR(50) NULL,
   genero VARCHAR(30) NULL,
   foto_perfil VARCHAR(500) NULL,           -- URL pública en Vercel Blob
-  email_verificado BOOLEAN NOT NULL DEFAULT FALSE,
-  creado_en TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  email_verificado BOOLEAN NULL DEFAULT FALSE,
+  creado_en TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP  -- se llamó "fecha_registro" en producción hasta la migración 004
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS estado_usuario (
