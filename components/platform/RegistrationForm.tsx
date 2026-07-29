@@ -12,11 +12,11 @@ import { useAppStore } from '@/lib/ciudadania/app-store'
 import { PasswordField } from './PasswordField'
 import { compressImage } from '@/lib/utils/compress-image'
 
-// TEMPORAL: registro deshabilitado hasta terminar de validar el schema en
-// producción — ver sesión del 2026-07-28. El login de cuentas existentes
-// sigue funcionando normal; solo se oculta el formulario de alta.
-// Para reactivar el registro: cambiar esto a `false`.
-const REGISTRATION_DISABLED = true
+// Controlado por env var (NEXT_PUBLIC_REGISTRATION_DISABLED) en vez de un
+// booleano hardcodeado, para que producción y local puedan diferir sin tocar
+// código ni recordar revertir un flag antes de cada push. El login de
+// cuentas existentes sigue funcionando normal; esto solo oculta el alta.
+const REGISTRATION_DISABLED = process.env.NEXT_PUBLIC_REGISTRATION_DISABLED === 'true'
 
 async function uploadProfilePhoto(userId: number, file: Blob) {
   const formData = new FormData()
