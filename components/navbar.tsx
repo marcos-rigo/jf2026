@@ -5,7 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, ChevronDown, User, Settings, LogOut, GraduationCap } from "lucide-react"
+import { Menu, X, ChevronDown, User, LogOut, GraduationCap } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useAppStore } from "@/lib/ciudadania/app-store"
 import {
@@ -152,10 +152,6 @@ export function Navbar() {
                       <User className="w-4 h-4" />
                       Mi perfil
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push('/ciudadania-presente/dashboard/perfil#seguridad')}>
-                      <Settings className="w-4 h-4" />
-                      Configuración
-                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem variant="destructive" onClick={handleLogout}>
                       <LogOut className="w-4 h-4" />
@@ -289,12 +285,6 @@ export function Navbar() {
                   className="flex items-center gap-2 w-full px-4 py-3 text-sm font-medium text-brand-navy hover:bg-brand-light-blue transition-colors"
                 >
                   <User className="w-4 h-4" /> Mi perfil
-                </button>
-                <button
-                  onClick={() => { setIsMobileMenuOpen(false); router.push('/ciudadania-presente/dashboard/perfil#seguridad') }}
-                  className="flex items-center gap-2 w-full px-4 py-3 text-sm font-medium text-brand-navy hover:bg-brand-light-blue transition-colors"
-                >
-                  <Settings className="w-4 h-4" /> Configuración
                 </button>
                 <button
                   onClick={() => { setIsMobileMenuOpen(false); handleLogout() }}
