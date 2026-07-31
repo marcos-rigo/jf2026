@@ -3,6 +3,9 @@
 import React, { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import Image from "next/image"
+import { useAppStore } from "@/lib/ciudadania/app-store"
+import { useTematicaProgress } from "@/lib/hooks/use-tematica-progress"
+import { TematicaCompletarButton } from "@/components/tematica-completar-button"
 import {
   Smartphone,
   Brain,
@@ -230,6 +233,8 @@ const roadmapData = [
 
 // ── Componente ────────────────────────────────────────────────────────────────
 export function HiperconectividadContent() {
+  const userId = useAppStore((s) => s.user?.id ?? null)
+  const progress = useTematicaProgress({ tematicaId: "hiperconectividad-digital", userId })
   const [activeRoadmap, setActiveRoadmap] = useState(0)
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] })
@@ -1358,6 +1363,7 @@ export function HiperconectividadContent() {
           </motion.div>
         )}
       </AnimatePresence>
+      <TematicaCompletarButton completada={progress.completada} onComplete={progress.markCompleted} />
     </div>
   )
 }

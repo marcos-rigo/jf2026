@@ -3,6 +3,9 @@
 import React, { useState, useEffect, useRef, useCallback } from "react"
 import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "framer-motion"
 import Image from "next/image"
+import { useAppStore } from "@/lib/ciudadania/app-store"
+import { useTematicaProgress } from "@/lib/hooks/use-tematica-progress"
+import { TematicaCompletarButton } from "@/components/tematica-completar-button"
 import {
   ShieldAlert,
   Smartphone,
@@ -272,6 +275,8 @@ function useCountUp(target: number, duration = 2, start = false) {
 
 // ── Componente ─────────────────────────────────────────────────────────────
 export function ViolenciaInfanciasContent() {
+  const userId = useAppStore((s) => s.user?.id ?? null)
+  const progress = useTematicaProgress({ tematicaId: "violencia-digital-infancias", userId })
   const [activeTab, setActiveTab] = useState<"alertas" | "protocolo">("alertas")
   const [expandedAlert, setExpandedAlert] = useState<string | null>(alertSignsData[0].id)
   const heroRef = useRef<HTMLDivElement>(null)
@@ -1144,6 +1149,7 @@ export function ViolenciaInfanciasContent() {
           </motion.div>
         )}
       </AnimatePresence>
+      <TematicaCompletarButton completada={progress.completada} onComplete={progress.markCompleted} />
     </main>
   )
 }

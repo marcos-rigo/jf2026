@@ -67,6 +67,7 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 | `/ciudadania-presente/login` | Login / register form (`?mode=register` switches tab) |
 | `/ciudadania-presente/dashboard/inicio` | Authenticated dashboard — renders `Dashboard`, `WizardLayout`, or `Certificate` based on Zustand `screen` state |
 | `/ciudadania-presente/dashboard/perfil` | User profile — edit contact/demographic fields, change password, upload profile photo |
+| `/ciudadania-presente/dashboard/tematicas` | All 11 `/tematicas` topics unlocked for platform members, with per-topic progress |
 
 ### Ciudadanía Presente platform (`/ciudadania-presente`)
 
@@ -81,6 +82,9 @@ A self-contained learning platform embedded in the site. `app/ciudadania-present
 **Profile management (`/ciudadania-presente/dashboard/perfil`):** Editable fields (`ciudad`, `pais`, `provincia`, `telefono`, `birthDate`, `nivelEducativo`, `genero`) go through `app/api/ciudadania/profile/update`; full name, DNI, and email are fixed at registration and rejected client-side even if resubmitted. Password changes go through `profile/change-password` (requires current password, new password ≥ 6 chars). `components/platform/PasswordField.tsx` is a shared show/hide password input used across login, registration, and the profile password form. The `usuarios` table needs the columns added by `lib/ciudadania/migrations/001_add_profile_fields.sql` (`provincia`, `pais`, `telefono`, `fecha_nacimiento`, `nivel_educativo`, `genero`, `foto_perfil`) — run it once against any existing database; `lib/ciudadania/schema.sql` has the full current table definition for fresh setups.
 
 **Profile photo storage (Vercel Blob):** `lib/utils/compress-image.ts` resizes/compresses the image client-side (max 512×512, WebP q0.8, falls back to JPEG, manually corrects EXIF orientation via a hand-rolled APP1 parser — no external libs) before it's ever sent to the server. The compressed `Blob` is posted as `FormData` to `app/api/ciudadania/profile/photo`, which uploads it server-side with `put()` from `@vercel/blob` (`access: 'public'`, pathname `perfil/{userId}-{timestamp}.{ext}`), deletes the previous blob with `del()` (best-effort — failures are logged, not fatal), and stores only the resulting URL in `usuarios.foto_perfil` (`VARCHAR(500)`, migrated from the old `LONGTEXT` base64 column by `lib/ciudadania/migrations/002_foto_perfil_url.sql`). The upload token is never exposed to the browser — only the already-compressed file crosses the network to the API route. `RegistrationForm` offers the same optional photo picker; since there's no `userId` until registration succeeds, the photo uploads in a second request right after `auth/register` returns and never blocks account creation on failure (`sonner` toast reports upload failure — `<Toaster />` is mounted in `app/ciudadania-presente/layout.tsx`, added because the project's sonner primitive existed but wasn't rendered anywhere before).
+
+**Temáticas progress tracking (`/tematicas/*` topics, separate from the wizard subtopics above):** The 11 `/tematicas` topics (hardcoded in `lib/tematicas-data.ts`, the `groups`/`TematicaItem` arrays) each get one row in `inscripciones_tematicas` per user (`usuario_id` + `tematica_id`, `tematica_id` is the topic's string slug, not a FK — added by `lib/ciudadania/migrations/005_progreso_tematicas.sql`; helpers in `lib/ciudadania/progreso-tematicas.ts`). "Enrolling" is just that row's first insert with everything at zero — there's no separate enrollment table. `detalle` is a free-form JSON column: each topic's quiz/checklist owns its own top-level key, since the 11 topics don't share a content structure; `completada`/`porcentaje` are kept denormalized so listing pages don't need to parse the JSON. `app/api/ciudadania/progreso-tematicas/route.ts` exposes `GET ?userId=` and `POST` (upsert, merges `detalle` keys rather than replacing the object). The client-side hook `lib/hooks/use-tematica-progress.ts` (`useTematicaProgress`) loads existing progress on mount, debounces writes (900ms) through `queueUpdate`/`flush`, and flushes on `beforeunload`/unmount via `sendBeacon` (falling back to a `keepalive` fetch). It exposes `checklistProgress(checklistId, total)` as a ready-made `computeProgress` for topics with a single markable checklist, plus `toggleChecklistItem`/`isChecked`/`saveQuizResult`/`markCompleted` for other pages to compose. `components/tematica-completar-button.tsx` (`TematicaCompletarButton`) is the manual "mark as done" control for topics with no measurable quiz/checklist.
+- `lib/tematicas-data.ts` — the 11 hardcoded `/tematicas` topics (id, href, category, icon, color, lock state) shared between the public listing and the platform's `/ciudadania-presente/dashboard/tematicas`
 
 **Key files:**
 - `lib/ciudadania/types.ts` — all shared types (`SubtopicData`, `AppState`, `WizardStep`, etc.)
@@ -134,6 +138,7 @@ A self-contained learning platform embedded in the site. `app/ciudadania-present
 - `lib/weekly-content.ts` — ISO week helpers, `fetch`-based content loader, and localStorage seen-state helpers for the weekly modal
 - `hooks/use-mobile.ts` — Responsive breakpoint detection
 - `hooks/use-toast.ts` — Toast hook (Sonner)
+- `lib/hooks/use-tematica-progress.ts` — `useTematicaProgress`, the debounced progress-tracking hook for `/tematicas` topics (separate from `hooks/` above)
 - `lib/ciudadania/` — Types, Zustand store, MySQL auth helpers, and mock content for the Ciudadanía Presente platform
 - `components/platform/` — All components for the Ciudadanía Presente platform (auth, dashboard, wizard steps, certificate)
 
@@ -220,14 +225,15 @@ Detailed workflow and `metadata.json` field reference: `content-management/READM
 
 ### API routes (`app/api/ciudadania/`)
 
-All routes are POST-only, server-side, and use the MySQL pool from `lib/ciudadania/db.ts`:
+Server-side routes using the MySQL pool from `lib/ciudadania/db.ts`; all are POST-only except `progreso-tematicas`, which also has a `GET`:
 
 | Route | Purpose |
 |-------|---------|
 | `auth/login` | Validate credentials, return user data |
 | `auth/register` | Create account, hash password with bcryptjs |
 | `auth/reset-password` | Reset password by email |
-| `progress/sync` | Read or write subtopic progress for a user |
+| `progress/sync` | Read or write wizard subtopic progress for a user |
+| `progreso-tematicas` | `GET ?userId=` reads all `/tematicas` topic progress for a user; `POST` upserts one topic's `detalle`/`porcentaje`/`completada` (merges `detalle` keys) |
 | `profile/update` | Update editable profile fields (city, country, province, phone, birth date, education level, gender) — name/DNI/email are immutable after registration |
 | `profile/change-password` | Change password given the current password |
 | `profile/photo` | Accepts `FormData` (not JSON): uploads the client-compressed file to Vercel Blob, deletes the old blob, stores the URL — or clears the photo if no file is sent |

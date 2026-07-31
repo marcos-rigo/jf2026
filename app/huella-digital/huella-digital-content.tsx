@@ -23,6 +23,9 @@ import {
 } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
+import { useAppStore } from "@/lib/ciudadania/app-store"
+import { useTematicaProgress, checklistProgress } from "@/lib/hooks/use-tematica-progress"
+import { TematicaCompletarButton } from "@/components/tematica-completar-button"
 
 const INFOGRAFIA_PATH = "/weekly-content/2026-W21/infografia%203.svg"
 
@@ -148,11 +151,15 @@ Saludos cordiales.`
 
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function HuellaDigitalContent() {
-  const [checked, setChecked] = useState<Record<string, boolean>>({
-    task1: false,
-    task2: false,
-    task3: false,
+  const userId = useAppStore((s) => s.user?.id ?? null)
+  const progress = useTematicaProgress({
+    tematicaId: "huella-digital",
+    userId,
+    computeProgress: checklistProgress("checklist", 3),
   })
+  const checkedItems = new Set(
+    Array.isArray(progress.detalle.checklist) ? (progress.detalle.checklist as string[]) : []
+  )
   const [copied, setCopied] = useState(false)
   const [openFaq, setOpenFaq] = useState<FaqId>(null)
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -285,22 +292,12 @@ export default function HuellaDigitalContent() {
   function prevSlide() { goTo((currentSlide - 1 + CARRUSEL_IMAGES.length) % CARRUSEL_IMAGES.length, -1) }
   function nextSlide() { goTo((currentSlide + 1) % CARRUSEL_IMAGES.length, 1) }
 
-  // Persist checkboxes
-  useEffect(() => {
-    const saved = localStorage.getItem("huella-digital-progress")
-    if (saved) setChecked(JSON.parse(saved))
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem("huella-digital-progress", JSON.stringify(checked))
-  }, [checked])
-
   function toggleCheck(id: string) {
-    setChecked((prev) => ({ ...prev, [id]: !prev[id] }))
+    progress.toggleChecklistItem("checklist", id)
   }
 
-  const completedCount = Object.values(checked).filter(Boolean).length
-  const progressPct = Math.round((completedCount / 3) * 100)
+  const completedCount = checkedItems.size
+  const progressPct = progress.porcentaje
 
   async function copyTemplate() {
     try {
@@ -445,11 +442,11 @@ export default function HuellaDigitalContent() {
                     <div className="relative w-4 h-4 shrink-0">
                       <input
                         type="checkbox"
-                        checked={checked[step.checkId] ?? false}
+                        checked={checkedItems.has(step.checkId)}
                         onChange={() => toggleCheck(step.checkId)}
                         className="appearance-none w-4 h-4 border-2 border-white/60 rounded cursor-pointer checked:bg-white checked:border-transparent transition-colors"
                       />
-                      {checked[step.checkId] && (
+                      {checkedItems.has(step.checkId) && (
                         <Check className="absolute inset-0 w-4 h-4 text-blue-600 pointer-events-none" />
                       )}
                     </div>
@@ -701,6 +698,8 @@ export default function HuellaDigitalContent() {
               ))}
             </div>
           </section>
+
+          <TematicaCompletarButton completada={progress.completada} onComplete={progress.markCompleted} />
         </div>
       </main>
 

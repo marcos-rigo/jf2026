@@ -4,15 +4,19 @@ import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'r
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import {
-  ArrowLeft, User, MapPin, Lock, ShieldCheck, ShieldAlert,
+  ArrowLeft, User, Lock, ShieldCheck, ShieldAlert,
   KeyRound, LogOut, CheckCircle2, Loader2, BadgeCheck, Camera, Trash2, X,
 } from 'lucide-react'
 import { useAppStore } from '@/lib/ciudadania/app-store'
 import { PasswordField } from '@/components/platform/PasswordField'
 import { compressImage } from '@/lib/utils/compress-image'
 
-const GENERO_OPTIONS = ['Femenino', 'Masculino', 'No binario', 'Prefiero no decir', 'Otro']
-const NIVEL_EDUCATIVO_OPTIONS = ['Primario', 'Secundario', 'Terciario', 'Universitario', 'Posgrado', 'Otro']
+function formatBirthDate(birthDate: string | null | undefined) {
+  if (!birthDate) return '—'
+  // birthDate llega como "YYYY-MM-DD" (columna DATE, ver lib/ciudadania/db.ts).
+  // Se ancla a mediodía local antes de formatear para no correr de día por TZ.
+  return new Date(`${birthDate}T12:00:00`).toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })
+}
 
 function inputCls(err?: boolean) {
   return [
@@ -87,13 +91,6 @@ export default function PerfilPage() {
     if (!user) router.replace('/ciudadania-presente/modulos')
   }, [user, router])
 
-  const [profileForm, setProfileForm] = useState({
-    ciudad: '', pais: '', provincia: '', telefono: '', birthDate: '', nivelEducativo: '', genero: '',
-  })
-  const [profileErrors, setProfileErrors] = useState<Record<string, string>>({})
-  const [profileMsg, setProfileMsg] = useState<{ kind: 'success' | 'error'; text: string } | null>(null)
-  const [savingProfile, setSavingProfile] = useState(false)
-
   const [pwForm, setPwForm] = useState({ current: '', next: '', confirm: '' })
   const [showCurrent, setShowCurrent] = useState(false)
   const [showNext, setShowNext] = useState(false)
@@ -105,20 +102,6 @@ export default function PerfilPage() {
   const [photoMsg, setPhotoMsg] = useState<{ kind: 'success' | 'error'; text: string } | null>(null)
   const [savingPhoto, setSavingPhoto] = useState(false)
 
-  useEffect(() => {
-    if (user) {
-      setProfileForm({
-        ciudad:         user.ciudad ?? '',
-        pais:           user.pais ?? '',
-        provincia:      user.provincia ?? '',
-        telefono:       user.telefono ?? '',
-        birthDate:      user.birthDate ?? '',
-        nivelEducativo: user.nivelEducativo ?? '',
-        genero:         user.genero ?? '',
-      })
-    }
-  }, [user])
-
   if (!user) return null
 
   const completedCount = subtopics.filter((s) => s.passed).length
@@ -126,46 +109,10 @@ export default function PerfilPage() {
     ? new Date(user.memberSince).toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })
     : '—'
 
-  const onProfileChange = (key: keyof typeof profileForm) => (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setProfileForm((f) => ({ ...f, [key]: e.target.value }))
-    if (profileErrors[key]) setProfileErrors((er) => ({ ...er, [key]: '' }))
-    if (profileMsg) setProfileMsg(null)
-  }
-
   const onPwChange = (key: keyof typeof pwForm) => (e: ChangeEvent<HTMLInputElement>) => {
     setPwForm((f) => ({ ...f, [key]: e.target.value }))
     if (pwErrors[key]) setPwErrors((er) => ({ ...er, [key]: '' }))
     if (pwMsg) setPwMsg(null)
-  }
-
-  const handleProfileSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    const errs: Record<string, string> = {}
-    if (!profileForm.ciudad.trim()) errs.ciudad = 'Ingresá tu ciudad.'
-    if (Object.keys(errs).length > 0) { setProfileErrors(errs); return }
-
-    setSavingProfile(true)
-    setProfileMsg(null)
-    try {
-      const res = await fetch('/api/ciudadania/profile/update', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: user.id, ...profileForm }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error)
-
-      updateUser({
-        ciudad: data.user.ciudad, pais: data.user.pais, provincia: data.user.provincia,
-        telefono: data.user.telefono, birthDate: data.user.birthDate,
-        nivelEducativo: data.user.nivelEducativo, genero: data.user.genero,
-      })
-      setProfileMsg({ kind: 'success', text: 'Tu perfil se actualizó correctamente.' })
-    } catch (err: unknown) {
-      setProfileMsg({ kind: 'error', text: err instanceof Error ? err.message : 'No se pudo actualizar el perfil.' })
-    } finally {
-      setSavingProfile(false)
-    }
   }
 
   const handlePwSubmit = async (e: FormEvent) => {
@@ -319,70 +266,20 @@ export default function PerfilPage() {
 
         <div className="grid gap-6">
 
-          {/* Locked identity data */}
+          {/* Locked personal data — todo se fija al registrarse, nada se edita después */}
           <Section icon={Lock} title="Datos de registro" description="Estos datos se fijaron al crear tu cuenta y no se pueden modificar. Si hay un error, contactá a soporte.">
             <div className="grid sm:grid-cols-3 gap-4">
               <LockedField label="Nombre completo" value={user.fullName} />
               <LockedField label="DNI" value={user.dni} />
               <LockedField label="Correo electrónico" value={user.email} />
+              <LockedField label="Ciudad" value={user.ciudad || '—'} />
+              <LockedField label="Provincia" value={user.provincia || '—'} />
+              <LockedField label="País" value={user.pais || '—'} />
+              <LockedField label="Teléfono" value={user.telefono || '—'} />
+              <LockedField label="Fecha de nacimiento" value={formatBirthDate(user.birthDate)} />
+              <LockedField label="Nivel educativo" value={user.nivelEducativo || '—'} />
+              <LockedField label="Género" value={user.genero || '—'} />
             </div>
-          </Section>
-
-          {/* Editable info */}
-          <Section icon={User} title="Información personal" description="Datos de contacto y demográficos, podés actualizarlos cuando quieras.">
-            <form onSubmit={handleProfileSubmit} className="grid gap-4">
-              {profileMsg && <Banner kind={profileMsg.kind} message={profileMsg.text} />}
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="flex flex-col gap-1">
-                  <label className="text-[11px] font-bold text-[#1A2A36] tracking-wide flex items-center gap-1">
-                    <MapPin className="w-3 h-3" /> Ciudad
-                  </label>
-                  <input value={profileForm.ciudad} onChange={onProfileChange('ciudad')} className={inputCls(!!profileErrors.ciudad)} />
-                  {profileErrors.ciudad && <p className="text-[11px] text-red-500 mt-0.5">⚠ {profileErrors.ciudad}</p>}
-                </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-[11px] font-bold text-[#1A2A36] tracking-wide">Provincia</label>
-                  <input value={profileForm.provincia} onChange={onProfileChange('provincia')} className={inputCls()} />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-[11px] font-bold text-[#1A2A36] tracking-wide">País</label>
-                  <input value={profileForm.pais} onChange={onProfileChange('pais')} className={inputCls()} />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-[11px] font-bold text-[#1A2A36] tracking-wide">Teléfono</label>
-                  <input value={profileForm.telefono} onChange={onProfileChange('telefono')} placeholder="Ej: +54 381…" className={inputCls()} />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-[11px] font-bold text-[#1A2A36] tracking-wide">Fecha de nacimiento</label>
-                  <input type="date" value={profileForm.birthDate ?? ''} onChange={onProfileChange('birthDate')} className={inputCls()} />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-[11px] font-bold text-[#1A2A36] tracking-wide">Nivel educativo</label>
-                  <select value={profileForm.nivelEducativo} onChange={onProfileChange('nivelEducativo')} className={inputCls() + ' cursor-pointer'}>
-                    <option value="">Seleccionar…</option>
-                    {NIVEL_EDUCATIVO_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}
-                  </select>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-[11px] font-bold text-[#1A2A36] tracking-wide">Género</label>
-                  <select value={profileForm.genero} onChange={onProfileChange('genero')} className={inputCls() + ' cursor-pointer'}>
-                    <option value="">Seleccionar…</option>
-                    {GENERO_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}
-                  </select>
-                </div>
-              </div>
-              <div className="flex justify-end">
-                <button
-                  type="submit"
-                  disabled={savingProfile}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all disabled:opacity-70"
-                  style={{ background: 'linear-gradient(135deg,#003257,#4272BB)' }}
-                >
-                  {savingProfile && <Loader2 className="w-4 h-4 animate-spin" />}
-                  Guardar cambios
-                </button>
-              </div>
-            </form>
           </Section>
 
           {/* Security */}

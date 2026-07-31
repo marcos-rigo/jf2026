@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
@@ -8,27 +8,26 @@ import IntroSection from '@/components/ciudadania-digital/intro-section';
 import Paso1Section from '@/components/ciudadania-digital/paso1-section';
 import Paso2Section from '@/components/ciudadania-digital/paso2-section';
 import Paso3Section from '@/components/ciudadania-digital/paso3-section';
-import HerramientasSection from '@/components/ciudadania-digital/herramientas-section';
+import HerramientasSection, { CHECKLIST_ITEMS } from '@/components/ciudadania-digital/herramientas-section';
+import { useAppStore } from '@/lib/ciudadania/app-store';
+import { useTematicaProgress, checklistProgress } from '@/lib/hooks/use-tematica-progress';
+import { TematicaCompletarButton } from '@/components/tematica-completar-button';
 
 type TabType = 'intro' | 'paso1' | 'paso2' | 'paso3' | 'herramientas';
 
 export default function CiudadaniaDigitalContent() {
   const [activeTab, setActiveTab] = useState<TabType>('intro');
-  const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
   const [isScrolling, setIsScrolling] = useState(false);
 
-  // Load checked items from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem('ciudadania-digital-checklist');
-    if (saved) {
-      setCheckedItems(new Set(JSON.parse(saved)));
-    }
-  }, []);
-
-  // Save checked items to localStorage
-  useEffect(() => {
-    localStorage.setItem('ciudadania-digital-checklist', JSON.stringify(Array.from(checkedItems)));
-  }, [checkedItems]);
+  const userId = useAppStore((s) => s.user?.id ?? null);
+  const progress = useTematicaProgress({
+    tematicaId: 'ciudadania-digital',
+    userId,
+    computeProgress: checklistProgress('checklist', CHECKLIST_ITEMS.length),
+  });
+  const checkedItems = new Set(
+    Array.isArray(progress.detalle.checklist) ? (progress.detalle.checklist as string[]) : []
+  );
 
   const handleNavigate = (tab: TabType) => {
     setActiveTab(tab);
@@ -37,14 +36,8 @@ export default function CiudadaniaDigitalContent() {
     setTimeout(() => setIsScrolling(false), 400);
   };
 
-  const handleCheckboxChange = (id: string, checked: boolean) => {
-    const newChecked = new Set(checkedItems);
-    if (checked) {
-      newChecked.add(id);
-    } else {
-      newChecked.delete(id);
-    }
-    setCheckedItems(newChecked);
+  const handleCheckboxChange = (id: string, _checked: boolean) => {
+    progress.toggleChecklistItem('checklist', id);
   };
 
   // Navigation sidebar buttons config
@@ -127,6 +120,8 @@ export default function CiudadaniaDigitalContent() {
               />
             )}
           </AnimatePresence>
+
+          <TematicaCompletarButton completada={progress.completada} onComplete={progress.markCompleted} />
         </main>
       </div>
 

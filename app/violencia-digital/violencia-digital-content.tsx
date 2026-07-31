@@ -39,6 +39,9 @@ import {
 } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
+import { useAppStore } from "@/lib/ciudadania/app-store"
+import { useTematicaProgress, checklistProgress } from "@/lib/hooks/use-tematica-progress"
+import { TematicaCompletarButton } from "@/components/tematica-completar-button"
 
 const INFOGRAFIA_PATH = "/weekly-content/2026-W22/violenciapng.png"
 
@@ -109,8 +112,17 @@ const FAQS: { id: FaqId; q: string; a: string | React.ReactNode }[] = [
 
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function ViolenciaDigitalContent() {
-  const [checked, setChecked] = useState<Record<string, boolean>>(
-    Object.fromEntries(CHECKLIST_ITEMS.map((i) => [i.id, false]))
+  const userId = useAppStore((s) => s.user?.id ?? null)
+  const progress = useTematicaProgress({
+    tematicaId: "violencia-digital",
+    userId,
+    computeProgress: checklistProgress("checklist", CHECKLIST_ITEMS.length),
+  })
+  const checked: Record<string, boolean> = Object.fromEntries(
+    CHECKLIST_ITEMS.map((i) => [
+      i.id,
+      Array.isArray(progress.detalle.checklist) && (progress.detalle.checklist as string[]).includes(i.id),
+    ])
   )
   const [copied, setCopied] = useState(false)
   const [openFaq, setOpenFaq] = useState<FaqId>(null)
@@ -247,7 +259,7 @@ export default function ViolenciaDigitalContent() {
   const allChecked = CHECKLIST_ITEMS.every((i) => checked[i.id])
 
   function toggleCheck(id: string) {
-    setChecked((prev) => ({ ...prev, [id]: !prev[id] }))
+    progress.toggleChecklistItem("checklist", id)
   }
 
   async function copyTemplate() {
@@ -799,6 +811,7 @@ export default function ViolenciaDigitalContent() {
             <p className="text-xs text-slate-400">Guía de acción construida para empoderamiento y protección.</p>
           </div>
 
+          <TematicaCompletarButton completada={progress.completada} onComplete={progress.markCompleted} />
         </div>
       </main>
 

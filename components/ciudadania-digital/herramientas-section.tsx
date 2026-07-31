@@ -12,7 +12,7 @@ interface HerramientasSectionProps {
   onCheckboxChange: (id: string, checked: boolean) => void;
 }
 
-const CHECKLIST_ITEMS = [
+export const CHECKLIST_ITEMS = [
   { id: 'password', label: 'Cambié mis 3 contraseñas principales' },
   { id: '2fa', label: 'Activé 2FA en Gmail, redes sociales, banco' },
   { id: 'permissions', label: 'Revisé permisos de apps en móvil' },

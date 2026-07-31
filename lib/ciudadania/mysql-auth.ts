@@ -35,18 +35,6 @@ export interface MysqlUserData {
   memberSince?:  string
 }
 
-// Solo los campos que el usuario puede modificar desde su perfil.
-// Nombre completo, DNI y email quedan fijados en el alta.
-export interface EditableProfileData {
-  ciudad:         string
-  pais?:          string
-  provincia?:     string
-  telefono?:      string
-  birthDate?:     string
-  nivelEducativo?: string
-  genero?:        string
-}
-
 export interface ProgressData {
   screen:           'dashboard' | 'wizard' | 'certificate'
   activeSubtopicId: number | null
@@ -204,27 +192,6 @@ export async function loginUser(email: string, password: string): Promise<LoginR
   const user = rowToUserData(dbUser)
   const progress = await getUserProgress(dbUser.id)
   return { user, progress }
-}
-
-// Solo actualiza campos editables: nombre completo, DNI y email quedan fijados en el alta.
-export async function updateProfile(userId: number, data: EditableProfileData): Promise<MysqlUserData> {
-  const { ciudad, pais, provincia, telefono, birthDate, nivelEducativo, genero } = data
-
-  await query(
-    `UPDATE usuarios
-     SET ciudad = ?, pais = ?, provincia = ?, telefono = ?, fecha_nacimiento = ?, nivel_educativo = ?, genero = ?
-     WHERE id = ?`,
-    [
-      ciudad.trim(), pais?.trim() || null, provincia?.trim() || null, telefono?.trim() || null,
-      birthDate || null, nivelEducativo?.trim() || null, genero?.trim() || null, userId,
-    ]
-  )
-
-  const rows = await query<UsuarioRow[]>(`SELECT ${USUARIO_COLUMNS} FROM usuarios WHERE id = ?`, [userId])
-  if (rows.length === 0) {
-    throw new Error('Usuario no encontrado.')
-  }
-  return rowToUserData(rows[0])
 }
 
 export async function getProfilePhotoUrl(userId: number): Promise<string | null> {

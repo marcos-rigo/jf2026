@@ -3,6 +3,9 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react"
 import { motion, AnimatePresence, useScroll, useSpring, useTransform, useMotionValue } from "framer-motion"
 import Image from "next/image"
+import { useAppStore } from "@/lib/ciudadania/app-store"
+import { useTematicaProgress } from "@/lib/hooks/use-tematica-progress"
+import { TematicaCompletarButton } from "@/components/tematica-completar-button"
 import {
   Smartphone, ShieldCheck, HeartPulse, MessageCircle, Users, Eye, Lightbulb,
   ChevronRight, BookOpen, Settings, Download, Fingerprint, Baby, Wifi, Brain,
@@ -245,6 +248,8 @@ const señalesAlerta = [
 
 // ── Main component ──────────────────────────────────────────────────────
 export function NnyaEntornoDigitalContent() {
+  const userId = useAppStore((s) => s.user?.id ?? null)
+  const progress = useTematicaProgress({ tematicaId: "nnya-entorno-digital", userId })
   const [pasoActivo, setPasoActivo] = useState(1)
   const heroRef = useRef<HTMLDivElement>(null)
 
@@ -1277,6 +1282,7 @@ export function NnyaEntornoDigitalContent() {
           </motion.div>
         )}
       </AnimatePresence>
+      <TematicaCompletarButton completada={progress.completada} onComplete={progress.markCompleted} />
     </div>
   )
 }

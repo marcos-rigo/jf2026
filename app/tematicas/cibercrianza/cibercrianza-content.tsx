@@ -5,6 +5,9 @@ import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "fra
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import Image from "next/image"
+import { useAppStore } from "@/lib/ciudadania/app-store"
+import { useTematicaProgress, type ComputedProgress } from "@/lib/hooks/use-tematica-progress"
+import { TematicaCompletarButton } from "@/components/tematica-completar-button"
 import {
   ArrowDown, ArrowRight, ArrowUpRight, RefreshCw, CheckCircle2, ChevronDown,
   Brain, Heart, ShoppingBag, Scan,
@@ -453,6 +456,16 @@ const estilos = {
   restrictivo: { nombre:"🔒 Restrictivo/a", color:"#EA580C", bg:"rgba(234,88,12,.08)",  border:"rgba(234,88,12,.25)",  descripcion:"Priorizás el control, pero eso puede llevar al uso clandestino. La prohibición sin diálogo no cierra el territorio digital: solo lo vuelve invisible para vos." },
 }
 
+// Progreso: 2 elementos medibles (los 2 quizzes). Cada uno cuenta la mitad;
+// "completada" cuando ambos tienen resultado guardado.
+function computeCibercrianzaProgress(detalle: Record<string, unknown>): ComputedProgress {
+  const total = 2
+  let done = 0
+  if (detalle.quiz_acompanamiento) done++
+  if (detalle.quiz_estilos) done++
+  return { porcentaje: Math.round((done / total) * 100), completada: done === total }
+}
+
 const senalesAlerta = [
   "Cambios abruptos de humor vinculados al uso del dispositivo",
   "Secretismo inusual o angustia si alguien se acerca mientras usa el teléfono",
@@ -527,6 +540,13 @@ const COMP_AC   = ["#00F0FF","#9D00FF","#0891B2","#059669","#D5247A"]
 
 // ═══════════════════════════════════════════════════════════════════════════════
 export function CibercrianzaContent() {
+  const userId = useAppStore((s) => s.user?.id ?? null)
+  const progress = useTematicaProgress({
+    tematicaId: "cibercrianza",
+    userId,
+    computeProgress: computeCibercrianzaProgress,
+  })
+
   // Quiz 1
   const [preguntaActual, setPreguntaActual] = useState(0)
   const [puntajeTotal,   setPuntajeTotal]   = useState(0)
@@ -538,8 +558,26 @@ export function CibercrianzaContent() {
   const [respuestasLimite,  setRespuestasLimite]  = useState<string[]>([])
   const [terminadoLimite,   setTerminadoLimite]   = useState(false)
   const [dirLimite,         setDirLimite]         = useState(1)
+  const [estiloRestaurado,  setEstiloRestaurado]  = useState<keyof typeof estilos | null>(null)
   // Risks accordion
   const [openRiesgos, setOpenRiesgos] = useState<Set<number>>(new Set())
+
+  // Restaura el resultado guardado de cada quiz al cargar el progreso.
+  useEffect(() => {
+    if (!progress.loaded) return
+    const quiz1 = progress.detalle.quiz_acompanamiento as { puntaje: number } | undefined
+    if (quiz1) {
+      setPuntajeTotal(quiz1.puntaje)
+      setTerminado(true)
+      setCountStart(true)
+    }
+    const quiz2 = progress.detalle.quiz_estilos as { perfil: keyof typeof estilos } | undefined
+    if (quiz2) {
+      setTerminadoLimite(true)
+      setEstiloRestaurado(quiz2.perfil)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [progress.loaded])
 
   const porcentaje = puntajeTotal
   const countValue = useCountUp(porcentaje, 1.5, countStart)
@@ -553,19 +591,32 @@ export function CibercrianzaContent() {
 
   const handleRespuesta = (puntos: number) => {
     const nuevo = puntajeTotal + puntos
-    if (preguntaActual === preguntas.length - 1) { setPuntajeTotal(nuevo); setTerminado(true) }
+    if (preguntaActual === preguntas.length - 1) {
+      setPuntajeTotal(nuevo); setTerminado(true)
+      const perfilFinal = perfiles.find(p => nuevo >= p.rango[0] && nuevo <= p.rango[1]) ?? perfiles[perfiles.length - 1]
+      progress.saveQuizResult("quiz_acompanamiento", { puntaje: nuevo, perfil: perfilFinal.nombre })
+    }
     else { setPuntajeTotal(nuevo); setDir(1); setPreguntaActual(p => p + 1) }
   }
   const resetQuiz = () => { setPreguntaActual(0); setPuntajeTotal(0); setTerminado(false); setDir(1); setCountStart(false) }
 
   const handleRespuestaLimite = (tipo: string) => {
     const nuevas = [...respuestasLimite, tipo]
-    if (preguntaLimite === preguntasLimites.length - 1) { setRespuestasLimite(nuevas); setTerminadoLimite(true) }
+    if (preguntaLimite === preguntasLimites.length - 1) {
+      setRespuestasLimite(nuevas); setTerminadoLimite(true)
+      const c = { permisivo:0, acompanante:0, restrictivo:0 }
+      nuevas.forEach(r => { if (r in c) c[r as keyof typeof c]++ })
+      const max = Math.max(...Object.values(c))
+      const predominante = c.acompanante === max ? "acompanante" : c.permisivo > c.restrictivo ? "permisivo" : "restrictivo"
+      setEstiloRestaurado(null)
+      progress.saveQuizResult("quiz_estilos", { perfil: predominante })
+    }
     else { setRespuestasLimite(nuevas); setDirLimite(1); setPreguntaLimite(p => p + 1) }
   }
-  const resetQuizLimite = () => { setPreguntaLimite(0); setRespuestasLimite([]); setTerminadoLimite(false); setDirLimite(1) }
+  const resetQuizLimite = () => { setPreguntaLimite(0); setRespuestasLimite([]); setTerminadoLimite(false); setDirLimite(1); setEstiloRestaurado(null) }
 
-  const getEstiloPredominante = () => {
+  const getEstiloPredominante = (): keyof typeof estilos => {
+    if (respuestasLimite.length === 0 && estiloRestaurado) return estiloRestaurado
     const c = { permisivo:0, acompanante:0, restrictivo:0 }
     respuestasLimite.forEach(r => { if (r in c) c[r as keyof typeof c]++ })
     const max = Math.max(...Object.values(c))
@@ -1789,6 +1840,8 @@ export function CibercrianzaContent() {
             </motion.div>
           </div>
         </section>
+
+        <TematicaCompletarButton completada={progress.completada} onComplete={progress.markCompleted} />
 
       </main>
       <Footer />

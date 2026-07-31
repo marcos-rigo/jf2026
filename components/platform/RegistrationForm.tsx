@@ -379,7 +379,7 @@ export default function RegistrationForm({ defaultMode = 'login' }: Registration
           fotoPerfil: data.user.fotoPerfil,
         })
         if (data.progress) loadProgress(data.progress)
-        router.push('/ciudadania-presente/dashboard/inicio')
+        router.push('/ciudadania-presente/dashboard/tematicas')
       } else {
         const fullName = `${form.lastName.trim()}, ${form.firstName.trim()}`
         const res = await fetch('/api/ciudadania/auth/register', {

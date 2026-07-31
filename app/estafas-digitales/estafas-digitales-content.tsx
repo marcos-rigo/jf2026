@@ -25,6 +25,9 @@ import {
   ZoomOut,
   Maximize2,
 } from "lucide-react"
+import { useAppStore } from "@/lib/ciudadania/app-store"
+import { useTematicaProgress } from "@/lib/hooks/use-tematica-progress"
+import { TematicaCompletarButton } from "@/components/tematica-completar-button"
 
 const INFOGRAFIA_PATH = "/weekly-content/2026-W23/infografia%205.svg"
 
@@ -39,6 +42,8 @@ const CARRUSEL_IMAGES = Array.from({ length: 6 }, (_, i) =>
 )
 
 export function EstafasDigitalesContent() {
+  const userId = useAppStore((s) => s.user?.id ?? null)
+  const progress = useTematicaProgress({ tematicaId: "estafas-digitales", userId })
   const [currentSlide, setCurrentSlide] = useState(0)
   const [direction, setDirection] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
@@ -860,6 +865,7 @@ export function EstafasDigitalesContent() {
           </motion.div>
         )}
       </AnimatePresence>
+      <TematicaCompletarButton completada={progress.completada} onComplete={progress.markCompleted} />
     </>
   )
 }

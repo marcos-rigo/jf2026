@@ -5,7 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, ChevronDown, User, Settings, LogOut } from "lucide-react"
+import { Menu, X, ChevronDown, User, Settings, LogOut, GraduationCap } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useAppStore } from "@/lib/ciudadania/app-store"
 import {
@@ -44,10 +44,12 @@ export function Navbar() {
   const isDark = isScrolled || !TRANSPARENT_ROUTES.some((route) => pathname === route)
   const isCiudadaniaModulos = pathname === "/ciudadania-presente/modulos"
   const isCiudadaniaLogin = pathname === "/ciudadania-presente/login"
-  const isCiudadaniaDashboard = pathname.startsWith("/ciudadania-presente/dashboard")
   const ctaHref = isCiudadaniaModulos ? "/ciudadania-presente/login" : "/ciudadania-presente"
   const ctaLabel = isCiudadaniaModulos ? "Ingresar" : "Ciudadanía Presente"
-  const showUserMenu = isCiudadaniaDashboard && !!platformUser
+  // Antes solo se mostraba en rutas bajo /ciudadania-presente/dashboard — la
+  // sesión (Zustand) es global, así que el menú de usuario debe reflejarse en
+  // toda la app, no solo ahí (ej. al entrar a /tematicas/cibercrianza logueado).
+  const showUserMenu = !!platformUser
 
   const handleLogout = () => {
     logout()
@@ -142,6 +144,10 @@ export function Navbar() {
                     </button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuItem onClick={() => router.push('/ciudadania-presente/dashboard/tematicas')}>
+                      <GraduationCap className="w-4 h-4" />
+                      Mis temáticas
+                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => router.push('/ciudadania-presente/dashboard/perfil')}>
                       <User className="w-4 h-4" />
                       Mi perfil
@@ -272,6 +278,12 @@ export function Navbar() {
                   </span>
                   <span className="text-sm font-bold text-brand-navy truncate">{platformUser.fullName}</span>
                 </div>
+                <button
+                  onClick={() => { setIsMobileMenuOpen(false); router.push('/ciudadania-presente/dashboard/tematicas') }}
+                  className="flex items-center gap-2 w-full px-4 py-3 text-sm font-medium text-brand-navy hover:bg-brand-light-blue transition-colors"
+                >
+                  <GraduationCap className="w-4 h-4" /> Mis temáticas
+                </button>
                 <button
                   onClick={() => { setIsMobileMenuOpen(false); router.push('/ciudadania-presente/dashboard/perfil') }}
                   className="flex items-center gap-2 w-full px-4 py-3 text-sm font-medium text-brand-navy hover:bg-brand-light-blue transition-colors"

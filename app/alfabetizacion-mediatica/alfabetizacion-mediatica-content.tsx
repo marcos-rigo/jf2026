@@ -8,6 +8,9 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js"
 import { ChevronLeft, ChevronRight, Images, X, ZoomIn, ZoomOut, Maximize2 } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
+import { useAppStore } from "@/lib/ciudadania/app-store"
+import { useTematicaProgress, checklistProgress } from "@/lib/hooks/use-tematica-progress"
+import { TematicaCompletarButton } from "@/components/tematica-completar-button"
 
 const INFOGRAFIA_PATH = "/weekly-content/2026-W20/infografia%202.svg"
 
@@ -174,7 +177,15 @@ function gaugeMessage(count: number): { text: string; color: string } {
 export default function AlfabetizacionMediaticaContent() {
   const [activeTab, setActiveTab] = useState<TabId>("paso1")
   const [openFaq, setOpenFaq] = useState<FaqId>(null)
-  const [checked, setChecked] = useState<Set<string>>(new Set())
+  const userId = useAppStore((s) => s.user?.id ?? null)
+  const progress = useTematicaProgress({
+    tematicaId: "alfabetizacion-mediatica",
+    userId,
+    computeProgress: checklistProgress("checklist", CHECKLIST_ITEMS.length),
+  })
+  const checked = new Set(
+    Array.isArray(progress.detalle.checklist) ? (progress.detalle.checklist as string[]) : []
+  )
   const [currentSlide, setCurrentSlide] = useState(0)
   const [direction, setDirection] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
@@ -308,11 +319,7 @@ export default function AlfabetizacionMediaticaContent() {
   function nextSlide() { goTo((currentSlide + 1) % CARRUSEL_IMAGES.length, 1) }
 
   function toggleCheck(id: string) {
-    setChecked((prev) => {
-      const next = new Set(prev)
-      next.has(id) ? next.delete(id) : next.add(id)
-      return next
-    })
+    progress.toggleChecklistItem("checklist", id)
   }
 
   const checkedCount = checked.size
@@ -1014,6 +1021,8 @@ export default function AlfabetizacionMediaticaContent() {
               </div>
             </div>
           </section>
+
+          <TematicaCompletarButton completada={progress.completada} onComplete={progress.markCompleted} />
         </div>
       </main>
 

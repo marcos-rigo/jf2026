@@ -46,6 +46,21 @@ CREATE TABLE IF NOT EXISTS progreso_subtemas (
   FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Inscripción + progreso por temática editorial (/tematicas). "Inscribirse"
+-- es la primera fila con todo en cero; ver migración 005 para más detalle.
+CREATE TABLE IF NOT EXISTS inscripciones_tematicas (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  usuario_id INT NOT NULL,
+  tematica_id VARCHAR(50) NOT NULL,        -- slug estable, ej. "cibercrianza" (no hay tabla de catálogo)
+  fecha_inscripcion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  completada BOOLEAN NOT NULL DEFAULT FALSE,
+  porcentaje INT NOT NULL DEFAULT 0,
+  detalle JSON NULL,                       -- forma libre por temática: cada quiz/checklist usa su propia clave
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY unique_usuario_tematica (usuario_id, tematica_id),
+  FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE IF NOT EXISTS password_resets (
   id INT AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(255) NOT NULL,

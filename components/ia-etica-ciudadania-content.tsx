@@ -10,6 +10,9 @@ import {
 } from "framer-motion"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
+import { useAppStore } from "@/lib/ciudadania/app-store"
+import { useTematicaProgress } from "@/lib/hooks/use-tematica-progress"
+import { TematicaCompletarButton } from "@/components/tematica-completar-button"
 import {
   Scale,
   Users,
@@ -645,6 +648,8 @@ function SectionLabel({
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function IaEticaCiudadaniaContent() {
+  const userId = useAppStore((s) => s.user?.id ?? null)
+  const progress = useTematicaProgress({ tematicaId: "ia-etica-ciudadania", userId })
   const [iaActiva, setIaActiva] = useState<"no-autonoma" | "autonoma">(
     "no-autonoma"
   )
@@ -2140,6 +2145,8 @@ export function IaEticaCiudadaniaContent() {
             </motion.div>
           </div>
         </section>
+
+        <TematicaCompletarButton completada={progress.completada} onComplete={progress.markCompleted} />
 
       </main>
       <Footer />
