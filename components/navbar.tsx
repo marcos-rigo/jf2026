@@ -85,7 +85,7 @@ export function Navbar() {
                 src={isDark ? "/img/marcaJF.svg" : "/img/marcaJFb.svg"}
                 alt="José Farhat"
                 width={140}
-                height={40}
+                height={41}
                 className="h-10 w-auto"
                 priority
               />

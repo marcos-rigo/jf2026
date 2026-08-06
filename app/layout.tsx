@@ -59,7 +59,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es" className={`scroll-smooth ${dmSans.variable} ${plusJakarta.variable}`}>
+    <html lang="es" data-scroll-behavior="smooth" className={`scroll-smooth ${dmSans.variable} ${plusJakarta.variable}`}>
       <body className="font-sans antialiased">
         {children}
         <Analytics />

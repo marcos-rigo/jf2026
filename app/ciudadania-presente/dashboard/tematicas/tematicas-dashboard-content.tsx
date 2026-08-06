@@ -162,7 +162,12 @@ export function TematicasDashboardContent() {
                     if (!group.items[pi].sinContenido) { prevTema = group.items[pi]; break }
                   }
                   const prevProg = prevTema ? progresoMap[prevTema.id] : undefined
-                  const unlocked = !sinContenido && (!prevTema || !!prevProg?.completada)
+                  // "Libres bajo influencia" queda desbloqueado completo para
+                  // cualquier usuario logueado (llegar a este dashboard ya
+                  // implica login) mientras se revisa el contenido recién
+                  // creado. A futuro pasa a secuencial como el resto de los
+                  // grupos.
+                  const unlocked = !sinContenido && (group.label === 'Libres bajo influencia' || !prevTema || !!prevProg?.completada)
 
                   const cardInner = (
                     <div

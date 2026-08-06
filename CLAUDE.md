@@ -51,6 +51,8 @@ Most routes follow a two-file pattern: `page.tsx` (server component, exports `me
 | `/caja-de-herramientas` | Toolbox/resources (6 cards) |
 | `/tematicas` | Digital citizenship topic listing — cards linking to sub-pages (two-file pattern, includes Navbar/Footer in `page.tsx`) |
 | `/tematicas/cibercrianza` | Cyber-parenting sub-page — two-file pattern (`page.tsx` + `cibercrianza-content.tsx`) |
+| `/tematicas/caldos-de-cultivo`, `/recuperar-la-agencia`, `/poliedro-ciudadania-digital` | "Libres bajo influencia" group, generic-template subset — thin server `page.tsx` renders the shared `components/tematicas/LibresBajoInfluenciaTemplate.tsx` client component |
+| `/tematicas/subculturas-digitales`, `/algoritmos-perfilado`, `/diseno-persuasivo-patrones-oscuros` | "Libres bajo influencia" group, forked subset — each now renders its own standalone page component (`SubculturasDigitalesPage.tsx`, `AlgoritmosPerfiladoPage.tsx`, `DisenoPersuasivoPatronesOscurosPage.tsx`) instead of the shared template, for bespoke presentation (slide decks, PDFs). See note below. |
 | `/tematicas/ia-etica-ciudadania` | "IA, Ética y Ciudadanía Digital" sub-page — two-file pattern (`page.tsx` + `IaEticaCiudadaniaContent`) |
 | `/etica-ia` | Near-duplicate of `/tematicas/ia-etica-ciudadania` (separate `EticaIAContent` component, near-identical content) — likely leftover, reconcile/remove before adding more content here |
 | `/ciudadania-digital` | Digital citizenship hub — links to sub-pages below |
@@ -139,6 +141,9 @@ A self-contained learning platform embedded in the site. `app/ciudadania-present
 - `hooks/use-mobile.ts` — Responsive breakpoint detection
 - `hooks/use-toast.ts` — Toast hook (Sonner)
 - `lib/hooks/use-tematica-progress.ts` — `useTematicaProgress`, the debounced progress-tracking hook for `/tematicas` topics (separate from `hooks/` above)
+- `lib/hooks/use-libres-subtopic.ts` — `useLibresSubtopic`, shared quiz + infografía-lightbox (zoom/pan/pinch) state machine for the "Libres bajo influencia" group; consumed by both `LibresBajoInfluenciaTemplate.tsx` and the forked standalone pages. Purely stateful — no JSX.
+- `components/tematicas/PdfViewer.tsx` — Paginated PDF viewer (`react-pdf`) with zoom, used by forked "Libres bajo influencia" pages for slide-deck content; worker script served from `public/pdf.worker.min.mjs`
+- `components/tematicas/WebpSlideCarousel.tsx` — Slide-by-slide `.webp` image carousel (fullscreen, zoom, optional PDF download) — the non-PDF alternative to `PdfViewer` for the same forked pages
 - `lib/ciudadania/` — Types, Zustand store, MySQL auth helpers, and mock content for the Ciudadanía Presente platform
 - `components/platform/` — All components for the Ciudadanía Presente platform (auth, dashboard, wizard steps, certificate)
 
@@ -161,6 +166,10 @@ Dark mode is implemented via the `.dark` CSS class, which overrides brand token 
 All content is **hardcoded as typed arrays** at the top of section components — this is the established pattern. Comments throughout indicate future CMS migration. When adding new content:
 1. Define a typed array at the top of the component
 2. Map over it in JSX
+
+**Shared-template exception (`/tematicas/*` "Libres bajo influencia" group):** when several sub-pages render the same layout with different content, the data instead lives in its own `lib/*-data.ts` file (e.g. `lib/libres-bajo-influencia-data.ts`, keyed by slug via a `getXBySlug()` lookup) and each route's `page.tsx` is just `const data = getXBySlug('...')!` passed into one shared client template (`components/tematicas/LibresBajoInfluenciaTemplate.tsx`). Icons are stored as string names (`iconName`), not components — a server `page.tsx` can't pass a component/function as a prop to a client component (RSC serialization), so the template holds an `ICONS: Record<IconName, LucideIcon>` map and resolves the string itself.
+
+> **Fork in progress:** 3 of the 6 group members (`subculturas-digitales`, `algoritmos-perfilado`, `diseno-persuasivo-patrones-oscuros`) have moved off the shared template into their own standalone page component under `components/tematicas/` because they need bespoke presentation the generic template doesn't support. They still consume `lib/libres-bajo-influencia-data.ts` for content and share the quiz/lightbox state machine via `lib/hooks/use-libres-subtopic.ts` (`useLibresSubtopic`) — only the JSX/layout is forked, not the data or interaction logic. Don't assume all 6 group members share one component; check which subset a slug is in before editing.
 
 **Weekly modal content** lives in `public/weekly-content/YYYY-WNN/` (e.g. `2026-W19/`). Each folder needs a `metadata.json` (matching the `WeeklyContent` interface in `lib/weekly-content.ts`) and a visual asset (`.gif`, `.webp`, or `.mp4`) referenced by `gifFileName`. Folders also typically include supplementary assets — PDF presentations, PNG infographics, and SVG files (none rendered by the modal; distributed alongside for social/print use). Naming convention observed: `*Gif.gif` for the modal visual, `*png.png` for share card, `inf*.png` for infographic, `*.pdf` for presentation. The modal renders once per ISO week per browser via `localStorage` (key prefix: `weeklyModal_`). **Important:** after creating a new week folder, add the week string (e.g. `"2026-W23"`) to the array in `public/weekly-content/manifest.json` manually — `npm run create-week` does not do this automatically. Asset size target is < 3 MB; the container is 16:9. All fetches use `cache: "no-store"` to prevent stale content.
 
@@ -207,6 +216,7 @@ Detailed workflow and `metadata.json` field reference: `content-management/READM
 - **react-hook-form + zod** — Form handling and schema validation
 - **recharts** — Data visualizations in `/alfabetizacion-mediatica` and `components/ciudadania-digital/`
 - **chart.js** + **react-chartjs-2** — Also installed; usage overlaps with recharts in some components
+- **react-pdf** — Renders slide-deck PDFs in `components/tematicas/PdfViewer.tsx` (forked "Libres bajo influencia" pages); requires the worker file at `public/pdf.worker.min.mjs`
 - **date-fns** — Date formatting utilities
 - **lucide-react** — Icons (900+)
 - **sonner** — Toast notifications

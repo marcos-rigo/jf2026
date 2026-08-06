@@ -115,7 +115,7 @@ export function Footer() {
                 src="/img/marcaJFb.png"
                 alt="José Farhat"
                 width={160}
-                height={48}
+                height={90}
                 style={{ height: "3rem", width: "auto" }}
               />
             </Link>
