@@ -436,6 +436,10 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
       { id: 9, question: '¿Cómo define la UNESCO la alfabetización mediática e informacional, según la charla?', options: ['Como la habilidad de programar aplicaciones', 'Como las capacidades para acceder, analizar, evaluar, crear y actuar críticamente frente a la información', 'Como el uso correcto de la ortografía en redes sociales', 'Como memorizar las políticas de privacidad de cada plataforma'], correctIndex: 1 },
       { id: 10, question: 'Según la charla, ¿cuál es el verdadero objetivo educativo, más allá de que un chico memorice definiciones?', options: ['Que apruebe un examen sobre tecnología', 'Que pueda decir con sus propias palabras cosas como "esta interfaz me está apurando" o "acá necesito pedir ayuda"', 'Que deje de usar redes sociales', 'Que use exclusivamente fuentes académicas'], correctIndex: 1 },
     ],
+    pdfUrl: '/img/tematicas/recuperar-la-agencia/presentacion.pdf',
+    pdfLabel: 'Presentación — Recuperar la agencia',
+    infografiaUrl: '/img/tematicas/recuperar-la-agencia/infografia.webp',
+    infografiaAlt: 'Infografía de Recuperar la agencia',
   },
 
   // =============================================

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { LibresBajoInfluenciaTemplate } from '@/components/tematicas/LibresBajoInfluenciaTemplate'
+import { RecuperarLaAgenciaPage } from '@/components/tematicas/RecuperarLaAgenciaPage'
 import { getLibresSubtopicBySlug } from '@/lib/libres-bajo-influencia-data'
 
 const data = getLibresSubtopicBySlug('recuperar-la-agencia')!
@@ -15,6 +15,6 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RecuperarLaAgenciaPage() {
-  return <LibresBajoInfluenciaTemplate data={data} groupLabel="Libres bajo influencia" />
+export default function Page() {
+  return <RecuperarLaAgenciaPage />
 }
