@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { LibresBajoInfluenciaTemplate } from '@/components/tematicas/LibresBajoInfluenciaTemplate'
+import { PoliedroCiudadaniaDigitalPage } from '@/components/tematicas/PoliedroCiudadaniaDigitalPage'
 import { getLibresSubtopicBySlug } from '@/lib/libres-bajo-influencia-data'
 
 const data = getLibresSubtopicBySlug('poliedro-ciudadania-digital')!
@@ -15,6 +15,6 @@ export const metadata: Metadata = {
   },
 }
 
-export default function PoliedroCiudadaniaDigitalPage() {
-  return <LibresBajoInfluenciaTemplate data={data} groupLabel="Libres bajo influencia" />
+export default function Page() {
+  return <PoliedroCiudadaniaDigitalPage />
 }

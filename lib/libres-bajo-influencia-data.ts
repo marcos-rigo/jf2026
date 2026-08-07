@@ -507,6 +507,10 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
       { id: 9, question: 'Según Amartya Sen, ¿qué es realmente la libertad?', options: ['Que una opción exista en el papel, aunque no pueda ejercerse', 'Las capacidades reales para hacer y para ser: conocimientos, derechos, apoyos y posibilidades efectivas de actuar', 'La ausencia total de reglas', 'Tener acceso ilimitado a internet'], correctIndex: 1 },
       { id: 10, question: '¿Cuál es la frase de cierre que resume la tesis de toda la charla "Libres bajo influencia"?', options: ['"Hay que desconectarse por completo para ser libres"', '"No se trata de vivir libres de toda influencia. Se trata de aprender a ser libres bajo influencia"', '"La tecnología es neutral y no influye en nadie"', '"Solo los adultos pueden ser verdaderamente libres en internet"'], correctIndex: 1 },
     ],
+    pdfUrl: '/img/tematicas/poliedro-ciudadania-digital/presentacion.pdf',
+    pdfLabel: 'Presentación — Ciudadanía digital: el poliedro',
+    infografiaUrl: '/img/tematicas/poliedro-ciudadania-digital/infografia.webp',
+    infografiaAlt: 'Infografía de Ciudadanía digital: el poliedro',
   },
 ]
 
