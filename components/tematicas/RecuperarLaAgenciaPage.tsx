@@ -297,13 +297,13 @@ function PauseAskChooseSimulator() {
             </span>
             <h3 className="ra-fraunces text-xl sm:text-2xl font-black text-white mt-1">Simulador "Pausar, Preguntar, Elegir"</h3>
           </div>
-          <div className="flex items-center gap-2 bg-slate-800 p-1 rounded-xl flex-wrap">
+          <div className="grid grid-cols-3 gap-1 sm:gap-2 bg-slate-800 p-1 rounded-xl w-full sm:w-auto">
             {AGENCY_SCENARIOS.map((sc, i) => (
               <button
                 key={sc.title}
                 type="button"
                 onClick={() => { setScenarioIdx(i); setStep('pause') }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer ${
+                className={`px-1.5 sm:px-3 py-1.5 rounded-lg text-[10px] sm:text-xs font-mono transition-all cursor-pointer whitespace-nowrap ${
                   scenarioIdx === i ? 'bg-emerald-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -1574,18 +1574,18 @@ export function RecuperarLaAgenciaPage() {
                   })}
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-slate-200">
+                <div className="flex flex-col-reverse sm:flex-row gap-3 sm:gap-0 items-stretch sm:items-center justify-between pt-4 border-t border-slate-200">
                   <button
                     onClick={handlePrev}
                     disabled={currentQuestionIdx === 0}
-                    className="px-5 py-2.5 rounded-full text-xs font-black border border-slate-300 hover:bg-slate-100 disabled:opacity-30 disabled:pointer-events-none"
+                    className={`px-5 py-2.5 rounded-full text-xs font-black border border-slate-300 hover:bg-slate-100 disabled:pointer-events-none text-center ${currentQuestionIdx === 0 ? 'opacity-0' : 'opacity-100'}`}
                   >
                     Anterior
                   </button>
                   <button
                     onClick={handleNext}
                     disabled={!canContinue}
-                    className="ra-btn px-6 py-2.5 rounded-full text-xs font-black disabled:opacity-40 disabled:pointer-events-none cursor-pointer"
+                    className="ra-btn mr-16 sm:mr-0 px-6 py-3 sm:py-2.5 rounded-full text-xs font-black disabled:opacity-40 disabled:pointer-events-none cursor-pointer text-center"
                   >
                     {isLastQuestion ? 'Finalizar y ver resultado' : 'Siguiente'}
                   </button>

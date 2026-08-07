@@ -1695,18 +1695,18 @@ export function CaldosDeCultivoPage() {
                   })}
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-slate-200">
+                <div className="flex flex-col-reverse sm:flex-row gap-3 sm:gap-0 items-stretch sm:items-center justify-between pt-4 border-t border-slate-200">
                   <button
                     onClick={handlePrev}
                     disabled={currentQuestionIdx === 0}
-                    className="px-5 py-2.5 rounded-full text-xs font-black border border-slate-300 hover:bg-slate-100 disabled:opacity-30 disabled:pointer-events-none"
+                    className={`px-5 py-2.5 rounded-full text-xs font-black border border-slate-300 hover:bg-slate-100 disabled:pointer-events-none text-center ${currentQuestionIdx === 0 ? 'opacity-0' : 'opacity-100'}`}
                   >
                     Anterior
                   </button>
                   <button
                     onClick={handleNext}
                     disabled={!canContinue}
-                    className="cc-cyber-btn px-6 py-2.5 rounded-full text-xs font-black disabled:opacity-40 disabled:pointer-events-none cursor-pointer"
+                    className="cc-cyber-btn mr-16 sm:mr-0 px-6 py-3 sm:py-2.5 rounded-full text-xs font-black disabled:opacity-40 disabled:pointer-events-none cursor-pointer text-center"
                   >
                     {isLastQuestion ? 'Finalizar y ver resultado' : 'Siguiente'}
                   </button>
