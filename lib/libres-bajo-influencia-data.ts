@@ -285,6 +285,10 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
       { id: 9, question: '¿Cuándo dice la charla que un diseño persuasivo "se pasa de la raya"?', options: ['Cuando usa colores llamativos', 'Cuando oculta, confunde o hace difícil salir', 'Cuando incluye una animación', 'Cuando pide confirmar el email'], correctIndex: 1 },
       { id: 10, question: 'Según la charla, ¿a qué le "hablan" los patrones oscuros para funcionar incluso cuando los conocemos?', options: ['A la razón y al análisis lógico', 'A nuestras necesidades y emociones: urgencia, recompensa, curiosidad, cansancio, miedo a quedar afuera', 'Únicamente al bolsillo', 'A la velocidad de conexión a internet'], correctIndex: 1 },
     ],
+    pdfUrl: '/img/tematicas/diseno-persuasivo-patrones-oscuros/presentacion.pdf',
+    pdfLabel: 'Presentación — Diseño persuasivo y patrones oscuros',
+    infografiaUrl: '/img/tematicas/diseno-persuasivo-patrones-oscuros/infografia.webp',
+    infografiaAlt: 'Infografía de Diseño persuasivo y patrones oscuros',
   },
 
   // =============================================
