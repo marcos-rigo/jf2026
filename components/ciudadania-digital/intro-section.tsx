@@ -86,38 +86,42 @@ export default function IntroSection({ onNavigate }: IntroSectionProps) {
         <div className="absolute top-0 right-0 w-64 h-64 bg-[#00F0FF] opacity-5 blur-[100px] rounded-full pointer-events-none" />
 
         <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 leading-tight font-display">
-          Toma el Control de tu <br />
+          Sé la Guía Digital <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] to-[#8B5CF6]">
-            Vida en Línea
+            de tus Estudiantes
           </span>
         </h2>
 
         <p className="text-lg text-slate-400 mb-6 leading-relaxed max-w-3xl font-sans">
-          ¿Sientes que la tecnología a veces te controla más a ti que tú a ella? Entre desinformación constante,
-          riesgos de privacidad, sesgos de la Inteligencia Artificial y debates acalorados en redes sociales,
-          navegar por internet puede sentirse como caminar por un campo minado.
+          ¿Sentís que tus estudiantes viven más conectados de lo que podés seguirles el ritmo? Entre la desinformación
+          que circula por los grupos de WhatsApp del curso, los riesgos de privacidad que exponen sin saberlo, los
+          sesgos de la Inteligencia Artificial que usan para hacer la tarea y los conflictos que se trasladan de las
+          redes sociales al aula, acompañar la vida digital de tus estudiantes puede sentirse como caminar por un
+          campo minado.
         </p>
 
         <div className="bg-gradient-to-r from-[#00F0FF]/10 to-transparent border-l-4 border-[#00F0FF] p-6 rounded-r-xl my-8 max-w-3xl">
           <p className="text-[#00F0FF] font-medium text-lg leading-relaxed">
-            El problema es que a menudo interactuamos en el mundo digital en{' '}
-            <strong className="font-bold text-white">"piloto automático"</strong>.
+            El problema es que buena parte de tus estudiantes interactúa en el mundo digital en{' '}
+            <strong className="font-bold text-white">"piloto automático"</strong> — y muchas veces vos también,
+            entre la carga docente y la velocidad con la que cambian las plataformas.
             La <strong className="font-bold text-white">Ciudadanía Digital</strong> no es solo saber usar un
-            dispositivo; es tener las habilidades para protegerte, convivir con respeto y aprovechar la red
-            para tu desarrollo.
+            dispositivo: es tener las herramientas para enseñar a protegerse, convivir con respeto y aprovechar
+            la red para el desarrollo de cada estudiante, dentro y fuera del aula.
           </p>
         </div>
 
         <p className="text-lg text-slate-400 leading-relaxed mb-10 max-w-3xl font-sans">
-          En esta plataforma, dejamos la teoría de lado. Te guiaremos paso a paso para que audites tu huella
-          en línea, protejas tus datos y aprendas a detectar información falsa como un profesional.
+          En este Kit dejamos la teoría de lado. Te guiamos paso a paso con estrategias que podés llevar directo
+          al aula: cómo trabajar la seguridad digital con tus estudiantes, cómo mediar los conflictos de convivencia
+          que llegan desde las redes, y cómo enseñarles a detectar información falsa antes de que la compartan.
         </p>
 
         <Button
           onClick={() => onNavigate('paso1')}
           className="bg-gradient-to-r from-[#00F0FF] to-blue-600 hover:from-blue-500 hover:to-[#00F0FF] text-black font-bold py-4 px-8 rounded-full text-lg shadow-lg transition-all flex items-center gap-3 hover:shadow-[0_0_15px_rgba(0,240,255,0.4)]"
         >
-          Iniciar Protocolo <span>➔</span>
+          Iniciar el Kit Docente <span>➔</span>
         </Button>
       </div>
 
@@ -131,10 +135,10 @@ export default function IntroSection({ onNavigate }: IntroSectionProps) {
             </div>
             <div>
               <p className="text-xs font-mono tracking-widest uppercase text-[#8B5CF6] opacity-80 mb-0.5">
-                Presentación completa
+                Material para el aula
               </p>
               <h3 className="text-lg md:text-xl font-bold text-white font-display">
-                Ciudadanía Digital — Galería
+                Ciudadanía Digital — Recursos para el Aula
               </h3>
             </div>
           </div>

@@ -22,10 +22,10 @@ export default function Paso1Section({ onNavigate }: Paso1SectionProps) {
           Fase 01
         </span>
         <h2 className="text-4xl font-bold text-white mt-5 mb-3 font-display">
-          Construye tu Escudo Digital
+          Construí el Escudo Digital de tu Aula
         </h2>
         <p className="text-slate-400 text-lg font-sans">
-          Seguridad y Privacidad como base de tu ciudadanía.
+          Seguridad y privacidad: la base que tus estudiantes necesitan antes que nada.
         </p>
       </div>
 
@@ -37,8 +37,10 @@ export default function Paso1Section({ onNavigate }: Paso1SectionProps) {
             <h3 className="font-bold text-xl text-white font-display">Objetivo</h3>
           </div>
           <p className="text-slate-300 mb-8 leading-relaxed font-sans">
-            Blindar tu identidad digital y reducir tu vulnerabilidad ante ciberataques. Tu vida digital necesita
-            cerraduras modernas. Las contraseñas como "123456" son puertas abiertas.
+            Ayudar a tus estudiantes —y a vos mismo/a— a blindar la identidad digital y reducir la vulnerabilidad
+            ante ciberataques. La vida digital necesita cerraduras modernas: contraseñas como "123456" o el propio
+            cumpleaños son puertas abiertas, y es habitual encontrarlas en los dispositivos que usan chicos y chicas
+            en el aula.
           </p>
 
           <h4 className="font-bold text-white mb-4 flex items-center gap-2 uppercase tracking-wider text-sm font-display">
@@ -47,15 +49,19 @@ export default function Paso1Section({ onNavigate }: Paso1SectionProps) {
           <ul className="space-y-4 text-slate-300 font-sans">
             <li className="flex items-start gap-3">
               <span className="text-[#00F0FF] font-bold">1.</span>
-              <span>Crea contraseñas fuertes (min. 12 caracteres, mezcla mayús/minús/números/símbolos)</span>
+              <span>Trabajá con tus estudiantes la creación de contraseñas fuertes (mínimo 12 caracteres,
+              combinando mayúsculas, minúsculas, números y símbolos) — podés convertirlo en una actividad de 10 minutos
+              al inicio de una clase.</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-[#00F0FF] font-bold">2.</span>
-              <span>Activa la autenticación de dos factores (2FA) en tus cuentas críticas</span>
+              <span>Mostrales cómo activar la autenticación de dos factores (2FA) en las cuentas que más usan:
+              correo institucional, redes sociales, plataformas de la escuela.</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-[#00F0FF] font-bold">3.</span>
-              <span>Revisa tus permisos de apps: cámara, micrófono, ubicación</span>
+              <span>Guialos a revisar los permisos de las apps que tienen instaladas: cámara, micrófono,
+              ubicación. Muchos nunca los revisaron.</span>
             </li>
           </ul>
 
@@ -64,8 +70,9 @@ export default function Paso1Section({ onNavigate }: Paso1SectionProps) {
               <span className="text-xl">💡</span> Aplicación Práctica
             </h4>
             <p className="text-sm text-slate-300 font-sans">
-              Abre tu gestor de contraseñas ahora. ¿Cuántas de tus cuentas principales NO tienen 2FA? Ese es tu primer
-              objetivo.
+              Actividad para el aula: pedile a tus estudiantes que revisen (sin decir la contraseña en voz alta) cuántas
+              de sus cuentas principales NO tienen 2FA activado. Ese conteo grupal, sin exponer a nadie, es un buen
+              disparador para la charla.
             </p>
           </div>
         </div>
@@ -73,13 +80,14 @@ export default function Paso1Section({ onNavigate }: Paso1SectionProps) {
         {/* Panel Gráfico y Acción */}
         <div className="flex flex-col gap-8">
           <div className="backdrop-blur-xl bg-[#141A28]/70 border border-slate-800/50 p-8 rounded-3xl">
-            <h4 className="font-bold text-white mb-4 font-display">Estado de Seguridad Global</h4>
+            <h4 className="font-bold text-white mb-4 font-display">Así Suele Estar la Seguridad de un Curso</h4>
             <SecurityChart />
           </div>
 
           <div className="bg-gradient-to-r from-[#F59E0B]/20 to-transparent border-l-4 border-[#F59E0B] p-6 rounded-r-2xl">
             <p className="text-[#F59E0B] font-medium text-sm leading-relaxed">
-              <strong>⚠️ Alerta:</strong> Si tienes cuentas sin 2FA, eres 99% más vulnerable a ataques de fuerza bruta.
+              <strong>⚠️ Alerta:</strong> Una cuenta sin 2FA es hasta 99% más vulnerable a ataques de fuerza bruta —
+              vale la pena compartir este dato concreto con tus estudiantes, suele impactar más que la advertencia genérica.
             </p>
           </div>
         </div>
@@ -91,10 +99,11 @@ export default function Paso1Section({ onNavigate }: Paso1SectionProps) {
           <span className="text-3xl">🏋️</span>
         </div>
         <div>
-          <h4 className="font-bold text-white text-lg mb-1 font-display">Entrenamiento de la sección</h4>
+          <h4 className="font-bold text-white text-lg mb-1 font-display">Actividad para el aula</h4>
           <p className="text-slate-400 font-sans">
-            Haz una limpieza digital de 5 min. Ve a los permisos de apps en tu celular y revoca acceso a
-            cámara/micrófono a 3 aplicaciones que no lo necesiten (ej. juegos offline).
+            Actividad de 10 minutos: pedile a tus estudiantes que abran los permisos de apps en su celular y revoquen
+            el acceso a cámara/micrófono de 3 aplicaciones que no lo necesiten (por ejemplo, juegos offline). Podés
+            hacerlo vos primero, como docente, para mostrar el paso a paso.
           </p>
         </div>
       </div>

@@ -732,8 +732,9 @@ export function EstafasDigitalesContent() {
                   UFECI (Nacional)
                 </h4>
                 <p className="text-sm text-slate-600 mb-4 leading-relaxed">
-                  Unidad Fiscal Especializada en Ciberdelincuencia. Para denunciar grooming u otros
-                  delitos informáticos a nivel nacional.
+                  Unidad Fiscal Especializada en Ciberdelincuencia. Para denunciar grooming (el
+                  acoso de un adulto a un menor con fines de abuso) u otros delitos informáticos a
+                  nivel nacional.
                 </p>
                 <ul className="text-sm space-y-2 text-slate-700">
                   <li className="flex items-start gap-2">

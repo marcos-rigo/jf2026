@@ -1,10 +1,12 @@
 "use client"
 
+import { useMemo, useState } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowDown, ArrowRight, LockKeyhole } from "lucide-react"
+import { ArrowDown, ArrowRight, LockKeyhole, Check } from "lucide-react"
 import { groups } from "@/lib/tematicas-data"
+import { AUDIENCIAS_ORDENADAS, AUDIENCIA_LABELS, type Audiencia } from "@/lib/audiencias"
 
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
@@ -17,6 +19,28 @@ const containerVariants = {
 }
 
 export function TematicasContent() {
+  // Filtro de públicos: selección única. Ninguno activo = se listan todas las
+  // temáticas, incluidas las que no tienen `audiencias` definido (contenido
+  // ambiguo/sin clasificar — ver content-management/PROPUESTA-AUDIENCIAS.md).
+  // Nota: una temática puede seguir teniendo varias audiencias en su dato
+  // (`audiencias: Audiencia[]`) — lo que es de selección única es la elección
+  // del usuario en el filtro, no la clasificación de contenido.
+  const [selectedAudiencia, setSelectedAudiencia] = useState<Audiencia | null>(null)
+
+  const selectAudiencia = (audiencia: Audiencia) => {
+    setSelectedAudiencia((prev) => (prev === audiencia ? null : audiencia))
+  }
+
+  const filteredGroups = useMemo(() => {
+    if (!selectedAudiencia) return groups
+    return groups
+      .map((group) => ({
+        ...group,
+        items: group.items.filter((tema) => tema.audiencias?.includes(selectedAudiencia)),
+      }))
+      .filter((group) => group.items.length > 0)
+  }, [selectedAudiencia])
+
   return (
     <main className="min-h-screen bg-[#F2F6FF]">
 
@@ -243,7 +267,52 @@ export function TematicasContent() {
       {/* ── Grid por grupos ── */}
       <section id="tematicas-list" className="py-16 md:py-24">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 space-y-14">
-          {groups.map((group, gi) => (
+
+          {/* Filtro de públicos */}
+          <div>
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">
+              Filtrar por público
+            </p>
+            <div className="flex flex-wrap gap-2.5" role="tablist" aria-label="Filtrar temáticas por público">
+              {AUDIENCIAS_ORDENADAS.map((audiencia) => {
+                const active = selectedAudiencia === audiencia
+                return (
+                  <button
+                    key={audiencia}
+                    type="button"
+                    role="tab"
+                    onClick={() => selectAudiencia(audiencia)}
+                    aria-selected={active}
+                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide border transition-colors duration-200 ${
+                      active
+                        ? "bg-brand-blue border-brand-blue text-white"
+                        : "bg-white border-slate-200 text-slate-500 hover:border-brand-blue/40 hover:text-brand-blue"
+                    }`}
+                  >
+                    {active && <Check className="w-3.5 h-3.5" />}
+                    {AUDIENCIA_LABELS[audiencia]}
+                  </button>
+                )
+              })}
+              {selectedAudiencia && (
+                <button
+                  type="button"
+                  onClick={() => setSelectedAudiencia(null)}
+                  className="inline-flex items-center px-4 py-2 rounded-full text-xs font-semibold text-slate-400 hover:text-brand-navy transition-colors duration-200"
+                >
+                  Limpiar filtro
+                </button>
+              )}
+            </div>
+          </div>
+
+          {filteredGroups.length === 0 && (
+            <p className="text-sm text-slate-400">
+              Ninguna temática clasificada coincide con el público seleccionado todavía.
+            </p>
+          )}
+
+          {filteredGroups.map((group, gi) => (
             <motion.div
               key={group.label}
               initial={{ opacity: 0, y: 32 }}

@@ -1,4 +1,5 @@
 import { Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, Scale, BookOpen, ScanEye, MousePointerClick, Flame, Compass, Hexagon, type LucideIcon } from "lucide-react"
+import type { Audiencia } from "./audiencias"
 
 export interface TematicaItem {
   id: string
@@ -22,6 +23,11 @@ export interface TematicaItem {
   // en vez de la card navegable normal, y para saltear el ítem del cálculo de
   // desbloqueo secuencial del módulo (no bloquea a los que vienen después).
   sinContenido?: boolean
+  // Públicos a los que el contenido, tal como está redactado hoy, le sirve.
+  // Ausente = sin clasificar (contenido ambiguo/neutro) — no asumir "todos los
+  // públicos" ni mostrar en filtros de público activos. Ver
+  // content-management/PROPUESTA-AUDIENCIAS.md para el criterio por temática.
+  audiencias?: Audiencia[]
 }
 
 export interface TematicaGroup {
@@ -58,6 +64,7 @@ export const groups: TematicaGroup[] = [
         icon: Eye,
         color: "#D5247A",
         locked: true,
+        audiencias: ["familias"],
       },
       {
         id: "hiperconectividad-digital",
@@ -70,6 +77,7 @@ export const groups: TematicaGroup[] = [
         icon: Brain,
         color: "#6366F1",
         locked: true,
+        audiencias: ["docentes", "familias"],
       },
     ],
   },
@@ -113,6 +121,7 @@ export const groups: TematicaGroup[] = [
         icon: Scale,
         color: "#00A99D",
         locked: false,
+        audiencias: ["docentes"],
       },
     ],
   },
@@ -149,6 +158,7 @@ export const groups: TematicaGroup[] = [
         icon: Lock,
         color: "#FF6B35",
         locked: true,
+        audiencias: ["mujeres"],
       },
       {
         id: "violencia-digital-infancias",
@@ -161,6 +171,7 @@ export const groups: TematicaGroup[] = [
         icon: ShieldAlert,
         color: "#EF4444",
         locked: true,
+        audiencias: ["docentes", "familias"],
       },
     ],
   },
@@ -179,6 +190,7 @@ export const groups: TematicaGroup[] = [
         icon: Users,
         color: "#9333EA",
         locked: true,
+        audiencias: ["docentes"],
       },
       {
         id: "algoritmos-perfilado",
@@ -215,6 +227,7 @@ export const groups: TematicaGroup[] = [
         icon: Flame,
         color: "#EA580C",
         locked: true,
+        audiencias: ["docentes"],
       },
       {
         id: "recuperar-la-agencia",
@@ -227,6 +240,7 @@ export const groups: TematicaGroup[] = [
         icon: Compass,
         color: "#059669",
         locked: true,
+        audiencias: ["docentes", "familias", "ninas-ninos-adolescentes"],
       },
       {
         id: "poliedro-ciudadania-digital",
@@ -239,6 +253,7 @@ export const groups: TematicaGroup[] = [
         icon: Hexagon,
         color: "#0EA5E9",
         locked: true,
+        audiencias: ["docentes"],
       },
     ],
   },
@@ -257,6 +272,7 @@ export const groups: TematicaGroup[] = [
         icon: Users,
         color: "#14B8A6",
         locked: false,
+        audiencias: ["familias"],
       },
       {
         id: "nnya-entorno-digital",
@@ -269,6 +285,7 @@ export const groups: TematicaGroup[] = [
         icon: Baby,
         color: "#7C3AED",
         locked: true,
+        audiencias: ["familias"],
       },
     ],
   },

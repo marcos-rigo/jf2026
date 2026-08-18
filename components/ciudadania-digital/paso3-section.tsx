@@ -21,10 +21,11 @@ export default function Paso3Section({ onNavigate }: Paso3SectionProps) {
           Fase 03
         </span>
         <h2 className="text-3xl font-bold text-white mt-5 mb-2 font-display">
-          Análisis Crítico y Bulos
+          Pensamiento Crítico frente a la IA y los Bulos
         </h2>
         <p className="text-slate-400 text-lg font-sans">
-          Entiende la Inteligencia Artificial y frena la desinformación.
+          Dales a tus estudiantes las herramientas para entender la IA y frenar la desinformación
+          antes de que la compartan.
         </p>
       </div>
 
@@ -32,14 +33,17 @@ export default function Paso3Section({ onNavigate }: Paso3SectionProps) {
         <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#F59E0B] to-transparent opacity-50" />
 
         <p className="text-slate-300 text-lg mb-10 leading-relaxed max-w-3xl font-sans">
-          La era de la IA generativa trae capacidades asombrosas, pero democratiza la desinformación ultrarrealista
-          (Deepfakes, textos sintéticos). Tu deber es no ser un nodo de retransmisión de datos falsos.
+          La era de la IA generativa trae capacidades asombrosas para el aula (resúmenes, tutores virtuales,
+          generación de material), pero también democratiza la desinformación ultrarrealista: deepfakes, textos
+          sintéticos, imágenes falsas que tus estudiantes se van a encontrar en algún momento. Tu rol como docente es
+          ayudarlos a no ser un nodo más de retransmisión de datos falsos, y a usar la IA con criterio en sus propios
+          trabajos.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Checklist de verificación */}
           <div className="md:col-span-2 space-y-4">
-            <h4 className="font-bold text-white text-lg mb-6 font-display">Checklist Anti-Bulos</h4>
+            <h4 className="font-bold text-white text-lg mb-6 font-display">Checklist Anti-Bulos (para trabajar en clase)</h4>
 
             <div className="space-y-3">
               {[
@@ -71,49 +75,49 @@ export default function Paso3Section({ onNavigate }: Paso3SectionProps) {
                 {
                   letter: 'V',
                   title: 'Verificación de Fuente',
-                  desc: 'Busca el medio original, verifica su reputación en fact-checkers.',
+                  desc: 'Enseñales a buscar el medio original y a chequear su reputación en sitios de fact-checking antes de creer o compartir.',
                   color: '#00F0FF',
                 },
                 {
                   letter: 'E',
                   title: 'Evidencia Múltiple',
-                  desc: 'Si solo 1-2 fuentes lo reportan, puede ser propaganda.',
+                  desc: 'Si solo una o dos fuentes lo reportan, puede ser propaganda o un rumor sin chequear. Pediles que busquen una segunda fuente antes de dar algo por cierto.',
                   color: '#8B5CF6',
                 },
                 {
                   letter: 'R',
                   title: 'Revista tu Sesgo',
-                  desc: 'Pregúntate: ¿Creo esto porque es cierto o porque deseo que sea cierto?',
+                  desc: 'Trabajá con ellos la pregunta: ¿lo creo porque es cierto, o porque quiero que sea cierto? Es un buen disparador de debate en el aula.',
                   color: '#10B981',
                 },
                 {
                   letter: 'I',
                   title: 'Identifica Cambios',
-                  desc: 'Deepfakes, ediciones de vídeo. Revisa metadatos si es posible.',
+                  desc: 'Deepfakes, ediciones de video, imágenes generadas por IA. Mostrales herramientas simples para detectar señales de manipulación.',
                   color: '#F59E0B',
                 },
                 {
                   letter: 'F',
                   title: 'Fecha y Contexto',
-                  desc: 'Noticias viejas recicladas. Entiende el contexto temporal.',
+                  desc: 'Noticias viejas que circulan como si fueran actuales. Ayudalos a chequear siempre la fecha y el contexto original.',
                   color: '#EF4444',
                 },
                 {
                   letter: 'I',
                   title: 'Intuición Crítica',
-                  desc: 'Si algo parece raro, probablemente lo sea. Desconfía del "sentido común".',
+                  desc: 'Si algo parece demasiado extremo o raro, probablemente lo sea. Enseñales a desconfiar del "así fue siempre" o del "todo el mundo lo dice".',
                   color: '#EC4899',
                 },
                 {
                   letter: 'C',
                   title: 'Contraste Perspectivas',
-                  desc: 'Lee análisis de fuentes con diferentes sesgos políticos.',
+                  desc: 'Proponeles leer sobre un mismo tema en dos medios con líneas editoriales distintas, para que vean cómo cambia el enfoque.',
                   color: '#06B6D4',
                 },
                 {
                   letter: 'A',
                   title: 'Actúa Responsablemente',
-                  desc: 'Antes de compartir, ya verificaste. Sé un "gate-keeper" confiable.',
+                  desc: 'Antes de reenviar algo al grupo del curso o a sus redes, ya verificaron. Ayudalos a entender que también son un "gate-keeper (guardián/a de la información)" confiable para quienes los rodean.',
                   color: '#14B8A6',
                 },
               ].map((item, idx) => (
@@ -144,7 +148,7 @@ export default function Paso3Section({ onNavigate }: Paso3SectionProps) {
           onClick={() => onNavigate('herramientas')}
           className="bg-white hover:bg-slate-200 text-black py-3 px-8 rounded-full font-bold shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all flex items-center gap-2 font-display"
         >
-          Acceder al Panel Final <span>➔</span>
+          Acceder al Centro de Recursos <span>➔</span>
         </Button>
       </div>
     </motion.section>

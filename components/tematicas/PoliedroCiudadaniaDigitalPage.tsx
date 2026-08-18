@@ -113,7 +113,7 @@ const STYLES = `
 const ACADEMIC_CITATIONS = [
   {
     author: 'John Dewey',
-    title: 'Democracy and Education',
+    title: 'Democracy and Education (Democracia y educación)',
     publication: 'Filosofía de la educación como experiencia presente',
     url: 'https://en.wikipedia.org/wiki/Democracy_and_Education',
     topic: 'No se educa para una vida futura ignorando la vida que ya está pasando hoy',
@@ -129,7 +129,7 @@ const ACADEMIC_CITATIONS = [
   },
   {
     author: 'David Buckingham',
-    title: 'Media Education: Literacy, Learning and Contemporary Culture',
+    title: 'Media Education: Literacy, Learning and Contemporary Culture (Educación mediática: alfabetización, aprendizaje y cultura contemporánea)',
     publication: 'Polity Press',
     url: 'https://www.politybooks.com/bookdetail?book_slug=media-education-literacy-learning-and-contemporary-culture--9780745631407',
     topic: 'La educación mediática no puede reducirse a enseñar a usar el aparato',
@@ -153,7 +153,7 @@ const ACADEMIC_CITATIONS = [
   },
   {
     author: 'Amartya Sen',
-    title: 'Development as Freedom',
+    title: 'Development as Freedom (El desarrollo como libertad)',
     publication: 'Premio Nobel de Economía 1998',
     url: 'https://en.wikipedia.org/wiki/Development_as_Freedom',
     topic: 'La libertad como capacidades reales para hacer y para ser, no solo opciones en el papel',
@@ -1490,7 +1490,7 @@ export function PoliedroCiudadaniaDigitalPage() {
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-all duration-300">
                       <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center gap-2 bg-white text-slate-900 font-extrabold text-sm sm:text-base px-6 py-3 rounded-full shadow-2xl">
-                        <ZoomIn className="w-5 h-5 text-blue-600" /> Ver a pantalla completa (Zoom & Pan)
+                        <ZoomIn className="w-5 h-5 text-blue-600" /> Ver a pantalla completa (acercar y desplazar)
                       </div>
                     </div>
                   </div>

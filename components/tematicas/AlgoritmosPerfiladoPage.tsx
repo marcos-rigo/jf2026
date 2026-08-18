@@ -147,7 +147,7 @@ const STYLES = `
 const ACADEMIC_CITATIONS = [
   {
     author: 'Shoshana Zuboff (2019)',
-    title: 'The Age of Surveillance Capitalism: The Fight for a Human Future at the New Frontier of Power',
+    title: 'The Age of Surveillance Capitalism: The Fight for a Human Future at the New Frontier of Power (La era del capitalismo de vigilancia: la lucha por un futuro humano en la nueva frontera del poder)',
     publication: 'PublicAffairs / Hachette Book Group',
     url: 'https://www.hachettebookgroup.com/titles/shoshana-zuboff/the-age-of-surveillance-capitalism/9781610395694/',
     topic: 'Capitalismo de vigilancia y productos de predicción del comportamiento',
@@ -155,7 +155,7 @@ const ACADEMIC_CITATIONS = [
   },
   {
     author: 'Federal Trade Commission (FTC, 2019)',
-    title: 'FTC Imposes $5 Billion Penalty and Sweeping New Privacy Restrictions on Facebook',
+    title: 'FTC Imposes $5 Billion Penalty and Sweeping New Privacy Restrictions on Facebook (La FTC impone una multa de 5.000 millones de dólares y nuevas restricciones de privacidad radicales a Facebook)',
     publication: 'Comisión Federal de Comercio de EE.UU. (FTC Official Release)',
     url: 'https://www.ftc.gov/news-events/news/press-releases/2019/07/ftc-imposes-5-billion-penalty-sweeping-new-privacy-restrictions-facebook',
     topic: 'Caso Cambridge Analytica: obtención engañosa de datos y perfilado político',
@@ -163,7 +163,7 @@ const ACADEMIC_CITATIONS = [
   },
   {
     author: 'Pew Research Center (2023)',
-    title: 'How Americans View Data Privacy',
+    title: 'How Americans View Data Privacy (Cómo ven los estadounidenses la privacidad de sus datos)',
     publication: 'Pew Research Center Internet & Technology',
     url: 'https://www.pewresearch.org/internet/2023/10/18/how-americans-view-data-privacy/',
     topic: 'Percepción pública sobre los riesgos de la recolección algorítmica de datos',
@@ -179,7 +179,7 @@ const ACADEMIC_CITATIONS = [
   },
   {
     author: 'Daniel J. Solove (2006)',
-    title: 'A Taxonomy of Privacy',
+    title: 'A Taxonomy of Privacy (Una taxonomía de la privacidad)',
     publication: 'University of Pennsylvania Law Review, Vol. 154',
     url: 'https://repository.law.upenn.edu/Documents/Detail/a-taxonomy-of-privacy/153988',
     topic: 'Taxonomía de la privacidad: recolección, procesamiento y agregación de patrones',
@@ -187,7 +187,7 @@ const ACADEMIC_CITATIONS = [
   },
   {
     author: 'Michel Foucault (1975)',
-    title: 'Surveiller et punir: Naissance de la prison',
+    title: 'Surveiller et punir: Naissance de la prison (Vigilar y castigar: nacimiento de la prisión)',
     publication: 'Éditions Gallimard',
     url: 'https://www.gallimard.fr/catalogue/surveiller-et-punir/9782070729685',
     topic: 'Poder disciplinario, norma y efectos de la clasificación social',
@@ -195,7 +195,7 @@ const ACADEMIC_CITATIONS = [
   },
   {
     author: 'Eli Pariser (2011)',
-    title: 'The Filter Bubble: What the Internet Is Hiding from You',
+    title: 'The Filter Bubble: What the Internet Is Hiding from You (La burbuja de filtros: lo que internet te oculta)',
     publication: 'Penguin Press',
     url: 'https://www.penguinrandomhouse.com/books/309214/the-filter-bubble-by-eli-pariser/',
     topic: 'Burbujas de filtro y algoritmos de personalización selectiva',
@@ -743,7 +743,7 @@ export function AlgoritmosPerfiladoPage() {
                 />
                 <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-all duration-300">
                   <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center gap-2 bg-white text-slate-900 font-extrabold text-sm sm:text-base px-6 py-3 rounded-full shadow-2xl">
-                    <ZoomIn className="w-5 h-5 text-blue-600" /> Ver a pantalla completa (Zoom & Pan)
+                    <ZoomIn className="w-5 h-5 text-blue-600" /> Ver a pantalla completa (acercar y desplazar)
                   </div>
                 </div>
               </div>

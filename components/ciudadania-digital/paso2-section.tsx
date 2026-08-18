@@ -21,10 +21,10 @@ export default function Paso2Section({ onNavigate }: Paso2SectionProps) {
           Fase 02
         </span>
         <h2 className="text-3xl font-bold text-white mt-5 mb-2 font-display">
-          Aplica la "Netiqueta"
+          Trabajá la "Netiqueta" con tu Curso
         </h2>
         <p className="text-slate-400 text-lg font-sans">
-          Lidera la convivencia en tus interacciones diarias.
+          Modelá y enseñá la convivencia digital, dentro y fuera del aula.
         </p>
       </div>
 
@@ -38,8 +38,10 @@ export default function Paso2Section({ onNavigate }: Paso2SectionProps) {
             <h3 className="font-bold text-xl text-white font-display">Objetivo</h3>
           </div>
           <p className="text-slate-300 mb-8 leading-relaxed font-sans">
-            Interactuar en línea con empatía, evitando malentendidos y construyendo una huella digital positiva. La
-            <em> Netiqueta</em> son las normas no escritas del ecosistema digital. Tu texto es tu reputación.
+            Que tus estudiantes aprendan a interactuar en línea con empatía, evitando malentendidos y construyendo una
+            huella digital positiva — y que vos tengas herramientas para mediar cuando un conflicto de WhatsApp o
+            Instagram se traslada al aula. La<em> Netiqueta</em> son las normas no escritas del ecosistema digital: lo
+            que se escribe también construye reputación, la de cada estudiante y la de la institución.
           </p>
 
           <h4 className="font-bold text-white mb-4 flex items-center gap-2 uppercase tracking-wider text-sm font-display">
@@ -48,21 +50,25 @@ export default function Paso2Section({ onNavigate }: Paso2SectionProps) {
           <ul className="space-y-4 text-slate-300 font-sans">
             <li className="flex items-start gap-3">
               <span className="text-[#8B5CF6] font-bold">1.</span>
-              <span>Lee antes de responder. Evita malinterpretaciones por falta de contexto.</span>
+              <span>Enseñales a leer antes de responder. Muchos conflictos entre estudiantes arrancan por
+              malinterpretar un mensaje sin contexto — funciona pedirles que lean dos veces antes de contestar en caliente.</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-[#8B5CF6] font-bold">2.</span>
               <span>
-                Sé respetuoso aunque no estés de acuerdo. Los debates constructivos no son ataques personales.
+                Modelá el respeto aunque no haya acuerdo. Ayudalos a diferenciar un debate constructivo de
+                un ataque personal — es una distinción que se puede trabajar con ejemplos reales de sus propios grupos.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-[#8B5CF6] font-bold">3.</span>
-              <span>Evita el SPAM y la autopromoción excesiva. Aporta valor.</span>
+              <span>Conversá sobre el spam y la autopromoción excesiva en los grupos del curso — cadenas,
+              reenvíos sin filtrar. Fomentá que cada mensaje aporte algo.</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-[#8B5CF6] font-bold">4.</span>
-              <span>Verifica fuentes antes de compartir noticias o información sensible.</span>
+              <span>Insistí en verificar fuentes antes de reenviar noticias o información sensible al grupo del
+              curso — esto conecta directo con lo que van a trabajar en la Fase 03.</span>
             </li>
           </ul>
         </div>
@@ -70,7 +76,7 @@ export default function Paso2Section({ onNavigate }: Paso2SectionProps) {
         {/* Ejemplo visual */}
         <div className="flex flex-col gap-6">
           <div className="backdrop-blur-xl bg-[#141A28]/70 border border-slate-800/50 border-t-4 border-t-[#8B5CF6] p-6 rounded-3xl h-full">
-            <h4 className="text-[#8B5CF6] font-bold text-lg mb-3 font-display">Ejemplo de Buen Comentario</h4>
+            <h4 className="text-[#8B5CF6] font-bold text-lg mb-3 font-display">Un Ejemplo para Compartir con tu Curso</h4>
             <div className="bg-slate-900/80 p-4 rounded-2xl border border-slate-700 text-sm">
               <p className="text-slate-300 italic font-sans">
                 "Excelente punto. No había considerado esa perspectiva. ¿Podrías compartir tus fuentes? Estoy
@@ -79,7 +85,7 @@ export default function Paso2Section({ onNavigate }: Paso2SectionProps) {
             </div>
             <div className="mt-4 text-xs text-slate-400 font-sans">
               <p className="font-bold text-slate-300 mb-1">✓ ¿Por qué funciona?</p>
-              <p>Es constructivo, abierto, sin ego y busca aprender.</p>
+              <p>Es constructivo, abierto, sin ego y busca aprender. Podés usarlo como modelo en clase.</p>
             </div>
           </div>
         </div>
@@ -88,11 +94,12 @@ export default function Paso2Section({ onNavigate }: Paso2SectionProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="bg-gradient-to-r from-[#00F0FF]/10 to-transparent border border-[#00F0FF]/30 p-6 rounded-2xl">
           <h4 className="text-[#00F0FF] font-bold text-lg mb-2 flex items-center gap-2 font-display">
-            <span>🔍</span> Auditoría de Huella
+            <span>🔍</span> Auditoría de Huella (para vos y para ellos)
           </h4>
           <p className="text-slate-300 text-sm leading-relaxed font-sans">
-            Busca tu nombre en Google (Modo Incógnito). Revisa imágenes y resultados de la primera página. Esa es tu
-            huella digital pública actual. ¿Refleja al profesional que quieres ser?
+            Proponeles buscar su propio nombre en Google en modo incógnito y revisar qué aparece en la primera página:
+            fotos, comentarios, resultados. Esa es su huella digital pública hoy. Podés hacer el ejercicio vos primero,
+            como docente, para mostrar cómo se hace sin exponer a nadie.
           </p>
         </div>
         <div className="bg-gradient-to-r from-[#8B5CF6]/10 to-transparent border border-[#8B5CF6]/30 p-6 rounded-2xl">
@@ -100,8 +107,9 @@ export default function Paso2Section({ onNavigate }: Paso2SectionProps) {
             <span>🌱</span> Aporte de Valor
           </h4>
           <p className="text-slate-300 text-sm leading-relaxed font-sans">
-            Escribe hoy un mensaje de agradecimiento o un comentario constructivo en el perfil de un colega o creador
-            que valores. Construye red.
+            Proponeles escribir esta semana un comentario constructivo o un mensaje de agradecimiento en el perfil de
+            un compañero, docente o creador que valoren. Es una forma simple de empezar a construir una huella digital
+            positiva.
           </p>
         </div>
       </div>

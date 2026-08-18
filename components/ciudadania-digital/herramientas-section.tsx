@@ -13,14 +13,14 @@ interface HerramientasSectionProps {
 }
 
 export const CHECKLIST_ITEMS = [
-  { id: 'password', label: 'Cambié mis 3 contraseñas principales' },
-  { id: '2fa', label: 'Activé 2FA en Gmail, redes sociales, banco' },
-  { id: 'permissions', label: 'Revisé permisos de apps en móvil' },
-  { id: 'privacy', label: 'Ajusté privacidad en redes sociales a "amigos"' },
-  { id: 'cookies', label: 'Rechazé cookies no esenciales (últimas 3 visitas)' },
-  { id: 'google-search', label: 'Busqué mi nombre en Google Incógnito' },
-  { id: 'comments', label: 'Escribí un comentario constructivo esta semana' },
-  { id: 'fake-news', label: 'Detecté una noticia falsa usando el framework VERIFICA' },
+  { id: 'password', label: 'Cambié mis 3 contraseñas principales y le mostré el proceso a mi curso' },
+  { id: '2fa', label: 'Activé 2FA en mi correo institucional, redes sociales y banco' },
+  { id: 'permissions', label: 'Revisé los permisos de apps en mi celular junto con mis estudiantes' },
+  { id: 'privacy', label: 'Ajusté la privacidad de mis redes sociales, separando mi perfil docente del personal' },
+  { id: 'cookies', label: 'Rechacé cookies no esenciales en mis últimas navegaciones' },
+  { id: 'google-search', label: 'Busqué mi nombre en Google en modo incógnito' },
+  { id: 'comments', label: 'Trabajé con mi curso un ejemplo de comentario constructivo esta semana' },
+  { id: 'fake-news', label: 'Apliqué el framework VERIFICA en clase para analizar una noticia con mis estudiantes' },
 ];
 
 export default function HerramientasSection({
@@ -41,21 +41,21 @@ export default function HerramientasSection({
   const faqItems = [
     {
       id: 'faq-1',
-      question: '¿Mi privacidad está realmente en riesgo?',
+      question: '¿La privacidad de mis estudiantes está realmente en riesgo?',
       answer:
-        'Sí. Cada click, búsqueda y "like" es capturado y vendido a terceros. Grandes corporaciones construyen perfiles de comportamiento tuyo. La privacidad es un derecho; defenderla es un acto cívico.',
+        'Sí. Cada click, búsqueda y "me gusta" que hacen tus estudiantes es capturado y puede venderse a terceros. Grandes corporaciones construyen perfiles de comportamiento sobre cada chico y chica. La privacidad es un derecho, y enseñar a defenderla es parte de la formación ciudadana que le toca a la escuela.',
     },
     {
       id: 'faq-2',
-      question: '¿Pueden rastrearme incluso en "Modo Incógnito"?',
+      question: '¿Se puede rastrear a alguien incluso en "Modo Incógnito"?',
       answer:
-        'Técnicamente, tu ISP (proveedor de internet) sigue viendo lo que haces. Sitios web pueden rastrearte por IP, cookies persistentes, o técnicas avanzadas de fingerprinting. Es una capa más de privacidad, no es invulnerable.',
+        'Técnicamente sí. El ISP (proveedor de internet) sigue viendo la actividad, y los sitios web pueden rastrear por IP, cookies persistentes o técnicas de fingerprinting (identificación del dispositivo por sus características técnicas). Es útil que tus estudiantes entiendan que el modo incógnito es una capa más de privacidad, no una capa invulnerable.',
     },
     {
       id: 'faq-3',
-      question: '¿Cómo sé si una noticia es real?',
+      question: '¿Cómo les enseño a mis estudiantes a saber si una noticia es real?',
       answer:
-        'Nunca confíes en un solo medio. Usa el framework VERIFICA: verifica la fuente, busca evidencia múltiple, revisa tu sesgo, identifica cambios, verifica fecha y contexto, aplica intuición crítica, contrasta perspectivas y actúa responsablemente.',
+        'Insistí en que nunca confíen en un solo medio. El framework VERIFICA que trabajamos en la Fase 03 les da un método concreto: verificar la fuente, buscar evidencia múltiple, revisar el propio sesgo, identificar cambios o ediciones, verificar fecha y contexto, aplicar intuición crítica, contrastar perspectivas y actuar con responsabilidad antes de compartir.',
     },
   ];
 
@@ -70,9 +70,9 @@ export default function HerramientasSection({
       <div className="mb-10 border-b border-slate-800 pb-8 flex items-end justify-between">
         <div>
           <h2 className="text-4xl font-extrabold text-white mb-2 tracking-tight font-display">
-            Centro de Control
+            Centro de Recursos Docente
           </h2>
-          <p className="text-slate-400 text-lg font-sans">Métricas, auditoría y base de conocimientos.</p>
+          <p className="text-slate-400 text-lg font-sans">Herramientas, autoevaluación y respuestas frecuentes para llevar al aula.</p>
         </div>
         <div className="hidden md:block text-right">
           <div className="text-xs text-[#00F0FF] font-mono uppercase tracking-widest mb-1">Status Sistema</div>
@@ -89,7 +89,7 @@ export default function HerramientasSection({
           <div className="flex justify-between items-start mb-8">
             <div>
               <h3 className="font-bold text-white text-xl font-display">Mi Progreso</h3>
-              <p className="text-slate-400 text-sm font-sans">Completa tu protocolo de seguridad</p>
+              <p className="text-slate-400 text-sm font-sans">Completá tu propio checklist antes de llevarlo al aula</p>
             </div>
           </div>
 
@@ -124,9 +124,9 @@ export default function HerramientasSection({
               />
             </div>
             <p className="text-xs text-slate-400 mt-3 font-sans">
-              {percentage < 40 && '⚠️ Necesitas reforzar urgente'}
-              {percentage >= 40 && percentage < 80 && '✓ Buen progreso. Mantén el ritmo'}
-              {percentage >= 80 && '✨ ¡Excelente! Eres un ciudadano digital responsable'}
+              {percentage < 40 && '⚠️ Conviene reforzar antes de llevarlo al aula'}
+              {percentage >= 40 && percentage < 80 && '✓ Buen progreso. Vas bien encaminado/a'}
+              {percentage >= 80 && '✨ ¡Excelente! Estás listo/a para guiar a tu curso con el ejemplo'}
             </p>
           </div>
         </div>
@@ -137,7 +137,8 @@ export default function HerramientasSection({
             <h3 className="font-bold text-white text-xl font-display mb-4">Vulnerabilidades Detectadas</h3>
             <ErrorsChart />
             <p className="text-xs text-slate-400 mt-4 font-sans">
-              Los principales riesgos en tu ecosistema digital. Enfócate en los de mayor porcentaje.
+              Los principales riesgos que suelen aparecer en el ecosistema digital de un aula. Usalo como disparador para
+              priorizar en qué enfocarte primero con tu curso.
             </p>
           </div>
         </div>
@@ -189,11 +190,12 @@ export default function HerramientasSection({
 
         <div className="relative z-10">
           <h3 className="font-extrabold text-2xl text-white mb-3 flex items-center gap-3 font-display">
-            <span>🎓</span> Protocolo Completado
+            <span>🎓</span> Kit Docente Completado
           </h3>
           <p className="text-slate-400 max-w-xl leading-relaxed font-sans">
-            Has completado el protocolo básico. Eres un nodo seguro en la red. Mantén tus defensas actualizadas y
-            promueve la convivencia cívica en tus comunidades digitales.
+            Completaste el kit básico. Ahora tenés las herramientas para acompañar a tus estudiantes en su vida digital
+            con criterio propio. Mantené tus prácticas actualizadas y seguí promoviendo la convivencia cívica dentro y
+            fuera del aula.
           </p>
         </div>
 

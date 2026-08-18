@@ -48,11 +48,11 @@ const STEPS = [
     number: 1,
     title: "Auditoría: Conocé tu exposición",
     objective:
-      "Identificar exactamente qué información tuya es pública (huella activa) y qué datos se recopilaron sin tu atención plena (huella pasiva).",
+      "Identificar exactamente qué información tuya es pública (huella activa) y qué datos se recopilaron sin tu atención plena (huella pasiva) — la misma información que un estudiante curioso o una familia pueden encontrar en dos minutos de búsqueda.",
     instructions: [
       "Abrí una ventana en modo incógnito para evitar sesgos del algoritmo.",
-      'Realizá "Egosurfing": buscá tu nombre completo entre comillas (ej. "Juan Pérez").',
-      "Buscá tu correo principal y tu número de teléfono.",
+      'Realizá "Egosurfing" (buscar tu propio nombre en internet): buscá tu nombre completo entre comillas (ej. "Juan Pérez").',
+      "Buscá también tu correo principal y tu número de teléfono, sobre todo si alguna vez los compartiste en un grupo de WhatsApp de familias o en una plataforma escolar.",
       "Revisá la primera página de resultados y la sección de imágenes.",
     ],
     tip: 'Buscá en tu correo palabras como "Bienvenido", "Confirma tu cuenta" o "Verifica". Encontrarás decenas de foros, tiendas y apps donde te registraste hace años y olvidaste.',
@@ -79,13 +79,13 @@ const STEPS = [
     number: 3,
     title: "Blindaje: Protección y Netiqueta",
     objective:
-      "Configurar barreras técnicas y de comportamiento para evitar volver a generar una huella digital tóxica.",
+      "Configurar barreras técnicas y de comportamiento para evitar volver a generar una huella digital tóxica — y establecer límites claros entre tu vida digital personal y tu rol docente.",
     instructions: [
       "Sensores Biométricos: Evitá usar tu huella dactilar para apps financieras críticas. Las huellas pueden ser copiadas y no se pueden cambiar como una contraseña. Optá por contraseñas fuertes o 2FA.",
-      "Redes Wi-Fi: Nunca accedas a tu banco o correo desde un Wi-Fi público sin una VPN.",
-      "Netiqueta: Pensalo dos veces antes de publicar. No etiquetés a otros sin permiso ni subas fotos de terceros sin su consentimiento.",
+      "Redes Wi-Fi: Nunca accedas a tu banco o correo desde el Wi-Fi de la escuela o cualquier red pública sin una VPN (red privada virtual que protege tu conexión).",
+      "Netiqueta: Pensalo dos veces antes de publicar, sobre todo si hay estudiantes de por medio. No etiquetés a otros sin permiso, no subas fotos de estudiantes sin autorización de sus familias, y mantené separados tus perfiles personales de cualquier contacto con el curso.",
     ],
-    tip: 'Revisá la configuración de privacidad de Instagram/Facebook y limitala a "Solo Amigos". Desactivá la indexación de tu perfil en motores de búsqueda desde la configuración de la red social.',
+    tip: 'Revisá la configuración de privacidad de Instagram/Facebook y limitala a "Solo Amigos" — es habitual que estudiantes busquen y encuentren el perfil personal de un/a docente. Desactivá también la indexación de tu perfil en buscadores desde la configuración de la red social.',
     lab: "Cambiá la privacidad de tu red social principal y asegurate de usar un navegador centrado en la privacidad (como Brave o Firefox) para tu navegación diaria.",
     checkId: "task3",
     checkLabel: 'He ajustado la privacidad de mis redes a "Privado"',
@@ -103,7 +103,7 @@ const ERRORS = [
   },
   {
     title: "Falsa identidad completa",
-    desc: "Usar tus datos reales para probar servicios dudosos. Creá siempre correos alias para este tipo de registros.",
+    desc: "Usar tus datos reales para probar servicios dudosos. Creá siempre correos alias para este tipo de registros — sobre todo si estás probando una app o plataforma educativa nueva antes de recomendarla a tu curso.",
   },
 ]
 
@@ -114,7 +114,7 @@ const NEXT_STEPS = [
   },
   {
     title: "Instalá un gestor de contraseñas",
-    desc: "Dejá de reciclar claves. Usá herramientas seguras y únicas por cuenta.",
+    desc: "Dejá de reciclar claves. Usá herramientas seguras y únicas por cuenta — es un buen hábito para mostrarles también a tus estudiantes.",
   },
 ]
 
@@ -332,7 +332,7 @@ export default function HuellaDigitalContent() {
             className="text-center mb-16 space-y-4"
           >
             <div className="inline-block px-3 py-1 rounded-full bg-blue-100 text-blue-600 text-sm font-semibold mb-4">
-              Guía Accionable 2026
+              Guía Accionable 2026 · Docentes
             </div>
             <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
               Recuperá el Control de tu{" "}
@@ -341,8 +341,10 @@ export default function HuellaDigitalContent() {
               </span>
             </h1>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              Tu huella digital (activa y pasiva) habla por vos antes de que vos lo hagas. Esta guía te llevará
-              de la sobreexposición al control total en 3 pasos prácticos.
+              Como docente, tu huella digital habla por vos antes de que lo hagas vos: para tus estudiantes, para las
+              familias que buscan tu nombre antes de una reunión, y para la escuela. Esta guía te lleva de la
+              sobreexposición al control total en 3 pasos prácticos, que después podés convertir en una actividad para
+              trabajar con tu curso.
             </p>
             <div className="inline-flex items-start gap-3 p-4 mt-6 bg-green-50 border border-green-200 rounded-xl text-green-800 text-left">
               <Target className="w-5 h-5 mt-0.5 shrink-0" />
@@ -350,7 +352,8 @@ export default function HuellaDigitalContent() {
                 <p className="font-semibold">Meta del día:</p>
                 <p className="text-sm">
                   Sabrás que lo lograste cuando busques tu nombre en internet y{" "}
-                  <strong>solo aparezca lo que vos decidís mostrar</strong>.
+                  <strong>solo aparezca lo que vos decidís mostrar</strong> — algo especialmente importante cuando quien
+                  busca es un estudiante, una familia o la dirección de la escuela.
                 </p>
               </div>
             </div>
@@ -490,7 +493,8 @@ export default function HuellaDigitalContent() {
                   animate={{ opacity: 1 }}
                   className="mt-4 text-emerald-400 font-bold text-sm flex items-center gap-2"
                 >
-                  <Check className="w-4 h-4" /> ¡Completado! Tu huella digital está bajo control.
+                  <Check className="w-4 h-4" /> ¡Completado! Tu huella digital está bajo control — y ya tenés un ejemplo propio para
+                  mostrarles a tus estudiantes cómo se hace.
                 </motion.p>
               )}
             </div>
@@ -503,7 +507,8 @@ export default function HuellaDigitalContent() {
             </h2>
             <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
               <p className="text-sm text-slate-600 mb-4">
-                Usá este texto para solicitar la eliminación de tus datos a empresas o webmasters.
+                Usá este texto para solicitar la eliminación de tus datos a empresas o webmasters. Podés adaptarlo también
+                para dar de baja cuentas antiguas asociadas a tu correo institucional.
               </p>
               <div className="relative">
                 <textarea
@@ -586,10 +591,10 @@ export default function HuellaDigitalContent() {
                   </div>
                   <div>
                     <p className="text-xs font-bold text-blue-500 tracking-widest uppercase mb-0.5">
-                      Presentación completa
+                      Material para el aula
                     </p>
                     <h2 className="text-lg md:text-xl font-extrabold text-slate-900 font-display">
-                      Huella Digital — Galería
+                      Huella Digital — Recursos para el Aula
                     </h2>
                   </div>
                 </div>

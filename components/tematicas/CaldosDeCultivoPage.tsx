@@ -157,7 +157,7 @@ const ACADEMIC_CITATIONS: Citation[] = [
   },
   {
     author: 'Wardle y Derakhshan (2017)',
-    title: 'Information Disorder: Toward an Interdisciplinary Framework for Research and Policy Making',
+    title: 'Information Disorder: Toward an Interdisciplinary Framework for Research and Policy Making (Desorden informativo: hacia un marco interdisciplinario para la investigación y las políticas públicas)',
     publication: 'Consejo de Europa',
     url: 'https://rm.coe.int/information-disorder-toward-an-interdisciplinary-framework-for-researc/168076277c',
     topic: 'Taxonomía de desinformación, información errónea e información maliciosa',
@@ -165,7 +165,7 @@ const ACADEMIC_CITATIONS: Citation[] = [
   },
   {
     author: 'Vosoughi, Roy y Aral (2018)',
-    title: 'The spread of true and false news online',
+    title: 'The spread of true and false news online (La difusión de noticias verdaderas y falsas online)',
     publication: 'Science, Vol. 359, Issue 6380',
     url: 'https://doi.org/10.1126/science.aap9559',
     topic: 'Análisis de 126.000 cadenas de noticias en Twitter durante más de una década',
@@ -173,7 +173,7 @@ const ACADEMIC_CITATIONS: Citation[] = [
   },
   {
     author: 'McPherson, Smith-Lovin y Cook (2001)',
-    title: 'Birds of a Feather: Homophily in Social Networks',
+    title: 'Birds of a Feather: Homophily in Social Networks (Dios los cría y ellos se juntan: homofilia en las redes sociales)',
     publication: 'Annual Review of Sociology, Vol. 27',
     url: 'https://doi.org/10.1146/annurev.soc.27.1.415',
     topic: 'El principio de homofilia: por qué nos vinculamos con quienes se nos parecen',
@@ -181,7 +181,7 @@ const ACADEMIC_CITATIONS: Citation[] = [
   },
   {
     author: 'Elisabeth Noelle-Neumann (1974)',
-    title: 'The Spiral of Silence: A Theory of Public Opinion',
+    title: 'The Spiral of Silence: A Theory of Public Opinion (La espiral del silencio: una teoría de la opinión pública)',
     publication: 'Journal of Communication, Vol. 24, Issue 2',
     url: 'https://doi.org/10.1111/j.1460-2466.1974.tb00367.x',
     topic: 'Por qué las opiniones minoritarias tienden a callarse por miedo al aislamiento',
@@ -1560,7 +1560,7 @@ export function CaldosDeCultivoPage() {
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-all duration-300">
                       <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center gap-2 bg-white text-slate-900 font-extrabold text-sm sm:text-base px-6 py-3 rounded-full shadow-2xl">
-                        <ZoomIn className="w-5 h-5 text-orange-600" /> Ver a pantalla completa (Zoom & Pan)
+                        <ZoomIn className="w-5 h-5 text-orange-600" /> Ver a pantalla completa (acercar y desplazar)
                       </div>
                     </div>
                   </div>

@@ -138,7 +138,7 @@ const STYLES = `
 const ACADEMIC_CITATIONS = [
   {
     author: 'BJ Fogg (2009–2020)',
-    title: 'The Fogg Behavior Model (B = MAP)',
+    title: 'The Fogg Behavior Model (B = MAP) (El modelo de comportamiento de Fogg)',
     publication: 'Behavior Design Lab, Stanford University',
     url: 'https://www.behaviormodel.org/',
     topic: 'Motivación, capacidad y disparador como condición del comportamiento',
@@ -146,7 +146,7 @@ const ACADEMIC_CITATIONS = [
   },
   {
     author: 'Harry Brignull (2010–2023)',
-    title: 'Deceptive Patterns (ex-Dark Patterns)',
+    title: 'Deceptive Patterns (ex-Dark Patterns) (Patrones engañosos, antes "patrones oscuros")',
     publication: 'deceptive.design — Iniciativa de Patrones Engañosos',
     url: 'https://deceptive.design/about-us/dr-harry-brignull/',
     topic: 'Taxonomía de diseños que llevan a hacer algo no deseado',
@@ -154,7 +154,7 @@ const ACADEMIC_CITATIONS = [
   },
   {
     author: 'Federal Trade Commission (FTC, 2023)',
-    title: 'FTC Finalizes Order Requiring Fortnite Maker Epic Games to Pay $245 Million',
+    title: 'FTC Finalizes Order Requiring Fortnite Maker Epic Games to Pay $245 Million (La FTC finaliza la orden que obliga a Epic Games, creadora de Fortnite, a pagar 245 millones de dólares)',
     publication: 'Comisión Federal de Comercio de EE.UU. (FTC Official Release)',
     url: 'https://www.ftc.gov/news-events/news/press-releases/2023/03/ftc-finalizes-order-requiring-fortnite-maker-epic-games-pay-245-million-tricking-users-making',
     topic: 'Caso Epic Games / Fortnite: cargos no deseados mediante patrones oscuros',
@@ -162,7 +162,7 @@ const ACADEMIC_CITATIONS = [
   },
   {
     author: 'Daniel Kahneman (2011)',
-    title: 'Thinking, Fast and Slow',
+    title: 'Thinking, Fast and Slow (Pensar rápido, pensar despacio)',
     publication: 'Farrar, Straus and Giroux',
     url: 'https://us.macmillan.com/books/9780374533557/thinkingfastandslow/',
     topic: 'Sistema 1 y Sistema 2: decisiones automáticas bajo fatiga o presión',
@@ -170,7 +170,7 @@ const ACADEMIC_CITATIONS = [
   },
   {
     author: 'Edward Deci & Richard Ryan',
-    title: 'Self-Determination Theory',
+    title: 'Self-Determination Theory (Teoría de la autodeterminación)',
     publication: 'Self-Determination Theory International',
     url: 'https://selfdeterminationtheory.org/',
     topic: 'Autonomía como necesidad psicológica básica frente al control externo',
@@ -178,7 +178,7 @@ const ACADEMIC_CITATIONS = [
   },
   {
     author: 'Lawrence Lessig (1999–2006)',
-    title: '"Code is Law" — Code and Other Laws of Cyberspace',
+    title: '"Code is Law" — Code and Other Laws of Cyberspace ("El código es ley" — El código y otras leyes del ciberespacio)',
     publication: 'Harvard Magazine / Harvard Law School',
     url: 'https://harvardmagazine.com/2000/01/code-is-law-html',
     topic: 'El código como regulador invisible: la arquitectura digital legisla sin necesidad de prohibiciones explícitas',
@@ -186,7 +186,7 @@ const ACADEMIC_CITATIONS = [
   },
   {
     author: 'Richard Thaler & Cass Sunstein (2008)',
-    title: 'Nudge: Choice Architecture',
+    title: 'Nudge: Choice Architecture (Nudge: arquitectura de elección)',
     publication: 'Yale University Press',
     url: 'https://en.wikipedia.org/wiki/Nudge_theory',
     topic: 'La "arquitectura de la elección": cómo el diseño de las opciones orienta la decisión sin obligarla',
@@ -194,7 +194,7 @@ const ACADEMIC_CITATIONS = [
   },
   {
     author: 'European Data Protection Board (2022)',
-    title: 'Guidelines 3/2022 on Dark Patterns in Social Media Platform Interfaces',
+    title: 'Guidelines 3/2022 on Dark Patterns in Social Media Platform Interfaces (Directrices 3/2022 sobre patrones oscuros en interfaces de redes sociales)',
     publication: 'Comité Europeo de Protección de Datos (EDPB)',
     url: 'https://www.edpb.europa.eu/system/files/2022-03/edpb_03-2022_guidelines_on_dark_patterns_in_social_media_platform_interfaces_en.pdf',
     topic: 'Catálogo oficial europeo de patrones oscuros en redes sociales, con criterios de evaluación',
@@ -218,7 +218,7 @@ const ACADEMIC_CITATIONS = [
   },
   {
     author: 'Ruohonen et al. (2025)',
-    title: 'Ethical Issues in Dark Patterns Research',
+    title: 'Ethical Issues in Dark Patterns Research (Cuestiones éticas en la investigación sobre patrones oscuros)',
     publication: 'arXiv (preprint académico revisable)',
     url: 'https://arxiv.org/abs/2503.02981',
     topic: 'Evaluación ética trimembre (deontología, utilitarismo, ética de la virtud) aplicada al diseño de software',
@@ -251,7 +251,7 @@ const SECTION_VISUALS: { imageSrc: string; icon: LucideIcon; label: string; sour
 // ─── Franja de datos duros (estudio Comisión Europea 2022, FTC, Kühling & Sauerborn 2024) ───
 const KEY_STATS = [
   { value: '97%', label: 'Apps de la UE con al menos un patrón oscuro', source: 'Comisión Europea, 2022' },
-  { value: '$245M', label: 'Multa de la FTC a Epic Games / Fortnite', source: 'FTC, 2023' },
+  { value: '$245M', label: 'Multa de la FTC (agencia de comercio de EE.UU.) a Epic Games / Fortnite', source: 'FTC, 2023' },
   { value: '244 h', label: 'Lectura anual de políticas de privacidad que le exigiríamos a un usuario promedio', source: 'Estudio citado en Perception Lab' },
   { value: '40%', label: 'E-commerce europeo con prácticas de diseño engañoso', source: 'Kühling & Sauerborn, 2024' },
 ]
@@ -272,7 +272,7 @@ const DARK_PATTERNS_TAXONOMY: {
   legal: string
 }[] = [
   {
-    title: 'Privacy Zuckering',
+    title: 'Privacy Zuckering (configuración de privacidad deliberadamente confusa)',
     category: 'datos',
     mechanic: 'Ocultación de controles de privacidad o flujos laberínticos para extraer más datos de los necesarios. Es la antítesis del principio Privacy by Default.',
     impact: 'Pérdida de soberanía sobre la información personal y exposición a perfilados predictivos.',
@@ -280,7 +280,7 @@ const DARK_PATTERNS_TAXONOMY: {
     legal: 'Sancionado por el RGPD (art. 5) y la CCPA de California.',
   },
   {
-    title: 'Roach Motel',
+    title: 'Roach Motel (motel de cucarachas: fácil entrar, difícil salir)',
     category: 'tiempo',
     mechanic: 'Diseño que facilita enormemente la entrada (un clic para suscribirse) pero impone barreras extremas para la salida (varios pasos o una llamada telefónica para cancelar).',
     impact: 'Carga cognitiva, pérdida de tiempo y mantenimiento forzoso de costos recurrentes.',
@@ -304,7 +304,7 @@ const DARK_PATTERNS_TAXONOMY: {
     legal: 'Clasificado como engaño por la Comisión Europea y organismos de defensa del consumidor.',
   },
   {
-    title: 'Confirmshaming',
+    title: 'Confirmshaming (vergüenza por rechazar)',
     category: 'tiempo',
     mechanic: 'Redacción manipuladora de la opción de rechazo, diseñada para inducir culpa ("No, prefiero pagar el precio completo").',
     impact: 'Daño a la autonomía emocional y degradación de la confianza en la marca.',
@@ -550,8 +550,8 @@ const DARK_PATTERN_OPTIONS = [
   { id: 'countdown', label: 'Cuenta regresiva que "expira" en minutos', category: 'Urgencia Fabricada', weight: { urgencia: 40, ansiedad: 20, erosion: 15 } },
   { id: 'preselected', label: 'Casilla de suscripción ya tildada por defecto', category: 'Consentimiento Oculto', weight: { friccion: 20, erosion: 35, culpa: 5 } },
   { id: 'hidden_cost', label: 'Costos que aparecen recién en el último paso del pago', category: 'Costo Sorpresa', weight: { friccion: 15, ansiedad: 25, erosion: 15 } },
-  { id: 'roach_motel', label: 'Cancelar la cuenta exige 6 pasos; darse de alta, uno solo', category: 'Roach Motel', weight: { friccion: 50, erosion: 25 } },
-  { id: 'confirmshaming', label: 'Botón de rechazo: "No, prefiero seguir pagando de más"', category: 'Confirmshaming', weight: { culpa: 45, ansiedad: 10, erosion: 15 } },
+  { id: 'roach_motel', label: 'Cancelar la cuenta exige 6 pasos; darse de alta, uno solo', category: 'Roach Motel (motel de cucarachas)', weight: { friccion: 50, erosion: 25 } },
+  { id: 'confirmshaming', label: 'Botón de rechazo: "No, prefiero seguir pagando de más"', category: 'Confirmshaming (vergüenza por rechazar)', weight: { culpa: 45, ansiedad: 10, erosion: 15 } },
   { id: 'streak', label: 'Racha de días que se pierde si no volvés hoy', category: 'Miedo a Perder lo Acumulado', weight: { ansiedad: 35, urgencia: 15, erosion: 10 } },
 ]
 
@@ -1507,7 +1507,7 @@ export function DisenoPersuasivoPatronesOscurosPage() {
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-all duration-300">
                       <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center gap-2 bg-white text-slate-900 font-extrabold text-sm sm:text-base px-6 py-3 rounded-full shadow-2xl">
-                        <ZoomIn className="w-5 h-5 text-rose-600" /> Ver a pantalla completa (Zoom & Pan)
+                        <ZoomIn className="w-5 h-5 text-rose-600" /> Ver a pantalla completa (acercar y desplazar)
                       </div>
                     </div>
                   </div>

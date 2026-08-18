@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, BadgeCheck, CheckCircle2, ChevronDown, Clock, LockKeyhole } from 'lucide-react'
+import { ArrowRight, BadgeCheck, Check, CheckCircle2, ChevronDown, Clock, LockKeyhole } from 'lucide-react'
 import { groups } from '@/lib/tematicas-data'
+import { AUDIENCIAS_ORDENADAS, AUDIENCIA_LABELS, type Audiencia } from '@/lib/audiencias'
 import { useAppStore } from '@/lib/ciudadania/app-store'
 import { Footer } from '@/components/footer'
 
@@ -27,14 +28,37 @@ const containerVariants = {
 
 const totalTemas = groups.reduce((n, g) => n + g.items.length, 0)
 
+// Bypass de desbloqueo secuencial SOLO para desarrollo local, para poder
+// revisar todas las temáticas sin tener que completar cada quiz en orden.
+// Requiere NODE_ENV === 'development' explícito (nunca es 'production' en un
+// build de Vercel) Y la variable opt-in en .env.development.local — no toca
+// la lógica de desbloqueo que corre en producción.
+const UNLOCK_ALL_LOCAL =
+  process.env.NODE_ENV === 'development' &&
+  process.env.NEXT_PUBLIC_UNLOCK_ALL_LOCAL === 'true'
+
 export function TematicasDashboardContent() {
   const userId = useAppStore((s) => s.user?.id ?? null)
   const [progresoMap, setProgresoMap] = useState<Record<string, ProgresoTematica>>({})
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({})
+  // Filtro de públicos: selección única. El desbloqueo secuencial de cada
+  // grupo se calcula SIEMPRE sobre `group.items` completo (el índice importa
+  // para saber cuál es "la temática anterior") — el filtro solo decide qué
+  // tarjetas ya calculadas se muestran, nunca qué se calcula. Así el filtro
+  // puede ocultar/mostrar con animación sin romper el orden de desbloqueo.
+  // Ver content-management/PROPUESTA-AUDIENCIAS.md.
+  const [selectedAudiencia, setSelectedAudiencia] = useState<Audiencia | null>(null)
 
   const toggleGroup = (label: string) => {
     setOpenGroups((prev) => ({ ...prev, [label]: !prev[label] }))
   }
+
+  const selectAudiencia = (audiencia: Audiencia) => {
+    setSelectedAudiencia((prev) => (prev === audiencia ? null : audiencia))
+  }
+
+  const matchesAudienceFilter = (tema: { audiencias?: Audiencia[] }) =>
+    !selectedAudiencia || !!tema.audiencias?.includes(selectedAudiencia)
 
   useEffect(() => {
     if (!userId) return
@@ -92,6 +116,45 @@ export function TematicasDashboardContent() {
       {/* Grid por grupos */}
       <section className="py-12 md:py-16">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 space-y-14">
+
+          {/* Filtro de públicos */}
+          <div>
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">
+              Filtrar por público
+            </p>
+            <div className="flex flex-wrap gap-2.5" role="tablist" aria-label="Filtrar temáticas por público">
+              {AUDIENCIAS_ORDENADAS.map((audiencia) => {
+                const active = selectedAudiencia === audiencia
+                return (
+                  <button
+                    key={audiencia}
+                    type="button"
+                    role="tab"
+                    onClick={() => selectAudiencia(audiencia)}
+                    aria-selected={active}
+                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide border transition-colors duration-200 ${
+                      active
+                        ? 'bg-brand-blue border-brand-blue text-white'
+                        : 'bg-white border-slate-200 text-slate-500 hover:border-brand-blue/40 hover:text-brand-blue'
+                    }`}
+                  >
+                    {active && <Check className="w-3.5 h-3.5" />}
+                    {AUDIENCIA_LABELS[audiencia]}
+                  </button>
+                )
+              })}
+              {selectedAudiencia && (
+                <button
+                  type="button"
+                  onClick={() => setSelectedAudiencia(null)}
+                  className="inline-flex items-center px-4 py-2 rounded-full text-xs font-semibold text-slate-400 hover:text-brand-navy transition-colors duration-200"
+                >
+                  Limpiar filtro
+                </button>
+              )}
+            </div>
+          </div>
+
           {groups.map((group, gi) => {
             const isOpen = !!openGroups[group.label]
             // Cuenta solo temáticas con `completada: true` — no confundir con
@@ -144,30 +207,42 @@ export function TematicasDashboardContent() {
                     transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                     className="overflow-hidden"
                   >
+                    {(() => {
+                      // Calculado SIEMPRE sobre group.items completo (el
+                      // desbloqueo secuencial depende del índice real). El
+                      // filtro de audiencia se aplica después, solo sobre
+                      // qué tarjetas ya calculadas se muestran.
+                      const cardsCalculados = group.items.map((tema, ti) => {
+                        const sinContenido = !!tema.sinContenido
+                        let prevTema: typeof tema | undefined
+                        for (let pi = ti - 1; pi >= 0; pi--) {
+                          if (!group.items[pi].sinContenido) { prevTema = group.items[pi]; break }
+                        }
+                        const prevProg = prevTema ? progresoMap[prevTema.id] : undefined
+                        const unlocked = !sinContenido && (UNLOCK_ALL_LOCAL || group.label === 'Libres bajo influencia' || !prevTema || !!prevProg?.completada)
+                        return { tema, sinContenido, prevTema, unlocked }
+                      })
+                      const cardsVisibles = cardsCalculados.filter(({ tema }) => matchesAudienceFilter(tema))
+
+                      if (cardsVisibles.length === 0) {
+                        return (
+                          <p className="text-sm text-slate-400 pt-7">
+                            Ninguna temática de este grupo está clasificada para el público seleccionado.
+                          </p>
+                        )
+                      }
+
+                      return (
                     <motion.div
                       variants={containerVariants}
                       initial="hidden"
                       animate="visible"
                       className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-7"
                     >
-                      {group.items.map((tema, ti) => {
+                      <AnimatePresence mode="popLayout">
+                      {cardsVisibles.map(({ tema, prevTema, sinContenido, unlocked }) => {
                   const IconComponent = tema.icon
                   const prog = progresoMap[tema.id]
-                  const sinContenido = !!tema.sinContenido
-
-                  // La temática anterior "real" para la secuencia: saltea
-                  // cualquier ítem sin contenido, no cuenta ni bloquea.
-                  let prevTema: typeof tema | undefined
-                  for (let pi = ti - 1; pi >= 0; pi--) {
-                    if (!group.items[pi].sinContenido) { prevTema = group.items[pi]; break }
-                  }
-                  const prevProg = prevTema ? progresoMap[prevTema.id] : undefined
-                  // "Libres bajo influencia" queda desbloqueado completo para
-                  // cualquier usuario logueado (llegar a este dashboard ya
-                  // implica login) mientras se revisa el contenido recién
-                  // creado. A futuro pasa a secuencial como el resto de los
-                  // grupos.
-                  const unlocked = !sinContenido && (group.label === 'Libres bajo influencia' || !prevTema || !!prevProg?.completada)
 
                   const cardInner = (
                     <div
@@ -288,7 +363,14 @@ export function TematicasDashboardContent() {
                   )
 
                   return (
-                    <motion.div key={tema.title} variants={cardVariants}>
+                    <motion.div
+                      key={tema.title}
+                      layout
+                      variants={cardVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit={{ opacity: 0, scale: 0.85, transition: { duration: 0.2 } }}
+                    >
                       {unlocked ? (
                         <Link href={tema.href} scroll={true} className="group block h-full">
                           {cardInner}
@@ -301,7 +383,10 @@ export function TematicasDashboardContent() {
                     </motion.div>
                   )
                 })}
+                      </AnimatePresence>
                     </motion.div>
+                      )
+                    })()}
                   </motion.div>
                 )}
               </AnimatePresence>

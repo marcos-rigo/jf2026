@@ -1,11 +1,16 @@
 // Contenido base del grupo temático "Libres bajo influencia", adaptado de la
 // conferencia de José Farhat "Libres bajo influencia" (guion completo, 29/07)
-// dirigida a docentes. Las acotaciones de oratoria del guion original
+// dirigida a docentes. NOTA: pese a este origen, no todos los subtemas
+// heredan esa dirección explícita en su prosa final — el campo `audiencias`
+// de cada entrada refleja el texto tal como quedó, no el origen de la charla.
+// Ver content-management/PROPUESTA-AUDIENCIAS.md. Las acotaciones de oratoria del guion original
 // ("[Pausa...]", indicaciones de tono, control de tiempo) no se incluyen acá:
 // son notas para quien da la charla, no contenido para quien lee. Lo que se
 // conserva son las ideas, los autores citados, los casos y las frases de
 // cierre de cada bloque.
 //
+import type { Audiencia } from './audiencias'
+
 // Es contenido de primera pasada, pensado para editarse subtema por subtema:
 // la estructura tipada importa más que la prosa definitiva.
 
@@ -52,6 +57,11 @@ export interface LibresSubtopicContent {
   pdfLabel?: string
   infografiaUrl?: string
   infografiaAlt?: string
+  // Públicos a los que el contenido, tal como está redactado hoy, le sirve.
+  // Ausente = sin clasificar (contenido ambiguo/neutro) — el grupo entero
+  // nació "dirigido a docentes" pero no todos los subtemas heredaron esa
+  // dirección explícita. Ver content-management/PROPUESTA-AUDIENCIAS.md.
+  audiencias?: Audiencia[]
 }
 
 export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
@@ -161,6 +171,7 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
       { id: 9, question: 'En el caso de Sofía, ¿qué está pasando "en paralelo" mientras ella aprende los códigos de la comunidad?', options: ['Nada, la plataforma es neutral', 'La plataforma está aprendiendo sobre ella: qué mira, qué guarda, qué repite y qué la hace volver', 'Sofía deja de dibujar por completo', 'La comunidad le exige pagar una membresía'], correctIndex: 1 },
       { id: 10, question: '¿Por qué dice la charla que "las métricas no solo cuentan la popularidad, también la fabrican"?', options: ['Porque los números de likes y vistas son siempre falsos', 'Porque lo repetido se vuelve familiar, lo aprobado deseable y lo compartido, normal — las métricas moldean lo que después se imita', 'Porque las plataformas prohíben mostrar métricas', 'Porque la popularidad no tiene relación con el contenido'], correctIndex: 1 },
     ],
+    audiencias: ['docentes'],
   },
 
   // =============================================
@@ -253,7 +264,7 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
       {
         heading: 'Cuándo se pasa de la raya',
         paragraphs: [
-          '¿Y cuándo esa orientación se pasa de la raya? Cuando oculta, cuando confunde, cuando hace difícil salir. Ahí aparecen los patrones oscuros. Harry Brignull les puso ese nombre a los diseños que llevan a la persona a hacer algo que no quería hacer. La FTC (la agencia de comercio de Estados Unidos) documentó un catálogo: anuncios disfrazados de contenido, costos que aparecen recién al final, opciones ya tildadas por defecto, laberintos para cancelar, mecanismos para sacar datos por confusión.',
+          '¿Y cuándo esa orientación se pasa de la raya? Cuando oculta, cuando confunde, cuando hace difícil salir. Ahí aparecen los patrones oscuros. Harry Brignull les puso ese nombre a los diseños que llevan a la persona a hacer algo que no quería hacer. La FTC documentó un catálogo: anuncios disfrazados de contenido, costos que aparecen recién al final, opciones ya tildadas por defecto, laberintos para cancelar, mecanismos para sacar datos por confusión.',
         ],
         quote: 'Cuando entrar es fácil y salir cuesta un esfuerzo enorme, la arquitectura ya tomó partido.',
       },
@@ -385,6 +396,7 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
     pdfLabel: 'Presentación — Caldos de cultivo',
     infografiaUrl: '/img/tematicas/caldos-de-cultivo/infografia.webp',
     infografiaAlt: 'Infografía de Caldos de cultivo',
+    audiencias: ['docentes'],
   },
 
   // =============================================
@@ -444,6 +456,7 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
     pdfLabel: 'Presentación — Recuperar la agencia',
     infografiaUrl: '/img/tematicas/recuperar-la-agencia/infografia.webp',
     infografiaAlt: 'Infografía de Recuperar la agencia',
+    audiencias: ['docentes', 'familias', 'ninas-ninos-adolescentes'],
   },
 
   // =============================================
@@ -511,6 +524,7 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
     pdfLabel: 'Presentación — Ciudadanía digital: el poliedro',
     infografiaUrl: '/img/tematicas/poliedro-ciudadania-digital/infografia.webp',
     infografiaAlt: 'Infografía de Ciudadanía digital: el poliedro',
+    audiencias: ['docentes'],
   },
 ]
 

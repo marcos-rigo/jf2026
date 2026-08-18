@@ -778,7 +778,7 @@ const SOURCES: Citation[] = [
   {
     id: 'sep',
     type: 'Filosofía moral y epistemología',
-    title: 'Personal Autonomy — Autonomía kantiana vs. agencia',
+    title: 'Personal Autonomy (Autonomía personal) — Autonomía kantiana vs. agencia',
     author: 'Stanford Encyclopedia of Philosophy & Robert Audi / Immanuel Kant',
     summary: 'Distingue metódicamente entre agencia (capacidad ontológica de actuar) y autonomía (capacidad de autogobernarse según razones y principios reflexivos propios).',
     keyConcept: 'Autogobierno, agente moral, razón práctica.',
@@ -1500,7 +1500,7 @@ export function RecuperarLaAgenciaPage() {
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-all duration-300">
                       <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center gap-2 bg-white text-slate-900 font-extrabold text-sm sm:text-base px-6 py-3 rounded-full shadow-2xl">
-                        <ZoomIn className="w-5 h-5 text-emerald-600" /> Ver a pantalla completa (Zoom & Pan)
+                        <ZoomIn className="w-5 h-5 text-emerald-600" /> Ver a pantalla completa (acercar y desplazar)
                       </div>
                     </div>
                   </div>

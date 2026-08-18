@@ -196,36 +196,36 @@ const riesgosData = [
 const roadmapData = [
   {
     id: 1,
-    titulo: "Evaluar la madurez, no la edad",
-    desc: "No priorizar la edad cronológica para el primer dispositivo. Evaluar la capacidad demostrada de autocontrol, responsabilidad y tolerancia a la frustración.",
+    titulo: "Entender que la madurez importa más que la edad",
+    desc: "La decisión sobre el primer dispositivo es de la familia, pero como docente podés ayudar a leerla: la capacidad de autocontrol, responsabilidad y tolerancia a la frustración que ves en el aula es un buen indicador para orientar a las familias que te consultan.",
     icon: Brain,
     color: "from-brand-blue to-cyan-500",
   },
   {
     id: 2,
-    titulo: "Desconexión nocturna total",
-    desc: "Prohibir el dispositivo en el dormitorio. Dormir con el móvil triplica el riesgo de ciberacoso, sexting y contacto con desconocidos, además de eliminar la fase REM.",
+    titulo: "Leer el impacto de la falta de descanso",
+    desc: "Dormir con el móvil triplica el riesgo de ciberacoso, sexting y contacto con desconocidos, además de eliminar la fase REM. Un estudiante que llega agotado o disperso puede estar arrastrando esto — es un dato útil para entender lo que pasa en el aula y para conversarlo con la familia.",
     icon: Moon,
     color: "from-violet-500 to-brand-blue",
   },
   {
     id: 3,
-    titulo: "Alfabetización algorítmica",
-    desc: "Enseñar que el contenido que ven es una construcción interesada del algoritmo, no una realidad social fiel. El algoritmo amplifica lo que captura atención, no lo que es verdad.",
+    titulo: "Trabajar la alfabetización algorítmica en el aula",
+    desc: "Enseñales que el contenido que ven es una construcción interesada del algoritmo, no una realidad social fiel: el algoritmo amplifica lo que capta atención, no lo que es verdad. Es contenido que podés incorporar directamente a tus clases, no solo delegarlo a la familia.",
     icon: Eye,
     color: "from-brand-pink to-violet-500",
   },
   {
     id: 4,
-    titulo: "Ocio analógico estructurado",
-    desc: "El deporte y las relaciones cara a cara son los únicos capaces de entrenar la tolerancia a la frustración y la paciencia. La corteza prefrontal necesita estímulos reales.",
+    titulo: "Promover el ocio analógico también desde la escuela",
+    desc: "El deporte y las relaciones cara a cara son los únicos capaces de entrenar la tolerancia a la frustración y la paciencia. Los espacios extracurriculares y un recreo bien aprovechado cumplen ese rol tanto como cualquier actividad en casa.",
     icon: Heart,
     color: "from-emerald-500 to-teal-500",
   },
   {
     id: 5,
-    titulo: "Mentoría digital activa",
-    desc: "Probar juegos y apps con ellos. Pasar de la fiscalización a la mentoría. La familia es el mayor influencer: su presencia, empatía y sentido común son irremplazables.",
+    titulo: "Ser un adulto de referencia, no solo un fiscalizador",
+    desc: "Pasar de la fiscalización a la mentoría también aplica en el aula. Junto con la familia, sos uno de los adultos de referencia de tus estudiantes: tu presencia, empatía y sentido común dentro del aula son irremplazables.",
     icon: Ear,
     color: "from-amber-500 to-orange-400",
   },
@@ -484,7 +484,7 @@ export function HiperconectividadContent() {
               </motion.h1>
 
               <motion.p variants={fadeUp} className="text-lg md:text-xl text-slate-500 max-w-xl leading-relaxed">
-                La hiperconectividad digital está reconfigurando estructuralmente la psique adolescente. Un análisis basado en neurodesarrollo sobre cómo las redes sociales impactan la identidad, la salud mental y el desarrollo cognitivo.
+                La hiperconectividad digital está reconfigurando estructuralmente la psique adolescente — y eso también se ve en el aula. Un análisis basado en neurodesarrollo sobre cómo las redes sociales impactan la identidad, la salud mental y el desarrollo cognitivo de tus estudiantes, con herramientas para leer esas señales día a día.
               </motion.p>
 
               <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
@@ -493,7 +493,7 @@ export function HiperconectividadContent() {
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </a>
                 <a href="#hoja-de-ruta" className="px-7 py-3.5 rounded-full font-bold text-brand-navy glass border border-slate-200 hover:border-violet-300 hover:shadow-md transition-all duration-300">
-                  Guía para familias
+                  Guía para el aula
                 </a>
               </motion.div>
 
@@ -924,7 +924,7 @@ export function HiperconectividadContent() {
                   </span>
                 </h2>
                 <p className="text-white text-xl max-w-2xl mx-auto">
-                  Las tasas de autolesiones se triplicaron. Casi el 50% de los jóvenes reportó pensamientos autolíticos. La evidencia es concluyente.
+                  Las tasas de autolesiones se triplicaron. Casi el 50% de los jóvenes reportó pensamientos autolíticos. La evidencia es concluyente — y como docente, sos una de las primeras personas en posición de notar estas señales en el aula.
                 </p>
               </motion.div>
 
@@ -976,7 +976,7 @@ export function HiperconectividadContent() {
               </h2>
             </div>
             <p className="text-brand-navy max-w-sm lg:text-right text-base leading-relaxed font-medium">
-              El ocio digital ha mutado hacia entornos donde los peligros éticos y económicos se normalizan.
+              El ocio digital ha mutado hacia entornos donde los peligros éticos y económicos se normalizan — muchos de ellos invisibles para un adulto que no los busca activamente, también en el aula.
             </p>
           </motion.div>
 
@@ -1017,13 +1017,15 @@ export function HiperconectividadContent() {
           >
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-light-blue border border-brand-blue/20 text-brand-blue text-sm font-semibold mb-5">
               <Star className="w-4 h-4" />
-              Guía para familias y educadores
+              Guía para educadores
             </span>
             <h2 className="text-5xl lg:text-6xl font-display font-bold text-brand-navy mb-5">
               Hoja de ruta para la salud digital
             </h2>
             <p className="text-brand-navy text-xl max-w-2xl mx-auto font-medium">
-              La familia es el mayor influencer. Cinco pasos para pasar de la restricción pasiva al acompañamiento activo.
+              La familia es el mayor influencer, pero la escuela es el segundo entorno más presente en la vida de un
+              adolescente. Cinco pasos para pasar de la restricción pasiva al acompañamiento activo, dentro y fuera del
+              aula.
             </p>
           </motion.div>
 
@@ -1193,8 +1195,8 @@ export function HiperconectividadContent() {
                     <Images className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-violet-600 tracking-widest uppercase mb-0.5">Presentación</p>
-                    <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 font-display">Hiperconectividad Digital</h2>
+                    <p className="text-xs font-bold text-violet-600 tracking-widest uppercase mb-0.5">Material para el aula</p>
+                    <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 font-display">Hiperconectividad Digital — Recursos para el Aula</h2>
                   </div>
                 </div>
                 <span className="text-slate-400 text-sm font-mono shrink-0 bg-slate-100/50 px-3 py-1.5 rounded-full">
@@ -1269,7 +1271,7 @@ export function HiperconectividadContent() {
 
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.06] border border-white/10 text-white/60 text-sm font-semibold mb-6 backdrop-blur-sm">
               <Sparkles className="w-4 h-4 text-yellow-300" />
-              #SuMayorInfluencer es usted
+              #TambiénSosReferencia
             </div>
 
             <h2 className="text-4xl lg:text-6xl font-display font-bold text-white mb-6 leading-[1.05] max-w-3xl">
@@ -1280,7 +1282,7 @@ export function HiperconectividadContent() {
             </h2>
 
             <p className="text-white/50 text-lg max-w-2xl mb-10 leading-relaxed">
-              La estabilidad emocional de los jóvenes no puede ser subcontratada a una plataforma digital. Su presencia, empatía y sentido común son irremplazables en el entorno digital de sus hijos.
+              La estabilidad emocional de los estudiantes no puede ser subcontratada a una plataforma digital. Tu presencia, empatía y sentido común son irremplazables en el entorno digital de quienes tenés en el aula — junto con la familia, sos parte de esa red de sostén.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">

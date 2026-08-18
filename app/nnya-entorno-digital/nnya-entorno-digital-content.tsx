@@ -218,7 +218,7 @@ const pasosMediacion = [
   { id: 1, titulo: "Dialogá sin juzgar", desc: "Preguntales a qué juegan, a quiénes siguen en TikTok o Instagram y qué les divierte. Mostrar interés genuino abre las puertas para hablar de temas más difíciles después.", icono: MessageCircle, color: "bg-gradient-to-br from-brand-blue to-cyan-400" },
   { id: 2, titulo: "Configuren juntos", desc: "Sentate con ellos a revisar la privacidad de sus perfiles. Enseñales a poner cuentas en privado, desactivar la ubicación y gestionar quién puede comentar sus fotos.", icono: Settings, color: "bg-gradient-to-br from-emerald-400 to-teal-500" },
   { id: 3, titulo: "Chequeá su huella digital", desc: "Búscalos en Google juntos: revisá qué fotos, comentarios o perfiles son visibles para cualquier persona. Esa información conforma su reputación digital y puede acompañarlos durante años.", icono: Fingerprint, color: "bg-gradient-to-br from-cyan-500 to-brand-blue" },
-  { id: 4, titulo: "Pensamiento crítico", desc: "Ayudalos a dudar. ¿Esa noticia es real? ¿Ese influencer está sponsoreado? Fomentar la duda es la mejor defensa contra la desinformación y el grooming.", icono: Lightbulb, color: "bg-gradient-to-br from-amber-400 to-orange-500" },
+  { id: 4, titulo: "Pensamiento crítico", desc: "Ayudalos a dudar. ¿Esa noticia es real? ¿Ese influencer está sponsoreado? Fomentar la duda es la mejor defensa contra la desinformación y el grooming (cuando un adulto se gana la confianza de un menor en línea con fines de abuso).", icono: Lightbulb, color: "bg-gradient-to-br from-amber-400 to-orange-500" },
   { id: 5, titulo: "Confianza cero", desc: "Enseñales a no compartir datos personales —dirección, colegio, número de teléfono— con desconocidos en línea, aunque parezcan amigos. En Internet, la identidad de alguien no siempre es la que muestra.", icono: Lock, color: "bg-gradient-to-br from-rose-400 to-pink-500" },
   { id: 6, titulo: "Higiene digital", desc: "Establecé rutinas saludables: sin pantallas durante las comidas, activar el modo descanso antes de dormir y reservar espacios offline en familia. Pequeños hábitos que mejoran la concentración y el bienestar general.", icono: HeartPulse, color: "bg-gradient-to-br from-indigo-400 to-violet-500" },
   { id: 7, titulo: "Pacten los límites", desc: "La prohibición total rara vez funciona. Es mejor acordar horarios libres de pantallas (ej: durante la cena o antes de dormir) para cuidar su calidad del sueño.", icono: ShieldCheck, color: "bg-gradient-to-br from-brand-pink to-violet-500" },
@@ -235,7 +235,7 @@ const consejosRapidos = [
   { texto: "El modo avión ayuda a desconectar", icono: "✈️" },
   { texto: "Tu ejemplo también educa: los hábitos digitales se aprenden mirándote a vos", icono: "⭐" },
   { texto: "Si usás el teléfono en la cena, les mostrás que está bien hacerlo", icono: "📱" },
-  { texto: "Hablen sobre el cyberbullying", icono: "💬" },
+  { texto: "Hablen sobre el ciberbullying (el acoso entre pares por medios digitales)", icono: "💬" },
   { texto: "No todo lo que brilla en las plataformas digitales es real", icono: "🔍" },
   { texto: "Enseñales a verificar la información antes de creerla y compartirla", icono: "✅" },
 ]
