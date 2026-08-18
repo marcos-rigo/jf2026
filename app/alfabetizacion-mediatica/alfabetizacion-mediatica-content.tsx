@@ -387,9 +387,10 @@ export default function AlfabetizacionMediaticaContent() {
               </h1>
 
               <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-lg">
-                La infoxicación satura nuestra capacidad de decisión. Este entorno de entrenamiento de{" "}
-                <strong className="text-brand-navy">Alfabetización Mediática</strong> es tu herramienta para
-                evaluar, procesar y compartir datos con precisión en la era digital.
+                La infoxicación satura la capacidad de decisión de cualquiera: la tuya y la de tus estudiantes. Este
+                entorno de entrenamiento de{" "}
+                <strong className="text-brand-navy">Alfabetización Mediática</strong> es tu herramienta para evaluar,
+                procesar y compartir datos con precisión, y para después poder enseñarles el mismo método en el aula.
               </p>
 
               <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-lg shadow-slate-200/30 p-5 sm:p-6 rounded-2xl border-l-4 border-l-brand-blue hover:border-l-brand-pink transition-colors duration-300 group">
@@ -397,8 +398,9 @@ export default function AlfabetizacionMediaticaContent() {
                   <span className="text-lg">🎯</span> Tu Objetivo Principal
                 </h3>
                 <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                  Instalar un "cortafuegos mental" para neutralizar titulares engañosos y elevar la calidad de
-                  la información que consumís y distribuís.
+                  Instalar un "cortafuegos mental" para neutralizar titulares engañosos y elevar la calidad de la
+                  información que consumís y distribuís — y tener un método claro y replicable para enseñarles lo mismo a
+                  tus estudiantes.
                 </p>
               </div>
             </motion.div>
@@ -477,7 +479,8 @@ export default function AlfabetizacionMediaticaContent() {
                 Módulos de Entrenamiento
               </h2>
               <p className="text-slate-600 text-base sm:text-lg">
-                Procesá las tres habilidades base. Interactuá con los módulos para desplegar las metodologías.
+                Procesá las tres habilidades base. Interactuá con los módulos para desplegar las metodologías — cada uno
+                incluye un caso de estudio que podés llevar directo a una clase.
               </p>
             </div>
 
@@ -554,8 +557,9 @@ export default function AlfabetizacionMediaticaContent() {
                           <span className="absolute top-3 sm:top-4 right-3 sm:right-4 text-5xl sm:text-6xl opacity-60 group-hover:scale-110 transition-transform duration-500">⚡</span>
                           <h4 className="font-display font-extrabold text-lg sm:text-xl mb-3 sm:mb-4 relative z-10">Laboratorio Práctico</h4>
                           <p className="text-brand-light-blue/90 mb-5 sm:mb-6 leading-relaxed text-sm sm:text-base">
-                            Identificá la primera noticia que veas en tus redes. Antes de leerla, abrí una
-                            pestaña nueva y buscá el nombre del sitio + "credibilidad".
+                            Identificá la primera noticia que veas en tus redes. Antes de leerla, abrí una pestaña nueva y buscá el
+                            nombre del sitio + "credibilidad". Podés repetir el mismo ejercicio con tu curso, usando una noticia que
+                            ellos mismos hayan visto circular esa semana.
                           </p>
                           <button className="bg-white text-brand-navy font-bold py-3 px-6 rounded-xl hover:bg-brand-light-blue transition-all duration-300 w-max shadow-lg hover:shadow-xl hover:-translate-y-0.5">
                             Misión Aceptada
@@ -612,8 +616,9 @@ export default function AlfabetizacionMediaticaContent() {
                           <span className="absolute top-3 sm:top-4 right-3 sm:right-4 text-5xl sm:text-6xl opacity-60 group-hover:scale-110 transition-transform duration-500">🧠</span>
                           <h4 className="font-display font-extrabold text-lg sm:text-xl mb-3 sm:mb-4 relative z-10">Laboratorio Práctico</h4>
                           <p className="text-white/80 mb-5 sm:mb-6 leading-relaxed text-sm sm:text-base">
-                            Tomá un mensaje polémico reciente. Aplicá la matriz de 3 puntos: 1. Autoría, 2.
-                            Evidencia documentada, 3. Ganancia emocional del emisor.
+                            Tomá un mensaje polémico reciente —puede ser uno que haya circulado en el grupo de WhatsApp del curso o
+                            entre las familias— y aplicá la matriz de 3 puntos: 1. Autoría, 2. Evidencia documentada, 3. Ganancia
+                            emocional del emisor.
                           </p>
                           <button className="bg-white text-brand-pink font-bold py-3 px-6 rounded-xl hover:bg-rose-50 transition-all duration-300 w-max shadow-lg hover:shadow-xl hover:-translate-y-0.5">
                             Aplicar Matriz
@@ -668,8 +673,9 @@ export default function AlfabetizacionMediaticaContent() {
                           <span className="absolute top-3 sm:top-4 right-3 sm:right-4 text-5xl sm:text-6xl opacity-60 group-hover:scale-110 transition-transform duration-500">🛑</span>
                           <h4 className="font-display font-extrabold text-lg sm:text-xl mb-3 sm:mb-4 relative z-10">Laboratorio Práctico</h4>
                           <p className="text-cyan-100 mb-5 sm:mb-6 leading-relaxed text-sm sm:text-base">
-                            Configurá mentalmente un "Delay de 10 segundos". Ante un contenido que genere ira
-                            o urgencia, contá hasta 10 antes de tocar compartir.
+                            Configurá mentalmente un "Delay de 10 segundos". Ante un contenido que genere ira o urgencia, contá hasta
+                            10 antes de tocar compartir — y proponeles a tus estudiantes la misma pausa antes de reenviar algo al
+                            grupo del curso.
                           </p>
                           <button className="bg-white text-cyan-800 font-bold py-3 px-6 rounded-xl hover:bg-cyan-50 transition-all duration-300 w-max shadow-lg hover:shadow-xl hover:-translate-y-0.5">
                             Activar Delay
@@ -690,7 +696,8 @@ export default function AlfabetizacionMediaticaContent() {
                 Suite de Herramientas Pro
               </h2>
               <p className="text-slate-600 text-base sm:text-lg">
-                Métodos prácticos para evaluar información en tiempo real.
+                Métodos prácticos para evaluar información en tiempo real, listos para llevar al aula
+                tal como están.
               </p>
             </div>
 
@@ -744,7 +751,8 @@ export default function AlfabetizacionMediaticaContent() {
                       Analizador de Viabilidad
                     </h3>
                     <p className="text-slate-500 text-sm sm:text-base">
-                      Ejecutá esta matriz de validación antes de confirmar la distribución de cualquier dato.
+                      Ejecutá esta matriz de validación antes de confirmar la distribución de cualquier dato — funciona igual
+                      de bien antes de compartir algo en el grupo del curso o de las familias.
                     </p>
                   </div>
 
@@ -837,10 +845,10 @@ export default function AlfabetizacionMediaticaContent() {
                   </div>
                   <div>
                     <p className="text-xs font-bold text-brand-blue tracking-widest uppercase mb-0.5">
-                      Presentación
+                      Material para el aula
                     </p>
                     <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 font-display">
-                      Alfabetización Mediática
+                      Alfabetización Mediática — Recursos para el Aula
                     </h2>
                   </div>
                 </div>
@@ -950,8 +958,8 @@ export default function AlfabetizacionMediaticaContent() {
                     },
                     {
                       id: "faq2",
-                      q: "Manejo de conflictos al corregir pares",
-                      a: 'Sé amable al corregir: separar a la persona del error hace que sea más fácil que lo acepte. Formato sugerido: "La arquitectura de esta noticia es confusa; los registros originales indican lo siguiente..."',
+                      q: "Manejo de conflictos al corregir a un estudiante",
+                      a: 'Sé amable al corregir: separar a la persona del error hace que sea más fácil que lo acepte, sobre todo frente al resto del curso. Formato sugerido: "Esta noticia está armada de forma confusa; veamos juntos qué dicen las fuentes originales..."',
                     },
                   ] as { id: FaqId; q: string; a: string }[]
                 ).map((faq) => (
@@ -1006,7 +1014,7 @@ export default function AlfabetizacionMediaticaContent() {
                       01
                     </span>
                     <span>
-                      <strong className="text-white">Limpiá tus redes:</strong> Dejá de seguir al menos 3 cuentas que compartan información sin citar fuentes confiables.
+                      <strong className="text-white">Limpiá tus redes:</strong> Dejá de seguir al menos 3 cuentas que compartan información sin citar fuentes confiables (podés proponerles a tus estudiantes que hagan el mismo ejercicio con sus propias redes).
                     </span>
                   </li>
                   <li className="flex gap-3 items-start">

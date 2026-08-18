@@ -392,6 +392,7 @@ const nivelesAccion: NivelAccion[] = [
       "Desarrollar alfabetización algorítmica propia: entender cómo los sistemas te clasifican",
       "Ejercer derechos ARCO frente a decisiones automatizadas que te afecten",
       "Cultivar lo irreemplazable: sensibilidad, juicio ético, presencia genuina",
+      "Modelar frente a tus estudiantes tu propia soberanía digital: explicar en voz alta por qué desconfiás de una fuente o por qué revisás un dato antes de darlo por cierto.",
     ],
     color: "var(--brand-blue)",
   },
@@ -405,6 +406,7 @@ const nivelesAccion: NivelAccion[] = [
       "Crear comités de ética con perspectiva de género e interculturalidad",
       "Garantizar explicabilidad en decisiones automatizadas que afecten personas",
       "Priorizar bienestar humano sobre eficiencia algorítmica en cada diseño",
+      "Llevar estas preguntas a tu institución: ¿qué herramientas de IA usa la escuela y con qué criterios de transparencia?",
     ],
     color: "#059669",
   },
@@ -418,6 +420,7 @@ const nivelesAccion: NivelAccion[] = [
       "Fortalecer la ciudadanía digital como derecho, no solo habilidad técnica",
       "Proteger comunidades vulnerables de la violencia algorítmica sistémica",
       "Construir IA desde perspectivas diversas: género, cultura, territorio y clase",
+      "Formar en el aula la próxima generación de ciudadanos digitales: la alfabetización algorítmica que trabajás hoy con tus estudiantes es, a escala, la construcción de esa ciudadanía.",
     ],
     color: "var(--brand-pink)",
   },
@@ -785,7 +788,8 @@ export function IaEticaCiudadaniaContent() {
                 >
                   brújula ética y el enfoque antropocéntrico
                 </span>{" "}
-                con que la usamos.
+                con que la usamos — y la escuela es uno de los lugares donde esa brújula se construye,
+                clase a clase.
               </motion.p>
 
               {/* Society tags */}
@@ -906,10 +910,10 @@ export function IaEticaCiudadaniaContent() {
                   className="font-display font-bold text-brand-navy leading-tight mb-5"
                   style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
                 >
-                  Alfabetización Digital y el Rol de la Escuela
+                  Alfabetización Digital: tu Rol en el Aula
                 </h2>
                 <p className="text-slate-600 text-xl leading-relaxed max-w-2xl font-medium">
-                  La escuela ya no puede enseñar solo a leer y escribir. Debe
+                  Ya no alcanza con enseñar a leer y escribir. Como docente, tenés un rol central en
                   formar ciudadanos capaces de{" "}
                   <span className="font-bold text-brand-navy">
                     comprender, usar, pensar y crear
@@ -1030,12 +1034,11 @@ export function IaEticaCiudadaniaContent() {
                 <School className="w-9 h-9 text-brand-blue flex-shrink-0" />
                 <p className="text-slate-700 text-xl font-medium leading-relaxed">
                   <span className="font-bold text-brand-navy">
-                    La escuela como garante de equidad digital:
+                    Tu aula como garante de equidad digital:
                   </span>{" "}
-                  sin formación crítica en ciudadanía digital, las brechas
-                  tecnológicas se convierten en brechas de poder. La
-                  alfabetización digital no es una competencia técnica; es un
-                  derecho político.
+                  sin formación crítica en ciudadanía digital, las brechas tecnológicas se convierten en brechas de poder.
+                  Cada clase donde trabajás esto de forma explícita achica esa brecha. La alfabetización digital no es una
+                  competencia técnica; es un derecho político.
                 </p>
               </motion.div>
             </motion.div>
@@ -1077,7 +1080,8 @@ export function IaEticaCiudadaniaContent() {
                 <p className="text-xl leading-relaxed font-medium max-w-2xl" style={{ color: "rgba(255,255,255,0.85)" }}>
                   ¿La IA desplaza o amplía? La respuesta depende del tipo de
                   sistema y del perfil profesional. El relato del reemplazo total
-                  es más simple que la realidad.
+                  es más simple que la realidad — y es exactamente la
+                  conversación que tus estudiantes van a necesitar tener sobre su propio futuro profesional.
                 </p>
               </motion.div>
 
@@ -2052,7 +2056,8 @@ export function IaEticaCiudadaniaContent() {
                   La Sociedad 5.0 exige ciudadanos capaces de entender los
                   sistemas que los gobiernan y ejercer su soberanía digital. Ese
                   es el horizonte del marco humanista: tecnología al servicio de
-                  la dignidad, no al revés.
+                  la dignidad, no al revés. Como
+                  docente, sos parte de quienes forman a esos ciudadanos, antes de que lo hagan los algoritmos.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <a
