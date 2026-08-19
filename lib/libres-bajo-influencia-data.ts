@@ -92,7 +92,7 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
         heading: 'De comunidad a subcultura',
         paragraphs: [
           'Una comunidad reúne gente alrededor de un interés. Una subcultura digital hace algo más grande: crea códigos propios — lenguaje, símbolos, referentes, estéticas, rituales, normas y formas de reconocimiento. Henri Tajfel y John Turner mostraron que una parte de quiénes somos se construye con los grupos a los que pertenecemos: el grupo da cuidado y sentido, pero el mismo grupo puede empezar a marcar qué se puede decir, qué hay que celebrar y qué hay que rechazar para seguir siendo parte.',
-          'Pertenecer no es el problema. Una subcultura puede ser creativa, educativa, incluso protectora. El riesgo aparece cuando una sola comunidad se queda con toda la identidad de la persona, o cuando convierte la diferencia en traición.',
+          'Pertenecer no es el problema. Una subcultura puede ser creativa, educativa, incluso protectora. El riesgo aparece cuando una sola comunidad se queda con toda la identidad de la persona, o cuando convierte la diferencia en traición. Es la misma dinámica que se puede ver, a escala reducida, en el grupo de WhatsApp de un curso.',
         ],
         quote: 'Las subculturas digitales no solo reúnen personas: enseñan cómo mirar, cómo hablar y qué conductas reciben aplausos.',
       },
@@ -109,7 +109,7 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
         heading: 'Normas que nunca están escritas',
         paragraphs: [
           '¿Cómo se aprenden esas normas, si casi nunca están escritas en ningún lado? Se aprenden mirando. Una publicación con miles de reproducciones y aprobaciones ya envía una señal antes de que nadie la analice: esto importa, esto gusta, esto pertenece. Robert Cialdini lo llamó prueba social — la tendencia a mirar a los demás cuando no sabemos bien qué pensar o hacer. Albert Bandura mostró que aprendemos observando modelos y observando qué les pasa a esos modelos.',
-          'Las métricas, entonces, no solo cuentan la popularidad: también la fabrican. Lo repetido se vuelve familiar. Lo aprobado se vuelve deseable. Lo compartido, poco a poco, se vuelve normal.',
+          'Las métricas, entonces, no solo cuentan la popularidad: también la fabrican. Lo repetido se vuelve familiar. Lo aprobado se vuelve deseable. Lo compartido, poco a poco, se vuelve normal. Reconocer esta lógica ayuda a leer lo que pasa en la propia aula, sin necesidad de entender cada plataforma en detalle.',
         ],
         quote: 'Las normas más influyentes casi nunca están escritas: están a la vista, en aquello que recibe atención.',
       },
@@ -187,7 +187,7 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
       'Cómo cada gesto digital deja una señal, cómo esas señales se convierten en un perfil, y qué significa realmente que un sistema "nos conozca".',
     authors: ['Shoshana Zuboff', 'Daniel Solove', 'Michel Foucault', 'Eli Pariser'],
     intro:
-      'Cuando pensamos en "datos personales" imaginamos el nombre, el domicilio, la fecha de nacimiento. Pero comunicamos muchísimo más con nuestras acciones: buscar, mirar, pausar, descartar, comentar, volver. Ninguno de esos gestos revela exactamente quiénes somos, pero juntos permiten encontrar regularidades. Shoshana Zuboff usa una expresión fuerte para describir esto: capitalismo de vigilancia — modelos de negocio que toman experiencias humanas y las transforman en datos, y esos datos en productos de predicción. Y esto conviene tenerlo claro, porque desactiva un poco el miedo: no hace falta imaginar una plataforma que lo sabe todo. Le alcanza con estimar qué es lo que probablemente va a captar nuestra atención. No adivina el alma. Calcula la probabilidad.',
+      'Cuando pensamos en "datos personales" imaginamos el nombre, el domicilio, la fecha de nacimiento. Pero comunicamos muchísimo más con nuestras acciones: buscar, mirar, pausar, descartar, comentar, volver. Ninguno de esos gestos revela exactamente quiénes somos, pero juntos permiten encontrar regularidades. Shoshana Zuboff usa una expresión fuerte para describir esto: capitalismo de vigilancia — modelos de negocio que toman experiencias humanas y las transforman en datos, y esos datos en productos de predicción. Y esto conviene tenerlo claro, porque desactiva un poco el miedo: no hace falta imaginar una plataforma que lo sabe todo. Le alcanza con estimar qué es lo que probablemente va a captar nuestra atención. No adivina el alma. Calcula la probabilidad. Esto también pasa en el aula: la mayoría de las plataformas educativas que un estudiante usa hoy —desde una app de tareas hasta un sistema de gestión de aula— también recolecta señales y construye, aunque no lo diga con esas palabras, un perfil.',
     sections: [
       {
         heading: 'De la señal al perfil',
@@ -212,6 +212,14 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
           'La pregunta, entonces, no es "toda personalización o ninguna". La pregunta es cuánto poder le queremos dar a un perfil para que decida qué podemos conocer, comprar, creer o descubrir.',
         ],
         quote: 'Cuando una etiqueta empieza a decidir por nosotros, la libertad se achica.',
+      },
+      {
+        heading: 'Qué significa esto para el aula',
+        paragraphs: [
+          'Enseñar a leer esto es, ni más ni menos, una forma de alfabetización algorítmica: entender que cada clic, cada pausa y cada búsqueda deja una huella que alguien, en algún lugar, está interpretando.',
+          'De ahí se desprenden algunas orientaciones concretas. Explicar que los datos no son solo lo que se completa en un formulario, sino también lo que se hace: buscar, mirar, pausar, volver. Proponer un ejercicio simple y revelador: comparar el feed de dos estudiantes frente al mismo tema y notar cuánto cambia, para que la burbuja de filtros deje de ser un concepto abstracto y se vuelva algo visible. Trabajar la pregunta "¿por qué me está mostrando esto?" como un hábito crítico, no como paranoia. Y nombrar, sin dramatismo, que la discriminación algorítmica más difícil de ver es la que nunca muestra una oportunidad, para que un estudiante entienda que no todo lo que no aparece es azar.',
+        ],
+        quote: 'En el aula, tal como en cualquier plataforma, cada clic construye una versión probable de quién es cada estudiante — enseñar a notarlo es el primer paso para no quedar del todo a merced de esa versión.',
       },
     ],
     caseStudy: {
@@ -252,7 +260,7 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
       'Por qué la influencia digital rara vez llega como una orden, y dónde está la línea entre un diseño que ayuda y uno que manipula.',
     authors: ['BJ Fogg', 'Harry Brignull', 'Daniel Kahneman', 'Edward Deci y Richard Ryan'],
     intro:
-      'La influencia digital rara vez llega como una orden. Casi nunca una plataforma nos dice "tenés que hacer esto". Funciona de otra manera, más suave: haciendo que una conducta sea más fácil, más visible y más oportuna. BJ Fogg estudió las tecnologías diseñadas para cambiar comportamientos y encontró una fórmula sencilla: cuando coinciden motivación, facilidad y un disparador en el momento justo, sube la probabilidad de que actuemos.',
+      'La influencia digital rara vez llega como una orden. Casi nunca una plataforma nos dice "tenés que hacer esto". Funciona de otra manera, más suave: haciendo que una conducta sea más fácil, más visible y más oportuna. BJ Fogg estudió las tecnologías diseñadas para cambiar comportamientos y encontró una fórmula sencilla: cuando coinciden motivación, facilidad y un disparador en el momento justo, sube la probabilidad de que actuemos. Los estudiantes se cruzan con esto todos los días, en los mismos juegos y apps que usan para divertirse: reconocerlo es una habilidad que se puede enseñar.',
     sections: [
       {
         heading: 'Ni bueno ni malo por sí mismo',
@@ -275,6 +283,14 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
           'Miren cómo aparece esto disfrazado: una cuenta regresiva no agrega ninguna información nueva, agrega presión. Una racha de días no solo muestra continuidad, agrega miedo a perder lo acumulado. Una notificación no solo informa, enciende la expectativa de que alguien nos reconoció.',
         ],
         quote: 'El problema no es tener emociones. El problema es no darnos cuenta cuándo un diseño fue construido alrededor de ellas.',
+      },
+      {
+        heading: 'Qué significa esto para el aula',
+        paragraphs: [
+          'El caso de Epic Games no es un ejemplo lejano: es exactamente el tipo de mecánica —rachas, cuentas regresivas, recompensas— que aparece todos los días en los juegos y apps que los estudiantes ya usan. Nombrar la técnica cuando aparece le quita buena parte de su poder: no es lo mismo sentir la presión de una racha que se rompe que poder decir "esto es una racha, está diseñada para que no la corte".',
+          'De ahí se desprenden algunas orientaciones concretas. Usar el caso de Epic Games como disparador de conversación, con el número real de reembolsos, no como una anécdota abstracta. Compartir la pregunta de Fogg y de Deci y Ryan como una herramienta que se puede aplicar a cualquier app: ¿este diseño apoya algo que yo ya quería hacer, o me está empujando hacia algo que no elegí? Y animarse a mirar con la misma lupa las propias herramientas educativas: varias apps de estudio usan rachas, insignias y cuentas regresivas con la misma lógica, y vale la pena preguntarse si en ese caso la técnica está del lado del estudiante o en su contra.',
+        ],
+        quote: 'Nombrar la técnica —"esto es una racha", "esto es una cuenta regresiva"— es el primer paso para dejar de estar solo del lado de quien la sufre.',
       },
     ],
     caseStudy: {
@@ -418,7 +434,7 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
         heading: 'Pausar, preguntar, elegir',
         paragraphs: [
           '¿Cómo se entrena esa capacidad, justo en el momento del impulso, que es el momento difícil? Con una secuencia de tres verbos: pausar, preguntar, elegir. Pausar crea una distancia mínima entre el estímulo y la respuesta. Preguntar convierte una reacción automática en una evaluación. Y elegir devuelve el protagonismo. Dejar el teléfono treinta segundos antes de responder algo que da bronca parece una nimiedad, pero cambia por completo la situación.',
-          'Cinco preguntas simples pueden acompañar esa pausa, para adultos y para chicos: ¿por qué me aparece esto justo a mí? ¿Qué quiere que yo haga? ¿Qué emoción me está tocando? ¿Qué dato estoy entregando? ¿Qué otra opción tengo?',
+          'Cinco preguntas simples pueden acompañar esa pausa, para adultos y para chicos: ¿por qué me aparece esto justo a mí? ¿Qué quiere que yo haga? ¿Qué emoción me está tocando? ¿Qué dato estoy entregando? ¿Qué otra opción tengo? Convertir estas cinco preguntas en un cartel o una rutina fija antes de usar el celular en clase es una forma simple de instalar la pausa como hábito, no como excepción.',
         ],
         quote: 'La agencia no es controlar todo: es poder decidir mejor.',
       },
@@ -426,7 +442,7 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
         heading: 'Leer hacia los costados',
         paragraphs: [
           'Para lo que leemos, Mike Caulfield propone algo muy práctico llamado lectura lateral: en vez de quedarse dentro de una página tratando de decidir si es confiable mirándola por dentro, salir de ella — abrir otra pestaña, buscar quién publica eso, contrastar, rastrear hasta la fuente original. Los verificadores profesionales no leen hacia abajo: leen hacia los costados. Preguntar, en este sentido, no es desconfiar de todo ni volverse cínico: es aprender a confiar con razones.',
-          'Algunas prácticas concretas ayudan a sostener esto en el tiempo: revisar los permisos que dimos, ordenar las notificaciones, crear pausas reales, diversificar las fuentes, conversar antes de reaccionar.',
+          'Algunas prácticas concretas ayudan a sostener esto en el tiempo: revisar los permisos que dimos, ordenar las notificaciones, crear pausas reales, diversificar las fuentes, conversar antes de reaccionar. Trabajar la lectura lateral con una noticia real que haya circulado esa semana en el curso convierte la técnica en algo tangible, en vez de una instrucción abstracta.',
         ],
         quote: 'Preguntar también es una forma de cuidado. Y es ciudadanía digital.',
       },

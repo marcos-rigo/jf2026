@@ -52,6 +52,7 @@ export const groups: TematicaGroup[] = [
         icon: Shield,
         color: "#4272BB",
         locked: true,
+        audiencias: ["docentes"],
       },
       {
         id: "huella-digital",
@@ -64,7 +65,7 @@ export const groups: TematicaGroup[] = [
         icon: Eye,
         color: "#D5247A",
         locked: true,
-        audiencias: ["familias"],
+        audiencias: ["familias", "docentes"],
       },
       {
         id: "hiperconectividad-digital",
@@ -109,6 +110,7 @@ export const groups: TematicaGroup[] = [
         icon: Search,
         color: "#00D4AA",
         locked: true,
+        audiencias: ["docentes"],
       },
       {
         id: "ia-etica-ciudadania",
@@ -265,14 +267,14 @@ export const groups: TematicaGroup[] = [
         id: "cibercrianza",
         href: "/tematicas/cibercrianza",
         category: "Cibercrianza",
-        title: "¿Sabés dónde interactúan tus hijos?",
-        description: "Cibercrianza: datos reales, quiz interactivo y claves para acompañar a tus hijos en el entorno digital.",
+        title: "¿Sabés dónde interactúan tus estudiantes?",
+        description: "Cibercrianza: datos reales, quiz interactivo y claves para acompañar a tus estudiantes en el entorno digital.",
         image: "/img/tematicas/cibercrianza_card.png",
         imageAlt: "Banner Cibercrianza",
         icon: Users,
         color: "#14B8A6",
         locked: false,
-        audiencias: ["familias"],
+        audiencias: ["familias", "docentes"],
       },
       {
         id: "nnya-entorno-digital",

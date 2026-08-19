@@ -327,9 +327,10 @@ export function EstafasDigitalesContent() {
               </h1>
 
               <p className="text-base sm:text-lg text-slate-600 mb-6 sm:mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0">
-                Los ciberdelincuentes están utilizando Inteligencia Artificial para crear fraudes
-                bancarios y móviles más sofisticados. Conoce cómo operan, cómo detectarlos y qué
-                hacer si caes en la trampa.
+                Los ciberdelincuentes están utilizando Inteligencia Artificial para crear fraudes bancarios y móviles más
+                sofisticados — y tus estudiantes, sobre todo los más grandes que ya manejan sus propias cuentas o
+                dispositivos, son un blanco cada vez más común. Conocé cómo operan, cómo detectarlos y qué hacer si vos o
+                alguien de tu curso cae en la trampa.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
@@ -462,8 +463,9 @@ export function EstafasDigitalesContent() {
               Las 3 formas más comunes de estafa
             </h2>
             <p className="text-slate-600 text-sm sm:text-base">
-              Desde correos falsos hasta voces clonadas por IA. Entiende la diferencia fundamental
-              entre estos tres métodos y cómo los atacantes juegan con tus emociones.
+              Desde correos falsos hasta voces clonadas por IA. Entendé la diferencia fundamental entre estos tres
+              métodos y cómo los atacantes juegan con las emociones — el mismo mecanismo que veas acá le sirve a tus
+              estudiantes para reconocerlo en sus propias redes.
             </p>
           </motion.div>
 
@@ -555,8 +557,9 @@ export function EstafasDigitalesContent() {
                 </motion.div>
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-extrabold mb-3 sm:mb-4">¿Caíste en la trampa?</h2>
                 <p className="text-red-100 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-                  No pierdas tiempo. Los primeros 5 minutos son cruciales para evitar que los
-                  atacantes tomen el control de tu dinero y tu información.
+                  No pierdas tiempo. Los primeros 5 minutos son cruciales para evitar que los atacantes tomen el control de
+                  tu dinero y tu información. Si un estudiante te cuenta que le pasó algo parecido, esta misma secuencia le
+                  sirve a él o ella.
                 </p>
               </motion.div>
 
@@ -611,10 +614,10 @@ export function EstafasDigitalesContent() {
                 </div>
                 <div>
                   <p className="text-xs font-bold text-brand-blue tracking-widest uppercase mb-0.5">
-                    Presentación
+                    Material para el aula
                   </p>
                   <h2 className="text-lg sm:text-xl md:text-2xl font-display font-extrabold text-brand-navy">
-                    Estafas Digitales
+                    Estafas Digitales — Recursos para el Aula
                   </h2>
                 </div>
               </div>
@@ -706,8 +709,8 @@ export function EstafasDigitalesContent() {
                 Dónde denunciar en Argentina
               </h2>
               <p className="text-slate-600 text-sm sm:text-base">
-                Si fuiste víctima de un ciberdelito, el Estado cuenta con herramientas y fiscalías
-                especializadas para asesorarte y tomar tu denuncia.
+                Si fuiste víctima de un ciberdelito —o un estudiante te cuenta que lo fue—, el Estado cuenta con
+                herramientas y fiscalías especializadas para asesorar y tomar la denuncia.
               </p>
             </div>
           </motion.div>
@@ -732,9 +735,9 @@ export function EstafasDigitalesContent() {
                   UFECI (Nacional)
                 </h4>
                 <p className="text-sm text-slate-600 mb-4 leading-relaxed">
-                  Unidad Fiscal Especializada en Ciberdelincuencia. Para denunciar grooming (el
-                  acoso de un adulto a un menor con fines de abuso) u otros delitos informáticos a
-                  nivel nacional.
+                  Unidad Fiscal Especializada en Ciberdelincuencia. Para denunciar grooming (el acoso de un adulto a un menor
+                  con fines de abuso) u otros delitos informáticos a nivel nacional. Si un estudiante te cuenta algo que
+                  suene a esto, este es el canal formal, además del protocolo de tu institución.
                 </p>
                 <ul className="text-sm space-y-2 text-slate-700">
                   <li className="flex items-start gap-2">

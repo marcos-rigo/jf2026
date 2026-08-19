@@ -378,23 +378,23 @@ const disenioDigital: DisenioCard[] = [
 ]
 
 const preguntas: Pregunta[] = [
-  { id:1,  texto:"¿Sabés en qué redes sociales tiene cuenta tu hijo/a?", opciones:[{texto:"Sí, conozco todas",puntos:10},{texto:"Algunas, no todas",puntos:5},{texto:"No tengo idea",puntos:0}] },
-  { id:2,  texto:"¿Sabés con quién habla tu hijo/a por WhatsApp, chats o juegos online?", opciones:[{texto:"Conozco a sus contactos principales",puntos:10},{texto:"Solo a algunos",puntos:5},{texto:"No lo sé",puntos:0}] },
+  { id:1,  texto:"¿Sabés en qué redes sociales tiene cuenta cada estudiante?", opciones:[{texto:"Sí, conozco todas",puntos:10},{texto:"Algunas, no todas",puntos:5},{texto:"No tengo idea",puntos:0}] },
+  { id:2,  texto:"¿Sabés con quién habla tu estudiante por WhatsApp, chats o juegos online?", opciones:[{texto:"Conozco a sus contactos principales",puntos:10},{texto:"Solo a algunos",puntos:5},{texto:"No lo sé",puntos:0}] },
   { id:3,  texto:"¿Alguna vez hablaron en familia sobre lo que se puede y no se puede compartir en internet?", opciones:[{texto:"Sí, lo conversamos seguido",puntos:10},{texto:"Una o dos veces",puntos:5},{texto:"Nunca lo hablamos",puntos:0}] },
-  { id:4,  texto:"¿Tu hijo/a sabe que puede contarte si algo lo incomoda o asusta en internet?", opciones:[{texto:"Sí, tiene confianza para hacerlo",puntos:10},{texto:"Creo que sí, pero no estoy seguro/a",puntos:5},{texto:"Probablemente no me lo diría",puntos:0}] },
+  { id:4,  texto:"¿Tu estudiante sabe que puede contarte si algo lo incomoda o asusta en internet?", opciones:[{texto:"Sí, tiene confianza para hacerlo",puntos:10},{texto:"Creo que sí, pero no estoy seguro/a",puntos:5},{texto:"Probablemente no me lo diría",puntos:0}] },
   { id:5,  texto:"¿Conocés qué tipo de contenido consumen habitualmente (videos, juegos, influencers)?", opciones:[{texto:"Sí, tengo bastante idea",puntos:10},{texto:"Algo, pero no en detalle",puntos:5},{texto:"No tengo idea",puntos:0}] },
-  { id:6,  texto:"¿Tienen acuerdos en casa sobre el uso del celular (horarios, espacios, límites)?", opciones:[{texto:"Sí, acordamos reglas juntos con nuestros hijos",puntos:10},{texto:"Hay algunas reglas pero no siempre se cumplen",puntos:5},{texto:"No hay acuerdos establecidos",puntos:0}] },
-  { id:7,  texto:"¿Sabés qué son los algoritmos y cómo pueden influir en lo que ven tus hijos?", opciones:[{texto:"Sí, lo entiendo bien",puntos:10},{texto:"Tengo una idea básica",puntos:5},{texto:"No sé qué son",puntos:0}] },
-  { id:8,  texto:"Si tu hijo/a recibiera un mensaje de un desconocido en un juego o red social, ¿sabés cómo reaccionaría?", opciones:[{texto:"Sí, lo hemos hablado y sabe qué hacer",puntos:10},{texto:"Creo que bien, pero no lo hemos hablado",puntos:5},{texto:"No lo sé",puntos:0}] },
+  { id:6,  texto:"¿Tienen acuerdos con el curso sobre el uso del celular (horarios, espacios, límites)?", opciones:[{texto:"Sí, acordamos reglas juntos con el curso",puntos:10},{texto:"Hay algunas reglas pero no siempre se cumplen",puntos:5},{texto:"No hay acuerdos establecidos",puntos:0}] },
+  { id:7,  texto:"¿Sabés qué son los algoritmos y cómo pueden influir en lo que ven tus estudiantes?", opciones:[{texto:"Sí, lo entiendo bien",puntos:10},{texto:"Tengo una idea básica",puntos:5},{texto:"No sé qué son",puntos:0}] },
+  { id:8,  texto:"Si tu estudiante recibiera un mensaje de un desconocido en un juego o red social, ¿sabés cómo reaccionaría?", opciones:[{texto:"Sí, lo hemos hablado y sabe qué hacer",puntos:10},{texto:"Creo que bien, pero no lo hemos hablado",puntos:5},{texto:"No lo sé",puntos:0}] },
   { id:9,  texto:"¿Sabés qué es el grooming o el ciberbullying?", opciones:[{texto:"Sí, conozco ambos conceptos",puntos:10},{texto:"Escuché algo, pero no en detalle",puntos:5},{texto:"No los conozco",puntos:0}] },
-  { id:10, texto:"¿Participás activamente del mundo digital de tu hijo/a (le preguntás, te interesás, a veces compartís)?", opciones:[{texto:"Sí, me intereso activamente",puntos:10},{texto:"A veces, no siempre",puntos:5},{texto:"Casi nunca",puntos:0}] },
+  { id:10, texto:"¿Participás activamente del mundo digital de tus estudiantes (les preguntás, te interesás, a veces compartís)?", opciones:[{texto:"Sí, me intereso activamente",puntos:10},{texto:"A veces, no siempre",puntos:5},{texto:"Casi nunca",puntos:0}] },
 ]
 
 const perfiles: Perfil[] = [
-  { rango:[80,100], color:"#059669", bg:"rgba(5,150,105,.08)",   nombre:"🟢 Guía digital presente",      descripcion:"Tenés una presencia activa en el entorno digital de tus hijos. Seguí construyendo esa confianza: el vínculo es el mejor factor de protección." },
+  { rango:[80,100], color:"#059669", bg:"rgba(5,150,105,.08)",   nombre:"🟢 Guía digital presente",      descripcion:"Tenés una presencia activa en el entorno digital de tus estudiantes. Seguí construyendo esa confianza: el vínculo es el mejor factor de protección." },
   { rango:[60,79],  color:"#D97706", bg:"rgba(217,119,6,.08)",   nombre:"🟡 Guía digital en camino",      descripcion:"Estás en el camino correcto. Hay áreas donde podés profundizar el acompañamiento. Empezá por abrir una conversación sin agenda de control." },
-  { rango:[40,59],  color:"#EA580C", bg:"rgba(234,88,12,.08)",   nombre:"🟠 Guía digital en alerta",      descripcion:"Es momento de empezar a conocer mejor el territorio digital donde viven tus hijos. No necesitás ser experto/a en tecnología: necesitás estar presente." },
-  { rango:[0,39],   color:"#DC2626", bg:"rgba(220,38,38,.08)",   nombre:"🔴 Guía digital desconectado/a", descripcion:"El territorio digital de tus hijos te es mayormente desconocido. No es tarde para empezar. Un primer paso: esta semana pedile que te muestre qué hace cuando agarra el teléfono." },
+  { rango:[40,59],  color:"#EA580C", bg:"rgba(234,88,12,.08)",   nombre:"🟠 Guía digital en alerta",      descripcion:"Es momento de empezar a conocer mejor el territorio digital donde viven tus estudiantes. No necesitás ser experto/a en tecnología: necesitás estar presente." },
+  { rango:[0,39],   color:"#DC2626", bg:"rgba(220,38,38,.08)",   nombre:"🔴 Guía digital desconectado/a", descripcion:"El territorio digital de tus estudiantes te es mayormente desconocido. No es tarde para empezar. Un primer paso: esta semana pedile a alguno que te muestre qué hace cuando agarra el teléfono." },
 ]
 
 const tabla: TablaRow[] = [
@@ -423,27 +423,27 @@ const riesgos: Riesgo[] = [
 ]
 
 const preguntasLimites: PreguntaLimite[] = [
-  { id:1, situacion:"Tu hijo/a de 13 años quiere instalarse TikTok. ¿Qué hacés?", opciones:[
+  { id:1, situacion:"Un estudiante de 13 años te cuenta que quiere instalarse TikTok. ¿Qué le decís?", opciones:[
     { texto:"Se lo permito y confío en que va a usarlo bien", tipo:"permisivo" },
     { texto:"Lo hablamos, revisamos juntos la configuración de privacidad y acordamos un tiempo de uso", tipo:"acompanante" },
     { texto:"Se lo prohíbo directamente", tipo:"restrictivo" },
   ]},
-  { id:2, situacion:"Notás que tu hijo/a se queda hasta la madrugada con el celular. ¿Qué hacés?", opciones:[
+  { id:2, situacion:"Notás que un estudiante llega agotado porque se queda hasta la madrugada con el celular. ¿Qué hacés?", opciones:[
     { texto:"Le digo que lo apague, pero al día siguiente vuelve a pasar lo mismo", tipo:"permisivo" },
     { texto:"Propongo en familia que los celulares se carguen fuera del cuarto por la noche", tipo:"acompanante" },
     { texto:"Le saco el celular sin más explicaciones", tipo:"restrictivo" },
   ]},
-  { id:3, situacion:"Tu hijo/a llega angustiado/a a casa por algo que pasó en un grupo de WhatsApp. ¿Qué hacés?", opciones:[
+  { id:3, situacion:"Un estudiante llega angustiado/a a clase por algo que pasó en un grupo de WhatsApp. ¿Qué hacés?", opciones:[
     { texto:"Le explico que le reste importancia y que busque una alternativa constructiva", tipo:"permisivo" },
     { texto:"Lo escucho sin juzgar, le pregunto qué necesita y pensamos juntos qué hacer", tipo:"acompanante" },
     { texto:"Le pido que me muestre el teléfono para ver qué pasó", tipo:"restrictivo" },
   ]},
-  { id:4, situacion:"Descubrís que tu hijo/a tiene una cuenta en una red social con una edad falsa. ¿Qué hacés?", opciones:[
+  { id:4, situacion:"Descubrís que un estudiante tiene una cuenta en una red social con una edad falsa. ¿Qué hacés?", opciones:[
     { texto:"Lo dejo pasar, total todos los chicos lo hacen", tipo:"permisivo" },
     { texto:"Lo hablo con calma, explico el por qué de los límites de edad y buscamos una alternativa juntos", tipo:"acompanante" },
     { texto:"Le borro la cuenta inmediatamente y le quito el teléfono una semana", tipo:"restrictivo" },
   ]},
-  { id:5, situacion:"Tu hijo/a menciona que tiene un 'amigo/a de internet' que no conoce en persona. ¿Qué hacés?", opciones:[
+  { id:5, situacion:"Un estudiante menciona que tiene un 'amigo/a de internet' que no conoce en persona. ¿Qué hacés?", opciones:[
     { texto:"No le doy importancia, tiene amigos en todos lados", tipo:"permisivo" },
     { texto:"Le pregunto con curiosidad genuina: ¿Cómo se conocieron? ¿De qué hablan? ¿Sabés quién es realmente?", tipo:"acompanante" },
     { texto:"Le digo que corte el contacto de inmediato", tipo:"restrictivo" },
@@ -452,7 +452,7 @@ const preguntasLimites: PreguntaLimite[] = [
 
 const estilos = {
   acompanante: { nombre:"✅ Acompañante",   color:"#059669", bg:"rgba(5,150,105,.08)",  border:"rgba(5,150,105,.25)",  descripcion:"Priorizás el diálogo y la construcción de confianza. Ese vínculo es el factor de protección más poderoso que existe." },
-  permisivo:   { nombre:"🔓 Permisivo/a",   color:"#D97706", bg:"rgba(217,119,6,.08)",  border:"rgba(217,119,6,.25)",  descripcion:"Confiás en tus hijos, pero puede faltarle estructura al acompañamiento. Los límites construidos juntos no limitan: protegen." },
+  permisivo:   { nombre:"🔓 Permisivo/a",   color:"#D97706", bg:"rgba(217,119,6,.08)",  border:"rgba(217,119,6,.25)",  descripcion:"Confiás en tus estudiantes, pero puede faltarle estructura al acompañamiento. Los límites construidos juntos no limitan: protegen." },
   restrictivo: { nombre:"🔒 Restrictivo/a", color:"#EA580C", bg:"rgba(234,88,12,.08)",  border:"rgba(234,88,12,.25)",  descripcion:"Priorizás el control, pero eso puede llevar al uso clandestino. La prohibición sin diálogo no cierra el territorio digital: solo lo vuelve invisible para vos." },
 }
 
@@ -502,7 +502,7 @@ const compromisos: Compromiso[] = [
   { numero:"2", icono:Handshake,    accion:"ACORDAR",   detalle:"Propongo en familia revisar juntos los acuerdos digitales que tenemos — o construir los que no tenemos aún." },
   { numero:"3", icono:MessageCircle,accion:"DIALOGAR",  detalle:"Incorporo una pregunta sobre lo digital en alguna conversación cotidiana, sin que sea un interrogatorio." },
   { numero:"4", icono:Link,         accion:"COORDINAR", detalle:"Me comunico con la escuela para saber qué espacios existen para hablar sobre lo digital y cómo podemos articular." },
-  { numero:"5", icono:Smartphone,   accion:"CUIDARME",  detalle:"Reviso mi propio uso del teléfono. Los adultos también somos parte del ecosistema digital de nuestros hijos. Somos un ejemplo." },
+  { numero:"5", icono:Smartphone,   accion:"CUIDARME",  detalle:"Reviso mi propio uso del teléfono. Los adultos también somos parte del ecosistema digital de nuestros estudiantes. Somos un ejemplo." },
 ]
 
 // ─── useCountUp ───
@@ -685,7 +685,7 @@ export function CibercrianzaContent() {
                   style={{ fontSize:"clamp(3.2rem, 7.8vw, 6.2rem)" }}>
                   ¿Sabés dónde <br />
                   <span className="lc-grad-cyber-text pb-1 block lg:inline">interactúan</span> <br className="hidden lg:inline" />
-                  tus hijos?
+                  tus estudiantes?
                 </motion.h1>
 
                 {/* Large Readable Paragraph */}
@@ -829,7 +829,7 @@ export function CibercrianzaContent() {
               <motion.div variants={fadeUp} transition={spring} className="text-center mb-20">
                 <span className="lc-mono lc-cyber-badge-pink inline-block text-xs uppercase tracking-widest mb-5 px-4 py-1.5 rounded-full font-bold">El mapa real</span>
                 <h2 className="lc-fraunces font-black text-brand-navy mb-4" style={{ fontSize:"clamp(2.8rem, 6.2vw, 4.2rem)" }}>
-                  Tus hijos ya viven en dos territorios
+                  Tus estudiantes ya viven en dos territorios
                 </h2>
                 <p className="text-slate-700 text-lg md:text-xl max-w-2xl mx-auto font-extrabold">
                   No entran y salen de internet: habitan simultáneamente en ambos espacios.
@@ -1411,7 +1411,7 @@ export function CibercrianzaContent() {
               <motion.div variants={fadeUp} transition={spring} className="text-center mb-16">
                 <span className="lc-mono lc-cyber-badge inline-block text-xs uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full font-bold">Quiz interactivo · 5 situaciones</span>
                 <h2 className="lc-fraunces font-black text-brand-navy mb-4" style={{ fontSize:"clamp(2.5rem, 5.5vw, 3.8rem)" }}>
-                  ¿Cómo manejás los límites digitales en casa?
+                  ¿Cómo manejás los límites digitales con tu curso?
                 </h2>
                 <p className="text-slate-700 font-extrabold text-base md:text-lg">5 situaciones cotidianas. ¿Cómo reaccionarías?</p>
               </motion.div>

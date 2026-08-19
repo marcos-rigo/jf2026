@@ -130,7 +130,7 @@ export function TematicasContent() {
                   </div>
                   <div className="px-3.5 py-3">
                     <span className="text-[10px] font-bold uppercase tracking-wide" style={{ color: "#14B8A6" }}>Cibercrianza</span>
-                    <p className="text-xs font-bold text-brand-navy leading-tight mt-0.5">¿Sabés dónde interactúan tus hijos?</p>
+                    <p className="text-xs font-bold text-brand-navy leading-tight mt-0.5">¿Sabés dónde interactúan tus estudiantes?</p>
                   </div>
                 </motion.div>
 

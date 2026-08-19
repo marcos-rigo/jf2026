@@ -56,7 +56,7 @@ const CARRUSEL_IMAGES = Array.from({ length: 8 }, (_, i) =>
 )
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type FaqId = "faq1" | "faq2" | null
+type FaqId = "faq1" | "faq2" | "faq3" | null
 
 // ─── Static data ──────────────────────────────────────────────────────────────
 const CHECKLIST_ITEMS = [
@@ -105,6 +105,18 @@ const FAQS: { id: FaqId; q: string; a: string | React.ReactNode }[] = [
         Sí, pero es insuficiente por sí solo. Por eso es vital <strong>copiar la URL</strong> del chat o
         perfil. Un pantallazo puede ser editado, pero la URL combinada con capturas da solidez a la
         investigación pericial.
+      </>
+    ),
+  },
+  {
+    id: "faq3",
+    q: "Soy docente y una alumna (o la familia de un estudiante) me contó que está pasando esto. ¿Qué hago?",
+    a: (
+      <>
+        Escuchá sin minimizar y sin pedirle que te muestre las pruebas vos misma —no te corresponde
+        investigar por tu cuenta—. Compartile este mismo protocolo y acompañala a activar el equipo de
+        orientación o el protocolo de tu institución. Si es una situación de riesgo inmediato, comunicate
+        con las líneas de ayuda correspondientes en lugar de intentar resolverlo solo con lo que sabés.
       </>
     ),
   },
@@ -329,8 +341,10 @@ export default function ViolenciaDigitalContent() {
 
             <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
               Estar en internet no debería dar miedo. Este es tu{" "}
-              <strong className="text-slate-800">manual táctico paso a paso</strong> basado en la Ley Olimpia
-              y protocolos internacionales para protegerte, recolectar pruebas y actuar.
+              <strong className="text-slate-800">manual táctico paso a paso</strong> basado en la Ley Olimpia y
+              protocolos internacionales para protegerte, recolectar pruebas y actuar. Si sos docente, este mismo
+              protocolo te sirve para vos y también para acompañar a una colega, a una alumna o a la familia de un
+              estudiante que esté atravesando esto.
             </p>
 
             <div className="inline-flex items-center gap-2 bg-violet-50 text-violet-700 px-4 py-2 rounded-full text-sm font-semibold border border-violet-200">
@@ -682,10 +696,10 @@ export default function ViolenciaDigitalContent() {
                   </div>
                   <div>
                     <p className="text-xs font-bold text-violet-500 tracking-widest uppercase mb-0.5">
-                      Presentación completa
+                      Material para el aula
                     </p>
                     <h2 className="text-lg md:text-xl font-extrabold text-slate-900 font-display">
-                      Violencia Digital hacia la Mujer — Galería
+                      Violencia Digital hacia la Mujer — Recursos para el Aula
                     </h2>
                   </div>
                 </div>

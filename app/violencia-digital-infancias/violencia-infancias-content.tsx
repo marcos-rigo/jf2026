@@ -184,7 +184,7 @@ const actionStepsData: ActionStep[] = [
     id: 1,
     title: "Contener sin juzgar",
     description:
-      "Escuche a la víctima y ofrezca apoyo emocional incondicional. No la responsabilice, no la avergüence y evite retirarle el dispositivo como medida de castigo.",
+      "Escuche a la víctima y ofrezca apoyo emocional incondicional. No la responsabilice, no la avergüence y evite retirarle el dispositivo como medida de castigo. Si es docente, esta primera escucha no reemplaza avisar a la familia y a la institución: es el paso inicial, no el único.",
     icon: Users,
     color: "from-brand-blue to-blue-700",
   },
@@ -211,6 +211,14 @@ const actionStepsData: ActionStep[] = [
       "En casos de grooming o extorsión, comuníquese con la Línea 137 o acuda a la fiscalía especializada en ciberdelitos más cercana. La denuncia activa el protocolo de protección institucional.",
     icon: CheckCircle2,
     color: "from-emerald-500 to-teal-500",
+  },
+  {
+    id: 5,
+    title: "Activar el protocolo escolar",
+    description:
+      "Si es docente, informe lo sucedido al equipo de orientación o a la dirección de su institución y coordine con la familia los pasos siguientes. La escuela tiene su propio protocolo de protección, que se suma —no reemplaza— a la denuncia formal.",
+    icon: BookOpen,
+    color: "from-brand-blue to-violet-600",
   },
 ]
 
@@ -450,7 +458,9 @@ export function ViolenciaInfanciasContent() {
               </motion.h1>
 
               <motion.p variants={fadeUp} className="text-lg md:text-xl text-slate-500 max-w-xl leading-relaxed">
-                Las interacciones en el entorno digital conllevan responsabilidades y riesgos. Aprenda a identificar, prevenir y actuar frente a situaciones de ciberacoso y grooming.
+                Las interacciones en el entorno digital conllevan responsabilidades y riesgos. Aprenda a identificar,
+                prevenir y actuar frente a situaciones de ciberacoso y grooming — desde el aula, muchas veces usted es
+                la primera persona en posición de notar que algo cambió.
               </motion.p>
 
               <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
@@ -649,7 +659,8 @@ export function ViolenciaInfanciasContent() {
               </h2>
             </div>
             <p className="text-slate-500 max-w-sm leading-relaxed lg:text-right">
-              Comprender las dinámicas de agresión es el primer paso para proteger la integridad de niñas, niños y adolescentes.
+              Comprender las dinámicas de agresión es el primer paso para proteger la integridad de niñas, niños y
+              adolescentes, tanto en casa como en el aula.
             </p>
           </motion.div>
 
@@ -950,8 +961,8 @@ export function ViolenciaInfanciasContent() {
                     <Images className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-brand-pink tracking-widest uppercase mb-0.5">Presentación</p>
-                    <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 font-display">Violencia Digital en Infancias</h2>
+                    <p className="text-xs font-bold text-brand-pink tracking-widest uppercase mb-0.5">Material para el aula</p>
+                    <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 font-display">Violencia Digital en Infancias — Recursos para el Aula</h2>
                   </div>
                 </div>
                 <span className="text-slate-400 text-sm font-mono shrink-0 bg-slate-50/80 px-3 py-1.5 rounded-full">
