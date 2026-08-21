@@ -28,6 +28,38 @@ const containerVariants = {
 
 const totalTemas = groups.reduce((n, g) => n + g.items.length, 0)
 
+// Temáticas con imagen custom generada (todas viven bajo /img/cards/) — pool
+// de donde se sortea el mosaico del hero. Si más temáticas suman su propia
+// imagen ahí, entran automáticamente al sorteo sin tocar este componente.
+const CUSTOM_IMAGE_TEMAS = groups
+  .flatMap((g) => g.items)
+  .filter((t) => t.image.startsWith('/img/cards/'))
+  .map((t) => ({ id: t.id, title: t.title, category: t.category, color: t.color, image: t.image }))
+
+type MosaicTema = (typeof CUSTOM_IMAGE_TEMAS)[number]
+
+function shuffle<T>(arr: T[]): T[] {
+  const copy = [...arr]
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[copy[i], copy[j]] = [copy[j], copy[i]]
+  }
+  return copy
+}
+
+const DESKTOP_MOSAIC_POSITIONS = [
+  { className: 'absolute top-0 left-0 w-[210px] rounded-2xl overflow-hidden shadow-2xl bg-white', rotate: '-3deg', delay: 0.35 },
+  { className: 'absolute top-10 right-0 w-[210px] rounded-2xl overflow-hidden shadow-2xl bg-white', rotate: '2.5deg', delay: 0.48 },
+  { className: 'absolute bottom-0 left-10 w-[210px] rounded-2xl overflow-hidden shadow-2xl bg-white', rotate: '2deg', delay: 0.6 },
+  { className: 'absolute bottom-8 right-4 w-[210px] rounded-2xl overflow-hidden shadow-2xl bg-white', rotate: '-2deg', delay: 0.72 },
+] as const
+
+const MOBILE_MOSAIC_POSITIONS = [
+  { wrapClassName: 'absolute left-0 top-8 z-10', wrapRotate: -9, cardWidth: 'w-[108px]', floatY: -7, floatDuration: 3.2, floatDelay: 0, delay: 0.38, center: false },
+  { wrapClassName: 'absolute left-1/2 -translate-x-1/2 top-0 z-20', wrapRotate: 2, cardWidth: 'w-[118px]', floatY: -11, floatDuration: 3.9, floatDelay: 0.5, delay: 0.52, center: true },
+  { wrapClassName: 'absolute right-0 top-6 z-10', wrapRotate: 8, cardWidth: 'w-[108px]', floatY: -6, floatDuration: 3.5, floatDelay: 1, delay: 0.66, center: false },
+] as const
+
 // Bypass de desbloqueo secuencial SOLO para desarrollo local, para poder
 // revisar todas las temáticas sin tener que completar cada quiz en orden.
 // Requiere NODE_ENV === 'development' explícito (nunca es 'production' en un
@@ -48,6 +80,19 @@ export function TematicasDashboardContent() {
   // puede ocultar/mostrar con animación sin romper el orden de desbloqueo.
   // Ver content-management/PROPUESTA-AUDIENCIAS.md.
   const [selectedAudiencia, setSelectedAudiencia] = useState<Audiencia | null>(null)
+
+  // Mosaico del hero: arranca con un orden fijo (para que SSR e hidratación
+  // coincidan) y se sortea una sola vez en el cliente después de montar —
+  // así cada visita al dashboard puede mostrar una combinación distinta de
+  // temáticas sin provocar un mismatch de hidratación en Next.js.
+  const [desktopMosaic, setDesktopMosaic] = useState<MosaicTema[]>(() => CUSTOM_IMAGE_TEMAS.slice(0, 4))
+  const [mobileMosaic, setMobileMosaic] = useState<MosaicTema[]>(() => CUSTOM_IMAGE_TEMAS.slice(0, 3))
+
+  useEffect(() => {
+    const shuffled = shuffle(CUSTOM_IMAGE_TEMAS)
+    setDesktopMosaic(shuffled.slice(0, 4))
+    setMobileMosaic(shuffled.slice(4, 7))
+  }, [])
 
   const toggleGroup = (label: string) => {
     setOpenGroups((prev) => ({ ...prev, [label]: !prev[label] }))
@@ -138,71 +183,28 @@ export function TematicasDashboardContent() {
             {/* Right: floating card mosaic — desktop only */}
             <div className="hidden lg:block flex-shrink-0 w-[460px] xl:w-[540px]">
               <div className="relative h-[420px]">
-
-                <motion.div
-                  initial={{ opacity: 0, y: 28 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.65, delay: 0.35 }}
-                  className="absolute top-0 left-0 w-[210px] rounded-2xl overflow-hidden shadow-2xl bg-white"
-                  style={{ borderTop: "3px solid #D5247A", rotate: "-3deg" }}
-                >
-                  <div className="relative h-[120px] w-full">
-                    <Image src="/weekly-content/2026-W21/huellapng.png" alt="Huella Digital" fill className="object-cover" sizes="210px" />
-                  </div>
-                  <div className="px-3.5 py-3">
-                    <span className="text-[10px] font-bold uppercase tracking-wide" style={{ color: "#D5247A" }}>Privacidad</span>
-                    <p className="text-xs font-bold text-brand-navy leading-tight mt-0.5">Huella Digital</p>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 28 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.65, delay: 0.48 }}
-                  className="absolute top-10 right-0 w-[210px] rounded-2xl overflow-hidden shadow-2xl bg-white"
-                  style={{ borderTop: "3px solid #F59E0B", rotate: "2.5deg" }}
-                >
-                  <div className="relative h-[120px] w-full">
-                    <Image src="/weekly-content/2026-W23/estafapng.png" alt="Estafas Digitales" fill className="object-cover" sizes="210px" />
-                  </div>
-                  <div className="px-3.5 py-3">
-                    <span className="text-[10px] font-bold uppercase tracking-wide" style={{ color: "#F59E0B" }}>Seguridad</span>
-                    <p className="text-xs font-bold text-brand-navy leading-tight mt-0.5">Estafas Digitales</p>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 28 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.65, delay: 0.6 }}
-                  className="absolute bottom-0 left-10 w-[210px] rounded-2xl overflow-hidden shadow-2xl bg-white"
-                  style={{ borderTop: "3px solid #EF4444", rotate: "2deg" }}
-                >
-                  <div className="relative h-[120px] w-full">
-                    <Image src="/weekly-content/2026-W25/card7.png" alt="Violencia Digital en Infancias" fill className="object-cover" sizes="210px" />
-                  </div>
-                  <div className="px-3.5 py-3">
-                    <span className="text-[10px] font-bold uppercase tracking-wide" style={{ color: "#EF4444" }}>Protección</span>
-                    <p className="text-xs font-bold text-brand-navy leading-tight mt-0.5">Violencia Digital en Infancias</p>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 28 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.65, delay: 0.72 }}
-                  className="absolute bottom-8 right-4 w-[210px] rounded-2xl overflow-hidden shadow-2xl bg-white"
-                  style={{ borderTop: "3px solid #7C3AED", rotate: "-2deg" }}
-                >
-                  <div className="relative h-[120px] w-full">
-                    <Image src="/weekly-content/2026-W24/card6.png" alt="Niñas, Niños y Adolescentes en el Entorno Digital" fill className="object-cover" sizes="210px" />
-                  </div>
-                  <div className="px-3.5 py-3">
-                    <span className="text-[10px] font-bold uppercase tracking-wide" style={{ color: "#7C3AED" }}>Infancia</span>
-                    <p className="text-xs font-bold text-brand-navy leading-tight mt-0.5">Niñas, Niños y Adolescentes</p>
-                  </div>
-                </motion.div>
-
+                {desktopMosaic.map((tema, i) => {
+                  const pos = DESKTOP_MOSAIC_POSITIONS[i]
+                  if (!pos) return null
+                  return (
+                    <motion.div
+                      key={tema.id}
+                      initial={{ opacity: 0, y: 28 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.65, delay: pos.delay }}
+                      className={pos.className}
+                      style={{ borderTop: `3px solid ${tema.color}`, rotate: pos.rotate }}
+                    >
+                      <div className="relative h-[120px] w-full">
+                        <Image src={tema.image} alt={tema.title} fill className="object-cover" sizes="210px" />
+                      </div>
+                      <div className="px-3.5 py-3">
+                        <span className="text-[10px] font-bold uppercase tracking-wide" style={{ color: tema.color }}>{tema.category}</span>
+                        <p className="text-xs font-bold text-brand-navy leading-tight mt-0.5">{tema.title}</p>
+                      </div>
+                    </motion.div>
+                  )
+                })}
               </div>
             </div>
 
@@ -210,76 +212,37 @@ export function TematicasDashboardContent() {
 
           {/* Mobile — 3 cards flotando encimadas, solo mobile */}
           <div className="lg:hidden mt-10 relative h-[200px]">
-
-            {/* Card izquierda */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.38 }}
-              className="absolute left-0 top-8 z-10"
-              style={{ rotate: -9 }}
-            >
-              <motion.div
-                animate={{ y: [0, -7, 0] }}
-                transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", repeatType: "loop" }}
-                className="w-[108px] rounded-xl overflow-hidden shadow-lg bg-white"
-                style={{ borderTop: "2px solid #D5247A" }}
-              >
-                <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
-                  <Image src="/weekly-content/2026-W21/huellapng.png" alt="Huella Digital" fill className="object-cover" sizes="108px" />
-                </div>
-                <div className="px-2 py-1.5">
-                  <span className="text-[9px] font-bold uppercase tracking-wide truncate block" style={{ color: "#D5247A" }}>Huella Digital</span>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* Card central — al frente */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.52 }}
-              className="absolute left-1/2 -translate-x-1/2 top-0 z-20"
-              style={{ rotate: 2 }}
-            >
-              <motion.div
-                animate={{ y: [0, -11, 0] }}
-                transition={{ duration: 3.9, repeat: Infinity, ease: "easeInOut", delay: 0.5, repeatType: "loop" }}
-                className="w-[118px] rounded-xl overflow-hidden bg-white"
-                style={{ borderTop: "2px solid #F59E0B", boxShadow: "0 12px 32px rgba(245,158,11,0.25)" }}
-              >
-                <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
-                  <Image src="/weekly-content/2026-W23/estafapng.png" alt="Estafas Digitales" fill className="object-cover" sizes="118px" />
-                </div>
-                <div className="px-2 py-1.5">
-                  <span className="text-[9px] font-bold uppercase tracking-wide truncate block" style={{ color: "#F59E0B" }}>Estafas</span>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* Card derecha */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.66 }}
-              className="absolute right-0 top-6 z-10"
-              style={{ rotate: 8 }}
-            >
-              <motion.div
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1, repeatType: "loop" }}
-                className="w-[108px] rounded-xl overflow-hidden shadow-lg bg-white"
-                style={{ borderTop: "2px solid #7C3AED" }}
-              >
-                <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
-                  <Image src="/weekly-content/2026-W24/card6.png" alt="Niñas, Niños y Adolescentes" fill className="object-cover" sizes="108px" />
-                </div>
-                <div className="px-2 py-1.5">
-                  <span className="text-[9px] font-bold uppercase tracking-wide truncate block" style={{ color: "#7C3AED" }}>Infancia</span>
-                </div>
-              </motion.div>
-            </motion.div>
-
+            {mobileMosaic.map((tema, i) => {
+              const pos = MOBILE_MOSAIC_POSITIONS[i]
+              if (!pos) return null
+              return (
+                <motion.div
+                  key={tema.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.55, delay: pos.delay }}
+                  className={pos.wrapClassName}
+                  style={{ rotate: pos.wrapRotate }}
+                >
+                  <motion.div
+                    animate={{ y: [0, pos.floatY, 0] }}
+                    transition={{ duration: pos.floatDuration, repeat: Infinity, ease: "easeInOut", delay: pos.floatDelay, repeatType: "loop" }}
+                    className={`${pos.cardWidth} rounded-xl overflow-hidden bg-white ${pos.center ? "" : "shadow-lg"}`}
+                    style={{
+                      borderTop: `2px solid ${tema.color}`,
+                      ...(pos.center ? { boxShadow: `0 12px 32px ${tema.color}40` } : {}),
+                    }}
+                  >
+                    <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
+                      <Image src={tema.image} alt={tema.title} fill className="object-cover" sizes={pos.cardWidth === "w-[118px]" ? "118px" : "108px"} />
+                    </div>
+                    <div className="px-2 py-1.5">
+                      <span className="text-[9px] font-bold uppercase tracking-wide truncate block" style={{ color: tema.color }}>{tema.category}</span>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              )
+            })}
           </div>
 
         </div>
