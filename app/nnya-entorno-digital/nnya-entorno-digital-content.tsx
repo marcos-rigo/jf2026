@@ -220,17 +220,17 @@ const pasosMediacion = [
   { id: 3, titulo: "Chequeá su huella digital", desc: "Búscalos en Google juntos: revisá qué fotos, comentarios o perfiles son visibles para cualquier persona. Esa información conforma su reputación digital y puede acompañarlos durante años.", icono: Fingerprint, color: "bg-gradient-to-br from-cyan-500 to-brand-blue" },
   { id: 4, titulo: "Pensamiento crítico", desc: "Ayudalos a dudar. ¿Esa noticia es real? ¿Ese influencer está sponsoreado? Fomentar la duda es la mejor defensa contra la desinformación y el grooming (cuando un adulto se gana la confianza de un menor en línea con fines de abuso).", icono: Lightbulb, color: "bg-gradient-to-br from-amber-400 to-orange-500" },
   { id: 5, titulo: "Confianza cero", desc: "Enseñales a no compartir datos personales —dirección, colegio, número de teléfono— con desconocidos en línea, aunque parezcan amigos. En Internet, la identidad de alguien no siempre es la que muestra.", icono: Lock, color: "bg-gradient-to-br from-rose-400 to-pink-500" },
-  { id: 6, titulo: "Higiene digital", desc: "Establecé rutinas saludables: sin pantallas durante las comidas, activar el modo descanso antes de dormir y reservar espacios offline en familia. Pequeños hábitos que mejoran la concentración y el bienestar general.", icono: HeartPulse, color: "bg-gradient-to-br from-indigo-400 to-violet-500" },
+  { id: 6, titulo: "Higiene digital", desc: "Establecé rutinas saludables: sin pantallas durante las comidas, activar el modo descanso antes de dormir y reservar espacios offline en familia. Si sos docente, podés proponer lo mismo como acuerdo de curso: momentos sin pantallas compartidos en clase. Pequeños hábitos que mejoran la concentración y el bienestar general.", icono: HeartPulse, color: "bg-gradient-to-br from-indigo-400 to-violet-500" },
   { id: 7, titulo: "Pacten los límites", desc: "La prohibición total rara vez funciona. Es mejor acordar horarios libres de pantallas (ej: durante la cena o antes de dormir) para cuidar su calidad del sueño.", icono: ShieldCheck, color: "bg-gradient-to-br from-brand-pink to-violet-500" },
 ]
 const herramientas = [
-  { titulo: "Guía de Privacidad", desc: "Paso a paso para configurar la seguridad en TikTok, Instagram y WhatsApp junto a tus hijos.", icono: ShieldCheck, gradient: "from-brand-blue to-cyan-400", tag: "Descargable" },
+  { titulo: "Guía de Privacidad", desc: "Paso a paso para configurar la seguridad en TikTok, Instagram y WhatsApp junto a tus estudiantes.", icono: ShieldCheck, gradient: "from-brand-blue to-cyan-400", tag: "Descargable" },
   { titulo: "Glosario Digital", desc: "Grooming, Sharenting, Sexting... ¿Qué significan y cómo detectarlos antes de que sea tarde?", icono: BookOpen, gradient: "from-brand-pink to-orange-400", tag: "Lectura" },
   { titulo: "Control Parental", desc: "Apps y configuraciones recomendadas para acompañar sin invadir. El equilibrio entre protección y autonomía.", icono: Smartphone, gradient: "from-violet-500 to-brand-blue", tag: "Herramientas" },
 ]
 const consejosRapidos = [
-  { texto: "Cuidá las fotos y videos que publicás de tus hijos", icono: "📸" },
-  { texto: "El sharenting expone la identidad digital de tus hijos sin que ellos lo elijan", icono: "🧒" },
+  { texto: "Cuidá las fotos y videos de tus estudiantes que se publican desde la escuela o el grupo del curso", icono: "📸" },
+  { texto: "Publicar fotos de estudiantes sin autorización expone su identidad digital sin que ellos lo elijan", icono: "🧒" },
   { texto: "Enseñales a bloquear y reportar", icono: "🚫" },
   { texto: "El modo avión ayuda a desconectar", icono: "✈️" },
   { texto: "Tu ejemplo también educa: los hábitos digitales se aprenden mirándote a vos", icono: "⭐" },
@@ -1226,7 +1226,7 @@ export function NnyaEntornoDigitalContent() {
             </h2>
 
             <p className="text-xl text-blue-100/70 max-w-2xl mb-10 leading-relaxed">
-              La tecnología avanza rápido, pero el diálogo y el acompañamiento no pasan de moda. Involucrate hoy en la vida digital de tus hijos.
+              La tecnología avanza rápido, pero el diálogo y el acompañamiento no pasan de moda. Involucrate hoy en la vida digital de tus estudiantes.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
