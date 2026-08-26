@@ -1,16 +1,30 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useCallback } from 'react';
+import Image from 'next/image';
 import { ErrorsChart } from './errors-chart';
-import { ChevronDown, Check } from 'lucide-react';
+import { ChevronDown, ChevronLeft, ChevronRight, Images } from 'lucide-react';
+import { FUENTES_COMPLETAS } from '@/lib/ciudadania-digital-content';
 
 interface HerramientasSectionProps {
-  onNavigate: (tab: 'paso3') => void;
   checkedItems: Set<string>;
   onCheckboxChange: (id: string, checked: boolean) => void;
 }
+
+const slideVariants = {
+  enter: (dir: number) => ({ opacity: 0, x: dir * 80 }),
+  center: { opacity: 1, x: 0 },
+  exit: (dir: number) => ({ opacity: 0, x: dir * -80 }),
+};
+
+const CARRUSEL_IMAGES = [
+  '/weekly-content/2026-W19/carrusel/1.svg',
+  '/weekly-content/2026-W19/carrusel/2.svg',
+  '/weekly-content/2026-W19/carrusel/3.svg',
+  '/weekly-content/2026-W19/carrusel/4.svg',
+  '/weekly-content/2026-W19/carrusel/5.svg',
+];
 
 export const CHECKLIST_ITEMS = [
   { id: 'password', label: 'Cambié mis 3 contraseñas principales y le mostré el proceso a mi curso' },
@@ -24,11 +38,25 @@ export const CHECKLIST_ITEMS = [
 ];
 
 export default function HerramientasSection({
-  onNavigate,
   checkedItems,
   onCheckboxChange,
 }: HerramientasSectionProps) {
   const [expandedFaq, setExpandedFaq] = useState<string | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [direction, setDirection] = useState(0);
+
+  const goTo = useCallback((index: number, dir: number) => {
+    setDirection(dir);
+    setCurrentSlide(index);
+  }, []);
+
+  const prevSlide = useCallback(() => {
+    goTo((currentSlide - 1 + CARRUSEL_IMAGES.length) % CARRUSEL_IMAGES.length, -1);
+  }, [currentSlide, goTo]);
+
+  const nextSlide = useCallback(() => {
+    goTo((currentSlide + 1) % CARRUSEL_IMAGES.length, 1);
+  }, [currentSlide, goTo]);
 
   const percentage = Math.round((checkedItems.size / CHECKLIST_ITEMS.length) * 100);
 
@@ -61,14 +89,18 @@ export default function HerramientasSection({
 
   return (
     <motion.section
+      id="recursos"
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.4 }}
-      className="w-full"
+      className="w-full scroll-mt-28 md:scroll-mt-32"
     >
       <div className="mb-10 border-b border-slate-800 pb-8 flex items-end justify-between">
         <div>
+          <span className="bg-[#00F0FF]/20 text-[#00F0FF] border border-[#00F0FF]/30 py-1.5 px-4 rounded-full text-xs font-bold uppercase tracking-widest font-mono mb-4 inline-block">
+            08 — Centro de Recursos
+          </span>
           <h2 className="text-4xl font-extrabold text-white mb-2 tracking-tight font-display">
             Centro de Recursos Docente
           </h2>
@@ -80,6 +112,79 @@ export default function HerramientasSection({
             <div className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
             Sistema Activo
           </div>
+        </div>
+      </div>
+
+      {/* ── Carrusel de recursos para el aula (trasladado desde el hero) ── */}
+      <div className="backdrop-blur-xl bg-[#141A28]/70 border border-slate-800/50 rounded-3xl overflow-hidden mb-10">
+        <div className="p-6 md:p-8 border-b border-slate-800/50 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#8B5CF6] to-blue-600 flex items-center justify-center shadow-[0_0_12px_rgba(139,92,246,0.3)] shrink-0">
+              <Images className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <p className="text-xs font-mono tracking-widest uppercase text-[#8B5CF6] opacity-80 mb-0.5">
+                Material para el aula
+              </p>
+              <h3 className="text-lg md:text-xl font-bold text-white font-display">
+                Ciudadanía Digital — Recursos para el Aula
+              </h3>
+            </div>
+          </div>
+          <span className="text-slate-400 text-sm font-mono">
+            {currentSlide + 1} / {CARRUSEL_IMAGES.length}
+          </span>
+        </div>
+
+        <div className="relative overflow-hidden">
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={currentSlide}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.35, ease: 'easeInOut' }}
+            >
+              <Image
+                src={CARRUSEL_IMAGES[currentSlide]}
+                alt={`Lámina ${currentSlide + 1}`}
+                width={1200}
+                height={800}
+                className="w-full h-auto object-contain"
+              />
+            </motion.div>
+          </AnimatePresence>
+
+          <button
+            onClick={prevSlide}
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-black/70 border border-white/20 flex items-center justify-center transition-colors backdrop-blur-sm"
+            aria-label="Anterior"
+          >
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+          </button>
+
+          <button
+            onClick={nextSlide}
+            className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-black/70 border border-white/20 flex items-center justify-center transition-colors backdrop-blur-sm"
+            aria-label="Siguiente"
+          >
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+          </button>
+        </div>
+
+        <div className="flex items-center justify-center gap-2 py-5">
+          {CARRUSEL_IMAGES.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i, i > currentSlide ? 1 : -1)}
+              className={`rounded-full transition-all duration-300 ${
+                i === currentSlide ? 'w-6 h-2.5 bg-[#8B5CF6]' : 'w-2.5 h-2.5 bg-slate-600 hover:bg-slate-400'
+              }`}
+              aria-label={`Ir a lámina ${i + 1}`}
+            />
+          ))}
         </div>
       </div>
 
@@ -217,14 +322,33 @@ export default function HerramientasSection({
         </div>
       </div>
 
-      <div className="mt-10 flex justify-start">
-        <Button
-          onClick={() => onNavigate('paso3')}
-          className="text-slate-500 hover:text-white font-medium transition-colors font-mono text-sm"
-          variant="ghost"
-        >
-          <span>←</span> Volver
-        </Button>
+      {/* Fuentes citadas — listado completo */}
+      <div className="backdrop-blur-xl bg-[#141A28]/70 border border-slate-800/50 p-8 md:p-10 rounded-3xl mt-10">
+        <h3 className="font-bold text-2xl text-white mb-6 flex items-center gap-3 font-display">
+          <span>📚</span> Fuentes Citadas
+        </h3>
+        <ul className="space-y-3">
+          {FUENTES_COMPLETAS.map((fuente) => (
+            <li key={fuente.n} className="flex items-start gap-3 text-sm">
+              <span className="text-slate-600 font-mono shrink-0">{fuente.n}.</span>
+              <div className="flex flex-col gap-1">
+                {fuente.url ? (
+                  <a
+                    href={fuente.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#00F0FF] hover:underline font-sans"
+                  >
+                    {fuente.label}
+                  </a>
+                ) : (
+                  <span className="text-slate-300 font-sans">{fuente.label}</span>
+                )}
+                {fuente.note && <span className="text-slate-500 text-xs font-sans italic">{fuente.note}</span>}
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </motion.section>
   );

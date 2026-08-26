@@ -3,18 +3,15 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
-interface Paso3SectionProps {
-  onNavigate: (tab: 'intro' | 'paso1' | 'paso2' | 'herramientas') => void;
-}
-
-export default function Paso3Section({ onNavigate }: Paso3SectionProps) {
+export default function Paso3Section() {
   return (
     <motion.section
+      id="ia-bulos"
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.4 }}
-      className="w-full"
+      className="w-full scroll-mt-28 md:scroll-mt-32"
     >
       <div className="mb-10">
         <span className="bg-[#F59E0B]/20 text-[#F59E0B] border border-[#F59E0B]/30 py-1.5 px-4 rounded-full text-xs font-bold uppercase tracking-widest font-mono">
@@ -136,19 +133,12 @@ export default function Paso3Section({ onNavigate }: Paso3SectionProps) {
         </div>
       </div>
 
-      <div className="mt-10 flex justify-between items-center">
+      <div className="mt-10 flex justify-end items-center">
         <Button
-          onClick={() => onNavigate('paso2')}
-          className="text-slate-500 hover:text-white font-medium transition-colors font-mono text-sm"
-          variant="ghost"
-        >
-          <span>←</span> Volver
-        </Button>
-        <Button
-          onClick={() => onNavigate('herramientas')}
+          onClick={() => document.getElementById('ventajas')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
           className="bg-white hover:bg-slate-200 text-black py-3 px-8 rounded-full font-bold shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all flex items-center gap-2 font-display"
         >
-          Acceder al Centro de Recursos <span>➔</span>
+          ↓ Ver Ventajas
         </Button>
       </div>
     </motion.section>

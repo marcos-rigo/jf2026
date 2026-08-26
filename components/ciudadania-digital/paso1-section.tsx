@@ -3,19 +3,18 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { SecurityChart } from './security-chart';
+import { SourceCite } from './source-cite';
+import { ZERO_TRUST_QUOTE, CIBERHIGIENE_QUOTE } from '@/lib/ciudadania-digital-content';
 
-interface Paso1SectionProps {
-  onNavigate: (tab: 'intro' | 'paso2' | 'paso3' | 'herramientas') => void;
-}
-
-export default function Paso1Section({ onNavigate }: Paso1SectionProps) {
+export default function Paso1Section() {
   return (
     <motion.section
+      id="seguridad"
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.4 }}
-      className="w-full"
+      className="w-full scroll-mt-28 md:scroll-mt-32"
     >
       <div className="mb-10">
         <span className="bg-[#00F0FF]/20 text-[#00F0FF] border border-[#00F0FF]/30 py-1.5 px-4 rounded-full text-xs font-bold uppercase tracking-widest font-mono">
@@ -93,6 +92,20 @@ export default function Paso1Section({ onNavigate }: Paso1SectionProps) {
         </div>
       </div>
 
+      {/* Conceptos avanzados: Zero Trust y Ciberhigiene */}
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="backdrop-blur-xl bg-[#141A28]/70 border border-slate-800/50 border-t-2 border-t-[#00F0FF] p-8 rounded-3xl">
+          <h4 className="font-bold text-white text-lg mb-3 font-display">Confianza Cero (Zero Trust)</h4>
+          <p className="text-slate-300 text-sm leading-relaxed font-sans mb-4">{ZERO_TRUST_QUOTE.text}</p>
+          <SourceCite source={ZERO_TRUST_QUOTE.source} />
+        </div>
+        <div className="backdrop-blur-xl bg-[#141A28]/70 border border-slate-800/50 border-t-2 border-t-[#8B5CF6] p-8 rounded-3xl">
+          <h4 className="font-bold text-white text-lg mb-3 font-display">Ciberhigiene</h4>
+          <p className="text-slate-300 text-sm leading-relaxed font-sans mb-4">{CIBERHIGIENE_QUOTE.text}</p>
+          <SourceCite source={CIBERHIGIENE_QUOTE.source} />
+        </div>
+      </div>
+
       {/* Ejercicio */}
       <div className="mt-8 bg-slate-800/30 border border-slate-700 p-8 rounded-3xl flex flex-col md:flex-row items-start md:items-center gap-6">
         <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center shrink-0 border border-slate-600 shadow-[0_0_10px_rgba(255,255,255,0.05)]">
@@ -110,10 +123,10 @@ export default function Paso1Section({ onNavigate }: Paso1SectionProps) {
 
       <div className="mt-10 flex justify-end">
         <Button
-          onClick={() => onNavigate('paso2')}
+          onClick={() => document.getElementById('netiqueta')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
           className="bg-slate-800 hover:bg-slate-700 text-white py-3 px-8 rounded-full font-medium transition-all border border-slate-600 hover:border-[#8B5CF6] font-display"
         >
-          Siguiente Fase ➔
+          ↓ Ver Netiqueta
         </Button>
       </div>
     </motion.section>

@@ -3,18 +3,15 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
-interface Paso2SectionProps {
-  onNavigate: (tab: 'intro' | 'paso1' | 'paso3' | 'herramientas') => void;
-}
-
-export default function Paso2Section({ onNavigate }: Paso2SectionProps) {
+export default function Paso2Section() {
   return (
     <motion.section
+      id="netiqueta"
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.4 }}
-      className="w-full"
+      className="w-full scroll-mt-28 md:scroll-mt-32"
     >
       <div className="mb-10">
         <span className="bg-[#8B5CF6]/20 text-[#8B5CF6] border border-[#8B5CF6]/30 py-1.5 px-4 rounded-full text-xs font-bold uppercase tracking-widest font-mono">
@@ -114,19 +111,12 @@ export default function Paso2Section({ onNavigate }: Paso2SectionProps) {
         </div>
       </div>
 
-      <div className="mt-10 flex justify-between">
+      <div className="mt-10 flex justify-end">
         <Button
-          onClick={() => onNavigate('paso1')}
-          className="text-slate-500 hover:text-white font-medium transition-colors font-mono text-sm"
-          variant="ghost"
-        >
-          <span>←</span> Volver
-        </Button>
-        <Button
-          onClick={() => onNavigate('paso3')}
+          onClick={() => document.getElementById('ia-bulos')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
           className="bg-slate-800 hover:bg-slate-700 text-white py-3 px-8 rounded-full font-medium transition-all border border-slate-600 hover:border-[#F59E0B] font-display"
         >
-          Siguiente Fase ➔
+          ↓ Ver IA y Bulos
         </Button>
       </div>
     </motion.section>
