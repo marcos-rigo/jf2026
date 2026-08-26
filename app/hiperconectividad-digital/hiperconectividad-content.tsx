@@ -36,6 +36,25 @@ import {
   ZoomOut,
   Maximize2,
 } from "lucide-react"
+import { SourceCite } from "@/components/hiperconectividad-digital/source-cite"
+import {
+  CONCEPTO_QUOTE,
+  TECNOESTRES_QUOTE,
+  UNICEF_ESPANA_2021,
+  UNICEF_ESPANA_PENDIENTE,
+  DEMENCIA_DIGITAL_QUOTE,
+  AUTOOBJETIVACION_SOURCE,
+  IDENTIDAD_FRAGMENTADA_SOURCE,
+  INSTAGRAM_32_SOURCE,
+  FOMO_SOURCE,
+  AUTOLESIONES_TRIPLICADAS_SOURCE,
+  IDEACION_SUICIDA_SOURCE,
+  DUERME_CON_MOVIL_SOURCE,
+  APUESTAS_ONLINE_SOURCE,
+  UNICEF_ESPANA_PENDIENTE as PEGI_SOURCE,
+  UNICEF_ESPANA_PENDIENTE as PADRES_SOURCE,
+  FUENTES_COMPLETAS,
+} from "@/lib/hiperconectividad-digital-content"
 
 const slideVariants = {
   enter: (dir: number) => ({ opacity: 0, x: dir * 80 }),
@@ -143,7 +162,7 @@ const saludData = [
   {
     titulo: "Ansiedad y Depresión",
     subtitulo: "Crisis clínica sin precedentes",
-    desc: "La hiperconexión y la comparación social continua son factores clave. En España, las autolesiones se triplicaron y casi el 50% reportó pensamientos autolíticos.",
+    desc: "La hiperconexión y la comparación social continua son factores clave. En España, los ingresos hospitalarios por autolesión en jóvenes se triplicaron en dos décadas; en Cataluña, el 43,3% de los adolescentes de 11 a 18 años reportó pensamientos suicidas.",
     items: ["Alteraciones del sueño y ciclo circadiano.", "Baja autoestima basada en métricas."],
     icon: Activity,
     accent: "from-cyan-400 to-brand-blue",
@@ -587,6 +606,26 @@ export function HiperconectividadContent() {
         <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white to-transparent pointer-events-none" />
       </section>
 
+      {/* ══ CONCEPTO ══════════════════════════════════════════════════════════ */}
+      <section className="px-6 py-16 lg:py-20 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+            className="gradient-border-card rounded-3xl p-8 lg:p-10 bg-slate-50"
+          >
+            <h2 className="text-xs font-bold uppercase tracking-widest text-brand-blue mb-4">Concepto</h2>
+            <blockquote className="text-brand-navy text-xl lg:text-2xl leading-relaxed italic border-l-4 border-brand-blue pl-6 mb-4">
+              "{CONCEPTO_QUOTE.text}"
+            </blockquote>
+            <SourceCite source={CONCEPTO_QUOTE.source} className="mb-6" />
+
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 mt-4">
+              <p className="text-slate-600 text-sm leading-relaxed mb-3">{TECNOESTRES_QUOTE.text}</p>
+              <SourceCite source={TECNOESTRES_QUOTE.source} />
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ══ STATS BENTO ═══════════════════════════════════════════════════════ */}
       <section id="contexto" className="bg-white px-6 py-20 lg:py-28">
         <div className="max-w-6xl mx-auto">
@@ -617,7 +656,8 @@ export function HiperconectividadContent() {
                   <Smartphone className="w-5 h-5" />
                 </div>
                 <p className="text-8xl lg:text-9xl font-display font-black text-white leading-none mb-3">94.8%</p>
-                <p className="text-white text-base">de los adolescentes tiene dispositivo móvil con conexión a internet.</p>
+                <p className="text-white text-base mb-3">de los adolescentes tiene dispositivo móvil con conexión a internet.</p>
+                <SourceCite source={UNICEF_ESPANA_2021} dark />
               </div>
             </motion.div>
 
@@ -631,7 +671,8 @@ export function HiperconectividadContent() {
               </div>
               <p className="text-5xl font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-violet-600 to-brand-blue mb-2 leading-none">11</p>
               <p className="text-sm font-bold text-brand-navy mb-1">años de edad</p>
-              <p className="text-slate-500 text-base leading-relaxed">edad media del primer dispositivo con internet.</p>
+              <p className="text-slate-500 text-base leading-relaxed mb-3">edad media del primer dispositivo con internet (10,96 años exactos).</p>
+              <SourceCite source={UNICEF_ESPANA_2021} />
             </motion.div>
 
             {/* Card — 8 horas */}
@@ -644,7 +685,8 @@ export function HiperconectividadContent() {
               </div>
               <p className="text-5xl font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-brand-pink to-orange-500 mb-2 leading-none">8h</p>
               <p className="text-sm font-bold text-brand-navy mb-1">diarias en pantallas</p>
-              <p className="text-slate-600 text-base leading-relaxed">promedio en adolescentes de 13 a 17 años.</p>
+              <p className="text-slate-600 text-base leading-relaxed mb-3">promedio en adolescentes de 13 a 17 años.</p>
+              <SourceCite source={UNICEF_ESPANA_PENDIENTE} />
             </motion.div>
 
             {/* Card — 77% */}
@@ -655,7 +697,8 @@ export function HiperconectividadContent() {
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <p className="text-5xl font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-500 to-orange-500 mb-2 leading-none">77%</p>
-              <p className="text-base text-slate-500 leading-relaxed">sin ningún límite de tiempo de uso establecido.</p>
+              <p className="text-base text-slate-500 leading-relaxed mb-3">sin ningún límite de tiempo de uso establecido.</p>
+              <SourceCite source={UNICEF_ESPANA_PENDIENTE} />
             </motion.div>
 
             {/* Card — 4 de 10 */}
@@ -666,7 +709,8 @@ export function HiperconectividadContent() {
                 <Heart className="w-5 h-5" />
               </div>
               <p className="text-5xl font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-emerald-500 to-teal-600 mb-2 leading-none">4/10</p>
-              <p className="text-base text-slate-500 leading-relaxed">se conecta específicamente para no sentirse solo.</p>
+              <p className="text-base text-slate-500 leading-relaxed mb-3">se conecta específicamente para no sentirse solo.</p>
+              <SourceCite source={UNICEF_ESPANA_2021} />
             </motion.div>
 
             {/* Card — solo 29.1% */}
@@ -679,6 +723,9 @@ export function HiperconectividadContent() {
                 <div>
                   <p className="text-6xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-orange-400 leading-none mb-2">29.1%</p>
                   <p className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-orange-400 text-base max-w-xs leading-relaxed font-medium">de los hogares cuenta con normas claras de uso digital. La brecha de supervisión es el punto de quiebre estratégico.</p>
+                  <div className="mt-3">
+                    <SourceCite source={UNICEF_ESPANA_PENDIENTE} dark />
+                  </div>
                 </div>
                 <div className="shrink-0 hidden sm:flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-brand-pink/30 to-orange-400/20 border border-brand-pink/30 backdrop-blur-sm">
                   <ShieldCheck className="w-9 h-9 text-brand-pink" />
@@ -706,9 +753,12 @@ export function HiperconectividadContent() {
               De las <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-cyan-500">TIC</span> a las{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-brand-pink">TRIC</span>
             </h2>
-            <p className="text-slate-600 text-xl leading-relaxed">
+            <p className="text-slate-600 text-xl leading-relaxed mb-4">
               La llegada de las redes sociales cambió el paradigma. Ya no son solo tecnologías de información y comunicación: el nuevo componente central es la <strong className="text-brand-navy">Relación</strong>.
             </p>
+            <div className="flex justify-center">
+              <SourceCite source={UNICEF_ESPANA_2021} />
+            </div>
           </motion.div>
 
           <div className="relative">
@@ -817,9 +867,10 @@ export function HiperconectividadContent() {
                 </div>
                 <div>
                   <p className="font-bold text-white text-lg mb-1">"Demencia Digital": la poda sináptica bajo el algoritmo</p>
-                  <p className="text-white text-base leading-relaxed">
-                    La poda sináptica adolescente está siendo moldeada por consumo superficial. Al externalizar funciones cognitivas al mundo digital, se produce una atrofia funcional del hipocampo y una reducción de la capacidad atencional a largo plazo.
+                  <p className="text-white text-base leading-relaxed mb-3">
+                    Según el psiquiatra Manfred Spitzer, la poda sináptica adolescente está siendo moldeada por consumo superficial. Al externalizar funciones cognitivas al mundo digital, se produciría una atrofia funcional del hipocampo y una reducción de la capacidad atencional a largo plazo — una hipótesis suya, con debate académico abierto sobre su alcance real.
                   </p>
+                  <SourceCite source={DEMENCIA_DIGITAL_QUOTE} dark />
                 </div>
               </motion.div>
             </div>
@@ -891,7 +942,16 @@ export function HiperconectividadContent() {
                     </div>
                     <div>
                       <p className="font-bold text-brand-navy text-base mb-1">{item.titulo}</p>
-                      <p className="text-slate-500 text-base leading-relaxed">{item.desc}</p>
+                      <p className="text-slate-500 text-base leading-relaxed mb-2">{item.desc}</p>
+                      <SourceCite
+                        source={
+                          item.titulo === "Auto-objetivación"
+                            ? AUTOOBJETIVACION_SOURCE
+                            : item.titulo === "Identidad fragmentada"
+                            ? IDENTIDAD_FRAGMENTADA_SOURCE
+                            : INSTAGRAM_32_SOURCE
+                        }
+                      />
                     </div>
                   </motion.div>
                 ))}
@@ -924,7 +984,7 @@ export function HiperconectividadContent() {
                   </span>
                 </h2>
                 <p className="text-white text-xl max-w-2xl mx-auto">
-                  Las tasas de autolesiones se triplicaron. Casi el 50% de los jóvenes reportó pensamientos autolíticos. La evidencia es concluyente — y como docente, sos una de las primeras personas en posición de notar estas señales en el aula.
+                  Los ingresos hospitalarios por autolesión en jóvenes se triplicaron en dos décadas, y en algunas regiones más de 4 de cada 10 adolescentes reportó pensamientos suicidas. La evidencia es concluyente — y como docente, sos una de las primeras personas en posición de notar estas señales en el aula.
                 </p>
               </motion.div>
 
@@ -943,7 +1003,7 @@ export function HiperconectividadContent() {
                       <h3 className="text-2xl font-display font-bold text-white mb-1">{item.titulo}</h3>
                       <p className={`text-sm font-semibold mb-4 ${item.textAccent}`}>{item.subtitulo}</p>
                       <p className="text-white text-base leading-relaxed mb-5">{item.desc}</p>
-                      <ul className="space-y-2">
+                      <ul className="space-y-2 mb-4">
                         {item.items.map((li, j) => (
                           <li key={j} className="flex items-start gap-2.5 text-white text-base">
                             <CheckCircle2 className={`w-4 h-4 ${item.textAccent} shrink-0 mt-0.5`} />
@@ -951,6 +1011,14 @@ export function HiperconectividadContent() {
                           </li>
                         ))}
                       </ul>
+                      {item.titulo === "Síndrome FOMO" && <SourceCite source={FOMO_SOURCE} dark />}
+                      {item.titulo === "Ansiedad y Depresión" && (
+                        <div className="flex flex-col gap-1.5">
+                          <SourceCite source={AUTOLESIONES_TRIPLICADAS_SOURCE} dark />
+                          <SourceCite source={IDEACION_SUICIDA_SOURCE} dark />
+                        </div>
+                      )}
+                      {item.titulo === "Trastornos Alimentarios" && <SourceCite source={DUERME_CON_MOVIL_SOURCE} dark />}
                     </div>
                   </motion.div>
                 ))}
@@ -1001,7 +1069,16 @@ export function HiperconectividadContent() {
                   </div>
 
                   <h3 className="text-2xl font-display font-bold text-brand-navy mb-3 group-hover:text-brand-blue transition-colors duration-300">{item.titulo}</h3>
-                  <p className="text-brand-navy text-base leading-relaxed">{item.desc}</p>
+                  <p className="text-brand-navy text-base leading-relaxed mb-3">{item.desc}</p>
+                  <SourceCite
+                    source={
+                      item.titulo === "Apuestas Online"
+                        ? APUESTAS_ONLINE_SOURCE
+                        : item.titulo === "Gaming y Brecha de Género"
+                        ? PEGI_SOURCE
+                        : PADRES_SOURCE
+                    }
+                  />
                 </div>
               </motion.div>
             ))}
@@ -1248,6 +1325,32 @@ export function HiperconectividadContent() {
               </div>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ══ FUENTES CITADAS ══════════════════════════════════════════════════ */}
+      <section className="px-6 py-16 bg-white">
+        <div className="max-w-3xl mx-auto bg-slate-50 rounded-3xl border border-slate-200 p-8 lg:p-10">
+          <h2 className="font-display text-2xl font-bold text-brand-navy mb-6 flex items-center gap-3">
+            <span>📚</span> Fuentes Citadas
+          </h2>
+          <ul className="space-y-3">
+            {FUENTES_COMPLETAS.map((fuente) => (
+              <li key={fuente.n} className="flex items-start gap-3 text-sm">
+                <span className="text-slate-400 font-mono shrink-0">{fuente.n}.</span>
+                <div className="flex flex-col gap-1">
+                  {fuente.url ? (
+                    <a href={fuente.url} target="_blank" rel="noopener noreferrer" className="text-brand-blue hover:underline">
+                      {fuente.label}
+                    </a>
+                  ) : (
+                    <span className="text-slate-700">{fuente.label}</span>
+                  )}
+                  {fuente.note && <span className="text-slate-400 text-xs italic">{fuente.note}</span>}
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

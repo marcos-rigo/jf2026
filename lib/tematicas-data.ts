@@ -96,8 +96,8 @@ export const groups: TematicaGroup[] = [
         imageAlt: "Banner Alfabetización Digital",
         icon: BookOpen,
         color: "#0EA5E9",
-        locked: true,
-        sinContenido: true,
+        locked: false,
+        audiencias: ["docentes", "familias"],
       },
       {
         id: "alfabetizacion-mediatica",

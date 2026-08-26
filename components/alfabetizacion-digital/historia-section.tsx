@@ -1,0 +1,118 @@
+'use client';
+
+import { GILSTER_QUOTE, SPIRES_BARTLETT_QUOTE, MARTIN_GRUDZIECKI_QUOTE, ESHET_ALKALAI_SOURCE, NG_SOURCE } from '@/lib/alfabetizacion-digital-content';
+import { SourceCite } from './source-cite';
+import { History, Compass, Layers, GitMerge } from 'lucide-react';
+
+export default function HistoriaSection() {
+  return (
+    <section id="historia" className="scroll-mt-28 md:scroll-mt-32 space-y-8">
+      {/* Encabezado de Sección */}
+      <div className="space-y-2">
+        <div className="flex items-center gap-2 text-sky-700 font-mono text-sm uppercase tracking-wider font-semibold">
+          <History className="w-4 h-4 text-sky-600" />
+          <span>01 · Genealogía Conceptual y Marcos Teóricos</span>
+        </div>
+        <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 font-display">
+          Evolución del Concepto: De la Destreza Operativa a la Transformación Crítica
+        </h2>
+        <p className="text-slate-600 text-base max-w-3xl leading-relaxed">
+          La alfabetización digital ha dejado de ser vista como una mera capacitación técnica en software para consolidarse como una matriz cognitiva y cultural indispensable para la resiliencia socioeconómica.
+        </p>
+      </div>
+
+      {/* Tarjeta Pionera: Paul Gilster (1997) */}
+      <div className="p-6 md:p-7 rounded-2xl bg-white border border-slate-200/80 shadow-md shadow-slate-100 hover:shadow-xl hover:border-sky-300 transition-all space-y-4">
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-white font-bold font-mono text-sm shadow-md shadow-sky-500/20">
+              1997
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-slate-900 font-display">Paul Gilster — El Origen del Término</h3>
+              <p className="text-xs text-sky-700 font-mono font-semibold">Digital Literacy (Wiley)</p>
+            </div>
+          </div>
+        </div>
+        
+        <p className="text-sm text-slate-700 leading-relaxed font-sans">
+          Gilster formuló la primera definición académica amplia: no la habilidad de presionar botones, sino la <strong className="text-slate-900">capacidad de comprender y usar información proveniente de múltiples fuentes cuando se presenta a través de computadoras</strong>. Destacó cuatro competencias clave: evaluación crítica del contenido, navegación no lineal, búsqueda estructurada e integración informacional.
+        </p>
+
+        <div className="p-4 rounded-xl bg-sky-50/50 border border-sky-200/60 space-y-2">
+          <p className="text-xs italic text-slate-700 leading-relaxed">&ldquo;{GILSTER_QUOTE.text}&rdquo;</p>
+          <SourceCite source={GILSTER_QUOTE.source} />
+        </div>
+      </div>
+
+      {/* Grid de Modelos Contemporáneos */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Yoram Eshet-Alkalai (2012) */}
+        <div className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-md shadow-slate-100 space-y-4 hover:border-sky-300 transition-all flex flex-col justify-between">
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-sky-700">
+              <Compass className="w-5 h-5 text-sky-600" />
+              <h3 className="text-base font-bold text-slate-900 font-display">Yoram Eshet-Alkalai (2012)</h3>
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Diseño cognitivo de 5 alfabetizaciones interconectadas: <strong className="text-slate-900">socioemocional</strong> (ética y comportamiento en red), <strong className="text-slate-900">pensamiento ramificado</strong> (navegación hipertextual), <strong className="text-slate-900">pensamiento en tiempo real</strong> (procesamiento ante estímulos masivos), <strong className="text-slate-900">informacional</strong> (filtrado de sesgos) y <strong className="text-slate-900">fotovisual/reproducción</strong> (remezcla multimodal).
+            </p>
+          </div>
+          <div className="pt-3 border-t border-slate-100">
+            <SourceCite source={ESHET_ALKALAI_SOURCE} />
+          </div>
+        </div>
+
+        {/* Ng (2012) */}
+        <div className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-md shadow-slate-100 space-y-4 hover:border-sky-300 transition-all flex flex-col justify-between">
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-blue-700">
+              <Layers className="w-5 h-5 text-blue-600" />
+              <h3 className="text-base font-bold text-slate-900 font-display">Ng, W. (2012) — Modelo Holístico</h3>
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              La alfabetización digital requiere la convergencia equilibrada de tres dimensiones principales: la <strong className="text-slate-900">dimensión técnica</strong> (destreza instrumental), la <strong className="text-slate-900">dimensión cognitiva</strong> (evaluación informacional y pensamiento crítico) y la <strong className="text-slate-900">dimensión socioemocional</strong> (comunicación ética y resguardo de la privacidad).
+            </p>
+          </div>
+          <div className="pt-3 border-t border-slate-100">
+            <SourceCite source={NG_SOURCE} />
+          </div>
+        </div>
+
+        {/* Spires & Bartlett (2012) */}
+        <div className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-md shadow-slate-100 space-y-4 hover:border-sky-300 transition-all flex flex-col justify-between">
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-indigo-700">
+              <GitMerge className="w-5 h-5 text-indigo-600" />
+              <h3 className="text-base font-bold text-slate-900 font-display">Spires & Bartlett (2012) — Proceso Secuencial</h3>
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Modelan la alfabetización como un proceso operativo en tres momentos continuos: <strong className="text-slate-900">acceso efectivo</strong> a la información digital, <strong className="text-slate-900">producción estructurada</strong> de nuevo conocimiento y contenido, e <strong className="text-slate-900">intercambio responsable</strong> en comunidades hiperconectadas.
+            </p>
+            <p className="text-xs italic text-slate-600">&ldquo;{SPIRES_BARTLETT_QUOTE.text}&rdquo;</p>
+          </div>
+          <div className="pt-3 border-t border-slate-100">
+            <SourceCite source={SPIRES_BARTLETT_QUOTE.source} />
+          </div>
+        </div>
+
+        {/* Martin & Grudziecki (2013) */}
+        <div className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-md shadow-slate-100 space-y-4 hover:border-sky-300 transition-all flex flex-col justify-between">
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-cyan-700">
+              <Layers className="w-5 h-5 text-cyan-600" />
+              <h3 className="text-base font-bold text-slate-900 font-display">Martin & Grudziecki (2013) — Los 3 Niveles</h3>
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Propone una pirámide de desarrollo: <strong className="text-slate-900">1. Alfabetización instrumental</strong> (destrezas operativas básicas), <strong className="text-slate-900">2. Uso digital aplicado</strong> (integración contextual a tareas profesionales y académicas), y <strong className="text-slate-900">3. Transformación digital crítica</strong> (capacidad de innovar y cuestionar estructuras).
+            </p>
+            <p className="text-xs italic text-slate-600">&ldquo;{MARTIN_GRUDZIECKI_QUOTE.text}&rdquo;</p>
+          </div>
+          <div className="pt-3 border-t border-slate-100">
+            <SourceCite source={MARTIN_GRUDZIECKI_QUOTE.source} />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

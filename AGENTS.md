@@ -26,6 +26,7 @@ npx tsc --noEmit         # type-check separately (build does NOT check types)
 - **Extra routes**: `/hiperconectividad-digital`, `/nnya-entorno-digital`, `/violencia-digital-infancias` — present in Navbar but not in manual route tables.
 - **Home page**: `app/page.tsx` currently does not render `WeeklyModalLoader` or `QuickContactSection` (both still exist as components but are unmounted). It now includes `<NarrativeSection />` from `components/sections/narrative-section.tsx` between `Hero` and `PillarsSection`.
 - **Duplicate tematica route**: `/etica-ia` and `/tematicas/ia-etica-ciudadania` render near-identical "IA, Ética y Ciudadanía Digital" content via separate components — likely needs reconciling.
+- **Cited-sources pattern**: `/ciudadania-digital`, `/huella-digital`, `/hiperconectividad-digital` each have their own `lib/<route>-content.ts` (`Source`/`Quote` types) and `components/<route>/source-cite.tsx` (deliberately duplicated per route, not shared — different themes). `unverified: true` renders a "sin verificar" badge. First two were rebuilt as 9-section scroll landings with a `toc-nav.tsx` sticky sidebar — keep `overflow-x-hidden` on `<main>`, never on the flex wrapper that also holds the sidebar, or `position: sticky` silently breaks. See `CLAUDE.md` for the full writeup.
 
 ## Weekly modal workflow
 
