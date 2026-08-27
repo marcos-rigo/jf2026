@@ -62,7 +62,7 @@ export function HeroSection() {
           <div className="inline-flex items-center gap-2.5 px-4 py-2 bg-brand-blue/5 border border-brand-blue/10 rounded-full shadow-sm hover:shadow-md transition-shadow duration-300">
             <span className="flex h-2 w-2 rounded-full bg-brand-pink animate-pulse shadow-[0_0_8px_#D5247A]" />
             <span className="text-xs font-bold text-brand-navy tracking-widest uppercase">
-              01 · Plataforma AMI — Concepto
+              01 · Concepto
             </span>
           </div>
 
