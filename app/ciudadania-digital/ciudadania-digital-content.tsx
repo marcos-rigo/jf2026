@@ -17,6 +17,7 @@ import HerramientasSection, { CHECKLIST_ITEMS } from '@/components/ciudadania-di
 import { useAppStore } from '@/lib/ciudadania/app-store';
 import { useTematicaProgress, checklistProgress } from '@/lib/hooks/use-tematica-progress';
 import { TematicaCompletarButton } from '@/components/tematica-completar-button';
+import { BackToDashboardButton } from '@/components/tematicas/back-to-dashboard-button';
 
 export default function CiudadaniaDigitalContent() {
   const userId = useAppStore((s) => s.user?.id ?? null);
@@ -36,6 +37,7 @@ export default function CiudadaniaDigitalContent() {
   return (
     <>
       <Navbar />
+      <BackToDashboardButton />
 
       <div className="min-h-screen flex flex-col md:flex-row relative text-slate-300 bg-brand-dark">
         {/* Grid de fondo */}

@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 import { Navbar } from "@/components/navbar"
+import { BackToDashboardButton } from "@/components/tematicas/back-to-dashboard-button"
 import { Footer } from "@/components/footer"
 import { HiperconectividadContent } from "./hiperconectividad-content"
 
@@ -29,6 +30,7 @@ export default function HiperconectividadPage() {
   return (
     <>
       <Navbar />
+      <BackToDashboardButton />
       <HiperconectividadContent />
       <Footer />
     </>

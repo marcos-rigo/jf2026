@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 import { Navbar } from "@/components/navbar"
+import { BackToDashboardButton } from "@/components/tematicas/back-to-dashboard-button"
 import { Footer } from "@/components/footer"
 import { EstafasDigitalesContent } from "./estafas-digitales-content"
 
@@ -27,6 +28,7 @@ export default function EstafasDigitalesPage() {
   return (
     <>
       <Navbar />
+      <BackToDashboardButton />
       <EstafasDigitalesContent />
       <Footer />
     </>

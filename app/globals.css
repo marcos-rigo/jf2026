@@ -373,6 +373,10 @@
   .animate-spin-slow,
   .animate-glow-ring,
   .animate-scale-breath,
+  .animate-pulse,
+  .animate-ping,
+  .animate-spin,
+  .animate-bounce,
   .bg-mesh-animated,
   [class*="particle-drift"] {
     animation: none !important;

@@ -42,6 +42,7 @@ import { Footer } from "@/components/footer"
 import { useAppStore } from "@/lib/ciudadania/app-store"
 import { useTematicaProgress, checklistProgress } from "@/lib/hooks/use-tematica-progress"
 import { TematicaCompletarButton } from "@/components/tematica-completar-button"
+import { BackToDashboardButton } from "@/components/tematicas/back-to-dashboard-button"
 
 const INFOGRAFIA_PATH = "/weekly-content/2026-W22/violenciapng.png"
 
@@ -314,6 +315,7 @@ export default function ViolenciaDigitalContent() {
   return (
     <>
       <Navbar />
+      <BackToDashboardButton />
 
       <main className="bg-slate-50 min-h-screen">
 

@@ -15,6 +15,7 @@ import RecursosSection from '@/components/huella-digital/recursos-section';
 import { useAppStore } from '@/lib/ciudadania/app-store';
 import { useTematicaProgress, checklistProgress } from '@/lib/hooks/use-tematica-progress';
 import { TematicaCompletarButton } from '@/components/tematica-completar-button';
+import { BackToDashboardButton } from '@/components/tematicas/back-to-dashboard-button';
 
 export default function HuellaDigitalContent() {
   const userId = useAppStore((s) => s.user?.id ?? null);
@@ -34,6 +35,7 @@ export default function HuellaDigitalContent() {
   return (
     <>
       <Navbar />
+      <BackToDashboardButton />
 
       <div className="min-h-screen flex flex-col md:flex-row relative bg-slate-50">
         <TocNav />

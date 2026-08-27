@@ -13,6 +13,7 @@ import { Footer } from "@/components/footer"
 import { useAppStore } from "@/lib/ciudadania/app-store"
 import { useTematicaProgress } from "@/lib/hooks/use-tematica-progress"
 import { TematicaCompletarButton } from "@/components/tematica-completar-button"
+import { BackToDashboardButton } from "@/components/tematicas/back-to-dashboard-button"
 import {
   Scale,
   Users,
@@ -679,6 +680,7 @@ export function IaEticaCiudadaniaContent() {
     <>
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
       <Navbar />
+      <BackToDashboardButton />
       <ScrollProgressBar />
 
       <main className="relative w-full font-sans overflow-hidden bg-white">

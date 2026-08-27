@@ -8,6 +8,7 @@ import Image from "next/image"
 import { useAppStore } from "@/lib/ciudadania/app-store"
 import { useTematicaProgress, type ComputedProgress } from "@/lib/hooks/use-tematica-progress"
 import { TematicaCompletarButton } from "@/components/tematica-completar-button"
+import { BackToDashboardButton } from "@/components/tematicas/back-to-dashboard-button"
 import {
   ArrowDown, ArrowRight, ArrowUpRight, RefreshCw, CheckCircle2, ChevronDown,
   Brain, Heart, ShoppingBag, Scan,
@@ -646,6 +647,7 @@ export function CibercrianzaContent() {
     <>
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
       <Navbar />
+      <BackToDashboardButton />
       <ScrollProgress />
       {/* Set large readable global text-slate-800 for high accessibility and large legibility */}
       <main className="relative w-full font-sans overflow-hidden bg-white text-slate-800 text-lg">

@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 import { Navbar } from "@/components/navbar"
+import { BackToDashboardButton } from "@/components/tematicas/back-to-dashboard-button"
 import { Footer } from "@/components/footer"
 import { ViolenciaInfanciasContent } from "./violencia-infancias-content"
 
@@ -28,6 +29,7 @@ export default function ViolenciaInfanciasPage() {
   return (
     <>
       <Navbar />
+      <BackToDashboardButton />
       <ViolenciaInfanciasContent />
       <Footer />
     </>

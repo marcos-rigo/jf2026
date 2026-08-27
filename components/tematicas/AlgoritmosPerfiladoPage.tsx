@@ -47,6 +47,7 @@ import {
 } from 'lucide-react'
 import Image from 'next/image'
 import { Navbar } from '@/components/navbar'
+import { BackToDashboardButton } from '@/components/tematicas/back-to-dashboard-button'
 import { Footer } from '@/components/footer'
 import { useLibresSubtopic } from '@/lib/hooks/use-libres-subtopic'
 import { getLibresSubtopicBySlug } from '@/lib/libres-bajo-influencia-data'
@@ -476,6 +477,7 @@ export function AlgoritmosPerfiladoPage() {
       <style>{STYLES}</style>
 
       <Navbar />
+      <BackToDashboardButton />
 
       {/* Progress Bar */}
       <div className="fixed top-0 left-0 right-0 h-1.5 bg-slate-100 z-50 overflow-hidden">

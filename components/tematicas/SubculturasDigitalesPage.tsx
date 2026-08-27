@@ -40,6 +40,7 @@ import {
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { Navbar } from '@/components/navbar'
+import { BackToDashboardButton } from '@/components/tematicas/back-to-dashboard-button'
 import { Footer } from '@/components/footer'
 import { useLibresSubtopic } from '@/lib/hooks/use-libres-subtopic'
 import { getLibresSubtopicBySlug } from '@/lib/libres-bajo-influencia-data'
@@ -569,6 +570,7 @@ export default function SubculturasDigitalesPage() {
     <>
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
       <Navbar />
+      <BackToDashboardButton />
 
       <main className="relative w-full font-sans overflow-hidden bg-white text-slate-800 text-lg">
 

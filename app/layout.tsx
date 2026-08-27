@@ -3,14 +3,16 @@ import { DM_Sans, Plus_Jakarta_Sans } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const dmSans = DM_Sans({ 
+const dmSans = DM_Sans({
   subsets: ["latin"],
+  style: ['normal', 'italic'],
   variable: '--font-dm-sans',
   display: 'swap',
 });
 
-const plusJakarta = Plus_Jakarta_Sans({ 
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
+  style: ['normal', 'italic'],
   variable: '--font-plus-jakarta',
   display: 'swap',
 });

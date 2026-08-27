@@ -25,6 +25,9 @@ export const CONCEPTO_QUOTE: Quote = {
   },
 };
 
+export const CONCEPTO_NOTA_DOCENTE =
+  'Para un docente, esto implica que "estar alfabetizado digitalmente" no es solo saber usar herramientas: es poder diseñar una clase que integre las tres dimensiones —técnica, cognitiva y socioemocional— en vez de reducir la alfabetización digital a manejo de software.';
+
 // ── 02 · Historia / origen — genealogía teórica ──
 
 export const GILSTER_QUOTE: Quote = {
@@ -59,23 +62,23 @@ export interface Dimension {
 export const DIMENSIONES: Dimension[] = [
   {
     titulo: 'Alfabetización socioemocional',
-    desc: 'Centrada en los aspectos relacionales y éticos; promueve la colaboración virtual y el comportamiento responsable en entornos digitales mediadores.',
+    desc: 'Centrada en los aspectos relacionales y éticos; promueve la colaboración virtual y el comportamiento responsable en entornos digitales mediadores. En el aula, es la base de las normas de netiqueta y convivencia digital que trabajamos en Ciudadanía Digital.',
   },
   {
     titulo: 'Pensamiento ramificado (branching literacy)',
-    desc: 'Destreza cognitiva para navegar con fluidez en arquitecturas de información no lineales, construyendo sentido en espacios hipertextuales.',
+    desc: 'Destreza cognitiva para navegar con fluidez en arquitecturas de información no lineales, construyendo sentido en espacios hipertextuales. En el aula, es la habilidad que se pone en juego cuando un estudiante navega fuentes, hipervínculos y pestañas sin perder el hilo de la consigna original.',
   },
   {
     titulo: 'Pensamiento en tiempo real',
-    desc: 'Capacidad de procesar simultáneamente flujos dinámicos de información y estímulos rápidos — crítica ante la saturación de datos actual.',
+    desc: 'Capacidad de procesar simultáneamente flujos dinámicos de información y estímulos rápidos — crítica ante la saturación de datos actual. En el aula, se relaciona directamente con los desafíos de atención y multitarea que abordamos en Hiperconectividad Digital.',
   },
   {
     titulo: 'Alfabetización informacional',
-    desc: 'Competencia para buscar, filtrar y evaluar críticamente la validez y los sesgos de los datos digitales, combatiendo activamente la desinformación.',
+    desc: 'Competencia para buscar, filtrar y evaluar críticamente la validez y los sesgos de los datos digitales, combatiendo activamente la desinformación. En el aula, es la misma habilidad que trabajamos con el método C.A.F.E. en la temática de Alfabetización Mediática.',
   },
   {
     titulo: 'Alfabetización de reproducción',
-    desc: 'Capacidad creativa para la decodificación multimodal y la creación de nuevos contenidos mediante remezcla y lenguajes gráficos complejos.',
+    desc: 'Capacidad creativa para la decodificación multimodal y la creación de nuevos contenidos mediante remezcla y lenguajes gráficos complejos. En el aula, es la competencia que entra en juego al enseñar creación responsable de contenido y detección de imágenes o videos generados por IA.',
   },
 ];
 
@@ -115,7 +118,7 @@ export const DIGCOMPALC_QUOTE: Quote = {
   source: {
     author: 'María Florencia Ripani (2026)',
     note: 'CEPAL, Marco regional de competencias digitales para América Latina y el Caribe (DigCompALC) — LC/TS.2026/44',
-    url: 'https://www.cepal.org/es/publicaciones/90120-marco-regional-competencias-digitales-america-latina-caribe-digcompalc',
+    url: 'https://www.cepal.org/es/publicaciones/90120-marco-regional-competencias-digitales-america-latina-caribe',
   },
 };
 
@@ -167,16 +170,26 @@ export const EJEMPLOS = {
   },
 };
 
+export const EJEMPLOS_NOTA_DOCENTE =
+  'Estos tres niveles sirven para dos cosas a la vez: para que puedas autoevaluar tu propia alfabetización digital como docente, y para calibrar expectativas realistas sobre en qué nivel está cada estudiante — no todo el curso llega al aula en el mismo punto de partida.';
+
 // ── 06 · Ventajas — retorno socioeconómico ──
 
 export const PIB_QUOTE: Quote = {
-  text: 'Un incremento del 1.9% en el PIB per cápita por cada 10% de aumento en la penetración de banda ancha fija en las Américas — un contrapeso medible a la baja productividad regional.',
-  source: { author: 'Análisis econométrico regional, citado en el informe de referencia de esta temática', note: 'método Entropy-TOPSIS aplicado al Índice de Alfabetización Digital (Di)' },
+  text: 'Un incremento del 3.19% en el PIB y del 2.61% en la productividad —además de la creación de 67.000 empleos directos— por cada 10% de aumento en la penetración de banda ancha fija en los países de América Latina y el Caribe.',
+  source: {
+    author: 'Banco Interamericano de Desarrollo (BID, 2012)',
+    note: 'estudio sobre el impacto económico de la banda ancha en América Latina y el Caribe',
+    url: 'https://www.fundacionmicrofinanzasbbva.org/revistaprogreso/economia-digital-en-america-latina-y-el-caribe-situacion-actual-y-recomendaciones/',
+  },
 };
 
 export const MERCADO_LABORAL_QUOTE: Quote = {
   text: 'El 80% de las vacantes en "middle-skill jobs" exige competencias digitales. Ante el riesgo de que la IA automatice el 44% de las tareas laborales en América Latina, desarrollar estas habilidades es la vía principal para evitar una obsolescencia masiva de la fuerza laboral — y el índice de alfabetización digital (Di) se correlaciona positivamente con mayores ingresos salariales.',
-  source: { author: 'Análisis econométrico regional, citado en el informe de referencia de esta temática' },
+  source: {
+    author: 'Análisis econométrico regional, citado en el informe de referencia de esta temática',
+    unverified: true,
+  },
 };
 
 // ── 07 · Riesgos ──
@@ -196,7 +209,7 @@ export const RIESGOS = [
   },
   {
     titulo: 'Invisibilidad de minorías',
-    desc: 'Comunidades rurales, pueblos indígenas y personas migrantes quedan fuera de los marcos de medición tradicionales cuando no se registra el Nivel Prebásico.',
+    desc: 'Comunidades rurales, pueblos indígenas y personas migrantes quedan fuera de los marcos de medición tradicionales cuando no se registra el Nivel Prebásico. En el aula, un docente puede ser quien primero note que un estudiante llega sin las competencias de Nivel 1 o 2 que el resto del curso da por sentadas.',
   },
 ];
 
@@ -258,16 +271,11 @@ export interface FuenteCitada {
 }
 
 export const FUENTES_COMPLETAS: FuenteCitada[] = [
-  { n: 1, label: 'María Florencia Ripani (2026) — CEPAL, Marco regional de competencias digitales para América Latina y el Caribe (DigCompALC)', url: 'https://www.cepal.org/es/publicaciones/90120-marco-regional-competencias-digitales-america-latina-caribe-digcompalc' },
+  { n: 1, label: 'María Florencia Ripani (2026) — CEPAL, Marco regional de competencias digitales para América Latina y el Caribe (DigCompALC)', url: 'https://www.cepal.org/es/publicaciones/90120-marco-regional-competencias-digitales-america-latina-caribe' },
   { n: 2, label: 'Comisión Europea — JRC, DigComp 3.0: The Digital Competence Framework for Citizens', url: 'https://joint-research-centre.ec.europa.eu/projects-and-activities/key-competences-lifelong-learning/digital-competence-framework-digcomp/digcomp-30_en' },
   { n: 3, label: 'CEPAL — Agenda digital para América Latina y el Caribe (eLAC2026)', url: 'https://elac.cepal.org/' },
   { n: 4, label: 'Biblioteca del Congreso Nacional de Chile (BCN) — Estudio de Alfabetismo Digital y Competencias', url: 'https://www.bcn.cl/obtienearchivo?id=repositorio/10221/37647/1/Informe_34_25_Alfabetismo_digital_en_Chile.pdf' },
   { n: 5, label: 'Fundación País Digital — Índice de Ciudadanía Digital', url: 'https://paisdigital.org/portfolio-item/indice-de-ciudadania-digital/' },
-  { n: 6, label: 'Paul Gilster (1997) — Digital Literacy, Wiley', note: 'sin edición digital oficial gratuita para linkear' },
-  { n: 7, label: 'Yoram Eshet-Alkalai (2012) — marco de las 5 dimensiones de alfabetización digital', note: 'sin link oficial verificado' },
-  { n: 8, label: 'Ng, W. (2012) — modelo holístico técnico/cognitivo/socioemocional', note: 'sin link oficial verificado' },
-  { n: 9, label: 'Spires, H. & Bartlett, M. (2012) — acceso, producción e intercambio', note: 'sin link oficial verificado' },
-  { n: 10, label: 'Martin, A. & Grudziecki, J. (2013) — niveles instrumental/aplicado/transformación crítica', note: 'sin link oficial verificado' },
 ];
 
 // ── Secciones del índice de navegación (TOC) ──
@@ -277,16 +285,30 @@ export interface TocSection {
   number: string;
   label: string;
   shortLabel: string;
+  /** Nivel de recorrido (1-4), en espejo de los 4 niveles de proficiencia DigComp
+   * (Básico/Intermedio/Avanzado/Altamente Avanzado) — no clasifica cada sección
+   * como si fuera literalmente ese nivel de competencia, sino que agrupa el
+   * recorrido de lectura de la página en la misma progresión de 4 etapas:
+   * conocer → enmarcar → aplicar → transferir/enseñar. Ver TIER_LABELS. */
+  tier: 1 | 2 | 3 | 4;
 }
 
+export const TIER_LABELS: Record<1 | 2 | 3 | 4, string> = {
+  1: 'Fundamentos',
+  2: 'Marco de referencia',
+  3: 'Aplicación',
+  4: 'Síntesis',
+};
+
 export const TOC_SECTIONS: TocSection[] = [
-  { id: 'hero', number: '00', label: 'Inicio', shortLabel: 'Inicio' },
-  { id: 'historia', number: '01', label: 'Genealogía Teórica', shortLabel: 'Historia' },
-  { id: 'caracteristicas', number: '02', label: 'Dimensiones Críticas', shortLabel: 'Rasgos' },
-  { id: 'tipos-variantes', number: '03', label: 'Niveles y Marcos', shortLabel: 'Niveles' },
-  { id: 'ejemplos-concretos', number: '04', label: 'Ejemplos Concretos', shortLabel: 'Ejemplos' },
-  { id: 'ventajas', number: '05', label: 'Retorno Socioeconómico', shortLabel: 'Ventajas' },
-  { id: 'riesgos', number: '06', label: 'Riesgos y Desafíos', shortLabel: 'Riesgos' },
-  { id: 'aula', number: '07', label: 'Rol Docente', shortLabel: 'Aula' },
-  { id: 'recursos', number: '08', label: 'Centro de Recursos', shortLabel: 'Recursos' },
+  { id: 'hero', number: '00', label: 'Inicio', shortLabel: 'Inicio', tier: 1 },
+  { id: 'historia', number: '01', label: 'Genealogía Teórica', shortLabel: 'Historia', tier: 1 },
+  { id: 'caracteristicas', number: '02', label: 'Dimensiones Críticas', shortLabel: 'Rasgos', tier: 1 },
+  { id: 'tipos-variantes', number: '03', label: 'Niveles y Marcos', shortLabel: 'Niveles', tier: 2 },
+  { id: 'infografia', number: '04', label: 'Infografía Interactiva', shortLabel: 'Infografía', tier: 2 },
+  { id: 'ejemplos-concretos', number: '05', label: 'Ejemplos Concretos', shortLabel: 'Ejemplos', tier: 3 },
+  { id: 'ventajas', number: '06', label: 'Retorno Socioeconómico', shortLabel: 'Ventajas', tier: 3 },
+  { id: 'riesgos', number: '07', label: 'Riesgos y Desafíos', shortLabel: 'Riesgos', tier: 3 },
+  { id: 'aula', number: '08', label: 'Rol Docente', shortLabel: 'Aula', tier: 4 },
+  { id: 'recursos', number: '09', label: 'Centro de Recursos', shortLabel: 'Recursos', tier: 4 },
 ];
