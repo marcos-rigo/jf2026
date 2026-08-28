@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion, useScroll, useSpring, useReducedMotion } from "framer-motion"
 import Image from "next/image"
 import {
   ShieldAlert,
@@ -36,6 +36,13 @@ import {
   ZoomIn,
   ZoomOut,
   Maximize2,
+  Quote,
+  History,
+  Layers,
+  BarChart3,
+  GraduationCap,
+  ArrowUp,
+  BookOpen,
 } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -43,6 +50,17 @@ import { useAppStore } from "@/lib/ciudadania/app-store"
 import { useTematicaProgress, checklistProgress } from "@/lib/hooks/use-tematica-progress"
 import { TematicaCompletarButton } from "@/components/tematica-completar-button"
 import { BackToDashboardButton } from "@/components/tematicas/back-to-dashboard-button"
+import { SourceCite } from "@/components/violencia-digital/source-cite"
+import {
+  CONCEPTO_QUOTES,
+  OLIMPIA_HISTORY,
+  LEY_27736_ARGENTINA,
+  TIPOS_VIOLENCIA_DIGITAL,
+  DEEPFAKES_NOTE,
+  MAGNITUD_ARGENTINA,
+  FAQ3_AMPLIACION,
+  ALL_SOURCES,
+} from "@/lib/violencia-digital-content"
 
 const INFOGRAFIA_PATH = "/weekly-content/2026-W22/violenciapng.png"
 
@@ -118,10 +136,76 @@ const FAQS: { id: FaqId; q: string; a: string | React.ReactNode }[] = [
         investigar por tu cuenta—. Compartile este mismo protocolo y acompañala a activar el equipo de
         orientación o el protocolo de tu institución. Si es una situación de riesgo inmediato, comunicate
         con las líneas de ayuda correspondientes en lugar de intentar resolverlo solo con lo que sabés.
+        <br />
+        <br />
+        {FAQ3_AMPLIACION}
       </>
     ),
   },
 ]
+
+// ─── Design helpers ────────────────────────────────────────────────────────────
+
+/** Barra fina fija arriba: progreso de lectura, acento naranja (color UNiTE). */
+function ReadingProgressBar() {
+  const { scrollYProgress } = useScroll()
+  const shouldReduceMotion = useReducedMotion()
+  const progress = useSpring(scrollYProgress,
+    shouldReduceMotion
+      ? { stiffness: 1000, damping: 100, mass: 0.1 }
+      : { stiffness: 120, damping: 24, mass: 0.4 }
+  )
+
+  return (
+    <motion.div
+      style={{ scaleX: progress }}
+      className="fixed top-0 left-0 right-0 h-[3px] origin-left z-[60] bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600"
+    />
+  )
+}
+
+/** Revela el contenido al entrar en viewport; sin animación si el usuario prefiere movimiento reducido. */
+function Reveal({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: React.ReactNode
+  delay?: number
+  className?: string
+}) {
+  const shouldReduceMotion = useReducedMotion()
+  if (shouldReduceMotion) {
+    return <div className={className}>{children}</div>
+  }
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+/** Pill que marca si un bloque es "protocolo accionable" o "contexto informativo". */
+function SectionBadge({ variant }: { variant: "protocol" | "context" }) {
+  if (variant === "protocol") {
+    return (
+      <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-orange-700 bg-orange-50 border border-orange-200 px-2.5 py-1 rounded-full mb-4">
+        <Zap className="w-3 h-3" /> Protocolo — hacé esto ahora
+      </span>
+    )
+  }
+  return (
+    <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-full mb-4">
+      <BookOpen className="w-3 h-3" /> Contexto
+    </span>
+  )
+}
 
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function ViolenciaDigitalContent() {
@@ -137,8 +221,20 @@ export default function ViolenciaDigitalContent() {
       Array.isArray(progress.detalle.checklist) && (progress.detalle.checklist as string[]).includes(i.id),
     ])
   )
+  const shouldReduceMotion = useReducedMotion()
   const [copied, setCopied] = useState(false)
   const [openFaq, setOpenFaq] = useState<FaqId>(null)
+  const [showScrollTop, setShowScrollTop] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => setShowScrollTop(window.scrollY > 400)
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: shouldReduceMotion ? "auto" : "smooth" })
+  }
   const [currentSlide, setCurrentSlide] = useState(0)
   const [direction, setDirection] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
@@ -314,6 +410,7 @@ export default function ViolenciaDigitalContent() {
 
   return (
     <>
+      <ReadingProgressBar />
       <Navbar />
       <BackToDashboardButton />
 
@@ -356,15 +453,81 @@ export default function ViolenciaDigitalContent() {
           </motion.div>
         </section>
 
+        {/* ── CONCEPTO ─────────────────────────────────────────────────────── */}
+        <section className="px-4 pb-12 md:pb-16">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex justify-center mb-2">
+              <SectionBadge variant="context" />
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2">
+              {CONCEPTO_QUOTES.map((q, i) => (
+                <Reveal key={q.source.author} delay={i * 0.08}>
+                  <div className="h-full bg-white rounded-2xl p-6 md:p-7 shadow-sm border border-slate-200 flex flex-col gap-4">
+                    <Quote className="w-7 h-7 text-orange-400/70 shrink-0" />
+                    <p className="font-display text-xl md:text-2xl italic font-medium text-slate-800 leading-snug">
+                      "{q.text}"
+                    </p>
+                    <SourceCite source={q.source} className="mt-auto pt-2" />
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <div className="max-w-4xl mx-auto px-4 pb-20 space-y-8">
 
+          {/* ── HISTORIA / ORIGEN ────────────────────────────────────────── */}
+          <Reveal>
+            <section id="historia" className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
+              <SectionBadge variant="context" />
+              <div className="flex items-center gap-3 mb-5">
+                <div className="bg-violet-50 p-2.5 rounded-xl text-violet-500 shrink-0">
+                  <History className="w-5 h-5" />
+                </div>
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-slate-900">De dónde viene la Ley Olimpia</h2>
+              </div>
+
+              <p className="text-slate-600 leading-relaxed mb-3">{OLIMPIA_HISTORY.text}</p>
+              <SourceCite source={OLIMPIA_HISTORY.source} className="mb-6" />
+
+              <div className="bg-violet-50 rounded-xl p-5 border border-violet-200">
+                <p className="text-slate-700 leading-relaxed mb-3">{LEY_27736_ARGENTINA.text}</p>
+                <SourceCite source={LEY_27736_ARGENTINA.source} />
+              </div>
+            </section>
+          </Reveal>
+
+          {/* ── TIPOS DE VIOLENCIA DIGITAL ──────────────────────────────────── */}
+          <Reveal>
+            <section id="tipos" className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
+              <SectionBadge variant="context" />
+              <div className="flex items-center gap-3 mb-5">
+                <div className="bg-cyan-50 p-2.5 rounded-xl text-cyan-500 shrink-0">
+                  <Layers className="w-5 h-5" />
+                </div>
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-slate-900">Tipos de violencia digital de género</h2>
+              </div>
+
+              <ul className="grid sm:grid-cols-2 gap-2 mb-4">
+                {TIPOS_VIOLENCIA_DIGITAL.items.map((item) => (
+                  <li key={item} className="flex gap-2 items-start text-slate-700 text-sm">
+                    <CheckCircle2 className="w-4 h-4 text-violet-400 shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <SourceCite source={TIPOS_VIOLENCIA_DIGITAL.source} className="mb-5" />
+
+              <div className="bg-slate-50 rounded-xl p-5 border border-slate-200">
+                <p className="text-sm text-slate-600 mb-3">{DEEPFAKES_NOTE.text}</p>
+                <SourceCite source={DEEPFAKES_NOTE.source} />
+              </div>
+            </section>
+          </Reveal>
+
           {/* ── INFOGRAFÍA GENERAL ────────────────────────────────────────── */}
-          <motion.section
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.05 }}
-            className="relative"
-          >
+          <Reveal className="relative">
             <div className="absolute -inset-4 bg-gradient-to-br from-violet-500/15 via-transparent to-cyan-400/10 blur-2xl rounded-3xl pointer-events-none" />
             <div className="relative rounded-2xl overflow-hidden border border-violet-300/30 shadow-[0_30px_80px_rgba(139,92,246,0.15),0_4px_24px_rgba(0,0,0,0.1)]">
               <div className="flex items-center gap-3 px-5 py-3.5 bg-gradient-to-r from-[#1e0a3c] to-[#2e1065] border-b border-white/[0.07]">
@@ -398,23 +561,21 @@ export default function ViolenciaDigitalContent() {
               </div>
               <div className="h-[2px] bg-gradient-to-r from-transparent via-violet-500/60 to-transparent" />
             </div>
-          </motion.section>
+          </Reveal>
 
           {/* ── STEP 1 ───────────────────────────────────────────────────── */}
-          <motion.article
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 relative overflow-hidden"
-          >
+          <Reveal>
+          <article className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-1 h-full bg-cyan-400 rounded-l-2xl" />
-            <div className="flex items-center gap-4 mb-4">
+            <span className="pointer-events-none select-none absolute -top-4 right-4 font-display text-8xl md:text-9xl font-black text-cyan-50">01</span>
+            <SectionBadge variant="protocol" />
+            <div className="flex items-center gap-4 mb-4 relative">
               <div className="bg-cyan-50 p-3 rounded-xl text-cyan-500 shrink-0">
                 <Lock className="w-6 h-6" />
               </div>
               <div>
                 <p className="text-xs font-bold text-cyan-500 tracking-wider uppercase">Paso 1</p>
-                <h3 className="font-display text-2xl font-bold text-slate-900">Asegurar el Perímetro</h3>
+                <h3 className="font-display text-2xl md:text-3xl font-bold text-slate-900">Asegurar el Perímetro</h3>
               </div>
             </div>
 
@@ -435,35 +596,34 @@ export default function ViolenciaDigitalContent() {
               ))}
             </ul>
 
-            <div className="bg-slate-50 rounded-xl p-5 border border-slate-200">
-              <h4 className="font-bold flex items-center gap-2 mb-2 text-slate-900">
-                <Zap className="w-4 h-4 text-yellow-500" /> Ahora hacé esto:
+            <div className="rounded-xl p-5 border border-orange-300 bg-orange-50 shadow-[0_0_0_1px_rgba(249,115,22,0.15),0_8px_24px_rgba(249,115,22,0.12)]">
+              <h4 className="font-bold flex items-center gap-2 mb-2 text-orange-700">
+                <Zap className="w-4 h-4 text-orange-500" /> Ahora hacé esto:
               </h4>
-              <p className="text-sm text-slate-600 mb-3">
+              <p className="text-sm text-slate-700 mb-3">
                 Andá a la configuración de WhatsApp/Instagram, buscá "Privacidad y Seguridad" y activá la
                 verificación en dos pasos. Toma solo 30 segundos.
               </p>
-              <code className="text-xs bg-slate-200 px-2 py-1 rounded font-mono text-slate-700">
+              <code className="text-xs bg-white px-2 py-1 rounded font-mono text-orange-700 border border-orange-200">
                 Configuración → Cuenta → Verificación en dos pasos
               </code>
             </div>
-          </motion.article>
+          </article>
+          </Reveal>
 
           {/* ── STEP 2 ───────────────────────────────────────────────────── */}
-          <motion.article
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 relative overflow-hidden"
-          >
+          <Reveal>
+          <article className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-1 h-full bg-violet-500 rounded-l-2xl" />
-            <div className="flex items-center gap-4 mb-4">
+            <span className="pointer-events-none select-none absolute -top-4 right-4 font-display text-8xl md:text-9xl font-black text-violet-50">02</span>
+            <SectionBadge variant="protocol" />
+            <div className="flex items-center gap-4 mb-4 relative">
               <div className="bg-violet-50 p-3 rounded-xl text-violet-500 shrink-0">
                 <Search className="w-6 h-6" />
               </div>
               <div>
                 <p className="text-xs font-bold text-violet-500 tracking-wider uppercase">Paso 2</p>
-                <h3 className="font-display text-2xl font-bold text-slate-900">Modo Investigador (Pruebas)</h3>
+                <h3 className="font-display text-2xl md:text-3xl font-bold text-slate-900">Modo Investigador (Pruebas)</h3>
               </div>
             </div>
 
@@ -504,26 +664,25 @@ export default function ViolenciaDigitalContent() {
                 type="text"
                 readOnly
                 value="https://instagram.com/usuario_agresor123"
-                className="w-full bg-white border border-violet-200 rounded-lg px-3 py-2 text-sm text-slate-500 font-mono focus:outline-none"
+                className="w-full bg-white border border-violet-200 rounded-lg px-3 py-2 text-sm text-slate-500 font-mono focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
               />
             </div>
-          </motion.article>
+          </article>
+          </Reveal>
 
           {/* ── STEP 3 ───────────────────────────────────────────────────── */}
-          <motion.article
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 relative overflow-hidden"
-          >
+          <Reveal>
+          <article className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-1 h-full bg-rose-500 rounded-l-2xl" />
-            <div className="flex items-center gap-4 mb-4">
+            <span className="pointer-events-none select-none absolute -top-4 right-4 font-display text-8xl md:text-9xl font-black text-rose-50">03</span>
+            <SectionBadge variant="protocol" />
+            <div className="flex items-center gap-4 mb-4 relative">
               <div className="bg-rose-50 p-3 rounded-xl text-rose-500 shrink-0">
                 <Gavel className="w-6 h-6" />
               </div>
               <div>
                 <p className="text-xs font-bold text-rose-500 tracking-wider uppercase">Paso 3</p>
-                <h3 className="font-display text-2xl font-bold text-slate-900">Denuncia y Contención</h3>
+                <h3 className="font-display text-2xl md:text-3xl font-bold text-slate-900">Denuncia y Contención</h3>
               </div>
             </div>
 
@@ -560,9 +719,9 @@ export default function ViolenciaDigitalContent() {
                 href="https://takeitdown.ncmec.org/es/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-slate-100 transition border border-slate-200 group"
+                className="flex flex-col items-center p-4 bg-orange-50 rounded-xl hover:bg-orange-100 transition border border-orange-200 group focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none shadow-[0_0_0_1px_rgba(249,115,22,0.1)] hover:shadow-[0_0_20px_rgba(249,115,22,0.25)]"
               >
-                <ImageMinus className="w-8 h-8 text-rose-500 mb-2 group-hover:scale-110 transition-transform" />
+                <ImageMinus className="w-8 h-8 text-orange-500 mb-2 group-hover:scale-110 transition-transform" />
                 <span className="font-bold text-center text-slate-900">Take It Down</span>
                 <span className="text-xs text-center text-slate-500 mt-1">Borrar imágenes explícitas de menores</span>
               </a>
@@ -570,18 +729,21 @@ export default function ViolenciaDigitalContent() {
                 href="https://stopncii.org/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-slate-100 transition border border-slate-200 group"
+                className="flex flex-col items-center p-4 bg-orange-50 rounded-xl hover:bg-orange-100 transition border border-orange-200 group focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none shadow-[0_0_0_1px_rgba(249,115,22,0.1)] hover:shadow-[0_0_20px_rgba(249,115,22,0.25)]"
               >
-                <FileKey className="w-8 h-8 text-rose-500 mb-2 group-hover:scale-110 transition-transform" />
+                <FileKey className="w-8 h-8 text-orange-500 mb-2 group-hover:scale-110 transition-transform" />
                 <span className="font-bold text-center text-slate-900">StopNCII.org</span>
                 <span className="text-xs text-center text-slate-500 mt-1">Borrar imágenes íntimas de adultos</span>
               </a>
             </div>
-          </motion.article>
+          </article>
+          </Reveal>
 
           {/* ── RED FLAGS ────────────────────────────────────────────────── */}
+          <Reveal>
           <div className="bg-red-50 border border-red-100 rounded-2xl p-6">
-            <h3 className="font-display text-xl font-bold text-red-600 flex items-center gap-2 mb-4">
+            <SectionBadge variant="protocol" />
+            <h3 className="font-display text-xl md:text-2xl font-bold text-red-600 flex items-center gap-2 mb-4">
               <AlertTriangle className="w-6 h-6" /> Errores fatales que debés evitar
             </h3>
             <div className="grid md:grid-cols-3 gap-4">
@@ -596,16 +758,19 @@ export default function ViolenciaDigitalContent() {
               ))}
             </div>
           </div>
+          </Reveal>
 
           {/* ── CHECKLIST ────────────────────────────────────────────────── */}
+          <Reveal>
           <section className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="font-display text-2xl font-bold flex items-center gap-2 text-slate-900">
-                <ListTodo className="w-6 h-6 text-violet-500" /> Checklist de Acción
+            <SectionBadge variant="protocol" />
+            <div className="flex flex-wrap justify-between items-center gap-3 mb-6">
+              <h3 className="font-display text-2xl md:text-3xl font-bold flex items-center gap-2 text-slate-900">
+                <ListTodo className="w-6 h-6 text-orange-500" /> Checklist de Acción
               </h3>
               <button
                 onClick={downloadPlan}
-                className="flex items-center gap-2 text-sm bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-700 transition font-medium"
+                className="flex items-center gap-2 text-sm bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition font-medium shadow-[0_0_20px_rgba(249,115,22,0.3)] focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:outline-none"
               >
                 <Download className="w-4 h-4" /> Descargar Plan
               </button>
@@ -622,7 +787,7 @@ export default function ViolenciaDigitalContent() {
                       type="checkbox"
                       checked={checked[item.id] ?? false}
                       onChange={() => toggleCheck(item.id)}
-                      className="appearance-none w-6 h-6 border-2 border-slate-300 rounded-md cursor-pointer checked:bg-violet-500 checked:border-transparent transition-all"
+                      className="appearance-none w-6 h-6 border-2 border-slate-300 rounded-md cursor-pointer checked:bg-orange-500 checked:border-transparent checked:shadow-[0_0_12px_rgba(249,115,22,0.5)] transition-all focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:outline-none"
                     />
                     {checked[item.id] && (
                       <Check className="absolute inset-0 w-6 h-6 text-white pointer-events-none p-0.5" />
@@ -642,7 +807,7 @@ export default function ViolenciaDigitalContent() {
             <AnimatePresence>
               {allChecked && (
                 <motion.div
-                  initial={{ opacity: 0, y: 8 }}
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   className="mt-6 p-4 bg-green-50 border border-green-200 rounded-xl"
@@ -655,11 +820,14 @@ export default function ViolenciaDigitalContent() {
               )}
             </AnimatePresence>
           </section>
+          </Reveal>
 
           {/* ── COPY TEMPLATE ────────────────────────────────────────────── */}
+          <Reveal>
           <section className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
-            <h3 className="font-display text-xl font-bold flex items-center gap-2 mb-4 text-slate-900">
-              <FileText className="w-5 h-5 text-cyan-500" /> Plantilla para pedir ayuda legal
+            <SectionBadge variant="protocol" />
+            <h3 className="font-display text-xl md:text-2xl font-bold flex items-center gap-2 mb-4 text-slate-900">
+              <FileText className="w-5 h-5 text-orange-500" /> Plantilla para pedir ayuda legal
             </h3>
             <p className="text-sm text-slate-600 mb-4">
               Copiá este texto para enviarlo a organizaciones de ayuda o al iniciar un reporte en la fiscalía.
@@ -672,7 +840,7 @@ export default function ViolenciaDigitalContent() {
               />
               <button
                 onClick={copyTemplate}
-                className="absolute top-3 right-3 flex items-center gap-1.5 text-xs font-bold bg-cyan-50 text-cyan-600 hover:bg-cyan-100 border border-cyan-200 px-3 py-1.5 rounded-lg transition-colors"
+                className="absolute top-3 right-3 flex items-center gap-1.5 text-xs font-bold bg-orange-500 text-white hover:bg-orange-600 border border-orange-500 px-3 py-1.5 rounded-lg transition-colors shadow-[0_0_16px_rgba(249,115,22,0.3)] focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:outline-none"
               >
                 {copied ? (
                   <>
@@ -686,8 +854,40 @@ export default function ViolenciaDigitalContent() {
               </button>
             </div>
           </section>
+          </Reveal>
+
+          {/* ── MAGNITUD DEL PROBLEMA EN ARGENTINA ──────────────────────────── */}
+          <Reveal>
+          <section id="magnitud" className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
+            <SectionBadge variant="context" />
+            <div className="flex items-center gap-3 mb-6">
+              <div className="bg-rose-50 p-2.5 rounded-xl text-rose-500 shrink-0">
+                <BarChart3 className="w-5 h-5" />
+              </div>
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-slate-900">La magnitud del problema en Argentina</h2>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-4 mb-4">
+              {MAGNITUD_ARGENTINA.stats.map((stat, i) => (
+                <div key={stat} className="bg-rose-50/60 rounded-xl p-5 border border-rose-100">
+                  <p className="font-display text-4xl md:text-5xl font-extrabold text-orange-500 mb-2 tabular-nums">
+                    {MAGNITUD_ARGENTINA.statsHighlight[i]}
+                  </p>
+                  <p className="text-slate-700 leading-relaxed text-sm">{stat}</p>
+                </div>
+              ))}
+            </div>
+            <SourceCite source={MAGNITUD_ARGENTINA.source} className="mb-6" />
+
+            <div className="bg-slate-50 rounded-xl p-5 border border-slate-200 flex gap-3 items-start">
+              <GraduationCap className="w-5 h-5 text-slate-500 shrink-0 mt-0.5" />
+              <p className="text-sm text-slate-600 leading-relaxed">{MAGNITUD_ARGENTINA.notaDocente}</p>
+            </div>
+          </section>
+          </Reveal>
 
           {/* ── CARRUSEL INLINE ───────────────────────────────────────────── */}
+          <Reveal>
           <section>
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
               {/* Header */}
@@ -767,8 +967,10 @@ export default function ViolenciaDigitalContent() {
               </div>
             </div>
           </section>
+          </Reveal>
 
           {/* ── FAQ ──────────────────────────────────────────────────────── */}
+          <Reveal>
           <section className="pb-4">
             <h3 className="font-display text-2xl font-bold mb-6 flex items-center gap-2 text-slate-900">
               <HelpCircle className="w-6 h-6 text-slate-400" /> Dudas Comunes
@@ -813,25 +1015,53 @@ export default function ViolenciaDigitalContent() {
               ))}
             </div>
           </section>
+          </Reveal>
 
           {/* ── RESOURCES ────────────────────────────────────────────────── */}
-          <div className="border-t border-slate-200 pt-8 pb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <div>
-              <p className="text-sm font-semibold text-slate-800">Recursos Oficiales Recomendados:</p>
-              <div className="flex flex-wrap gap-4 mt-2 text-xs text-slate-500">
-                <a href="https://www.oas.org/ext/es/seguridad/prog-ciber" target="_blank" rel="noopener noreferrer" className="hover:text-violet-500 transition-colors">OEA Seguridad Digital</a>
-                <a href="https://argentina.unfpa.org/es" target="_blank" rel="noopener noreferrer" className="hover:text-violet-500 transition-colors">UNFPA Argentina</a>
-                <a href="https://mptutelar.gob.ar/" target="_blank" rel="noopener noreferrer" className="hover:text-violet-500 transition-colors">Ministerio Público Tutelar</a>
-              </div>
+          <Reveal>
+          <div className="border-t border-slate-200 pt-8 pb-4">
+            <p className="text-sm font-semibold text-slate-800 mb-2">Recursos Oficiales Recomendados:</p>
+            <div className="flex flex-wrap gap-4 text-xs text-slate-500 mb-6">
+              <a href="https://www.oas.org/ext/es/seguridad/prog-ciber" target="_blank" rel="noopener noreferrer" className="hover:text-violet-500 transition-colors">OEA Seguridad Digital</a>
+              <a href="https://argentina.unfpa.org/es" target="_blank" rel="noopener noreferrer" className="hover:text-violet-500 transition-colors">UNFPA Argentina</a>
+              <a href="https://mptutelar.gob.ar/" target="_blank" rel="noopener noreferrer" className="hover:text-violet-500 transition-colors">Ministerio Público Tutelar</a>
             </div>
+
+            <p className="text-sm font-semibold text-slate-800 mb-3">Fuentes citadas en esta página:</p>
+            <ul className="space-y-2 mb-4">
+              {ALL_SOURCES.map((source, i) => (
+                <li key={`${source.author}-${i}`}>
+                  <SourceCite source={source} />
+                </li>
+              ))}
+            </ul>
+
             <p className="text-xs text-slate-400">Guía de acción construida para empoderamiento y protección.</p>
           </div>
+          </Reveal>
 
           <TematicaCompletarButton completada={progress.completada} onComplete={progress.markCompleted} />
         </div>
       </main>
 
       <Footer />
+
+      {/* ── VOLVER ARRIBA ─────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.2 }}
+            onClick={scrollToTop}
+            aria-label="Volver arriba"
+            className="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-orange-500 text-white shadow-[0_4px_20px_rgba(249,115,22,0.4)] hover:bg-orange-600 flex items-center justify-center transition-colors focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:outline-none"
+          >
+            <ArrowUp className="w-5 h-5" />
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* ── LIGHTBOX INFOGRAFÍA ───────────────────────────────────────── */}
       <AnimatePresence>
