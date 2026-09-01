@@ -120,7 +120,7 @@ export function TematicasDashboardContent() {
   }, [userId])
 
   return (
-    <main className="min-h-screen bg-[#F2F6FF]">
+    <main className="min-h-screen bg-[#F2F6FF] overflow-x-hidden">
 
       {/* Hero */}
       <section className="relative bg-white overflow-hidden pt-10 md:pt-14 pb-16 md:pb-24">
@@ -146,7 +146,7 @@ export function TematicasDashboardContent() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.65, delay: 0.18 }}
-                className="text-6xl sm:text-7xl md:text-8xl xl:text-[6.5rem] font-display font-bold text-brand-navy mb-5 leading-none"
+                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[6.5rem] font-display font-bold text-brand-navy mb-5 leading-none break-words"
               >
                 Temáticas
               </motion.h1>
@@ -309,12 +309,12 @@ export function TematicasDashboardContent() {
                 type="button"
                 onClick={() => toggleGroup(group.label)}
                 aria-expanded={isOpen}
-                className="w-full flex items-center gap-3 mb-0 py-2 group/header"
+                className="w-full flex flex-wrap items-center gap-x-3 gap-y-2 mb-0 py-2 group/header"
               >
                 <div className="w-1.5 h-7 rounded-full flex-shrink-0" style={{ backgroundColor: group.accent }} />
-                <h2 className="text-lg font-display font-bold text-brand-navy">{group.label}</h2>
-                <div className="flex-1 h-px bg-slate-200" />
-                <span className="text-xs font-semibold text-slate-400 whitespace-nowrap">
+                <h2 className="text-lg font-display font-bold text-brand-navy min-w-0 truncate max-w-[70vw] sm:max-w-none">{group.label}</h2>
+                <div className="hidden sm:block flex-1 h-px bg-slate-200" />
+                <span className="hidden sm:inline text-xs font-semibold text-slate-400 whitespace-nowrap">
                   {completadasGrupo}/{group.items.length} completadas
                 </span>
                 <span
@@ -326,7 +326,7 @@ export function TematicasDashboardContent() {
                 <motion.div
                   animate={{ rotate: isOpen ? 180 : 0 }}
                   transition={{ duration: 0.25 }}
-                  className="flex-shrink-0 text-slate-400 group-hover/header:text-brand-blue transition-colors"
+                  className="flex-shrink-0 text-slate-400 group-hover/header:text-brand-blue transition-colors ml-auto sm:ml-0"
                 >
                   <ChevronDown className="w-5 h-5" />
                 </motion.div>
