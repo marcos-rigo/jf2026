@@ -6,11 +6,19 @@ import Image from "next/image"
 import { useAppStore } from "@/lib/ciudadania/app-store"
 import { useTematicaProgress } from "@/lib/hooks/use-tematica-progress"
 import { TematicaCompletarButton } from "@/components/tematica-completar-button"
+import { SourceCite } from "@/components/nnya-entorno-digital/source-cite"
+import {
+  FILTER_BUBBLE_QUOTE,
+  GLOBAL_KIDS_ONLINE_SOURCE,
+  UNICEF_BENEFICIOS_QUOTE,
+  FUENTES_CITADAS,
+} from "@/lib/nnya-entorno-digital-content"
 import {
   Smartphone, ShieldCheck, HeartPulse, MessageCircle, Users, Eye, Lightbulb,
   ChevronRight, BookOpen, Settings, Download, Fingerprint, Baby, Wifi, Brain,
   Star, TrendingUp, Clock, Lock, Zap, AlertCircle, ArrowRight, Play,
   ChevronLeft, Images, X, ZoomIn, ZoomOut, Maximize2, Sparkles, Quote,
+  History, Globe2, ArrowUp, BookMarked, Rocket,
 } from "lucide-react"
 
 // ── Constants ────────────────────────────────────────────────────────────
@@ -154,6 +162,38 @@ function ScrollProgress() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 })
   return (
     <motion.div className="fixed top-0 left-0 right-0 h-[3px] z-[60] origin-left" style={{ scaleX, background: "linear-gradient(90deg, #4272BB, #D5247A, #8B5CF6)" }} />
+  )
+}
+
+// ── Back to top — aparece después de pasar el Hero, scroll suave al inicio ──
+function BackToTopButton() {
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.8)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          initial={{ opacity: 0, scale: 0.6, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.6, y: 20 }}
+          transition={{ duration: 0.25, ease }}
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.95 }}
+          aria-label="Volver arriba"
+          className="fixed bottom-6 right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center text-white shadow-lg shadow-brand-blue/30 hover:shadow-xl hover:shadow-brand-blue/40 transition-shadow duration-300"
+          style={{ background: "linear-gradient(135deg, #4272BB, #D5247A, #8B5CF6)" }}
+        >
+          <ArrowUp className="w-6 h-6" />
+        </motion.button>
+      )}
+    </AnimatePresence>
   )
 }
 
@@ -332,6 +372,7 @@ export function NnyaEntornoDigitalContent() {
   return (
     <div className="w-full bg-white font-sans text-brand-navy overflow-hidden bg-noise">
       <ScrollProgress />
+      <BackToTopButton />
 
       {/* ════════════════════════════════════════════════════════════════════
          HERO — mesh gradient + particles + parallax
@@ -516,6 +557,84 @@ export function NnyaEntornoDigitalContent() {
       <WaveDivider flip />
 
       {/* ════════════════════════════════════════════════════════════════════
+         CONCEPTO — filtro burbuja
+      ════════════════════════════════════════════════════════════════════ */}
+      <section className="py-16 lg:py-20 px-6 lg:px-12 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-dot-grid pointer-events-none" />
+        <div className="max-w-4xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease }}
+            className="rounded-[2.5rem] p-8 sm:p-10 lg:p-12 bg-white/70 backdrop-blur-xl border border-slate-200/60 shadow-xl shadow-slate-200/30"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-light-blue/60 backdrop-blur-sm border border-brand-blue/15 text-brand-blue text-sm font-semibold mb-6 shadow-sm">
+              <Quote className="w-4 h-4" />
+              Detrás del concepto
+            </div>
+            <blockquote className="text-lg md:text-xl leading-relaxed text-slate-700 italic font-medium mb-5"
+              style={{ borderLeft: "4px solid #4272BB", paddingLeft: "1.5rem" }}>
+              "{FILTER_BUBBLE_QUOTE.text}"
+            </blockquote>
+            <div style={{ paddingLeft: "1.5rem" }}>
+              <SourceCite source={FILTER_BUBBLE_QUOTE.source} />
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Wave divider ── */}
+      <WaveDivider />
+
+      {/* ════════════════════════════════════════════════════════════════════
+         HISTORIA / ORIGEN
+      ════════════════════════════════════════════════════════════════════ */}
+      <section className="py-16 lg:py-20 px-6 lg:px-12 bg-slate-50/50 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease }}
+            className="text-center mb-10"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur-sm border border-brand-blue/15 text-brand-blue text-sm font-semibold mb-5 shadow-sm">
+              <History className="w-4 h-4" />
+              Historia
+            </div>
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-brand-navy leading-tight">
+              De dónde viene esta evidencia
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease }}
+            className="rounded-3xl bg-white border border-slate-100 shadow-md p-8 sm:p-10 flex items-start gap-5"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-brand-light-blue flex items-center justify-center shrink-0">
+              <Globe2 className="w-6 h-6 text-brand-blue" />
+            </div>
+            <div>
+              <p className="text-slate-600 leading-relaxed text-base mb-4">
+                La Red Global Kids Online fue fundada en 2006 por el Centro de Investigación Innocenti de UNICEF, la London School of
+                Economics (LSE) y la Red Europea de Kids Online, para generar evidencia comparada sobre la vida de niñas, niños y
+                adolescentes en el entorno digital en todo el mundo. Los estudios de UNICEF Kids Online Iberoamérica y la Encuesta de
+                Ciudadanía Digital Argentina, que esta página ya cita en sus estadísticas, forman parte de esa red de investigación.
+              </p>
+              <SourceCite source={GLOBAL_KIDS_ONLINE_SOURCE} />
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Wave divider ── */}
+      <WaveDivider flip />
+
+      {/* ════════════════════════════════════════════════════════════════════
          PERCEPCIÓN — 3D tilt cards
       ════════════════════════════════════════════════════════════════════ */}
       <section className="py-28 px-6 lg:px-12 bg-white relative overflow-hidden">
@@ -577,6 +696,11 @@ export function NnyaEntornoDigitalContent() {
                     <p className="text-slate-600 leading-relaxed text-base">
                       {item.desc}
                     </p>
+                    {item.id === 2 && (
+                      <div className="mt-4 pt-4 border-t border-pink-100">
+                        <SourceCite source={FILTER_BUBBLE_QUOTE.source} />
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               )}
@@ -700,6 +824,54 @@ export function NnyaEntornoDigitalContent() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── Wave divider ── */}
+      <WaveDivider flip />
+
+      {/* ════════════════════════════════════════════════════════════════════
+         VENTAJAS / LO POSITIVO
+      ════════════════════════════════════════════════════════════════════ */}
+      <section className="py-24 px-6 lg:px-12 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-network-nodes pointer-events-none" />
+        <div className="max-w-5xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease }}
+            className="text-center mb-14"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50/60 backdrop-blur-sm border border-emerald-200/60 text-emerald-600 text-sm font-semibold mb-5 shadow-sm">
+              <Rocket className="w-4 h-4" />
+              También es cierto
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-display font-bold text-brand-navy mb-5 leading-tight">
+              Internet también es una{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-400 bg-[length:200%_auto] animate-gradient">
+                oportunidad
+              </span>
+            </h2>
+            <p className="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">No todo es riesgo: acompañar también significa reconocer lo que el entorno digital les da.</p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease }}
+            whileHover={{ y: -4 }}
+            className="group relative bg-emerald-50/50 rounded-3xl p-8 lg:p-10 border border-emerald-200/60 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
+          >
+            <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-t-3xl" />
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+              <Rocket className="w-7 h-7" />
+            </div>
+            <p className="font-bold text-brand-navy text-xl mb-3 leading-snug">Creatividad, aprendizaje y voz propia</p>
+            <p className="text-slate-600 text-lg leading-relaxed mb-6 max-w-2xl">{UNICEF_BENEFICIOS_QUOTE.text}</p>
+            <SourceCite source={UNICEF_BENEFICIOS_QUOTE.source} />
+          </motion.div>
         </div>
       </section>
 
@@ -1124,6 +1296,44 @@ export function NnyaEntornoDigitalContent() {
               </div>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ── Wave divider ── */}
+      <WaveDivider flip />
+
+      {/* ════════════════════════════════════════════════════════════════════
+         CENTRO DE RECURSOS — FUENTES CITADAS
+      ════════════════════════════════════════════════════════════════════ */}
+      <section className="py-20 lg:py-24 px-6 lg:px-12 bg-slate-50/50 relative overflow-hidden">
+        <div className="max-w-3xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease }}
+            className="flex items-center gap-3 mb-10"
+          >
+            <div className="w-11 h-11 rounded-2xl bg-brand-light-blue flex items-center justify-center shrink-0">
+              <BookMarked className="w-5 h-5 text-brand-blue" />
+            </div>
+            <h2 className="text-2xl lg:text-3xl font-display font-bold text-brand-navy">Centro de recursos — fuentes citadas</h2>
+          </motion.div>
+
+          <motion.ol
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease }}
+            className="flex flex-col gap-3"
+          >
+            {FUENTES_CITADAS.map((source, i) => (
+              <li key={i} className="flex items-start gap-3 bg-white rounded-2xl border border-slate-100 shadow-sm p-4">
+                <span className="text-slate-300 font-mono text-sm mt-0.5 shrink-0">{String(i + 1).padStart(2, "0")}</span>
+                <SourceCite source={source} />
+              </li>
+            ))}
+          </motion.ol>
         </div>
       </section>
 
