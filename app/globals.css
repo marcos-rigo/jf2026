@@ -357,6 +357,27 @@
   animation: glow-ring 3s ease-in-out infinite;
 }
 
+/* ── Shine sweep — diagonal light streak on hover, for premium pill/chip buttons ── */
+.shine-sweep {
+  position: relative;
+  overflow: hidden;
+}
+.shine-sweep::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.65), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.shine-sweep:hover::before {
+  left: 125%;
+}
+
 /* ── Scale breath ───────────────────────────────────────────────────────── */
 @keyframes scale-breath {
   0%, 100% { transform: scale(1); }

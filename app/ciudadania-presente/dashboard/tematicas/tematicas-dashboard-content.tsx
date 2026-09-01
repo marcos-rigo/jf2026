@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, BadgeCheck, Check, CheckCircle2, ChevronDown, Clock, LockKeyhole } from 'lucide-react'
+import { ArrowRight, BadgeCheck, Check, CheckCircle2, ChevronDown, Clock, LockKeyhole, SlidersHorizontal, X } from 'lucide-react'
 import { groups } from '@/lib/tematicas-data'
-import { AUDIENCIAS_ORDENADAS, AUDIENCIA_LABELS, type Audiencia } from '@/lib/audiencias'
+import { AUDIENCIAS_ORDENADAS, AUDIENCIA_LABELS, AUDIENCIA_ICONS, AUDIENCIA_COLORS, type Audiencia } from '@/lib/audiencias'
 import { useAppStore } from '@/lib/ciudadania/app-store'
 import { Footer } from '@/components/footer'
 
@@ -146,7 +146,8 @@ export function TematicasDashboardContent() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.65, delay: 0.18 }}
-                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[6.5rem] font-display font-bold text-brand-navy mb-5 leading-none break-words"
+                className="font-display font-bold text-brand-navy mb-5 leading-none whitespace-nowrap"
+                style={{ fontSize: "clamp(2.25rem, 9vw, 6.5rem)" }}
               >
                 Temáticas
               </motion.h1>
@@ -253,42 +254,125 @@ export function TematicasDashboardContent() {
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 space-y-14">
 
           {/* Filtro de públicos */}
-          <div>
-            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">
-              Filtrar por público
-            </p>
-            <div className="flex flex-wrap gap-2.5" role="tablist" aria-label="Filtrar temáticas por público">
+          <motion.div
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-white p-7 sm:p-10 shadow-xl shadow-slate-200/50"
+          >
+            {/* Glow decorativo — un tono ambiente por cada público, apenas insinuado */}
+            <div className="absolute -top-24 -right-10 w-72 h-72 rounded-full blur-[90px] pointer-events-none animate-float-slow" style={{ backgroundColor: `${AUDIENCIA_COLORS.docentes}14` }} />
+            <div className="absolute -bottom-28 -left-14 w-72 h-72 rounded-full blur-[90px] pointer-events-none animate-float-slower" style={{ backgroundColor: `${AUDIENCIA_COLORS.familias}12` }} />
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-64 h-56 rounded-full blur-[100px] pointer-events-none animate-pulse-soft" style={{ backgroundColor: `${AUDIENCIA_COLORS['ninas-ninos-adolescentes']}0F` }} />
+            <div className="absolute top-4 left-8 w-40 h-40 rounded-full blur-[70px] pointer-events-none animate-pulse-soft" style={{ backgroundColor: `${AUDIENCIA_COLORS.mujeres}12`, animationDelay: '-2s' }} />
+            <div className="absolute bottom-6 right-10 w-44 h-44 rounded-full blur-[70px] pointer-events-none animate-float-slow" style={{ backgroundColor: `${AUDIENCIA_COLORS['adultos-mayores']}12`, animationDelay: '-4s' }} />
+
+            <div className="relative flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-7 mb-8">
+              <motion.div
+                whileHover={{ rotate: 10, scale: 1.08 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+                className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-brand-blue/25 animate-glow-ring bg-gradient-to-br from-brand-blue via-violet-600 to-brand-pink bg-[length:200%_auto] animate-gradient"
+              >
+                <SlidersHorizontal className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+              </motion.div>
+              <div className="min-w-0">
+                <span className="inline-flex items-center px-3 py-1 rounded-full bg-brand-light-blue/70 text-brand-blue text-[11px] font-bold uppercase tracking-widest mb-2">
+                  Filtrar por público
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-brand-navy leading-tight mb-1.5">
+                  ¿Para quién es el contenido?
+                </h2>
+                <p className="text-sm sm:text-base text-slate-500 leading-relaxed">
+                  {selectedAudiencia ? (
+                    <>Mostrando las temáticas pensadas para{' '}
+                      <span className="font-bold" style={{ color: AUDIENCIA_COLORS[selectedAudiencia] }}>
+                        {AUDIENCIA_LABELS[selectedAudiencia].toLowerCase()}
+                      </span>.
+                    </>
+                  ) : (
+                    'Elegí un público de la lista y te mostramos solo el contenido pensado para él.'
+                  )}
+                </p>
+              </div>
+            </div>
+
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="relative flex flex-wrap gap-3"
+              role="tablist"
+              aria-label="Filtrar temáticas por público"
+            >
               {AUDIENCIAS_ORDENADAS.map((audiencia) => {
                 const active = selectedAudiencia === audiencia
+                const Icon = AUDIENCIA_ICONS[audiencia]
+                const color = AUDIENCIA_COLORS[audiencia]
                 return (
-                  <button
+                  <motion.button
                     key={audiencia}
+                    variants={cardVariants}
+                    whileHover={{ y: -4, scale: 1.045 }}
+                    whileTap={{ scale: 0.96 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 22 }}
                     type="button"
                     role="tab"
                     onClick={() => selectAudiencia(audiencia)}
                     aria-selected={active}
-                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide border transition-colors duration-200 ${
+                    className={`shine-sweep group inline-flex items-center gap-3 pl-2.5 pr-5 py-2.5 rounded-full border-2 text-sm font-extrabold tracking-wide transition-all duration-300 ${
                       active
-                        ? 'bg-brand-blue border-brand-blue text-white'
-                        : 'bg-white border-slate-200 text-slate-500 hover:border-brand-blue/40 hover:text-brand-blue'
+                        ? 'text-white shadow-lg'
+                        : '[background-color:var(--chip-tint)] [border-color:var(--chip-border)] [color:#475569] hover:text-white hover:[background-color:var(--chip-color)] hover:[border-color:var(--chip-color)] hover:[box-shadow:0_12px_28px_-6px_var(--chip-shadow)]'
                     }`}
+                    style={
+                      active
+                        ? {
+                            backgroundColor: color,
+                            background: `linear-gradient(135deg, ${color}, color-mix(in srgb, ${color}, black 20%))`,
+                            borderColor: color,
+                            boxShadow: `0 12px 28px -6px ${color}70`,
+                          }
+                        : ({
+                            '--chip-color': color,
+                            '--chip-tint': `${color}14`,
+                            '--chip-border': `${color}45`,
+                            '--chip-shadow': `${color}55`,
+                          } as React.CSSProperties)
+                    }
                   >
-                    {active && <Check className="w-3.5 h-3.5" />}
-                    {AUDIENCIA_LABELS[audiencia]}
-                  </button>
+                    <span
+                      className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 group-hover:rotate-[14deg] group-hover:scale-110 ${
+                        active ? '' : '[background-color:var(--chip-icon-bg)] group-hover:[background-color:rgba(255,255,255,0.22)]'
+                      }`}
+                      style={active ? { backgroundColor: 'rgba(255,255,255,0.22)' } : ({ '--chip-icon-bg': `${color}20` } as React.CSSProperties)}
+                    >
+                      {active ? (
+                        <Check className="w-4 h-4 text-white" />
+                      ) : (
+                        <Icon className="w-4 h-4 transition-colors duration-300 [color:var(--chip-color)] group-hover:text-white" />
+                      )}
+                    </span>
+                    <span className="transition-colors duration-300">{AUDIENCIA_LABELS[audiencia]}</span>
+                  </motion.button>
                 )
               })}
               {selectedAudiencia && (
-                <button
+                <motion.button
+                  variants={cardVariants}
                   type="button"
                   onClick={() => setSelectedAudiencia(null)}
-                  className="inline-flex items-center px-4 py-2 rounded-full text-xs font-semibold text-slate-400 hover:text-brand-navy transition-colors duration-200"
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
+                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border-2 border-transparent text-sm font-bold text-slate-400 hover:text-brand-navy hover:bg-slate-100 hover:border-slate-200 transition-all duration-300"
                 >
+                  <X className="w-4 h-4" />
                   Limpiar filtro
-                </button>
+                </motion.button>
               )}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {groups.map((group, gi) => {
             const isOpen = !!openGroups[group.label]
@@ -378,14 +462,21 @@ export function TematicasDashboardContent() {
                       {cardsVisibles.map(({ tema, prevTema, sinContenido, unlocked }) => {
                   const IconComponent = tema.icon
                   const prog = progresoMap[tema.id]
+                  const cardVars = unlocked
+                    ? ({
+                        '--tema-color': tema.color,
+                        '--tema-tint': `${tema.color}15`,
+                        '--tema-shadow': `${tema.color}45`,
+                      } as React.CSSProperties)
+                    : undefined
 
                   const cardInner = (
                     <div
                       className={[
-                        'relative h-full bg-white rounded-2xl overflow-hidden flex flex-col border border-slate-100 shadow-sm transition-all duration-300',
-                        unlocked ? 'hover:shadow-lg hover:-translate-y-1' : '',
+                        'relative h-full bg-white rounded-2xl overflow-hidden flex flex-col border border-slate-100 shadow-sm transition-all duration-400',
+                        unlocked ? 'shine-sweep hover:[box-shadow:0_28px_54px_-18px_var(--tema-shadow)]' : '',
                       ].join(' ')}
-                      style={{ borderTop: `3px solid ${unlocked ? tema.color : '#CBD5E1'}` }}
+                      style={{ borderTop: `3px solid ${unlocked ? tema.color : '#CBD5E1'}`, ...cardVars }}
                     >
                       <div className="relative h-44 overflow-hidden bg-slate-100 flex-shrink-0">
                         <Image
@@ -396,13 +487,18 @@ export function TematicasDashboardContent() {
                           loading="lazy"
                           className={[
                             'object-cover transition-transform duration-500',
-                            unlocked ? 'group-hover:scale-105' : 'grayscale opacity-50',
+                            unlocked ? 'group-hover:scale-110 group-hover:rotate-1' : 'grayscale opacity-50',
                           ].join(' ')}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                        {unlocked && (
+                          <div
+                            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 mix-blend-multiply [background:linear-gradient(to_top,var(--tema-color)40,transparent_70%)]"
+                          />
+                        )}
 
                         {unlocked ? (
-                          <div className="absolute top-3 left-3">
+                          <div className="absolute top-3 left-3 transition-transform duration-300 group-hover:scale-105">
                             <div
                               className="flex items-center gap-1.5 px-2.5 py-1 rounded-full shadow-sm"
                               style={{ backgroundColor: tema.color }}
@@ -445,8 +541,8 @@ export function TematicasDashboardContent() {
                       <div className="flex flex-col flex-1 p-5">
                         <h3
                           className={[
-                            'text-base font-display font-bold mb-2 leading-snug transition-colors duration-200',
-                            unlocked ? 'text-brand-navy group-hover:text-brand-blue' : 'text-slate-400',
+                            'text-base font-display font-bold mb-2 leading-snug transition-colors duration-300',
+                            unlocked ? 'text-brand-navy group-hover:[color:var(--tema-color)]' : 'text-slate-400',
                           ].join(' ')}
                         >
                           {tema.title}
@@ -469,11 +565,11 @@ export function TematicasDashboardContent() {
                         <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
                           {unlocked ? (
                             <span
-                              className="text-sm font-semibold flex items-center gap-1.5 group-hover:gap-2.5 transition-all duration-200"
+                              className="text-sm font-semibold flex items-center gap-1.5 group-hover:gap-2.5 transition-all duration-300"
                               style={{ color: tema.color }}
                             >
                               Explorar
-                              <ArrowRight className="w-4 h-4" />
+                              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                             </span>
                           ) : sinContenido ? (
                             <span className="text-xs font-medium text-slate-400 flex items-center gap-1.5">
@@ -487,10 +583,19 @@ export function TematicasDashboardContent() {
                             </span>
                           )}
                           <div
-                            className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-                            style={{ backgroundColor: unlocked ? `${tema.color}15` : '#F1F5F9' }}
+                            className={[
+                              'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300',
+                              unlocked ? '[background-color:var(--tema-tint)] group-hover:[background-color:var(--tema-color)] group-hover:rotate-12 group-hover:scale-110' : '',
+                            ].join(' ')}
+                            style={{ backgroundColor: unlocked ? undefined : '#F1F5F9' }}
                           >
-                            <IconComponent className="w-4 h-4" style={{ color: unlocked ? tema.color : '#94A3B8' }} />
+                            <IconComponent
+                              className={[
+                                'w-4 h-4 transition-colors duration-300',
+                                unlocked ? '[color:var(--tema-color)] group-hover:text-white' : '',
+                              ].join(' ')}
+                              style={{ color: unlocked ? undefined : '#94A3B8' }}
+                            />
                           </div>
                         </div>
                       </div>
@@ -505,6 +610,9 @@ export function TematicasDashboardContent() {
                       initial="hidden"
                       animate="visible"
                       exit={{ opacity: 0, scale: 0.85, transition: { duration: 0.2 } }}
+                      whileHover={unlocked ? { y: -6, scale: 1.015 } : undefined}
+                      whileTap={unlocked ? { scale: 0.985 } : undefined}
+                      transition={{ type: 'spring', stiffness: 300, damping: 24 }}
                     >
                       {unlocked ? (
                         <Link href={tema.href} scroll={true} className="group block h-full">
