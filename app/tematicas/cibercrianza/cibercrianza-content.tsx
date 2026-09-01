@@ -9,13 +9,26 @@ import { useAppStore } from "@/lib/ciudadania/app-store"
 import { useTematicaProgress, type ComputedProgress } from "@/lib/hooks/use-tematica-progress"
 import { TematicaCompletarButton } from "@/components/tematica-completar-button"
 import { BackToDashboardButton } from "@/components/tematicas/back-to-dashboard-button"
+import { SourceCite } from "@/components/tematicas/cibercrianza/source-cite"
 import {
-  ArrowDown, ArrowRight, ArrowUpRight, RefreshCw, CheckCircle2, ChevronDown,
+  KIDS_ONLINE_SOURCE,
+  BULLYING_SIN_FRONTERAS_SOURCE,
+  GROOMING_LATAM_SOURCE,
+  MEDIACION_PARENTAL_QUOTE,
+  BYBEE_QUOTE,
+  GLOBAL_KIDS_ONLINE_QUOTE,
+  UNICEF_BENEFICIOS_QUOTE,
+  MESAS_DIALOGO_QUOTE,
+  FUENTES_CITADAS,
+} from "@/lib/cibercrianza-content"
+import {
+  ArrowDown, ArrowRight, ArrowUpRight, ArrowUp, RefreshCw, CheckCircle2, ChevronDown,
   Brain, Heart, ShoppingBag, Scan,
   Zap, ThumbsUp, Target, Unlock,
   UserX, MessageSquareWarning, Camera, EyeOff, Smartphone, AlertTriangle,
   Home, School, Users, HeartPulse, Globe, Landmark,
-  Search, Handshake, MessageCircle, Link, Eye, Sparkles
+  Search, Handshake, MessageCircle, Link, Eye, Sparkles,
+  History, Lightbulb, Palette, BookMarked,
 } from "lucide-react"
 
 // ─── Styles ───
@@ -411,15 +424,15 @@ const desafios: Desafio[] = [
   { icono:Zap,      titulo:"La velocidad del cambio",      ac:"#00F0FF", bg:"rgba(0,240,255,.07)",   descripcion:"Los cambios tecnológicos son más rápidos que los procesos educativos. Cuando los adultos aprenden a usar una plataforma, los chicos ya migraron a otra." },
   { icono:ThumbsUp, titulo:"La validación social digital", ac:"#9D00FF", bg:"rgba(157,0,255,.07)",  descripcion:"Antes la aprobación venía de círculos reducidos. Hoy puede venir —o no venir— de cientos o miles de personas. El impacto emocional es proporcional." },
   { icono:Target,   titulo:"La batalla por la atención",   ac:"#D97706", bg:"rgba(217,119,6,.07)",   descripcion:"Las plataformas están diseñadas por equipos de ingenieros para maximizar el tiempo de uso. No compiten con nosotros: compiten con todo." },
-  { icono:Unlock,   titulo:"La autonomía prematura",       ac:"#FF007F", bg:"rgba(255,0,127,.07)",   descripcion:"El 46% de los adolescentes argentinos reconoce que el tiempo frente a las pantallas le genera problemas como menor rendimiento escolar. Muchos acceden a experiencias para las que aún no tienen herramientas emocionales. (UNICEF, 2025)" },
+  { icono:Unlock,   titulo:"La autonomía prematura",       ac:"#FF007F", bg:"rgba(255,0,127,.07)",   descripcion:"El 46% de los adolescentes argentinos reconoce que el tiempo frente a las pantallas le genera problemas como menor rendimiento escolar. Muchos acceden a experiencias para las que aún no tienen herramientas emocionales." },
 ]
 
 const riesgos: Riesgo[] = [
-  { icono:UserX,               titulo:"Grooming",                     ac:"#9D00FF", bg:"rgba(157,0,255,.06)", descripcion:"Adulto que se hace pasar por par para ganar confianza y acceder al NNA con fines de abuso o explotación. Comienza frecuentemente en los chats de videojuegos como Roblox y Minecraft.",  senales:"Amistad con adulto desconocido en línea, secrecía, regalos o dinero sin origen claro.", dato:"El 55% de los menores argentinos no sabe qué es el grooming. (Grooming LATAM, 2024)" },
-  { icono:MessageSquareWarning, titulo:"Ciberbullying",                ac:"#FF007F", bg:"rgba(255,0,127,.06)",  descripcion:"Hostigamiento, humillación o exclusión entre pares mediada por tecnología. Puede incluir difusión de imágenes o rumores.",                                                                   senales:"No quiere ir a la escuela, llora con el teléfono, evita hablar de sus compañeros.", dato:"Argentina ocupa el 5° lugar mundial en casos de acoso escolar y digital. Entre mayo 2024 y mayo 2025 se registraron más de 140.000 casos graves. (Bullying Sin Fronteras, 2025)" },
-  { icono:Camera,               titulo:"Sextorsión",                   ac:"#D97706", bg:"rgba(217,119,6,.06)",  descripcion:"Presión para compartir imágenes íntimas, luego usadas como chantaje. Puede afectar a cualquier edad.",                                                                                     senales:"Angustia extrema, pide dinero sin explicar por qué, cierra el teléfono bruscamente.", dato:"1 de cada 3 adolescentes argentinos afirmó haberse encontrado en persona con alguien que conoció por internet. (Kids Online Argentina 2025, UNICEF/UNESCO)" },
+  { icono:UserX,               titulo:"Grooming",                     ac:"#9D00FF", bg:"rgba(157,0,255,.06)", descripcion:"Adulto que se hace pasar por par para ganar confianza y acceder al NNA con fines de abuso o explotación. Comienza frecuentemente en los chats de videojuegos como Roblox y Minecraft.",  senales:"Amistad con adulto desconocido en línea, secrecía, regalos o dinero sin origen claro.", dato:"El 55% de los menores argentinos no sabe qué es el grooming." },
+  { icono:MessageSquareWarning, titulo:"Ciberbullying",                ac:"#FF007F", bg:"rgba(255,0,127,.06)",  descripcion:"Hostigamiento, humillación o exclusión entre pares mediada por tecnología. Puede incluir difusión de imágenes o rumores.",                                                                   senales:"No quiere ir a la escuela, llora con el teléfono, evita hablar de sus compañeros.", dato:"Argentina ocupa el 5° lugar mundial en casos de acoso escolar y digital. Entre mayo 2024 y mayo 2025 se registraron más de 140.000 casos graves." },
+  { icono:Camera,               titulo:"Sextorsión",                   ac:"#D97706", bg:"rgba(217,119,6,.06)",  descripcion:"Presión para compartir imágenes íntimas, luego usadas como chantaje. Puede afectar a cualquier edad.",                                                                                     senales:"Angustia extrema, pide dinero sin explicar por qué, cierra el teléfono bruscamente.", dato:"1 de cada 3 adolescentes argentinos afirmó haberse encontrado en persona con alguien que conoció por internet." },
   { icono:EyeOff,               titulo:"Contenidos nocivos",           ac:"#0891B2", bg:"rgba(8,145,178,.06)",  descripcion:"Exposición a violencia, pornografía, autolesión, trastornos alimentarios, ideologías extremas.",                                                                                          senales:"Cambios en vocabulario, conducta o intereses; referencias a temas preocupantes.", dato:"Los algoritmos amplifican el contenido que genera reacción, sin importar si es dañino para el usuario." },
-  { icono:Smartphone,           titulo:"Uso problemático de pantallas",ac:"#059669", bg:"rgba(5,150,105,.06)",  descripcion:"Uso compulsivo que interfiere con el sueño, el estudio y los vínculos presenciales.",                                                                                                    senales:"Dificultad para dejar el dispositivo, irritabilidad intensa cuando se limita el acceso, pérdida de intereses previos.", dato:"El 46% de los adolescentes argentinos percibe que las pantallas le generan problemas como menor rendimiento escolar. (UNICEF, 2025)" },
+  { icono:Smartphone,           titulo:"Uso problemático de pantallas",ac:"#059669", bg:"rgba(5,150,105,.06)",  descripcion:"Uso compulsivo que interfiere con el sueño, el estudio y los vínculos presenciales.",                                                                                                    senales:"Dificultad para dejar el dispositivo, irritabilidad intensa cuando se limita el acceso, pérdida de intereses previos.", dato:"El 46% de los adolescentes argentinos percibe que las pantallas le generan problemas como menor rendimiento escolar." },
   { icono:AlertTriangle,        titulo:"Desinformación",               ac:"#DB2777", bg:"rgba(219,39,119,.06)", descripcion:"Consumo y difusión de contenidos falsos, teorías conspirativas o información manipulada.",                                                                                               senales:"Creencias inusuales, rechazo de fuentes confiables, citas frecuentes de influencers sin verificación.", dato:"La IA generativa produce imágenes y videos falsos cada vez más indistinguibles de lo real." },
 ]
 
@@ -532,6 +545,37 @@ function ScrollProgress() {
   return (
     <motion.div className="fixed top-0 left-0 right-0 h-[6px] z-[60] origin-left"
       style={{ scaleX, background:"linear-gradient(90deg, var(--neon-blue) 0%, var(--neon-pink) 50%, var(--neon-purple) 100%)", boxShadow: "0 0 12px var(--neon-pink-glow)" }} />
+  )
+}
+
+// ─── BackToTopButton — aparece después de pasar el Hero, scroll suave al inicio ───
+function BackToTopButton() {
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.8)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          initial={{ opacity: 0, scale: 0.6, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.6, y: 20 }}
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.95 }}
+          aria-label="Volver arriba"
+          className="lc-cyber-btn fixed bottom-6 right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center"
+        >
+          <ArrowUp className="w-6 h-6 text-white" />
+        </motion.button>
+      )}
+    </AnimatePresence>
   )
 }
 
@@ -649,6 +693,7 @@ export function CibercrianzaContent() {
       <Navbar />
       <BackToDashboardButton />
       <ScrollProgress />
+      <BackToTopButton />
       {/* Set large readable global text-slate-800 for high accessibility and large legibility */}
       <main className="relative w-full font-sans overflow-hidden bg-white text-slate-800 text-lg">
 
@@ -763,6 +808,61 @@ export function CibercrianzaContent() {
           <div className="absolute bottom-0 inset-x-0 h-28 pointer-events-none" style={{ background:"linear-gradient(to top,#FFFFFF,transparent)" }} />
         </section>
 
+        {/* ══ CONCEPTO ══ */}
+        <section className="relative px-6 py-16 lg:py-20 overflow-hidden bg-white">
+          <div className="max-w-4xl mx-auto relative z-10">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once:true }} variants={fadeUp} transition={spring}
+              className="lc-cyber-glass rounded-[36px] p-8 sm:p-10 lg:p-12">
+              <span className="lc-mono lc-cyber-badge inline-block text-xs uppercase tracking-widest mb-6 px-4 py-1.5 rounded-full font-bold">
+                Detrás del concepto
+              </span>
+              <blockquote className="text-lg md:text-xl leading-relaxed text-slate-700 italic font-medium mb-5"
+                style={{ borderLeft:"5px solid var(--neon-purple)", paddingLeft:"1.5rem" }}>
+                "{MEDIACION_PARENTAL_QUOTE.text}"
+              </blockquote>
+              <div style={{ paddingLeft:"1.5rem" }}>
+                <SourceCite source={MEDIACION_PARENTAL_QUOTE.source} />
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ══ HISTORIA / ORIGEN ══ */}
+        <section className="relative px-6 py-16 lg:py-20 overflow-hidden bg-slate-50/50">
+          <div className="max-w-4xl mx-auto relative z-10">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once:true }} variants={stagger}>
+              <motion.div variants={fadeUp} transition={spring} className="text-center mb-12">
+                <span className="lc-mono lc-cyber-badge inline-block text-xs uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full font-bold">
+                  Historia
+                </span>
+                <h2 className="lc-fraunces font-black text-brand-navy" style={{ fontSize:"clamp(2.4rem, 5.5vw, 3.6rem)" }}>
+                  De dónde viene este campo
+                </h2>
+              </motion.div>
+
+              <motion.div variants={fadeUp} transition={spring} className="rounded-[36px] bg-white border-2 border-slate-100 p-8 sm:p-10 lg:p-12">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="w-11 h-11 rounded-2xl flex-shrink-0 flex items-center justify-center" style={{ background:"rgba(157,0,255,.08)", border:"2px solid rgba(157,0,255,.22)" }}>
+                    <History className="w-5 h-5" style={{ color:"var(--neon-purple)" }} />
+                  </div>
+                  <p className="text-slate-700 leading-relaxed text-base sm:text-lg font-bold pt-2">{BYBEE_QUOTE.text}</p>
+                </div>
+                <SourceCite source={BYBEE_QUOTE.source} className="ml-[3.75rem]" />
+
+                <div className="h-px bg-slate-100 my-8" />
+
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="w-11 h-11 rounded-2xl flex-shrink-0 flex items-center justify-center" style={{ background:"rgba(0,240,255,.08)", border:"2px solid rgba(0,240,255,.22)" }}>
+                    <Globe className="w-5 h-5" style={{ color:"var(--neon-blue)" }} />
+                  </div>
+                  <p className="text-slate-700 leading-relaxed text-base sm:text-lg font-bold pt-2">{GLOBAL_KIDS_ONLINE_QUOTE.text}</p>
+                </div>
+                <SourceCite source={GLOBAL_KIDS_ONLINE_QUOTE.source} className="ml-[3.75rem]" />
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
         {/* ══ 2 DATOS QUE IMPACTAN ══ */}
         <section id="datos" className="relative px-6 py-28 lg:py-36 overflow-hidden bg-white">
           <div className="absolute inset-0 lc-grid-cyber opacity-15 pointer-events-none" />
@@ -818,6 +918,10 @@ export function CibercrianzaContent() {
                   )
                 })}
               </div>
+
+              <motion.div variants={fadeUp} transition={spring} className="mt-10 flex justify-center">
+                <SourceCite source={KIDS_ONLINE_SOURCE} />
+              </motion.div>
 
             </motion.div>
           </div>
@@ -1331,6 +1435,11 @@ export function CibercrianzaContent() {
                       </div>
                       <h3 className="font-display font-black text-2xl mb-4 text-brand-navy">{d.titulo}</h3>
                       <p className="text-slate-700 leading-relaxed text-base md:text-lg font-bold">{d.descripcion}</p>
+                      {d.titulo === "La autonomía prematura" && (
+                        <div className="mt-5 pt-5 border-t border-slate-100">
+                          <SourceCite source={KIDS_ONLINE_SOURCE} />
+                        </div>
+                      )}
                     </motion.div>
                   )
                 })}
@@ -1389,7 +1498,11 @@ export function CibercrianzaContent() {
                                 <p className="text-base text-slate-800 font-extrabold">{r.senales}</p>
                               </div>
 
-                              <p className="lc-mono text-sm font-extrabold" style={{ color:r.ac }}>{r.dato}</p>
+                              <p className="lc-mono text-sm font-extrabold mb-3" style={{ color:r.ac }}>{r.dato}</p>
+                              {r.titulo === "Grooming" && <SourceCite source={GROOMING_LATAM_SOURCE} />}
+                              {r.titulo === "Ciberbullying" && <SourceCite source={BULLYING_SIN_FRONTERAS_SOURCE} />}
+                              {r.titulo === "Sextorsión" && <SourceCite source={KIDS_ONLINE_SOURCE} />}
+                              {r.titulo === "Uso problemático de pantallas" && <SourceCite source={KIDS_ONLINE_SOURCE} />}
                             </div>
                           </motion.div>
                         )}
@@ -1399,6 +1512,54 @@ export function CibercrianzaContent() {
                   )
                 })}
               </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ══ VENTAJAS / LO POSITIVO ══ */}
+        <section className="relative px-6 py-28 lg:py-36 overflow-hidden bg-white">
+          <div className="absolute inset-0 lc-grid-cyber opacity-15 pointer-events-none" />
+          <div className="max-w-6xl mx-auto relative z-10">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once:true }} variants={stagger}>
+
+              <motion.div variants={fadeUp} transition={spring} className="text-center mb-20">
+                <span className="lc-mono lc-cyber-badge inline-block text-xs uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full font-bold" style={{ borderColor:"rgba(5,150,105,.35)" }}>
+                  Lo que también es cierto
+                </span>
+                <h2 className="lc-fraunces font-black text-brand-navy mb-4" style={{ fontSize:"clamp(2.8rem, 6.2vw, 4.2rem)" }}>
+                  Internet también es una oportunidad
+                </h2>
+                <div className="w-24 h-1.5 bg-emerald-500 mx-auto mt-4 rounded-full" />
+              </motion.div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <motion.div variants={fadeUp} transition={spring}
+                  whileHover={{ y:-10, boxShadow:"0 20px 45px rgba(5,150,105,.15), 0 0 15px rgba(5,150,105,.3)" }}
+                  className="p-10 relative overflow-hidden cursor-default bg-white border-2"
+                  style={{ borderColor:"rgba(5,150,105,.22)", borderRadius:"36px", transition:"all 0.35s cubic-bezier(0.16, 1, 0.3, 1)" }}>
+                  <div className="absolute top-0 inset-x-0 h-1.5 rounded-t-3xl" style={{ background:"linear-gradient(90deg,#059669,transparent)" }} />
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-8" style={{ background:"rgba(5,150,105,.08)", border:"2px solid rgba(5,150,105,.28)" }}>
+                    <Lightbulb className="w-7 h-7" style={{ color:"#059669" }} />
+                  </div>
+                  <h3 className="font-display font-black text-2xl mb-4 text-brand-navy">Creatividad, aprendizaje y voz propia</h3>
+                  <p className="text-slate-700 leading-relaxed text-base md:text-lg font-bold mb-6">{UNICEF_BENEFICIOS_QUOTE.text}</p>
+                  <SourceCite source={UNICEF_BENEFICIOS_QUOTE.source} />
+                </motion.div>
+
+                <motion.div variants={fadeUp} transition={{ ...spring, delay:.08 }}
+                  whileHover={{ y:-10, boxShadow:"0 20px 45px rgba(0,240,255,.12), 0 0 15px var(--neon-blue-glow)" }}
+                  className="p-10 relative overflow-hidden cursor-default bg-white border-2"
+                  style={{ borderColor:"rgba(0,240,255,.22)", borderRadius:"36px", transition:"all 0.35s cubic-bezier(0.16, 1, 0.3, 1)" }}>
+                  <div className="absolute top-0 inset-x-0 h-1.5 rounded-t-3xl" style={{ background:"linear-gradient(90deg,var(--neon-blue),transparent)" }} />
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-8" style={{ background:"rgba(0,240,255,.08)", border:"2px solid rgba(0,240,255,.28)" }}>
+                    <Palette className="w-7 h-7" style={{ color:"var(--neon-blue)" }} />
+                  </div>
+                  <h3 className="font-display font-black text-2xl mb-4 text-brand-navy">Aprendizaje, entretenimiento y socialización</h3>
+                  <p className="text-slate-700 leading-relaxed text-base md:text-lg font-bold mb-6">{MESAS_DIALOGO_QUOTE.text}</p>
+                  <SourceCite source={MESAS_DIALOGO_QUOTE.source} />
+                </motion.div>
+              </div>
+
             </motion.div>
           </div>
         </section>
@@ -1488,6 +1649,16 @@ export function CibercrianzaContent() {
                     )}
                   </AnimatePresence>
                 </div>
+              </motion.div>
+
+              <motion.div variants={fadeUp} transition={spring} className="mt-10 rounded-[28px] p-7 sm:p-8 bg-white border-2 border-slate-100">
+                <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-bold mb-3">
+                  Este modelo de tres estilos corresponde a la tipología académica de mediación parental: la investigación distingue
+                  estrategias de mediación activa/habilitante (diálogo, co-uso, acompañamiento) de estrategias de mediación restrictiva
+                  (prohibición, control técnico) — la primera permite explorar oportunidades dentro de un entorno de apoyo; la segunda
+                  reduce riesgos pero también reduce oportunidades.
+                </p>
+                <SourceCite source={MEDIACION_PARENTAL_QUOTE.source} />
               </motion.div>
             </motion.div>
           </div>
@@ -1762,6 +1933,31 @@ export function CibercrianzaContent() {
                   )
                 })}
               </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ══ CENTRO DE RECURSOS — FUENTES CITADAS ══ */}
+        <section className="relative px-6 py-20 lg:py-24 overflow-hidden bg-slate-50/50">
+          <div className="max-w-3xl mx-auto relative z-10">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once:true }} variants={stagger}>
+              <motion.div variants={fadeUp} transition={spring} className="flex items-center gap-3 mb-10">
+                <div className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background:"rgba(0,240,255,.08)", border:"2px solid rgba(0,240,255,.25)" }}>
+                  <BookMarked className="w-5 h-5" style={{ color:"var(--neon-blue)" }} />
+                </div>
+                <h2 className="lc-fraunces font-black text-brand-navy" style={{ fontSize:"clamp(1.8rem, 4vw, 2.6rem)" }}>
+                  Centro de recursos — fuentes citadas
+                </h2>
+              </motion.div>
+
+              <motion.ol variants={fadeUp} transition={spring} className="flex flex-col gap-3">
+                {FUENTES_CITADAS.map((source, i) => (
+                  <li key={i} className="flex items-start gap-3 bg-white rounded-2xl border-2 border-slate-100 p-4">
+                    <span className="lc-mono text-slate-300 font-black text-sm mt-0.5 shrink-0">{String(i + 1).padStart(2, "0")}</span>
+                    <SourceCite source={source} />
+                  </li>
+                ))}
+              </motion.ol>
             </motion.div>
           </div>
         </section>

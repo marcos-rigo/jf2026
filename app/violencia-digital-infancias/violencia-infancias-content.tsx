@@ -6,6 +6,17 @@ import Image from "next/image"
 import { useAppStore } from "@/lib/ciudadania/app-store"
 import { useTematicaProgress } from "@/lib/hooks/use-tematica-progress"
 import { TematicaCompletarButton } from "@/components/tematica-completar-button"
+import { SourceCite } from "@/components/violencia-digital-infancias/source-cite"
+import {
+  GROOMING_LEY_QUOTE,
+  GROOMING_DIA_NACIONAL,
+  LINEA_137_ORIGEN_QUOTE,
+  LINEA_137_ALCANCE,
+  MAGNITUD_UNICEF_QUOTE,
+  MAGNITUD_KIDS_ONLINE,
+  MAGNITUD_ENCUESTA_GROOMING,
+  FUENTES_CITADAS,
+} from "@/lib/violencia-digital-infancias-content"
 import {
   ShieldAlert,
   Smartphone,
@@ -37,6 +48,9 @@ import {
   Monitor,
   Fingerprint,
   Brain,
+  Scale,
+  TrendingUp,
+  BookMarked,
 } from "lucide-react"
 
 // ── Slide variants (carrusel) ──────────────────────────────────────────────
@@ -589,6 +603,37 @@ export function ViolenciaInfanciasContent() {
       </section>
 
       {/* ════════════════════════════════════════════════════════════════════
+         MARCO LEGAL — GROOMING
+      ════════════════════════════════════════════════════════════════════ */}
+      <section className="px-6 py-16 lg:py-20 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-dot-grid pointer-events-none" />
+        <div className="max-w-4xl mx-auto relative z-10">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+            className="rounded-3xl border border-slate-200 bg-slate-50/60 p-8 lg:p-10 shadow-md"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center shadow-md shrink-0">
+                <Scale className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <p className="text-xs text-slate-400 font-medium uppercase tracking-wider">Marco legal</p>
+                <h2 className="text-2xl lg:text-3xl font-display font-bold text-brand-navy">El grooming es un delito penal</h2>
+              </div>
+            </div>
+            <blockquote className="border-l-4 border-brand-blue/40 pl-5 text-slate-600 text-lg leading-relaxed italic mb-4">
+              "{GROOMING_LEY_QUOTE.text}"
+            </blockquote>
+            <SourceCite source={GROOMING_LEY_QUOTE.source} className="mb-5" />
+            <div className="h-px bg-slate-200 my-5" />
+            <p className="text-slate-600 leading-relaxed mb-3">
+              El 13 de noviembre se estableció como el Día Nacional de la Lucha Contra el Grooming, en conmemoración de la sanción de esta ley.
+            </p>
+            <SourceCite source={GROOMING_DIA_NACIONAL} />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════════════════
          STATS BENTO
       ════════════════════════════════════════════════════════════════════ */}
       <section ref={statsRef} className="bg-white px-6 py-20 lg:py-28 relative overflow-hidden">
@@ -689,9 +734,42 @@ export function ViolenciaInfanciasContent() {
                     {type.title}
                   </h3>
                   <p className="text-slate-600 text-base leading-relaxed">{type.description}</p>
+                  {type.id === "grooming" && (
+                    <div className="mt-4 pt-4 border-t border-slate-100">
+                      <SourceCite source={GROOMING_LEY_QUOTE.source} />
+                    </div>
+                  )}
                 </div>
               </motion.div>
             ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════════════════
+         ORIGEN — LÍNEA 137
+      ════════════════════════════════════════════════════════════════════ */}
+      <section className="px-6 py-16 lg:py-20 bg-white relative overflow-hidden">
+        <div className="max-w-4xl mx-auto relative z-10">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+            className="rounded-3xl border border-brand-blue/15 bg-gradient-to-br from-brand-light-blue/40 to-white p-8 lg:p-10 shadow-md"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-blue to-cyan-500 flex items-center justify-center shadow-md shrink-0">
+                <PhoneCall className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <p className="text-xs text-slate-400 font-medium uppercase tracking-wider">Origen</p>
+                <h2 className="text-2xl lg:text-3xl font-display font-bold text-brand-navy">¿Qué es la Línea 137?</h2>
+              </div>
+            </div>
+            <p className="text-slate-600 leading-relaxed mb-3">{LINEA_137_ORIGEN_QUOTE.text}</p>
+            <SourceCite source={LINEA_137_ORIGEN_QUOTE.source} className="mb-5" />
+            <div className="h-px bg-slate-200 my-5" />
+            <p className="text-slate-600 leading-relaxed mb-3">
+              La línea atiende específicamente casos de violencia familiar, sexual y grooming — no es un número genérico de emergencias.
+            </p>
+            <SourceCite source={LINEA_137_ALCANCE} />
           </motion.div>
         </div>
       </section>
@@ -840,6 +918,92 @@ export function ViolenciaInfanciasContent() {
               )}
             </AnimatePresence>
           </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════════════════
+         MAGNITUD DEL PROBLEMA
+      ════════════════════════════════════════════════════════════════════ */}
+      <section className="px-6 py-20 lg:py-28 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-dot-grid pointer-events-none" />
+        <div className="max-w-6xl mx-auto relative z-10">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+            className="text-center mb-14"
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur-sm border border-brand-blue/15 text-brand-blue text-sm font-semibold mb-6 shadow-sm">
+              <TrendingUp className="w-4 h-4" />
+              Magnitud del problema
+            </span>
+            <h2 className="text-4xl lg:text-5xl font-display font-bold text-brand-navy mb-5">
+              Lo que muestran los datos oficiales
+            </h2>
+          </motion.div>
+
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"
+          >
+            {/* Card grande — crecimiento de denuncias */}
+            <motion.div variants={fadeUp}
+              className="lg:col-span-2 rounded-3xl p-8 lg:p-10 bg-gradient-to-br from-brand-navy to-[#1a3a6b] text-white relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-64 h-64 bg-brand-blue/30 rounded-full blur-[80px] pointer-events-none" />
+              <div className="absolute inset-0 bg-dot-grid-dark opacity-[0.08] pointer-events-none" />
+              <div className="relative z-10">
+                <div className="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-8 mb-4">
+                  <div>
+                    <p className="text-white/40 text-sm font-medium uppercase tracking-wider mb-2">2016</p>
+                    <p className="text-4xl lg:text-5xl font-display font-black text-white/70">8.840</p>
+                  </div>
+                  <ArrowRight className="w-8 h-8 text-cyan-300 hidden sm:block mb-2" />
+                  <div>
+                    <p className="text-white/40 text-sm font-medium uppercase tracking-wider mb-2">2024</p>
+                    <p className="text-6xl lg:text-7xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-300">120.162</p>
+                  </div>
+                </div>
+                <p className="text-white/70 text-lg leading-relaxed max-w-2xl mb-5">
+                  Más de 150.000 denuncias vinculadas con grooming y explotación sexual de niñas, niños y adolescentes en entornos digitales se registraron en Argentina en 2024. Un incremento de más de 13 veces en 8 años.
+                </p>
+                <SourceCite source={MAGNITUD_UNICEF_QUOTE.source} className="text-white/60 [&_a]:hover:text-cyan-300" />
+              </div>
+            </motion.div>
+
+            {/* Card mediana — encuesta grooming */}
+            <motion.div variants={fadeUp}
+              className="rounded-3xl p-7 bg-slate-50 relative overflow-hidden"
+            >
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-pink to-orange-400 flex items-center justify-center text-white shadow-md mb-5">
+                <AlertTriangle className="w-5 h-5" />
+              </div>
+              <p className="text-5xl font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-brand-pink to-orange-500 mb-3 leading-none">12,7%</p>
+              <p className="text-slate-600 text-base leading-relaxed mb-4">{MAGNITUD_ENCUESTA_GROOMING.text}</p>
+              <SourceCite source={MAGNITUD_ENCUESTA_GROOMING.source} />
+            </motion.div>
+
+            {/* Card mediana — Kids Online */}
+            <motion.div variants={fadeUp}
+              className="rounded-3xl p-7 bg-gradient-to-br from-brand-light-blue to-blue-50 relative overflow-hidden"
+            >
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-blue to-cyan-500 flex items-center justify-center text-white shadow-md mb-5">
+                <BookMarked className="w-5 h-5" />
+              </div>
+              <p className="text-slate-700 text-base leading-relaxed mb-4">
+                En 2025, UNICEF y UNESCO realizaron la Encuesta Kids Online Argentina, un relevamiento en 291 escuelas primarias y secundarias de todo el país, con menores de 9 a 17 años.
+              </p>
+              <SourceCite source={MAGNITUD_KIDS_ONLINE} />
+            </motion.div>
+          </motion.div>
+
+          {/* Cierre — qué significa para el aula */}
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+            className="rounded-3xl border border-slate-200 bg-white p-8 lg:p-10 shadow-md flex items-start gap-5"
+          >
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white shadow-md shrink-0">
+              <BookOpen className="w-5 h-5" />
+            </div>
+            <p className="text-slate-600 text-lg leading-relaxed">
+              El crecimiento de denuncias (de 8.840 a 120.162 en 8 años) no es solo "más casos" — también refleja que cada vez más víctimas y adultos de referencia saben que pueden y deben denunciar. Un docente que conoce el protocolo es parte de ese cambio.
+            </p>
+          </motion.div>
         </div>
       </section>
 
@@ -1023,6 +1187,25 @@ export function ViolenciaInfanciasContent() {
                 </button>
               </div>
             </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════════════════
+         FUENTES CITADAS
+      ════════════════════════════════════════════════════════════════════ */}
+      <section className="px-6 py-16 lg:py-20 bg-slate-50/40">
+        <div className="max-w-3xl mx-auto">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+            <h2 className="text-2xl lg:text-3xl font-display font-bold text-brand-navy mb-6">Fuentes citadas</h2>
+            <ol className="flex flex-col gap-3">
+              {FUENTES_CITADAS.map((source, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="text-slate-300 font-mono text-sm mt-0.5 shrink-0">{String(i + 1).padStart(2, "0")}</span>
+                  <SourceCite source={source} />
+                </li>
+              ))}
+            </ol>
           </motion.div>
         </div>
       </section>
