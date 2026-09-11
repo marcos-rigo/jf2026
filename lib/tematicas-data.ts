@@ -52,7 +52,7 @@ export const groups: TematicaGroup[] = [
         icon: Shield,
         color: "#4272BB",
         locked: true,
-        audiencias: ["docentes"],
+        audiencias: ["docentes", "familias"],
       },
       {
         id: "huella-digital",

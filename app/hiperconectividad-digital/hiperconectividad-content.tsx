@@ -55,6 +55,75 @@ import {
   UNICEF_ESPANA_PENDIENTE as PADRES_SOURCE,
   FUENTES_COMPLETAS,
 } from "@/lib/hiperconectividad-digital-content"
+import { resolveTexto, type AudienciaTexto } from "@/lib/audiencia-texto"
+import { useAudienciaStore } from "@/lib/audiencia-store"
+import type { Audiencia } from "@/lib/audiencias"
+
+// Esta temática está clasificada para docentes y familias por igual
+// (lib/tematicas-data.ts), pero el contenido original se escribió pensando
+// solo en el aula. Los textos que asumían explícitamente un lector docente
+// (mención a "tus estudiantes", "el aula", "tu curso") pasaron a `AudienciaTexto`
+// con fallback 'docentes' — el resto del contenido (estadísticas, citas) sirve
+// igual para cualquier audiencia y no se tocó.
+function resolveField(field: string | AudienciaTexto, audienciaActual: Audiencia | null): string {
+  return typeof field === "string" ? field : resolveTexto(field, audienciaActual, "docentes")
+}
+
+const HERO_INTRO_TEXTO: AudienciaTexto = {
+  docentes:
+    "La hiperconectividad digital está reconfigurando estructuralmente la psique adolescente — y eso también se ve en el aula. Un análisis basado en neurodesarrollo sobre cómo las redes sociales impactan la identidad, la salud mental y el desarrollo cognitivo de tus estudiantes, con herramientas para leer esas señales día a día.",
+  familias:
+    "La hiperconectividad digital está reconfigurando estructuralmente la psique adolescente. Un análisis basado en neurodesarrollo sobre cómo las redes sociales impactan la identidad, la salud mental y el desarrollo cognitivo de tus hijos, con herramientas para leer esas señales día a día.",
+}
+
+const HERO_BOTON_GUIA_TEXTO: AudienciaTexto = {
+  docentes: "Guía para el aula",
+  familias: "Guía para la familia",
+}
+
+const SALUD_MENTAL_INTRO_TEXTO: AudienciaTexto = {
+  docentes:
+    "Los ingresos hospitalarios por autolesión en jóvenes se triplicaron en dos décadas, y en algunas regiones más de 4 de cada 10 adolescentes reportó pensamientos suicidas. La evidencia es concluyente — y como docente, sos una de las primeras personas en posición de notar estas señales en el aula.",
+  familias:
+    "Los ingresos hospitalarios por autolesión en jóvenes se triplicaron en dos décadas, y en algunas regiones más de 4 de cada 10 adolescentes reportó pensamientos suicidas. La evidencia es concluyente — y como familia, sos quien está en mejor posición para notar estas señales a tiempo.",
+}
+
+const ECOSISTEMAS_SUBTITULO_TEXTO: AudienciaTexto = {
+  docentes:
+    "El ocio digital ha mutado hacia entornos donde los peligros éticos y económicos se normalizan — muchos de ellos invisibles para un adulto que no los busca activamente, también en el aula.",
+  familias:
+    "El ocio digital ha mutado hacia entornos donde los peligros éticos y económicos se normalizan — muchos de ellos invisibles para un adulto que no los busca activamente.",
+}
+
+const HOJA_DE_RUTA_BADGE_TEXTO: AudienciaTexto = {
+  docentes: "Guía para educadores",
+  familias: "Guía para familias",
+}
+
+const HOJA_DE_RUTA_INTRO_TEXTO: AudienciaTexto = {
+  docentes:
+    "La familia es el mayor influencer, pero la escuela es el segundo entorno más presente en la vida de un adolescente. Cinco pasos para pasar de la restricción pasiva al acompañamiento activo, dentro y fuera del aula.",
+  familias:
+    "La familia es el mayor influencer en la vida de un adolescente. Cinco pasos para pasar de la restricción pasiva al acompañamiento activo, en el día a día de tu casa.",
+}
+
+const CARRUSEL_HEADER_TEXTO: { label: AudienciaTexto; titulo: AudienciaTexto } = {
+  label: {
+    docentes: "Material para el aula",
+    familias: "Presentación completa",
+  },
+  titulo: {
+    docentes: "Hiperconectividad Digital — Recursos para el Aula",
+    familias: "Hiperconectividad Digital — Galería",
+  },
+}
+
+const CTA_CIERRE_TEXTO: AudienciaTexto = {
+  docentes:
+    "La estabilidad emocional de los estudiantes no puede ser subcontratada a una plataforma digital. Tu presencia, empatía y sentido común son irremplazables en el entorno digital de quienes tenés en el aula — junto con la familia, sos parte de esa red de sostén.",
+  familias:
+    "La estabilidad emocional de tus hijos no puede ser subcontratada a una plataforma digital. Tu presencia, empatía y sentido común son irremplazables en su vida digital — junto con la escuela, sos parte de esa red de sostén.",
+}
 
 const slideVariants = {
   enter: (dir: number) => ({ opacity: 0, x: dir * 80 }),
@@ -212,31 +281,58 @@ const riesgosData = [
   },
 ]
 
-const roadmapData = [
+const roadmapData: {
+  id: number
+  titulo: string | AudienciaTexto
+  desc: string | AudienciaTexto
+  icon: typeof Brain
+  color: string
+}[] = [
   {
     id: 1,
     titulo: "Entender que la madurez importa más que la edad",
-    desc: "La decisión sobre el primer dispositivo es de la familia, pero como docente podés ayudar a leerla: la capacidad de autocontrol, responsabilidad y tolerancia a la frustración que ves en el aula es un buen indicador para orientar a las familias que te consultan.",
+    desc: {
+      docentes:
+        "La decisión sobre el primer dispositivo es de la familia, pero como docente podés ayudar a leerla: la capacidad de autocontrol, responsabilidad y tolerancia a la frustración que ves en el aula es un buen indicador para orientar a las familias que te consultan.",
+      familias:
+        "La decisión sobre el primer dispositivo es tuya como familia: la capacidad de autocontrol, responsabilidad y tolerancia a la frustración que ves en tu hijo o hija en el día a día es un mejor indicador que la edad sola.",
+    },
     icon: Brain,
     color: "from-brand-blue to-cyan-500",
   },
   {
     id: 2,
     titulo: "Leer el impacto de la falta de descanso",
-    desc: "Dormir con el móvil triplica el riesgo de ciberacoso, sexting y contacto con desconocidos, además de eliminar la fase REM. Un estudiante que llega agotado o disperso puede estar arrastrando esto — es un dato útil para entender lo que pasa en el aula y para conversarlo con la familia.",
+    desc: {
+      docentes:
+        "Dormir con el móvil triplica el riesgo de ciberacoso, sexting y contacto con desconocidos, además de eliminar la fase REM. Un estudiante que llega agotado o disperso puede estar arrastrando esto — es un dato útil para entender lo que pasa en el aula y para conversarlo con la familia.",
+      familias:
+        "Dormir con el móvil triplica el riesgo de ciberacoso, sexting y contacto con desconocidos, además de eliminar la fase REM. Un hijo o hija que se despierta agotado o disperso puede estar arrastrando esto — vale la pena sacar el cargador del cuarto.",
+    },
     icon: Moon,
     color: "from-violet-500 to-brand-blue",
   },
   {
     id: 3,
-    titulo: "Trabajar la alfabetización algorítmica en el aula",
-    desc: "Enseñales que el contenido que ven es una construcción interesada del algoritmo, no una realidad social fiel: el algoritmo amplifica lo que capta atención, no lo que es verdad. Es contenido que podés incorporar directamente a tus clases, no solo delegarlo a la familia.",
+    titulo: {
+      docentes: "Trabajar la alfabetización algorítmica en el aula",
+      familias: "Trabajar la alfabetización algorítmica en casa",
+    },
+    desc: {
+      docentes:
+        "Enseñales que el contenido que ven es una construcción interesada del algoritmo, no una realidad social fiel: el algoritmo amplifica lo que capta atención, no lo que es verdad. Es contenido que podés incorporar directamente a tus clases, no solo delegarlo a la familia.",
+      familias:
+        "Enseñales que el contenido que ven es una construcción interesada del algoritmo, no una realidad social fiel: el algoritmo amplifica lo que capta atención, no lo que es verdad. Es una charla que podés tener en casa, no algo para delegarle solo a la escuela.",
+    },
     icon: Eye,
     color: "from-brand-pink to-violet-500",
   },
   {
     id: 4,
-    titulo: "Promover el ocio analógico también desde la escuela",
+    titulo: {
+      docentes: "Promover el ocio analógico también desde la escuela",
+      familias: "Promover el ocio analógico en casa",
+    },
     desc: "El deporte y las relaciones cara a cara son los únicos capaces de entrenar la tolerancia a la frustración y la paciencia. Los espacios extracurriculares y un recreo bien aprovechado cumplen ese rol tanto como cualquier actividad en casa.",
     icon: Heart,
     color: "from-emerald-500 to-teal-500",
@@ -244,7 +340,12 @@ const roadmapData = [
   {
     id: 5,
     titulo: "Ser un adulto de referencia, no solo un fiscalizador",
-    desc: "Pasar de la fiscalización a la mentoría también aplica en el aula. Junto con la familia, sos uno de los adultos de referencia de tus estudiantes: tu presencia, empatía y sentido común dentro del aula son irremplazables.",
+    desc: {
+      docentes:
+        "Pasar de la fiscalización a la mentoría también aplica en el aula. Junto con la familia, sos uno de los adultos de referencia de tus estudiantes: tu presencia, empatía y sentido común dentro del aula son irremplazables.",
+      familias:
+        "Pasar de la fiscalización a la mentoría también aplica en casa. Sos uno de los adultos de referencia de tus hijos: tu presencia, empatía y sentido común son irremplazables, más que cualquier control parental.",
+    },
     icon: Ear,
     color: "from-amber-500 to-orange-400",
   },
@@ -254,6 +355,16 @@ const roadmapData = [
 export function HiperconectividadContent() {
   const userId = useAppStore((s) => s.user?.id ?? null)
   const progress = useTematicaProgress({ tematicaId: "hiperconectividad-digital", userId })
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual)
+  const heroIntro = resolveTexto(HERO_INTRO_TEXTO, audienciaActual, "docentes")
+  const heroBotonGuia = resolveTexto(HERO_BOTON_GUIA_TEXTO, audienciaActual, "docentes")
+  const saludMentalIntro = resolveTexto(SALUD_MENTAL_INTRO_TEXTO, audienciaActual, "docentes")
+  const ecosistemasSubtitulo = resolveTexto(ECOSISTEMAS_SUBTITULO_TEXTO, audienciaActual, "docentes")
+  const hojaDeRutaBadge = resolveTexto(HOJA_DE_RUTA_BADGE_TEXTO, audienciaActual, "docentes")
+  const hojaDeRutaIntro = resolveTexto(HOJA_DE_RUTA_INTRO_TEXTO, audienciaActual, "docentes")
+  const carruselLabel = resolveTexto(CARRUSEL_HEADER_TEXTO.label, audienciaActual, "docentes")
+  const carruselTitulo = resolveTexto(CARRUSEL_HEADER_TEXTO.titulo, audienciaActual, "docentes")
+  const ctaCierre = resolveTexto(CTA_CIERRE_TEXTO, audienciaActual, "docentes")
   const [activeRoadmap, setActiveRoadmap] = useState(0)
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] })
@@ -503,7 +614,7 @@ export function HiperconectividadContent() {
               </motion.h1>
 
               <motion.p variants={fadeUp} className="text-lg md:text-xl text-slate-500 max-w-xl leading-relaxed">
-                La hiperconectividad digital está reconfigurando estructuralmente la psique adolescente — y eso también se ve en el aula. Un análisis basado en neurodesarrollo sobre cómo las redes sociales impactan la identidad, la salud mental y el desarrollo cognitivo de tus estudiantes, con herramientas para leer esas señales día a día.
+                {heroIntro}
               </motion.p>
 
               <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
@@ -512,7 +623,7 @@ export function HiperconectividadContent() {
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </a>
                 <a href="#hoja-de-ruta" className="px-7 py-3.5 rounded-full font-bold text-brand-navy glass border border-slate-200 hover:border-violet-300 hover:shadow-md transition-all duration-300">
-                  Guía para el aula
+                  {heroBotonGuia}
                 </a>
               </motion.div>
 
@@ -984,7 +1095,7 @@ export function HiperconectividadContent() {
                   </span>
                 </h2>
                 <p className="text-white text-xl max-w-2xl mx-auto">
-                  Los ingresos hospitalarios por autolesión en jóvenes se triplicaron en dos décadas, y en algunas regiones más de 4 de cada 10 adolescentes reportó pensamientos suicidas. La evidencia es concluyente — y como docente, sos una de las primeras personas en posición de notar estas señales en el aula.
+                  {saludMentalIntro}
                 </p>
               </motion.div>
 
@@ -1044,7 +1155,7 @@ export function HiperconectividadContent() {
               </h2>
             </div>
             <p className="text-brand-navy max-w-sm lg:text-right text-base leading-relaxed font-medium">
-              El ocio digital ha mutado hacia entornos donde los peligros éticos y económicos se normalizan — muchos de ellos invisibles para un adulto que no los busca activamente, también en el aula.
+              {ecosistemasSubtitulo}
             </p>
           </motion.div>
 
@@ -1094,15 +1205,13 @@ export function HiperconectividadContent() {
           >
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-light-blue border border-brand-blue/20 text-brand-blue text-sm font-semibold mb-5">
               <Star className="w-4 h-4" />
-              Guía para educadores
+              {hojaDeRutaBadge}
             </span>
             <h2 className="text-5xl lg:text-6xl font-display font-bold text-brand-navy mb-5">
               Hoja de ruta para la salud digital
             </h2>
             <p className="text-brand-navy text-xl max-w-2xl mx-auto font-medium">
-              La familia es el mayor influencer, pero la escuela es el segundo entorno más presente en la vida de un
-              adolescente. Cinco pasos para pasar de la restricción pasiva al acompañamiento activo, dentro y fuera del
-              aula.
+              {hojaDeRutaIntro}
             </p>
           </motion.div>
 
@@ -1125,7 +1234,7 @@ export function HiperconectividadContent() {
                     {step.id}
                   </div>
                   <span className={`font-semibold text-base transition-colors ${activeRoadmap === i ? "text-brand-navy" : "text-brand-navy/60"}`}>
-                    {step.titulo}
+                    {resolveField(step.titulo, audienciaActual)}
                   </span>
                   {activeRoadmap === i && <ChevronRight className="w-4 h-4 text-brand-blue ml-auto shrink-0" />}
                 </button>
@@ -1158,8 +1267,8 @@ export function HiperconectividadContent() {
                           ))}
                         </div>
                       </div>
-                      <h3 className="text-3xl lg:text-4xl font-display font-bold text-brand-navy mb-4">{step.titulo}</h3>
-                      <p className="text-brand-navy text-lg leading-relaxed">{step.desc}</p>
+                      <h3 className="text-3xl lg:text-4xl font-display font-bold text-brand-navy mb-4">{resolveField(step.titulo, audienciaActual)}</h3>
+                      <p className="text-brand-navy text-lg leading-relaxed">{resolveField(step.desc, audienciaActual)}</p>
                     </motion.div>
                   ) : null
                 )}
@@ -1272,8 +1381,8 @@ export function HiperconectividadContent() {
                     <Images className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-violet-600 tracking-widest uppercase mb-0.5">Material para el aula</p>
-                    <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 font-display">Hiperconectividad Digital — Recursos para el Aula</h2>
+                    <p className="text-xs font-bold text-violet-600 tracking-widest uppercase mb-0.5">{carruselLabel}</p>
+                    <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 font-display">{carruselTitulo}</h2>
                   </div>
                 </div>
                 <span className="text-slate-400 text-sm font-mono shrink-0 bg-slate-100/50 px-3 py-1.5 rounded-full">
@@ -1385,7 +1494,7 @@ export function HiperconectividadContent() {
             </h2>
 
             <p className="text-white/50 text-lg max-w-2xl mb-10 leading-relaxed">
-              La estabilidad emocional de los estudiantes no puede ser subcontratada a una plataforma digital. Tu presencia, empatía y sentido común son irremplazables en el entorno digital de quienes tenés en el aula — junto con la familia, sos parte de esa red de sostén.
+              {ctaCierre}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
