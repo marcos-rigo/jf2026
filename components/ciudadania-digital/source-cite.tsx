@@ -11,7 +11,7 @@ interface SourceCiteProps {
 // mención sin confirmar (paradoja del Barco de Teseo, frase exacta de ISO 27100)
 // en vez de presentarse como cita textual cerrada.
 export function SourceCite({ source, className = '' }: SourceCiteProps) {
-  const base = 'inline-flex flex-wrap items-center gap-1.5 text-xs font-mono text-slate-400';
+  const base = 'inline-flex flex-wrap items-center gap-1.5 text-xs font-mono text-slate-600';
 
   const content = (
     <>
@@ -21,7 +21,7 @@ export function SourceCite({ source, className = '' }: SourceCiteProps) {
       <span className={source.unverified ? 'italic' : ''}>{source.author}</span>
       {source.note && <span className="opacity-70">— {source.note}</span>}
       {source.unverified && (
-        <span className="opacity-60 text-[0.65rem] uppercase tracking-wider px-1.5 py-0.5 rounded border border-slate-700">
+        <span className="opacity-80 text-[0.65rem] uppercase tracking-wider px-1.5 py-0.5 rounded border border-slate-300">
           sin verificar
         </span>
       )}
@@ -34,7 +34,7 @@ export function SourceCite({ source, className = '' }: SourceCiteProps) {
         href={source.url}
         target="_blank"
         rel="noopener noreferrer"
-        className={`${base} hover:text-[#00F0FF] transition-colors ${className}`}
+        className={`${base} hover:text-[#0E7490] transition-colors ${className}`}
       >
         {content}
         <ExternalLink className="w-3 h-3 opacity-60 shrink-0" />

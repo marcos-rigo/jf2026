@@ -62,6 +62,12 @@ export interface LibresSubtopicContent {
   // nació "dirigido a docentes" pero no todos los subtemas heredaron esa
   // dirección explícita. Ver content-management/PROPUESTA-AUDIENCIAS.md.
   audiencias?: Audiencia[]
+  // Notas puntuales por audiencia (patrón "Grupo B" — ver investigación
+  // "contenido con variantes por audiencia"). Sin escribir todavía en
+  // ningún subtema; opcionales y sin fallback entre sí — ver
+  // components/nota-audiencia.tsx.
+  notaDocente?: string
+  notaFamilias?: string
 }
 
 export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [

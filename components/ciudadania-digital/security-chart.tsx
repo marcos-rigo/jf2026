@@ -43,10 +43,10 @@ export function SecurityChart() {
         display: false,
       },
       tooltip: {
-        backgroundColor: '#1E293B',
+        backgroundColor: '#0F172A',
         padding: 12,
-        titleColor: '#E2E8F0',
-        bodyColor: '#94A3B8',
+        titleColor: '#F1F5F9',
+        bodyColor: '#CBD5E1',
         borderColor: '#334155',
         borderWidth: 1,
         callbacks: {
@@ -61,16 +61,16 @@ export function SecurityChart() {
         beginAtZero: true,
         max: 100,
         ticks: {
-          color: '#94A3B8',
+          color: '#334155',
           stepSize: 25,
         },
         grid: {
-          color: 'rgba(148, 163, 184, 0.1)',
+          color: 'rgba(51, 65, 85, 0.12)',
         },
       },
       x: {
         ticks: {
-          color: '#94A3B8',
+          color: '#334155',
         },
         grid: {
           display: false,

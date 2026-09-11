@@ -82,6 +82,10 @@ export const MAGNITUD_ARGENTINA = {
   } as Source,
   notaDocente:
     'Este dato es clave para entender por qué la pregunta de "qué hacer si una alumna te lo cuenta" importa tanto: la mayoría de quienes atraviesan esto no lo denuncian ni lo cuentan formalmente. Que confíe en un docente puede ser la única vez que lo cuenta.',
+  // Sin escribir todavía — ver investigación "contenido con variantes por
+  // audiencia". Campo hermano de notaDocente, mismo patrón: opcional, y si
+  // no está no se muestra nada (sin fallback a la nota de otra audiencia).
+  notaFamilias: undefined as string | undefined,
 };
 
 export const FAQ3_AMPLIACION =

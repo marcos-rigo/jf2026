@@ -276,6 +276,12 @@ export const VULNERABILITIES = [
 export const AULA_SINTESIS =
   'UNESCO tiene un marco específico para esto — el MIL Competency Framework for Teachers — que confirma que dirigir esta temática a docentes no es una adaptación forzada: la alfabetización mediática e informacional está pensada, desde su origen institucional, para formar primero a quien va a formar a otros. El framework C.A.F.E. y el checklist de 5 ítems son exactamente el tipo de herramienta operativa que ese marco pide — y la distinción entre misinformación/desinformación/malinformación le da al docente un vocabulario más preciso que "fake news" para trabajar con el curso.';
 
+// Sin escribir todavía — ver investigación "contenido con variantes por
+// audiencia". Sibling de AULA_SINTESIS para la audiencia "familias" (este
+// archivo usa consts sueltas en vez de campos de un mismo objeto, así que el
+// patrón "campo hermano opcional" se replica como const hermana opcional).
+export const AULA_SINTESIS_FAMILIAS: string | undefined = undefined;
+
 export const AULA_SINTESIS_SOURCE: Source = { author: 'UNESCO', url: 'https://www.unesco.org/en/ami' };
 
 export interface FaqItem {

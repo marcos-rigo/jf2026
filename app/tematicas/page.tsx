@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { Suspense } from "react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { TematicasContent } from "./tematicas-content"
@@ -20,7 +21,9 @@ export default function TematicasPage() {
   return (
     <>
       <Navbar />
-      <TematicasContent />
+      <Suspense fallback={null}>
+        <TematicasContent />
+      </Suspense>
       <Footer />
     </>
   )

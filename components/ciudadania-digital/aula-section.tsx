@@ -1,9 +1,16 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { AULA_SINTESIS } from '@/lib/ciudadania-digital-content';
+import { AULA_SINTESIS, AULA_TITULO } from '@/lib/ciudadania-digital-content';
+import { resolveTexto } from '@/lib/audiencia-texto';
+import { useAudienciaStore } from '@/lib/audiencia-store';
 
 export default function AulaSection() {
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual);
+  const titulo = resolveTexto(AULA_TITULO, audienciaActual, 'docentes');
+  const intro = resolveTexto(AULA_SINTESIS.intro, audienciaActual, 'docentes');
+  const cierre = resolveTexto(AULA_SINTESIS.cierre, audienciaActual, 'docentes');
+
   return (
     <motion.section
       id="aula"
@@ -14,15 +21,15 @@ export default function AulaSection() {
       className="w-full scroll-mt-28 md:scroll-mt-32"
     >
       <div className="mb-10">
-        <span className="bg-[#8B5CF6]/20 text-[#8B5CF6] border border-[#8B5CF6]/30 py-1.5 px-4 rounded-full text-xs font-bold uppercase tracking-widest font-mono">
-          07 — Para el Aula
+        <span className="bg-[#6D28D9]/10 text-[#6D28D9] border border-[#6D28D9]/30 py-1.5 px-4 rounded-full text-xs font-bold uppercase tracking-widest font-mono">
+          07 — {titulo}
         </span>
-        <h2 className="text-4xl font-bold text-white mt-5 mb-3 font-display">Qué Significa Esto para el Aula</h2>
+        <h2 className="text-4xl font-bold text-brand-navy mt-5 mb-3 font-display">Qué Significa Esto para el Aula</h2>
       </div>
 
-      <div className="backdrop-blur-xl bg-[#141A28]/70 border border-slate-800/50 p-8 md:p-10 rounded-3xl space-y-6">
-        <p className="text-slate-300 leading-relaxed font-sans">{AULA_SINTESIS.intro}</p>
-        <p className="text-slate-300 leading-relaxed font-sans">{AULA_SINTESIS.cierre}</p>
+      <div className="bg-white border border-slate-200 p-8 md:p-10 rounded-3xl space-y-6 shadow-sm">
+        <p className="text-slate-700 leading-relaxed font-sans">{intro}</p>
+        <p className="text-slate-700 leading-relaxed font-sans">{cierre}</p>
       </div>
     </motion.section>
   );

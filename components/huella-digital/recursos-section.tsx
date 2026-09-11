@@ -14,18 +14,46 @@ import {
   Fingerprint,
 } from 'lucide-react';
 import { FUENTES_COMPLETAS } from '@/lib/huella-digital-content';
+import { resolveTexto, type AudienciaTexto } from '@/lib/audiencia-texto';
+import { useAudienciaStore } from '@/lib/audiencia-store';
 
-// Contenido sin cambios — extraído tal cual de app/huella-digital/huella-digital-content.tsx.
-const NEXT_STEPS = [
+// Contenido ya adaptado a docentes (fallback de audiencia). Solo el segundo
+// paso menciona explícitamente a estudiantes y pasó a `AudienciaTexto`.
+const NEXT_STEPS: { title: string; desc: string | AudienciaTexto }[] = [
   {
     title: 'Programá un recordatorio',
     desc: 'Poné una alarma cada 6 meses para hacer Egosurfing de rutina.',
   },
   {
     title: 'Instalá un gestor de contraseñas',
-    desc: 'Dejá de reciclar claves. Usá herramientas seguras y únicas por cuenta — es un buen hábito para mostrarles también a tus estudiantes.',
+    desc: {
+      docentes: 'Dejá de reciclar claves. Usá herramientas seguras y únicas por cuenta — es un buen hábito para mostrarles también a tus estudiantes.',
+      familias: 'Dejá de reciclar claves. Usá herramientas seguras y únicas por cuenta.',
+    },
   },
 ];
+
+const TEMPLATE_INTRO_TEXTO: AudienciaTexto = {
+  docentes:
+    'Usá este texto para solicitar la eliminación de tus datos a empresas o webmasters. Podés adaptarlo también para dar de baja cuentas antiguas asociadas a tu correo institucional.',
+  familias: 'Usá este texto para solicitar la eliminación de tus datos a empresas o webmasters.',
+};
+
+const COMPLETADO_TEXTO: AudienciaTexto = {
+  docentes: '¡Completado! Tu huella digital está bajo control — y ya tenés un ejemplo propio para mostrarles a tus estudiantes cómo se hace.',
+  familias: '¡Completado! Tu huella digital está bajo control.',
+};
+
+const CARRUSEL_HEADER: { label: AudienciaTexto; titulo: AudienciaTexto } = {
+  label: {
+    docentes: 'Material para el aula',
+    familias: 'Presentación completa',
+  },
+  titulo: {
+    docentes: 'Huella Digital — Recursos para el Aula',
+    familias: 'Huella Digital — Galería',
+  },
+};
 
 const RESOURCES = ['Have I Been Pwned', 'Google Takeout', 'DeleteMe'];
 
@@ -77,6 +105,11 @@ export default function RecursosSection({ progressPct, completedCount }: Recurso
   const [openFaq, setOpenFaq] = useState<FaqId>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual);
+  const templateIntro = resolveTexto(TEMPLATE_INTRO_TEXTO, audienciaActual, 'docentes');
+  const completadoTexto = resolveTexto(COMPLETADO_TEXTO, audienciaActual, 'docentes');
+  const carruselLabel = resolveTexto(CARRUSEL_HEADER.label, audienciaActual, 'docentes');
+  const carruselTitulo = resolveTexto(CARRUSEL_HEADER.titulo, audienciaActual, 'docentes');
 
   function goTo(index: number, dir: number) {
     setDirection(dir);
@@ -142,8 +175,7 @@ export default function RecursosSection({ progressPct, completedCount }: Recurso
           </div>
           {completedCount === 3 && (
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 text-emerald-400 font-bold text-sm flex items-center gap-2">
-              <Check className="w-4 h-4" /> ¡Completado! Tu huella digital está bajo control — y ya tenés un ejemplo propio para
-              mostrarles a tus estudiantes cómo se hace.
+              <Check className="w-4 h-4" /> {completadoTexto}
             </motion.p>
           )}
         </div>
@@ -153,10 +185,7 @@ export default function RecursosSection({ progressPct, completedCount }: Recurso
       <section className="mb-12">
         <h3 className="font-display text-2xl font-bold mb-6 border-b pb-2 border-slate-200">Plantilla de Acción Rápida</h3>
         <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-          <p className="text-sm text-slate-600 mb-4">
-            Usá este texto para solicitar la eliminación de tus datos a empresas o webmasters. Podés adaptarlo también
-            para dar de baja cuentas antiguas asociadas a tu correo institucional.
-          </p>
+          <p className="text-sm text-slate-600 mb-4">{templateIntro}</p>
           <div className="relative">
             <textarea
               readOnly
@@ -190,7 +219,7 @@ export default function RecursosSection({ progressPct, completedCount }: Recurso
               <li key={s.title} className="flex items-start gap-2">
                 <Check className="w-4 h-4 text-blue-500 mt-0.5 shrink-0" />
                 <span>
-                  <strong>{s.title}:</strong> {s.desc}
+                  <strong>{s.title}:</strong> {typeof s.desc === 'string' ? s.desc : resolveTexto(s.desc, audienciaActual, 'docentes')}
                 </span>
               </li>
             ))}
@@ -215,9 +244,9 @@ export default function RecursosSection({ progressPct, completedCount }: Recurso
                 <Images className="w-5 h-5 text-white" />
               </div>
               <div>
-                <p className="text-xs font-bold text-blue-500 tracking-widest uppercase mb-0.5">Material para el aula</p>
+                <p className="text-xs font-bold text-blue-500 tracking-widest uppercase mb-0.5">{carruselLabel}</p>
                 <h3 className="text-lg md:text-xl font-extrabold text-slate-900 font-display">
-                  Huella Digital — Recursos para el Aula
+                  {carruselTitulo}
                 </h3>
               </div>
             </div>

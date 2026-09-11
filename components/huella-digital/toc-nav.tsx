@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Fingerprint } from 'lucide-react';
-import { TOC_SECTIONS } from '@/lib/huella-digital-content';
+import { TOC_SECTIONS, type TocSection } from '@/lib/huella-digital-content';
+import { resolveTexto } from '@/lib/audiencia-texto';
+import { useAudienciaStore } from '@/lib/audiencia-store';
 
 function scrollToSection(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -14,6 +16,16 @@ function scrollToSection(id: string) {
 export function TocNav() {
   const [activeId, setActiveId] = useState(TOC_SECTIONS[0].id);
   const mobileItemRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual);
+
+  function label(section: TocSection) {
+    return section.labelAudiencia ? resolveTexto(section.labelAudiencia, audienciaActual, 'docentes') : section.label;
+  }
+  function shortLabel(section: TocSection) {
+    return section.shortLabelAudiencia
+      ? resolveTexto(section.shortLabelAudiencia, audienciaActual, 'docentes')
+      : section.shortLabel;
+  }
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -65,7 +77,7 @@ export function TocNav() {
               }`}
             >
               <span className="opacity-70 mr-1.5 text-xs text-blue-500 font-mono">{section.number}</span>
-              {section.label}
+              {label(section)}
             </button>
           ))}
         </div>
@@ -89,7 +101,7 @@ export function TocNav() {
               }`}
             >
               <span className="opacity-70 mr-1.5 text-xs text-blue-500 font-mono">{section.number}</span>
-              {section.shortLabel}
+              {shortLabel(section)}
             </button>
           ))}
         </div>

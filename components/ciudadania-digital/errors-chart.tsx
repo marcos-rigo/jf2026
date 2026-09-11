@@ -40,7 +40,7 @@ export function ErrorsChart() {
       legend: {
         position: 'bottom' as const,
         labels: {
-          color: '#94A3B8',
+          color: '#334155',
           padding: 20,
           font: { size: 12 },
           boxWidth: 12,
@@ -48,10 +48,10 @@ export function ErrorsChart() {
         },
       },
       tooltip: {
-        backgroundColor: '#1E293B',
+        backgroundColor: '#0F172A',
         padding: 12,
-        titleColor: '#E2E8F0',
-        bodyColor: '#94A3B8',
+        titleColor: '#F1F5F9',
+        bodyColor: '#CBD5E1',
         borderColor: '#334155',
         borderWidth: 1,
         callbacks: {

@@ -40,7 +40,7 @@ export function Navbar() {
   const router = useRouter()
   const platformUser = useAppStore((s) => s.user)
   const logout = useAppStore((s) => s.reset)
-  const TRANSPARENT_ROUTES = ["/", "/ciudadania-digital"]
+  const TRANSPARENT_ROUTES = ["/"]
   const isDark = isScrolled || !TRANSPARENT_ROUTES.some((route) => pathname === route)
   const isCiudadaniaModulos = pathname === "/ciudadania-presente/modulos"
   const isCiudadaniaLogin = pathname === "/ciudadania-presente/login"

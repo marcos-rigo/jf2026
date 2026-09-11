@@ -5,10 +5,44 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Target, X, ZoomIn, ZoomOut, Maximize2 } from 'lucide-react';
 import { SourceCite } from './source-cite';
 import { CONCEPTO_QUOTE } from '@/lib/huella-digital-content';
+import { resolveTexto, type AudienciaTexto } from '@/lib/audiencia-texto';
+import { useAudienciaStore } from '@/lib/audiencia-store';
 
 const INFOGRAFIA_PATH = '/weekly-content/2026-W21/infografia%203.svg';
 
+const BADGE_TEXTO: AudienciaTexto = {
+  docentes: 'Guía Accionable 2026 · Docentes',
+  familias: 'Guía Accionable 2026',
+};
+
+const INTRO_TEXTO: AudienciaTexto = {
+  docentes:
+    'Como docente, tu huella digital habla por vos antes de que lo hagas vos: para tus estudiantes, para las familias que buscan tu nombre antes de una reunión, y para la escuela. Esta guía te lleva de la sobreexposición al control total en 3 pasos prácticos, que después podés convertir en una actividad para trabajar con tu curso.',
+  familias:
+    'Tu huella digital (activa y pasiva) habla por vos antes de que vos lo hagas. Esta guía te llevará de la sobreexposición al control total en 3 pasos prácticos.',
+};
+
+// El énfasis en negrita se preserva buscando el término en el string resuelto
+// en vez de hardcodear el <strong> por audiencia — aparece igual en ambas.
+const META_DIA_STRONG_TERM = 'solo aparezca lo que vos decidís mostrar';
+
+const META_DIA_TEXTO: AudienciaTexto = {
+  docentes:
+    'Sabrás que lo lograste cuando busques tu nombre en internet y solo aparezca lo que vos decidís mostrar — algo especialmente importante cuando quien busca es un estudiante, una familia o la dirección de la escuela.',
+  familias: 'Sabrás que lo lograste cuando busques tu nombre en internet y solo aparezca lo que vos decidís mostrar.',
+};
+
+function withBoldTerm(text: string, term: string) {
+  return text.split(term).flatMap((part, i, arr) =>
+    i < arr.length - 1 ? [part, <strong key={i}>{term}</strong>] : [part]
+  );
+}
+
 export default function HeroSection() {
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual);
+  const badge = resolveTexto(BADGE_TEXTO, audienciaActual, 'docentes');
+  const intro = resolveTexto(INTRO_TEXTO, audienciaActual, 'docentes');
+  const metaDia = resolveTexto(META_DIA_TEXTO, audienciaActual, 'docentes');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
@@ -141,7 +175,7 @@ export default function HeroSection() {
       {/* ── Header ── */}
       <div className="text-center mb-12 space-y-4">
         <div className="inline-block px-3 py-1 rounded-full bg-blue-100 text-blue-600 text-sm font-semibold mb-4">
-          Guía Accionable 2026 · Docentes
+          {badge}
         </div>
         <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
           Recuperá el Control de tu{' '}
@@ -160,20 +194,13 @@ export default function HeroSection() {
         </div>
 
         <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-          Como docente, tu huella digital habla por vos antes de que lo hagas vos: para tus estudiantes, para las
-          familias que buscan tu nombre antes de una reunión, y para la escuela. Esta guía te lleva de la
-          sobreexposición al control total en 3 pasos prácticos, que después podés convertir en una actividad para
-          trabajar con tu curso.
+          {intro}
         </p>
         <div className="inline-flex items-start gap-3 p-4 mt-6 bg-green-50 border border-green-200 rounded-xl text-green-800 text-left">
           <Target className="w-5 h-5 mt-0.5 shrink-0" />
           <div>
             <p className="font-semibold">Meta del día:</p>
-            <p className="text-sm">
-              Sabrás que lo lograste cuando busques tu nombre en internet y{' '}
-              <strong>solo aparezca lo que vos decidís mostrar</strong> — algo especialmente importante cuando quien
-              busca es un estudiante, una familia o la dirección de la escuela.
-            </p>
+            <p className="text-sm">{withBoldTerm(metaDia, META_DIA_STRONG_TERM)}</p>
           </div>
         </div>
       </div>

@@ -2,19 +2,41 @@
 
 import { motion } from 'framer-motion';
 import { Lightbulb, Zap, Check } from 'lucide-react';
+import { resolveTexto, type AudienciaTexto } from '@/lib/audiencia-texto';
+import { useAudienciaStore } from '@/lib/audiencia-store';
+import type { Audiencia } from '@/lib/audiencias';
 
-// Los 3 pasos ya adaptados a docentes — contenido sin cambios, solo extraído
-// de app/huella-digital/huella-digital-content.tsx a su propia sección.
-const STEPS = [
+// Los 3 pasos ya adaptados a docentes (fallback de audiencia) — con la
+// migración a variantes por audiencia, solo algunos campos puntuales (los
+// que mencionan explícitamente a estudiantes/escuela) pasaron a `AudienciaTexto`;
+// el resto sigue siendo contenido fijo, igual para toda audiencia.
+const STEPS: {
+  number: number;
+  title: string;
+  objective: string | AudienciaTexto;
+  instructions: (string | AudienciaTexto)[];
+  tip: string | AudienciaTexto;
+  lab: string;
+  checkId: string;
+  checkLabel: string;
+}[] = [
   {
     number: 1,
     title: 'Auditoría: Conocé tu exposición',
-    objective:
-      'Identificar exactamente qué información tuya es pública (huella activa) y qué datos se recopilaron sin tu atención plena (huella pasiva) — la misma información que un estudiante curioso o una familia pueden encontrar en dos minutos de búsqueda.',
+    objective: {
+      docentes:
+        'Identificar exactamente qué información tuya es pública (huella activa) y qué datos se recopilaron sin tu atención plena (huella pasiva) — la misma información que un estudiante curioso o una familia pueden encontrar en dos minutos de búsqueda.',
+      familias:
+        'Identificar exactamente qué información tuya es pública (huella activa) y qué datos se recopilaron sin tu atención plena (huella pasiva).',
+    },
     instructions: [
       'Abrí una ventana en modo incógnito para evitar sesgos del algoritmo.',
       'Realizá "Egosurfing" (buscar tu propio nombre en internet): buscá tu nombre completo entre comillas (ej. "Juan Pérez").',
-      'Buscá también tu correo principal y tu número de teléfono, sobre todo si alguna vez los compartiste en un grupo de WhatsApp de familias o en una plataforma escolar.',
+      {
+        docentes:
+          'Buscá también tu correo principal y tu número de teléfono, sobre todo si alguna vez los compartiste en un grupo de WhatsApp de familias o en una plataforma escolar.',
+        familias: 'Buscá también tu correo principal y tu número de teléfono.',
+      },
       'Revisá la primera página de resultados y la sección de imágenes.',
     ],
     tip: 'Buscá en tu correo palabras como "Bienvenido", "Confirma tu cuenta" o "Verifica". Encontrarás decenas de foros, tiendas y apps donde te registraste hace años y olvidaste.',
@@ -40,19 +62,36 @@ const STEPS = [
   {
     number: 3,
     title: 'Blindaje: Protección y Netiqueta',
-    objective:
-      'Configurar barreras técnicas y de comportamiento para evitar volver a generar una huella digital tóxica — y establecer límites claros entre tu vida digital personal y tu rol docente.',
+    objective: {
+      docentes:
+        'Configurar barreras técnicas y de comportamiento para evitar volver a generar una huella digital tóxica — y establecer límites claros entre tu vida digital personal y tu rol docente.',
+      familias: 'Configurar barreras técnicas y de comportamiento para evitar volver a generar una huella digital tóxica.',
+    },
     instructions: [
       'Sensores Biométricos: Evitá usar tu huella dactilar para apps financieras críticas. Las huellas pueden ser copiadas y no se pueden cambiar como una contraseña. Optá por contraseñas fuertes o 2FA.',
       'Redes Wi-Fi: Nunca accedas a tu banco o correo desde el Wi-Fi de la escuela o cualquier red pública sin una VPN (red privada virtual que protege tu conexión).',
-      'Netiqueta: Pensalo dos veces antes de publicar, sobre todo si hay estudiantes de por medio. No etiquetés a otros sin permiso, no subas fotos de estudiantes sin autorización de sus familias, y mantené separados tus perfiles personales de cualquier contacto con el curso.',
+      {
+        docentes:
+          'Netiqueta: Pensalo dos veces antes de publicar, sobre todo si hay estudiantes de por medio. No etiquetés a otros sin permiso, no subas fotos de estudiantes sin autorización de sus familias, y mantené separados tus perfiles personales de cualquier contacto con el curso.',
+        familias:
+          'Netiqueta: Pensalo dos veces antes de publicar. No etiquetés a otros sin permiso ni subas fotos de terceros sin su consentimiento.',
+      },
     ],
-    tip: 'Revisá la configuración de privacidad de Instagram/Facebook y limitala a "Solo Amigos" — es habitual que estudiantes busquen y encuentren el perfil personal de un/a docente. Desactivá también la indexación de tu perfil en buscadores desde la configuración de la red social.',
+    tip: {
+      docentes:
+        'Revisá la configuración de privacidad de Instagram/Facebook y limitala a "Solo Amigos" — es habitual que estudiantes busquen y encuentren el perfil personal de un/a docente. Desactivá también la indexación de tu perfil en buscadores desde la configuración de la red social.',
+      familias:
+        'Revisá la configuración de privacidad de Instagram/Facebook y limitala a "Solo Amigos". Desactivá también la indexación de tu perfil en buscadores desde la configuración de la red social.',
+    },
     lab: 'Cambiá la privacidad de tu red social principal y asegurate de usar un navegador centrado en la privacidad (como Brave o Firefox) para tu navegación diaria.',
     checkId: 'task3',
     checkLabel: 'He ajustado la privacidad de mis redes a "Privado"',
   },
 ];
+
+function resolveField(field: string | AudienciaTexto, audienciaActual: Audiencia | null): string {
+  return typeof field === 'string' ? field : resolveTexto(field, audienciaActual, 'docentes');
+}
 
 interface EjemplosSectionProps {
   checkedItems: Set<string>;
@@ -60,6 +99,7 @@ interface EjemplosSectionProps {
 }
 
 export default function EjemplosSection({ checkedItems, onToggleCheck }: EjemplosSectionProps) {
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual);
   return (
     <div id="ejemplos-concretos" className="w-full scroll-mt-28 md:scroll-mt-32">
       <div className="mb-8">
@@ -87,20 +127,20 @@ export default function EjemplosSection({ checkedItems, onToggleCheck }: Ejemplo
 
           <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
             <p className="mb-4 text-slate-700">
-              <strong>Objetivo:</strong> {step.objective}
+              <strong>Objetivo:</strong> {resolveField(step.objective, audienciaActual)}
             </p>
 
             <h4 className="font-semibold text-lg mb-2 text-blue-600">Instrucciones:</h4>
             <ul className="list-disc pl-5 space-y-2 mb-6 text-slate-600">
               {step.instructions.map((ins, j) => (
-                <li key={j}>{ins}</li>
+                <li key={j}>{resolveField(ins, audienciaActual)}</li>
               ))}
             </ul>
 
             <div className="flex gap-3 bg-slate-50 p-4 rounded-lg mb-6 border-l-4 border-blue-500">
               <Lightbulb className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
               <p className="text-sm text-slate-600">
-                <strong>Ejemplo práctico:</strong> {step.tip}
+                <strong>Ejemplo práctico:</strong> {resolveField(step.tip, audienciaActual)}
               </p>
             </div>
 

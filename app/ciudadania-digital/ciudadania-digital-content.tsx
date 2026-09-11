@@ -39,9 +39,9 @@ export default function CiudadaniaDigitalContent() {
       <Navbar />
       <BackToDashboardButton />
 
-      <div className="min-h-screen flex flex-col md:flex-row relative text-slate-300 bg-brand-dark">
+      <div className="min-h-screen flex flex-col md:flex-row relative text-slate-700 bg-brand-light-blue">
         {/* Grid de fondo */}
-        <div className="fixed inset-0 bg-[length:40px_40px] bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] pointer-events-none opacity-20 z-0" />
+        <div className="fixed inset-0 bg-[length:40px_40px] bg-[linear-gradient(to_right,rgba(0,50,87,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,50,87,0.05)_1px,transparent_1px)] pointer-events-none opacity-40 z-0" />
 
         <TocNav />
 

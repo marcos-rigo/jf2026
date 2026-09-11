@@ -47,6 +47,7 @@ import {
 import { useAppStore } from "@/lib/ciudadania/app-store"
 import { useTematicaProgress } from "@/lib/hooks/use-tematica-progress"
 import { TematicaCompletarButton } from "@/components/tematica-completar-button"
+import { AULA_ROL } from "@/lib/estafas-digitales-content"
 
 const INFOGRAFIA_PATH = "/weekly-content/2026-W23/infografia%205.svg"
 
@@ -1160,7 +1161,7 @@ export function EstafasDigitalesContent() {
                 El Rol Docente: De la Prohibición a la Pausa Cognitiva
               </h2>
               <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
-                La prohibición estricta de las pantallas incrementa el secretismo e impide que un alumno afectado busque ayuda institucional oportuna por temor a ser sancionado.
+                {AULA_ROL.notaDocente}
               </p>
             </motion.div>
 

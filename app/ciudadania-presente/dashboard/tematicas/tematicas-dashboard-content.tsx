@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { ArrowRight, BadgeCheck, Check, CheckCircle2, ChevronDown, Clock, LockKeyhole, SlidersHorizontal, X } from 'lucide-react'
 import { groups } from '@/lib/tematicas-data'
 import { AUDIENCIAS_ORDENADAS, AUDIENCIA_LABELS, AUDIENCIA_ICONS, AUDIENCIA_COLORS, type Audiencia } from '@/lib/audiencias'
+import { useAudienciaStore, useSyncAudienciaFromQuery } from '@/lib/audiencia-store'
 import { useAppStore } from '@/lib/ciudadania/app-store'
 import { Footer } from '@/components/footer'
 
@@ -79,7 +80,11 @@ export function TematicasDashboardContent() {
   // tarjetas ya calculadas se muestran, nunca qué se calcula. Así el filtro
   // puede ocultar/mostrar con animación sin romper el orden de desbloqueo.
   // Ver content-management/PROPUESTA-AUDIENCIAS.md.
-  const [selectedAudiencia, setSelectedAudiencia] = useState<Audiencia | null>(null)
+  // Estado global (lib/audiencia-store.ts) en vez de useState local — mismo
+  // store que usa el listado público de /tematicas.
+  const selectedAudiencia = useAudienciaStore((s) => s.audienciaActual)
+  const setSelectedAudienciaGlobal = useAudienciaStore((s) => s.setAudiencia)
+  useSyncAudienciaFromQuery()
 
   // Mosaico del hero: arranca con un orden fijo (para que SSR e hidratación
   // coincidan) y se sortea una sola vez en el cliente después de montar —
@@ -99,7 +104,7 @@ export function TematicasDashboardContent() {
   }
 
   const selectAudiencia = (audiencia: Audiencia) => {
-    setSelectedAudiencia((prev) => (prev === audiencia ? null : audiencia))
+    setSelectedAudienciaGlobal(selectedAudiencia === audiencia ? null : audiencia)
   }
 
   const matchesAudienceFilter = (tema: { audiencias?: Audiencia[] }) =>
@@ -362,7 +367,7 @@ export function TematicasDashboardContent() {
                 <motion.button
                   variants={cardVariants}
                   type="button"
-                  onClick={() => setSelectedAudiencia(null)}
+                  onClick={() => setSelectedAudienciaGlobal(null)}
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.96 }}
                   className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border-2 border-transparent text-sm font-bold text-slate-400 hover:text-brand-navy hover:bg-slate-100 hover:border-slate-200 transition-all duration-300"
@@ -615,7 +620,11 @@ export function TematicasDashboardContent() {
                       transition={{ type: 'spring', stiffness: 300, damping: 24 }}
                     >
                       {unlocked ? (
-                        <Link href={tema.href} scroll={true} className="group block h-full">
+                        <Link
+                          href={selectedAudiencia ? `${tema.href}?audiencia=${selectedAudiencia}` : tema.href}
+                          scroll={true}
+                          className="group block h-full"
+                        >
                           {cardInner}
                         </Link>
                       ) : (

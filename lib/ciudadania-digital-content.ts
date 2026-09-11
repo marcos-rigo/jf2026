@@ -1,5 +1,6 @@
 // Datos de contenido de la temática "Ciudadanía Digital" — landing de scroll continuo.
 // Separado de la JSX siguiendo el patrón del resto del proyecto (arrays tipados + componentes que mapean sobre ellos).
+import type { AudienciaTexto } from './audiencia-texto';
 
 export interface Source {
   author: string;
@@ -29,6 +30,64 @@ export const HERO_QUOTES: Quote[] = [
     source: { author: 'Dr. José Farhat' },
   },
 ];
+
+export const HERO_TEXTO: {
+  // Separado en línea1/destacado (en vez de un string único) para preservar
+  // el salto de línea + estilo degradado del h2 original — la separación es
+  // de layout, no cambia las palabras de cada variante.
+  tituloLinea1: AudienciaTexto;
+  tituloDestacado: AudienciaTexto;
+  parrafo1: AudienciaTexto;
+  parrafoDestacado: AudienciaTexto;
+  parrafoCierre: AudienciaTexto;
+  boton: AudienciaTexto;
+} = {
+  tituloLinea1: {
+    docentes: 'Sé la Guía Digital',
+    familias: 'Toma el Control',
+  },
+  tituloDestacado: {
+    docentes: 'de tus Estudiantes',
+    familias: 'de tu Vida en Línea',
+  },
+  parrafo1: {
+    docentes:
+      '¿Sentís que tus estudiantes viven más conectados de lo que podés seguirles el ritmo? Entre la desinformación que circula por los grupos de WhatsApp del curso, los riesgos de privacidad que exponen sin saberlo, los sesgos de la Inteligencia Artificial que usan para hacer la tarea y los conflictos que se trasladan de las redes sociales al aula, acompañar la vida digital de tus estudiantes puede sentirse como caminar por un campo minado.',
+    familias:
+      '¿Sientes que la tecnología a veces te controla más a ti que tú a ella? Entre desinformación constante, riesgos de privacidad, sesgos de la IA y debates acalorados en redes sociales, navegar por internet puede sentirse como caminar por un campo minado.',
+  },
+  parrafoDestacado: {
+    docentes:
+      'El problema es que buena parte de tus estudiantes interactúa en el mundo digital en "piloto automático" — y muchas veces vos también, entre la carga docente y la velocidad con la que cambian las plataformas. La Ciudadanía Digital no es solo saber usar un dispositivo: es tener las herramientas para enseñar a protegerse, convivir con respeto y aprovechar la red para el desarrollo de cada estudiante, dentro y fuera del aula.',
+    familias:
+      'El problema es que a menudo interactuamos en el mundo digital en "piloto automático". La Ciudadanía Digital no es solo saber usar un dispositivo: es tener las herramientas para protegerte, convivir con respeto y aprovechar la red para tu propio desarrollo.',
+  },
+  parrafoCierre: {
+    docentes:
+      'En este Kit dejamos la teoría de lado. Te guiamos paso a paso con estrategias que podés llevar directo al aula: cómo trabajar la seguridad digital con tus estudiantes, cómo mediar los conflictos de convivencia que llegan desde las redes, y cómo enseñarles a detectar información falsa antes de que la compartan.',
+    familias:
+      'En esta plataforma, dejamos la teoría de lado. Te guiaremos paso a paso para que audites tu huella en línea, protejas tus datos y aprendas a detectar información falsa como un profesional.',
+  },
+  boton: {
+    docentes: 'Iniciar el Kit Docente',
+    familias: 'Iniciar Protocolo',
+  },
+};
+
+// El carrusel de recursos se trasladó del Hero al Centro de Recursos
+// (components/ciudadania-digital/herramientas-section.tsx) pero el header
+// sigue siendo texto "de audiencia" — se mantiene documentado acá junto al
+// resto del contenido del Hero original.
+export const HERO_CARRUSEL_HEADER: { label: AudienciaTexto; titulo: AudienciaTexto } = {
+  label: {
+    docentes: 'Material para el aula',
+    familias: 'Presentación completa',
+  },
+  titulo: {
+    docentes: 'Ciudadanía Digital — Recursos para el Aula',
+    familias: 'Ciudadanía Digital — Galería',
+  },
+};
 
 // ── 02 · Historia / origen ──
 
@@ -243,6 +302,219 @@ export const CIBERHIGIENE_QUOTE: Quote = {
   source: { author: 'Dr. José Farhat' },
 };
 
+// ── Fase 01 · Seguridad (components/ciudadania-digital/paso1-section.tsx) ──
+
+export const PASO1_TEXTO: {
+  titulo: AudienciaTexto;
+  subtitulo: AudienciaTexto;
+  objetivo: AudienciaTexto;
+  instruccion1: AudienciaTexto;
+  instruccion2: AudienciaTexto;
+  instruccion3: AudienciaTexto;
+  aplicacionPractica: AudienciaTexto;
+  graficoTitulo: AudienciaTexto;
+  alerta: AudienciaTexto;
+  finalTitulo: AudienciaTexto;
+  finalTexto: AudienciaTexto;
+} = {
+  titulo: {
+    docentes: 'Construí el Escudo Digital de tu Aula',
+    familias: 'Construye tu Escudo Digital',
+  },
+  subtitulo: {
+    docentes: 'Seguridad y privacidad: la base que tus estudiantes necesitan antes que nada.',
+    familias: 'Seguridad y Privacidad como base de tu ciudadanía.',
+  },
+  objetivo: {
+    docentes:
+      'Ayudar a tus estudiantes —y a vos mismo/a— a blindar la identidad digital y reducir la vulnerabilidad ante ciberataques. La vida digital necesita cerraduras modernas: contraseñas como "123456" o el propio cumpleaños son puertas abiertas, y es habitual encontrarlas en los dispositivos que usan chicos y chicas en el aula.',
+    familias:
+      'Blindar tu identidad digital y reducir tu vulnerabilidad ante ciberataques. Tu vida digital necesita cerraduras modernas. Las contraseñas como "123456" son puertas abiertas.',
+  },
+  instruccion1: {
+    docentes:
+      'Trabajá con tus estudiantes la creación de contraseñas fuertes (mínimo 12 caracteres, combinando mayúsculas, minúsculas, números y símbolos) — podés convertirlo en una actividad de 10 minutos al inicio de una clase.',
+    familias: 'Crea contraseñas fuertes (min. 12 caracteres, mezcla mayús/minús/números/símbolos)',
+  },
+  instruccion2: {
+    docentes:
+      'Mostrales cómo activar la autenticación de dos factores (2FA) en las cuentas que más usan: correo institucional, redes sociales, plataformas de la escuela.',
+    familias: 'Activa la autenticación de dos factores (2FA) en tus cuentas críticas',
+  },
+  instruccion3: {
+    docentes:
+      'Guialos a revisar los permisos de las apps que tienen instaladas: cámara, micrófono, ubicación. Muchos nunca los revisaron.',
+    familias: 'Revisa tus permisos de apps: cámara, micrófono, ubicación',
+  },
+  aplicacionPractica: {
+    docentes:
+      'Actividad para el aula: pedile a tus estudiantes que revisen (sin decir la contraseña en voz alta) cuántas de sus cuentas principales NO tienen 2FA activado. Ese conteo grupal, sin exponer a nadie, es un buen disparador para la charla.',
+    familias: 'Abre tu gestor de contraseñas ahora. ¿Cuántas de tus cuentas principales NO tienen 2FA? Ese es tu primer objetivo.',
+  },
+  graficoTitulo: {
+    docentes: 'Así Suele Estar la Seguridad de un Curso',
+    familias: 'Estado de Seguridad Global',
+  },
+  alerta: {
+    docentes:
+      'Una cuenta sin 2FA es hasta 99% más vulnerable a ataques de fuerza bruta — vale la pena compartir este dato concreto con tus estudiantes, suele impactar más que la advertencia genérica.',
+    familias: 'Si tienes cuentas sin 2FA, eres 99% más vulnerable a ataques de fuerza bruta.',
+  },
+  finalTitulo: {
+    docentes: 'Actividad para el aula',
+    familias: 'Entrenamiento de la sección',
+  },
+  finalTexto: {
+    docentes:
+      'Actividad de 10 minutos: pedile a tus estudiantes que abran los permisos de apps en su celular y revoquen el acceso a cámara/micrófono de 3 aplicaciones que no lo necesiten (por ejemplo, juegos offline). Podés hacerlo vos primero, como docente, para mostrar el paso a paso.',
+    familias:
+      'Haz una limpieza digital de 5 min. Ve a los permisos de apps en tu celular y revoca acceso a cámara/micrófono a 3 aplicaciones que no lo necesiten (ej. juegos offline).',
+  },
+};
+
+// ── Fase 02 · Netiqueta (components/ciudadania-digital/paso2-section.tsx) ──
+
+export const PASO2_TEXTO: {
+  titulo: AudienciaTexto;
+  subtitulo: AudienciaTexto;
+  objetivo: AudienciaTexto;
+  protocolo1: AudienciaTexto;
+  protocolo2: AudienciaTexto;
+  protocolo3: AudienciaTexto;
+  protocolo4: AudienciaTexto;
+  ejemploTitulo: AudienciaTexto;
+  porQueFunciona: AudienciaTexto;
+  auditoriaTitulo: AudienciaTexto;
+  auditoriaTexto: AudienciaTexto;
+  aporteTexto: AudienciaTexto;
+} = {
+  titulo: {
+    docentes: 'Trabajá la "Netiqueta" con tu Curso',
+    familias: 'Aplica la "Netiqueta"',
+  },
+  subtitulo: {
+    docentes: 'Modelá y enseñá la convivencia digital, dentro y fuera del aula.',
+    familias: 'Lidera la convivencia en tus interacciones diarias.',
+  },
+  objetivo: {
+    docentes:
+      'Que tus estudiantes aprendan a interactuar en línea con empatía, evitando malentendidos y construyendo una huella digital positiva — y que vos tengas herramientas para mediar cuando un conflicto de WhatsApp o Instagram se traslada al aula. La Netiqueta son las normas no escritas del ecosistema digital: lo que se escribe también construye reputación, la de cada estudiante y la de la institución.',
+    familias:
+      'Interactuar en línea con empatía, evitando malentendidos y construyendo una huella digital positiva. La Netiqueta son las normas no escritas del ecosistema digital. Tu texto es tu reputación.',
+  },
+  protocolo1: {
+    docentes:
+      'Enseñales a leer antes de responder. Muchos conflictos entre estudiantes arrancan por malinterpretar un mensaje sin contexto — funciona pedirles que lean dos veces antes de contestar en caliente.',
+    familias: 'Lee antes de responder. Evita malinterpretaciones por falta de contexto.',
+  },
+  protocolo2: {
+    docentes:
+      'Modelá el respeto aunque no haya acuerdo. Ayudalos a diferenciar un debate constructivo de un ataque personal — es una distinción que se puede trabajar con ejemplos reales de sus propios grupos.',
+    familias: 'Sé respetuoso aunque no estés de acuerdo. Los debates constructivos no son ataques personales.',
+  },
+  protocolo3: {
+    docentes:
+      'Conversá sobre el spam y la autopromoción excesiva en los grupos del curso — cadenas, reenvíos sin filtrar. Fomentá que cada mensaje aporte algo.',
+    familias: 'Evita el SPAM y la autopromoción excesiva. Aporta valor.',
+  },
+  protocolo4: {
+    docentes:
+      'Insistí en verificar fuentes antes de reenviar noticias o información sensible al grupo del curso — esto conecta directo con lo que van a trabajar en la Fase 03.',
+    familias: 'Verifica fuentes antes de compartir noticias o información sensible.',
+  },
+  ejemploTitulo: {
+    docentes: 'Un Ejemplo para Compartir con tu Curso',
+    familias: 'Ejemplo de Buen Comentario',
+  },
+  porQueFunciona: {
+    docentes: 'Es constructivo, abierto, sin ego y busca aprender. Podés usarlo como modelo en clase.',
+    familias: 'Es constructivo, abierto, sin ego y busca aprender.',
+  },
+  auditoriaTitulo: {
+    docentes: 'Auditoría de Huella (para vos y para ellos)',
+    familias: 'Auditoría de Huella',
+  },
+  auditoriaTexto: {
+    docentes:
+      'Proponeles buscar su propio nombre en Google en modo incógnito y revisar qué aparece en la primera página: fotos, comentarios, resultados. Esa es su huella digital pública hoy. Podés hacer el ejercicio vos primero, como docente, para mostrar cómo se hace sin exponer a nadie.',
+    familias:
+      'Busca tu nombre en Google (Modo Incógnito). Revisa imágenes y resultados de la primera página. Esa es tu huella digital pública actual. ¿Refleja al profesional que quieres ser?',
+  },
+  aporteTexto: {
+    docentes:
+      'Proponeles escribir esta semana un comentario constructivo o un mensaje de agradecimiento en el perfil de un compañero, docente o creador que valoren. Es una forma simple de empezar a construir una huella digital positiva.',
+    familias:
+      'Escribe hoy un mensaje de agradecimiento o un comentario constructivo en el perfil de un colega o creador que valores. Construye red.',
+  },
+};
+
+// ── Fase 03 · IA y Bulos (components/ciudadania-digital/paso3-section.tsx) ──
+
+export const PASO3_TEXTO: {
+  titulo: AudienciaTexto;
+  subtitulo: AudienciaTexto;
+  intro: AudienciaTexto;
+  checklistTitulo: AudienciaTexto;
+} = {
+  titulo: {
+    docentes: 'Pensamiento Crítico frente a la IA y los Bulos',
+    familias: 'Análisis Crítico y Bulos',
+  },
+  subtitulo: {
+    docentes: 'Dales a tus estudiantes las herramientas para entender la IA y frenar la desinformación antes de que la compartan.',
+    familias: 'Entiende la Inteligencia Artificial y frena la desinformación.',
+  },
+  intro: {
+    docentes:
+      'La era de la IA generativa trae capacidades asombrosas para el aula (resúmenes, tutores virtuales, generación de material), pero también democratiza la desinformación ultrarrealista: deepfakes, textos sintéticos, imágenes falsas que tus estudiantes se van a encontrar en algún momento. Tu rol como docente es ayudarlos a no ser un nodo más de retransmisión de datos falsos, y a usar la IA con criterio en sus propios trabajos.',
+    familias:
+      'La era de la IA generativa trae capacidades asombrosas, pero democratiza la desinformación ultrarrealista (Deepfakes, textos sintéticos). Tu deber es no ser un nodo de retransmisión de datos falsos.',
+  },
+  checklistTitulo: {
+    docentes: 'Checklist Anti-Bulos (para trabajar en clase)',
+    familias: 'Checklist Anti-Bulos',
+  },
+};
+
+// Descripciones del framework VERIFICA — mismo orden que el array de
+// paso3-section.tsx (V, E, R, I·Identifica, F, I·Intuición, C, A). Letra,
+// título y color no cambian por audiencia, solo la descripción.
+export const VERIFICA_DESC: AudienciaTexto[] = [
+  {
+    docentes: 'Enseñales a buscar el medio original y a chequear su reputación en sitios de fact-checking antes de creer o compartir.',
+    familias: 'Busca el medio original, verifica su reputación en fact-checkers.',
+  },
+  {
+    docentes: 'Si solo una o dos fuentes lo reportan, puede ser propaganda o un rumor sin chequear. Pediles que busquen una segunda fuente antes de dar algo por cierto.',
+    familias: 'Si solo 1-2 fuentes lo reportan, puede ser propaganda.',
+  },
+  {
+    docentes: 'Trabajá con ellos la pregunta: ¿lo creo porque es cierto, o porque quiero que sea cierto? Es un buen disparador de debate en el aula.',
+    familias: 'Pregúntate: ¿Creo esto porque es cierto o porque deseo que sea cierto?',
+  },
+  {
+    docentes: 'Deepfakes, ediciones de video, imágenes generadas por IA. Mostrales herramientas simples para detectar señales de manipulación.',
+    familias: 'Deepfakes, ediciones de vídeo. Revisa metadatos si es posible.',
+  },
+  {
+    docentes: 'Noticias viejas que circulan como si fueran actuales. Ayudalos a chequear siempre la fecha y el contexto original.',
+    familias: 'Noticias viejas recicladas. Entiende el contexto temporal.',
+  },
+  {
+    docentes: 'Si algo parece demasiado extremo o raro, probablemente lo sea. Enseñales a desconfiar del "así fue siempre" o del "todo el mundo lo dice".',
+    familias: 'Si algo parece raro, probablemente lo sea. Desconfía del "sentido común".',
+  },
+  {
+    docentes: 'Proponeles leer sobre un mismo tema en dos medios con líneas editoriales distintas, para que vean cómo cambia el enfoque.',
+    familias: 'Lee análisis de fuentes con diferentes sesgos políticos.',
+  },
+  {
+    docentes:
+      'Antes de reenviar algo al grupo del curso o a sus redes, ya verificaron. Ayudalos a entender que también son un "gate-keeper (guardián/a de la información)" confiable para quienes los rodean.',
+    familias: 'Antes de compartir, ya verificaste. Sé un "gate-keeper" confiable.',
+  },
+];
+
 // ── 06 · Ventajas ──
 
 export const VENTAJAS_SOURCE: Source = { author: 'Dr. José Farhat', note: '"Oportunidades"' };
@@ -300,6 +572,161 @@ export const INDEC_QUOTE: Quote = {
   },
 };
 
+// ── 08 · Centro de Recursos (components/ciudadania-digital/herramientas-section.tsx) ──
+
+export const RECURSOS_TEXTO: {
+  tituloSeccion: AudienciaTexto;
+  subtitulo: AudienciaTexto;
+  progresoBajo: AudienciaTexto;
+  progresoMedio: AudienciaTexto;
+  progresoAlto: AudienciaTexto;
+  cierreTitulo: AudienciaTexto;
+  cierreTexto: AudienciaTexto;
+} = {
+  tituloSeccion: {
+    docentes: 'Centro de Recursos Docente',
+    familias: 'Centro de Control',
+  },
+  subtitulo: {
+    docentes: 'Herramientas, autoevaluación y respuestas frecuentes para llevar al aula.',
+    familias: 'Métricas, auditoría y base de conocimientos.',
+  },
+  progresoBajo: {
+    docentes: '⚠️ Conviene reforzar antes de llevarlo al aula',
+    familias: '⚠️ Necesitas reforzar urgente',
+  },
+  progresoMedio: {
+    docentes: '✓ Buen progreso. Vas bien encaminado/a',
+    familias: '✓ Buen progreso. Mantén el ritmo',
+  },
+  progresoAlto: {
+    docentes: '✨ ¡Excelente! Estás listo/a para guiar a tu curso con el ejemplo',
+    familias: '✨ ¡Excelente! Eres un ciudadano digital responsable',
+  },
+  cierreTitulo: {
+    docentes: 'Kit Docente Completado',
+    familias: 'Protocolo Completado',
+  },
+  cierreTexto: {
+    docentes:
+      'Completaste el kit básico. Ahora tenés las herramientas para acompañar a tus estudiantes en su vida digital con criterio propio. Mantené tus prácticas actualizadas y seguí promoviendo la convivencia cívica dentro y fuera del aula.',
+    familias:
+      'Has completado el protocolo básico. Eres un nodo seguro en la red. Mantén tus defensas actualizadas y promueve la convivencia cívica en tus comunidades digitales.',
+  },
+};
+
+export interface ChecklistItem {
+  id: string;
+  label: AudienciaTexto;
+}
+
+export const CHECKLIST_ITEMS: ChecklistItem[] = [
+  {
+    id: 'password',
+    label: {
+      docentes: 'Cambié mis 3 contraseñas principales y le mostré el proceso a mi curso',
+      familias: 'Cambié mis 3 contraseñas principales',
+    },
+  },
+  {
+    id: '2fa',
+    label: {
+      docentes: 'Activé 2FA en mi correo institucional, redes sociales y banco',
+      familias: 'Activé 2FA en Gmail, redes sociales, banco',
+    },
+  },
+  {
+    id: 'permissions',
+    label: {
+      docentes: 'Revisé los permisos de apps en mi celular junto con mis estudiantes',
+      familias: 'Revisé permisos de apps en móvil',
+    },
+  },
+  {
+    id: 'privacy',
+    label: {
+      docentes: 'Ajusté la privacidad de mis redes sociales, separando mi perfil docente del personal',
+      familias: 'Ajusté privacidad en redes sociales a "amigos"',
+    },
+  },
+  {
+    id: 'cookies',
+    label: {
+      docentes: 'Rechacé cookies no esenciales en mis últimas navegaciones',
+      familias: 'Rechazé cookies no esenciales (últimas 3 visitas)',
+    },
+  },
+  {
+    id: 'google-search',
+    label: {
+      docentes: 'Busqué mi nombre en Google en modo incógnito',
+      familias: 'Busqué mi nombre en Google Incógnito',
+    },
+  },
+  {
+    id: 'comments',
+    label: {
+      docentes: 'Trabajé con mi curso un ejemplo de comentario constructivo esta semana',
+      familias: 'Escribí un comentario constructivo esta semana',
+    },
+  },
+  {
+    id: 'fake-news',
+    label: {
+      docentes: 'Apliqué el framework VERIFICA en clase para analizar una noticia con mis estudiantes',
+      familias: 'Detecté una noticia falsa usando el framework VERIFICA',
+    },
+  },
+];
+
+export interface FaqItemAudiencia {
+  id: string;
+  question: AudienciaTexto;
+  answer: AudienciaTexto;
+}
+
+export const FAQ_ITEMS: FaqItemAudiencia[] = [
+  {
+    id: 'faq-1',
+    question: {
+      docentes: '¿La privacidad de mis estudiantes está realmente en riesgo?',
+      familias: '¿Mi privacidad está realmente en riesgo?',
+    },
+    answer: {
+      docentes:
+        'Sí. Cada click, búsqueda y "me gusta" que hacen tus estudiantes es capturado y puede venderse a terceros. Grandes corporaciones construyen perfiles de comportamiento sobre cada chico y chica. La privacidad es un derecho, y enseñar a defenderla es parte de la formación ciudadana que le toca a la escuela.',
+      familias:
+        'Sí. Cada click, búsqueda y "like" es capturado y vendido a terceros. Grandes corporaciones construyen perfiles de comportamiento tuyo. La privacidad es un derecho; defenderla es un acto cívico.',
+    },
+  },
+  {
+    id: 'faq-2',
+    question: {
+      docentes: '¿Se puede rastrear a alguien incluso en "Modo Incógnito"?',
+      familias: '¿Pueden rastrearme incluso en "Modo Incógnito"?',
+    },
+    answer: {
+      docentes:
+        'Técnicamente sí. El ISP (proveedor de internet) sigue viendo la actividad, y los sitios web pueden rastrear por IP, cookies persistentes o técnicas de fingerprinting (identificación del dispositivo por sus características técnicas). Es útil que tus estudiantes entiendan que el modo incógnito es una capa más de privacidad, no una capa invulnerable.',
+      familias:
+        'Técnicamente, tu ISP (proveedor de internet) sigue viendo lo que haces. Sitios web pueden rastrearte por IP, cookies persistentes, o técnicas avanzadas de fingerprinting. Es una capa más de privacidad, no es invulnerable.',
+    },
+  },
+  {
+    id: 'faq-3',
+    question: {
+      docentes: '¿Cómo les enseño a mis estudiantes a saber si una noticia es real?',
+      familias: '¿Cómo sé si una noticia es real?',
+    },
+    answer: {
+      docentes:
+        'Insistí en que nunca confíen en un solo medio. El framework VERIFICA que trabajamos en la Fase 03 les da un método concreto: verificar la fuente, buscar evidencia múltiple, revisar el propio sesgo, identificar cambios o ediciones, verificar fecha y contexto, aplicar intuición crítica, contrastar perspectivas y actuar con responsabilidad antes de compartir.',
+      familias:
+        'Nunca confíes en un solo medio. Usa el framework VERIFICA: verifica la fuente, busca evidencia múltiple, revisa tu sesgo, identifica cambios, verifica fecha y contexto, aplica intuición crítica, contrasta perspectivas y actúa responsablemente.',
+    },
+  },
+];
+
 // ── 09 · Centro de recursos — listado completo de fuentes citadas ──
 
 export interface FuenteCitada {
@@ -326,11 +753,24 @@ export const FUENTES_COMPLETAS: FuenteCitada[] = [
 
 // ── 08 · Qué significa esto para el aula (sección de síntesis propia, sin citas) ──
 
-export const AULA_SINTESIS = {
-  intro:
-    'De las 12 dimensiones, un docente no necesita trabajar las 12 con la misma profundidad. Alfabetización digital, seguridad digital, etiqueta digital y salud/bienestar digital son las que más directamente entran en el día a día del aula — no casualmente, son las que ya cubren las 3 fases actuales del Kit. Comercio digital, leyes digitales y Gov Tech son más relevantes para una materia de formación ciudadana o economía que para el acompañamiento cotidiano, pero vale la pena nombrarlas.',
-  cierre:
-    'El dato de ICDL Foundation es un buen punto de partida para una primera clase: nadie parte de cero, pero tampoco nadie sabe tanto como cree — buen argumento contra el supuesto de "son nativos digitales, ya saben usar la tecnología" que muchos adultos dan por sentado. Las 8 "actitudes de un buen ciudadano digital" funcionan directamente como rúbrica de aula. Y el modelo de competencias del siglo XXI (Maneras de pensar/trabajar/vivir el mundo) conecta la ciudadanía digital con objetivos pedagógicos más amplios que un docente ya persigue de todos modos.',
+export const AULA_SINTESIS: { intro: AudienciaTexto; cierre: AudienciaTexto } = {
+  intro: {
+    docentes:
+      'De las 12 dimensiones, un docente no necesita trabajar las 12 con la misma profundidad. Alfabetización digital, seguridad digital, etiqueta digital y salud/bienestar digital son las que más directamente entran en el día a día del aula — no casualmente, son las que ya cubren las 3 fases actuales del Kit. Comercio digital, leyes digitales y Gov Tech son más relevantes para una materia de formación ciudadana o economía que para el acompañamiento cotidiano, pero vale la pena nombrarlas.',
+    familias:
+      'De las 12 dimensiones, no hace falta que trabajes las 12 con la misma profundidad en casa. Alfabetización digital, seguridad digital, etiqueta digital y salud/bienestar digital son las que más directamente entran en el día a día de acompañar a tus hijos — no casualmente, son las que ya cubren las 3 fases actuales del Kit. Comercio digital, leyes digitales y Gov Tech son más relevantes para lo que van a ver en la escuela que para el acompañamiento cotidiano en casa, pero vale la pena que sepas que existen.',
+  },
+  cierre: {
+    docentes:
+      'El dato de ICDL Foundation es un buen punto de partida para una primera clase: nadie parte de cero, pero tampoco nadie sabe tanto como cree — buen argumento contra el supuesto de "son nativos digitales, ya saben usar la tecnología" que muchos adultos dan por sentado. Las 8 "actitudes de un buen ciudadano digital" funcionan directamente como rúbrica de aula. Y el modelo de competencias del siglo XXI (Maneras de pensar/trabajar/vivir el mundo) conecta la ciudadanía digital con objetivos pedagógicos más amplios que un docente ya persigue de todos modos.',
+    familias:
+      'El dato de ICDL Foundation es un buen punto de partida para una charla en casa: nadie parte de cero, pero tampoco nadie sabe tanto como cree — buen argumento contra el supuesto de "son nativos digitales, ya saben usar la tecnología" que muchos padres dan por sentado. Las 8 "actitudes de un buen ciudadano digital" funcionan directamente como una lista de acuerdos familiares. Y el modelo de competencias del siglo XXI conecta la ciudadanía digital con las mismas habilidades que ya querés para el futuro de tus hijos, más allá de la tecnología.',
+  },
+};
+
+export const AULA_TITULO: AudienciaTexto = {
+  docentes: 'Para el Aula',
+  familias: 'Para tu Casa',
 };
 
 // ── Secciones del índice de navegación (TOC) ──

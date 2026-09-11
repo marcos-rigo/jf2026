@@ -4,9 +4,12 @@ import { motion } from 'framer-motion';
 import { AlertTriangle, X } from 'lucide-react';
 import { SourceCite } from './source-cite';
 import { DATA_BROKERS_QUOTE } from '@/lib/huella-digital-content';
+import { resolveTexto, type AudienciaTexto } from '@/lib/audiencia-texto';
+import { useAudienciaStore } from '@/lib/audiencia-store';
 
-// Contenido sin cambios — extraído tal cual de app/huella-digital/huella-digital-content.tsx.
-const ERRORS = [
+// Contenido ya adaptado a docentes (fallback de audiencia). Solo el tercer
+// error menciona explícitamente a estudiantes/curso y pasó a `AudienciaTexto`.
+const ERRORS: { title: string; desc: string | AudienciaTexto }[] = [
   {
     title: 'Ignorar la huella pasiva',
     desc: 'Creer que si no publicás, no dejás rastro. Las cookies y rastreadores invisibles compilan tu perfil constantemente.',
@@ -17,11 +20,16 @@ const ERRORS = [
   },
   {
     title: 'Falsa identidad completa',
-    desc: 'Usar tus datos reales para probar servicios dudosos. Creá siempre correos alias para este tipo de registros — sobre todo si estás probando una app o plataforma educativa nueva antes de recomendarla a tu curso.',
+    desc: {
+      docentes:
+        'Usar tus datos reales para probar servicios dudosos. Creá siempre correos alias para este tipo de registros — sobre todo si estás probando una app o plataforma educativa nueva antes de recomendarla a tu curso.',
+      familias: 'Usar tus datos reales para probar servicios dudosos. Creá siempre correos alias para este tipo de registros.',
+    },
   },
 ];
 
 export default function RiesgosSection() {
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual);
   return (
     <motion.section
       id="riesgos"
@@ -47,7 +55,7 @@ export default function RiesgosSection() {
             <li key={e.title} className="flex items-start gap-2">
               <X className="w-4 h-4 text-red-500 mt-0.5 shrink-0" />
               <span>
-                <strong>{e.title}:</strong> {e.desc}
+                <strong>{e.title}:</strong> {typeof e.desc === 'string' ? e.desc : resolveTexto(e.desc, audienciaActual, 'docentes')}
               </span>
             </li>
           ))}

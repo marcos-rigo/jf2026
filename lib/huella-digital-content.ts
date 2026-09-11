@@ -1,7 +1,11 @@
 // Datos de contenido de la temática "Huella Digital" — landing de scroll continuo.
 // Mismo patrón que lib/ciudadania-digital-content.ts (arrays tipados + componentes que mapean sobre ellos),
 // separado de la JSX. STEPS, ERRORS, NEXT_STEPS, RESOURCES, TEMPLATE y FAQS viven en el propio
-// componente que los renderiza (no se movieron acá) — son contenido ya adaptado a docentes que no se toca.
+// componente que los renderiza (no se movieron acá). Con la migración a variantes por audiencia
+// (ver lib/audiencia-texto.ts), algunos campos puntuales de esos arrays pasaron a `AudienciaTexto`
+// directamente en el componente — el resto sigue siendo contenido fijo, igual para toda audiencia.
+
+import type { AudienciaTexto } from './audiencia-texto';
 
 export interface Source {
   author: string;
@@ -90,9 +94,13 @@ export const DATA_BROKERS_QUOTE: Quote = {
 
 // ── 08 · Qué significa esto para el aula (síntesis propia, sin cita) ──
 
-export const AULA_SINTESIS = {
-  texto:
-    'La huella digital de un docente importa doblemente — la propia, y la que ayuda a construir en sus estudiantes al modelarla. El caso Costeja es un buen disparador de clase: mostrar que hasta la información verídica puede pedirse que se desindexe, y por qué eso genera debate entre privacidad y derecho a la información.',
+export const AULA_SINTESIS: { texto: AudienciaTexto } = {
+  texto: {
+    docentes:
+      'La huella digital de un docente importa doblemente — la propia, y la que ayuda a construir en sus estudiantes al modelarla. El caso Costeja es un buen disparador de clase: mostrar que hasta la información verídica puede pedirse que se desindexe, y por qué eso genera debate entre privacidad y derecho a la información.',
+    familias:
+      'Tu huella digital importa doblemente — la propia, y la que ayudás a construir en tus hijos al modelarla. El caso Costeja es un buen disparador de charla en casa: mostrar que hasta la información verídica puede pedirse que se desindexe, y por qué eso genera debate entre privacidad y derecho a la información.',
+  },
 };
 
 // ── 09 · Centro de recursos — fuentes citadas completas ──
@@ -134,6 +142,11 @@ export interface TocSection {
   number: string;
   label: string;
   shortLabel: string;
+  // Solo la sección "aula" varía por audiencia hoy — el resto de los labels
+  // del índice son iguales para todo público. Cuando están presentes, ganan
+  // por sobre `label`/`shortLabel` (ver toc-nav.tsx / resolveTexto).
+  labelAudiencia?: AudienciaTexto;
+  shortLabelAudiencia?: AudienciaTexto;
 }
 
 export const TOC_SECTIONS: TocSection[] = [
@@ -144,6 +157,13 @@ export const TOC_SECTIONS: TocSection[] = [
   { id: 'ejemplos-concretos', number: '04', label: 'Ejemplos Concretos', shortLabel: 'Ejemplos' },
   { id: 'ventajas', number: '05', label: 'Ventajas', shortLabel: 'Ventajas' },
   { id: 'riesgos', number: '06', label: 'Problemas / Riesgos', shortLabel: 'Riesgos' },
-  { id: 'aula', number: '07', label: 'Para el Aula', shortLabel: 'Aula' },
+  {
+    id: 'aula',
+    number: '07',
+    label: 'Para el Aula',
+    shortLabel: 'Aula',
+    labelAudiencia: { docentes: 'Para el Aula', familias: 'Para tu Casa' },
+    shortLabelAudiencia: { docentes: 'Aula', familias: 'Casa' },
+  },
   { id: 'recursos', number: '08', label: 'Centro de Recursos', shortLabel: 'Recursos' },
 ];

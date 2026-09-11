@@ -28,6 +28,10 @@ export const CONCEPTO_QUOTE: Quote = {
 export const CONCEPTO_NOTA_DOCENTE =
   'Para un docente, esto implica que "estar alfabetizado digitalmente" no es solo saber usar herramientas: es poder diseñar una clase que integre las tres dimensiones —técnica, cognitiva y socioemocional— en vez de reducir la alfabetización digital a manejo de software.';
 
+// Sin escribir todavía — ver investigación "contenido con variantes por
+// audiencia". Sibling de CONCEPTO_NOTA_DOCENTE para "familias".
+export const CONCEPTO_NOTA_FAMILIAS: string | undefined = undefined;
+
 // ── 02 · Historia / origen — genealogía teórica ──
 
 export const GILSTER_QUOTE: Quote = {

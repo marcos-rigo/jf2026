@@ -1,12 +1,13 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowDown, ArrowRight, LockKeyhole, Check } from "lucide-react"
 import { groups } from "@/lib/tematicas-data"
 import { AUDIENCIAS_ORDENADAS, AUDIENCIA_LABELS, type Audiencia } from "@/lib/audiencias"
+import { useAudienciaStore, useSyncAudienciaFromQuery } from "@/lib/audiencia-store"
 
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
@@ -25,10 +26,14 @@ export function TematicasContent() {
   // Nota: una temática puede seguir teniendo varias audiencias en su dato
   // (`audiencias: Audiencia[]`) — lo que es de selección única es la elección
   // del usuario en el filtro, no la clasificación de contenido.
-  const [selectedAudiencia, setSelectedAudiencia] = useState<Audiencia | null>(null)
+  // Estado global (lib/audiencia-store.ts) en vez de useState local, para que
+  // la selección viaje al navegar a una temática individual.
+  const selectedAudiencia = useAudienciaStore((s) => s.audienciaActual)
+  const setSelectedAudienciaGlobal = useAudienciaStore((s) => s.setAudiencia)
+  useSyncAudienciaFromQuery()
 
   const selectAudiencia = (audiencia: Audiencia) => {
-    setSelectedAudiencia((prev) => (prev === audiencia ? null : audiencia))
+    setSelectedAudienciaGlobal(selectedAudiencia === audiencia ? null : audiencia)
   }
 
   const filteredGroups = useMemo(() => {
@@ -297,7 +302,7 @@ export function TematicasContent() {
               {selectedAudiencia && (
                 <button
                   type="button"
-                  onClick={() => setSelectedAudiencia(null)}
+                  onClick={() => setSelectedAudienciaGlobal(null)}
                   className="inline-flex items-center px-4 py-2 rounded-full text-xs font-semibold text-slate-400 hover:text-brand-navy transition-colors duration-200"
                 >
                   Limpiar filtro
@@ -346,7 +351,14 @@ export function TematicasContent() {
               >
                 {group.items.map((tema) => {
                   const IconComponent = tema.icon
-                  const linkHref = tema.locked ? "/ciudadania-presente/modulos" : tema.href
+                  // El filtro activo viaja en la URL para que el link a la
+                  // temática individual sea compartible y autocontenido, sin
+                  // depender solo de lo persistido en el store.
+                  const linkHref = tema.locked
+                    ? "/ciudadania-presente/modulos"
+                    : selectedAudiencia
+                      ? `${tema.href}?audiencia=${selectedAudiencia}`
+                      : tema.href
                   return (
                     <motion.div key={tema.title} variants={cardVariants}>
                       <Link href={linkHref} scroll={true} className="group block h-full">

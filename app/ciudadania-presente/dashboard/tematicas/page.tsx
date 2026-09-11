@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { TematicasDashboardContent } from './tematicas-dashboard-content'
 
 export const metadata: Metadata = {
@@ -7,5 +8,9 @@ export const metadata: Metadata = {
 }
 
 export default function TematicasDashboardPage() {
-  return <TematicasDashboardContent />
+  return (
+    <Suspense fallback={null}>
+      <TematicasDashboardContent />
+    </Suspense>
+  )
 }
