@@ -232,7 +232,7 @@ export const groups: TematicaGroup[] = [
         icon: Flame,
         color: "#EA580C",
         locked: true,
-        audiencias: ["docentes"],
+        audiencias: ["docentes", "familias"],
       },
       {
         id: "recuperar-la-agencia",

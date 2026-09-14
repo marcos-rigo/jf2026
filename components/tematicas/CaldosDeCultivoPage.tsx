@@ -64,6 +64,7 @@ import { getLibresSubtopicBySlug } from '@/lib/libres-bajo-influencia-data'
 import { hexToRgba } from '@/lib/utils'
 
 import { WebpSlideCarousel } from '@/components/tematicas/WebpSlideCarousel'
+import { useAudienciaStore } from '@/lib/audiencia-store'
 
 // ─── Color Tokens: "Caldos de Cultivo" (fuego / pasto seco) ───
 const FLAME = '#EA580C'
@@ -1043,6 +1044,7 @@ function DigitalImmunityMiniTest() {
 export function CaldosDeCultivoPage() {
   const data = getLibresSubtopicBySlug('caldos-de-cultivo')!
   const reducedMotion = useReducedMotion()
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual)
 
   const { progress, quiz, lightbox } = useLibresSubtopic(data)
 
@@ -1285,6 +1287,14 @@ export function CaldosDeCultivoPage() {
         <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-10 bg-white">
           <div className="max-w-5xl mx-auto space-y-20 sm:space-y-28">
             {data.sections.map((sec, i) => {
+              // Resuelto por audiencia (mismo criterio que las demás páginas del
+              // grupo): si hay variante *Familias y la audiencia activa es
+              // 'familias', se usa esa; si no, el contenido de siempre. Acá la
+              // voz docente está repartida en 3 secciones (sin heading/quote
+              // propios) en vez de concentrada en un cierre — heading y quote no
+              // tienen variante en esta temática.
+              const paragraphs = audienciaActual === 'familias' && sec.paragraphsFamilias ? sec.paragraphsFamilias : sec.paragraphs
+
               const visual = SECTION_VISUALS[i] || SECTION_VISUALS[0]
               const isEven = i % 2 === 0
 
@@ -1319,7 +1329,7 @@ export function CaldosDeCultivoPage() {
                     </h2>
 
                     <div className="space-y-4 text-slate-800 font-extrabold text-base sm:text-lg md:text-xl leading-relaxed">
-                      {sec.paragraphs.map((p, idx) => (
+                      {paragraphs.map((p, idx) => (
                         <p key={idx}>{p}</p>
                       ))}
                     </div>

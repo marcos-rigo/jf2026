@@ -401,6 +401,10 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
           '¿Qué ingredientes forman ese pasto seco? Repetición, polarización, viralidad emocional, cámaras de eco, desinformación. Cuando se combinan, se potencian. Urie Bronfenbrenner recuerda que la conducta surge de sistemas interrelacionados, nunca de una sola causa. Claire Wardle y Hossein Derakhshan, estudiando lo que llaman "desorden informativo", piden mirar tres cosas juntas: quién es el actor, cómo es el mensaje y cómo lo interpreta quien lo recibe.',
           'Con esta lente, la pregunta escolar cambia: deja de ser solamente "¿qué publicó este chico?" y pasa a ser también "¿qué ambiente premió, repitió y normalizó esa publicación?". Dos de esos ingredientes — las cámaras de eco y la polarización — merecen mirarse de cerca, porque suelen confundirse con otro fenómeno ya conocido y en realidad son otra cosa.',
         ],
+        paragraphsFamilias: [
+          '¿Qué ingredientes forman ese pasto seco? Repetición, polarización, viralidad emocional, cámaras de eco, desinformación. Cuando se combinan, se potencian. Urie Bronfenbrenner recuerda que la conducta surge de sistemas interrelacionados, nunca de una sola causa. Claire Wardle y Hossein Derakhshan, estudiando lo que llaman "desorden informativo", piden mirar tres cosas juntas: quién es el actor, cómo es el mensaje y cómo lo interpreta quien lo recibe.',
+          'Con esta lente, la pregunta en casa cambia: deja de ser solamente "¿qué publicó mi hijo o hija?" y pasa a ser también "¿qué ambiente premió, repitió y normalizó esa publicación?". Dos de esos ingredientes — las cámaras de eco y la polarización — merecen mirarse de cerca, porque suelen confundirse con otro fenómeno ya conocido y en realidad son otra cosa.',
+        ],
         quote: 'Un caldo de cultivo no determina: facilita, recompensa, repite y amplifica.',
       },
       {
@@ -417,6 +421,10 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
           'Dentro de esa cámara pasa algo más, que la politóloga Elisabeth Noelle-Neumann describió mucho antes de que existieran las redes sociales: cuando alguien percibe que su opinión es minoritaria, tiende a callarla por miedo al aislamiento social. Es la espiral del silencio. En los grupos digitales ese mecanismo se acelera, porque las métricas hacen visible, en tiempo real, qué opinión predomina, y el costo de disentir se vuelve público e inmediato, no un cálculo abstracto para más adelante.',
           'El resultado es una ilusión de consenso: no es que todos piensen igual, sino que quienes piensan distinto se van quedando callados, uno por uno, hasta que la opinión que queda visible parece más unánime de lo que realmente es. Para un aula, esto tiene una consecuencia directa: el silencio de un estudiante frente a un tema polémico no siempre es indiferencia — a veces es el costo social de disentir, ya calculado de antemano.',
         ],
+        paragraphsFamilias: [
+          'Dentro de esa cámara pasa algo más, que la politóloga Elisabeth Noelle-Neumann describió mucho antes de que existieran las redes sociales: cuando alguien percibe que su opinión es minoritaria, tiende a callarla por miedo al aislamiento social. Es la espiral del silencio. En los grupos digitales ese mecanismo se acelera, porque las métricas hacen visible, en tiempo real, qué opinión predomina, y el costo de disentir se vuelve público e inmediato, no un cálculo abstracto para más adelante.',
+          'El resultado es una ilusión de consenso: no es que todos piensen igual, sino que quienes piensan distinto se van quedando callados, uno por uno, hasta que la opinión que queda visible parece más unánime de lo que realmente es. Para una familia, esto tiene una consecuencia directa: el silencio de un hijo o hija frente a un tema polémico no siempre es indiferencia — a veces es el costo social de disentir, ya calculado de antemano.',
+        ],
         quote: 'No es que todos piensen igual: es que quienes piensan distinto se quedan, uno por uno, en silencio.',
       },
       {
@@ -432,6 +440,11 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
           'Wardle y Derakhshan proponen no hablar de un único fenómeno sino de un espectro de desórdenes informativos, distinguibles con dos preguntas: ¿el contenido es falso? y ¿quien lo comparte sabe que lo es? De ahí surgen tres categorías distintas: la desinformación (falsa, y compartida a sabiendas, con intención de dañar), la información errónea (falsa, pero compartida por alguien que cree que es cierta) y la información maliciosa (genuina, pero sacada de contexto o difundida para hacer daño — una foto real, un dato real, publicado con otro fin). Distinguirlas importa en el aula: no todo lo que circula como falso es mentira deliberada, y tratar igual a quien se equivocó y a quien manipuló a propósito borra una diferencia ética central.',
           'Pero el objetivo último de la desinformación contemporánea rara vez es imponer una mentira puntual y que todo el mundo se la crea. Es más ambicioso, y más dañino: fabricar la duda. No se trata de convencer de que A es falso y B es verdadero, sino de erosionar la confianza en que exista siquiera una diferencia entre ambos — en que la verdad sea algo alcanzable. Explotando la indignación y la viralidad emocional, se instala una duda metódica que no aclara nada, pero paraliza el juicio crítico de quien la recibe.',
           'Una consecuencia concreta de esa duda fabricada, y particularmente alarmante para el aula, es el autodiagnóstico erróneo en salud mental: chicos y chicas que, inmersos en comunidades que desconfían sistemáticamente de la experiencia médica, adoptan etiquetas psicológicas a partir de contenido no verificado y, por confiar más en esa comunidad que en un profesional, retrasan o directamente evitan pedir la ayuda real que necesitan. La duda, fabricada en un video de treinta segundos, termina reemplazando a un diagnóstico clínico.',
+        ],
+        paragraphsFamilias: [
+          'Wardle y Derakhshan proponen no hablar de un único fenómeno sino de un espectro de desórdenes informativos, distinguibles con dos preguntas: ¿el contenido es falso? y ¿quien lo comparte sabe que lo es? De ahí surgen tres categorías distintas: la desinformación (falsa, y compartida a sabiendas, con intención de dañar), la información errónea (falsa, pero compartida por alguien que cree que es cierta) y la información maliciosa (genuina, pero sacada de contexto o difundida para hacer daño — una foto real, un dato real, publicado con otro fin). Distinguirlas importa en casa: no todo lo que circula como falso es mentira deliberada, y tratar igual a quien se equivocó y a quien manipuló a propósito borra una diferencia ética central.',
+          'Pero el objetivo último de la desinformación contemporánea rara vez es imponer una mentira puntual y que todo el mundo se la crea. Es más ambicioso, y más dañino: fabricar la duda. No se trata de convencer de que A es falso y B es verdadero, sino de erosionar la confianza en que exista siquiera una diferencia entre ambos — en que la verdad sea algo alcanzable. Explotando la indignación y la viralidad emocional, se instala una duda metódica que no aclara nada, pero paraliza el juicio crítico de quien la recibe.',
+          'Una consecuencia concreta de esa duda fabricada, y particularmente alarmante para una familia, es el autodiagnóstico erróneo en salud mental: chicos y chicas que, inmersos en comunidades que desconfían sistemáticamente de la experiencia médica, adoptan etiquetas psicológicas a partir de contenido no verificado y, por confiar más en esa comunidad que en un profesional, retrasan o directamente evitan pedir la ayuda real que necesitan. La duda, fabricada en un video de treinta segundos, termina reemplazando a un diagnóstico clínico.',
         ],
         quote: 'La desinformación contemporánea no siempre busca imponer una mentira: muchas veces le alcanza con fabricar la duda.',
       },
@@ -467,7 +480,7 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
     pdfLabel: 'Presentación — Caldos de cultivo',
     infografiaUrl: '/img/tematicas/caldos-de-cultivo/infografia.webp',
     infografiaAlt: 'Infografía de Caldos de cultivo',
-    audiencias: ['docentes'],
+    audiencias: ['docentes', 'familias'],
   },
 
   // =============================================
