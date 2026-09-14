@@ -2,9 +2,13 @@
 
 import { motion } from 'framer-motion';
 import { Terminal } from 'lucide-react';
-import { EJEMPLOS_FASES } from '@/lib/alfabetizacion-mediatica-content';
+import { EJEMPLOS_FASES, pickFamilias } from '@/lib/alfabetizacion-mediatica-content';
+import { useAudienciaStore } from '@/lib/audiencia-store';
 
 export function EjemplosSection() {
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual);
+  const esFamilias = audienciaActual === 'familias';
+
   return (
     <section id="ejemplos-concretos" className="scroll-mt-20 space-y-8">
       <div className="space-y-2">
@@ -16,7 +20,9 @@ export function EjemplosSection() {
           Las 3 Fases del Entrenamiento
         </h2>
         <p className="text-slate-600 text-sm sm:text-base max-w-2xl leading-relaxed">
-          Cada fase incluye un caso de estudio real y un ejercicio que podés llevar directo a una clase.
+          {esFamilias
+            ? 'Cada fase incluye un caso de estudio real y un ejercicio que podés hacer en casa con tus hijos.'
+            : 'Cada fase incluye un caso de estudio real y un ejercicio que podés llevar directo a una clase.'}
         </p>
       </div>
 
@@ -60,7 +66,9 @@ export function EjemplosSection() {
                   {fase.emoji}
                 </span>
                 <h4 className="font-display font-extrabold text-lg sm:text-xl mb-3 sm:mb-4 relative z-10">{fase.labTitulo}</h4>
-                <p className={`${fase.labTextClass} mb-5 sm:mb-6 leading-relaxed text-sm sm:text-base`}>{fase.labTexto}</p>
+                <p className={`${fase.labTextClass} mb-5 sm:mb-6 leading-relaxed text-sm sm:text-base`}>
+                  {pickFamilias(fase.labTexto, fase.labTextoFamilias, audienciaActual)}
+                </p>
                 <button
                   className={`bg-white ${fase.labBotonTextClass} font-bold py-3 px-6 rounded-xl ${fase.labBotonHoverClass} transition-all duration-300 w-max shadow-lg hover:shadow-xl hover:-translate-y-0.5`}
                 >

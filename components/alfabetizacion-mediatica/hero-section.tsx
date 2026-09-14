@@ -4,7 +4,8 @@ import { motion } from 'framer-motion';
 import { Doughnut } from 'react-chartjs-2';
 import { GraduationCap } from 'lucide-react';
 import { SourceCite } from './source-cite';
-import { MIL_QUOTE, MIL_ORIGEN_QUOTE, MIL_DOCENTES_QUOTE } from '@/lib/alfabetizacion-mediatica-content';
+import { MIL_QUOTE, MIL_ORIGEN_QUOTE, MIL_DOCENTES_QUOTE, MIL_FAMILIAS_QUOTE, pickFamilias } from '@/lib/alfabetizacion-mediatica-content';
+import { useAudienciaStore } from '@/lib/audiencia-store';
 
 const introChartData = {
   labels: ['Lee solo el título', 'Análisis completo (Artículo)'],
@@ -50,6 +51,10 @@ const introChartOptions = {
 } as const;
 
 export function HeroSection() {
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual);
+  const esFamilias = audienciaActual === 'familias';
+  const milQuoteAudiencia = pickFamilias(MIL_DOCENTES_QUOTE, MIL_FAMILIAS_QUOTE, audienciaActual);
+
   return (
     <section id="hero" className="scroll-mt-20 space-y-10 sm:space-y-12">
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
@@ -74,10 +79,21 @@ export function HeroSection() {
           </h1>
 
           <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-lg">
-            La infoxicación satura la capacidad de decisión de cualquiera: la tuya y la de tus estudiantes. Este
-            entorno de entrenamiento de{' '}
-            <strong className="text-brand-navy">Alfabetización Mediática</strong> es tu herramienta para evaluar,
-            procesar y compartir datos con precisión, y para después poder enseñarles el mismo método en el aula.
+            {esFamilias ? (
+              <>
+                La infoxicación satura la capacidad de decisión de cualquiera: la tuya y la de tus hijos. Este
+                entorno de entrenamiento de{' '}
+                <strong className="text-brand-navy">Alfabetización Mediática</strong> es tu herramienta para evaluar,
+                procesar y compartir datos con precisión, y para después poder enseñarles el mismo método en casa.
+              </>
+            ) : (
+              <>
+                La infoxicación satura la capacidad de decisión de cualquiera: la tuya y la de tus estudiantes. Este
+                entorno de entrenamiento de{' '}
+                <strong className="text-brand-navy">Alfabetización Mediática</strong> es tu herramienta para evaluar,
+                procesar y compartir datos con precisión, y para después poder enseñarles el mismo método en el aula.
+              </>
+            )}
           </p>
 
           <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-lg shadow-slate-200/30 p-5 sm:p-6 rounded-2xl border-l-4 border-l-brand-blue hover:border-l-brand-pink transition-colors duration-300 group">
@@ -85,9 +101,19 @@ export function HeroSection() {
               <span className="text-lg">🎯</span> Tu Objetivo Principal
             </h3>
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              Instalar un "cortafuegos mental" para neutralizar titulares engañosos y elevar la calidad de la
-              información que consumís y distribuís — y tener un método claro y replicable para enseñarles lo mismo a
-              tus estudiantes.
+              {esFamilias ? (
+                <>
+                  Instalar un "cortafuegos mental" para neutralizar titulares engañosos y elevar la calidad de la
+                  información que consumís y distribuís — y tener un método claro y replicable para enseñarles lo
+                  mismo a tus hijos.
+                </>
+              ) : (
+                <>
+                  Instalar un "cortafuegos mental" para neutralizar titulares engañosos y elevar la calidad de la
+                  información que consumís y distribuís — y tener un método claro y replicable para enseñarles lo
+                  mismo a tus estudiantes.
+                </>
+              )}
             </p>
           </div>
         </motion.div>
@@ -139,10 +165,10 @@ export function HeroSection() {
         </div>
         <div className="space-y-2">
           <h4 className="font-display font-extrabold text-brand-navy text-base sm:text-lg">
-            Un marco pensado específicamente para docentes
+            {esFamilias ? 'Por qué esto también es tarea de la familia' : 'Un marco pensado específicamente para docentes'}
           </h4>
-          <p className="text-sm sm:text-base text-slate-700 leading-relaxed">{MIL_DOCENTES_QUOTE.text}</p>
-          <SourceCite source={MIL_DOCENTES_QUOTE.source} />
+          <p className="text-sm sm:text-base text-slate-700 leading-relaxed">{milQuoteAudiencia.text}</p>
+          <SourceCite source={milQuoteAudiencia.source} />
         </div>
       </div>
     </section>

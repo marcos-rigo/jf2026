@@ -3,8 +3,12 @@
 import { TrendingUp } from 'lucide-react';
 import { SourceCite } from './source-cite';
 import { VENTAJAS_QUOTE } from '@/lib/alfabetizacion-mediatica-content';
+import { useAudienciaStore } from '@/lib/audiencia-store';
 
 export function VentajasSection() {
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual);
+  const esFamilias = audienciaActual === 'familias';
+
   return (
     <section id="ventajas" className="scroll-mt-20 space-y-6">
       <div className="space-y-2">
@@ -13,7 +17,7 @@ export function VentajasSection() {
           <span>06 · Ventajas</span>
         </div>
         <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-          Por qué esto importa más allá del aula
+          {esFamilias ? 'Por qué esto importa en la vida cotidiana' : 'Por qué esto importa más allá del aula'}
         </h2>
       </div>
 

@@ -1,9 +1,14 @@
 'use client';
 
 import { EJEMPLOS, EJEMPLOS_NOTA_DOCENTE } from '@/lib/alfabetizacion-digital-content';
+import { resolveTexto } from '@/lib/audiencia-texto';
+import { useAudienciaStore } from '@/lib/audiencia-store';
 import { CheckCircle2, Terminal, FolderTree, Bot, Code2, GraduationCap } from 'lucide-react';
 
 export default function EjemplosSection() {
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual);
+  const nota = resolveTexto(EJEMPLOS_NOTA_DOCENTE, audienciaActual, 'docentes');
+
   return (
     <section id="ejemplos-concretos" className="scroll-mt-28 md:scroll-mt-32 space-y-8">
       {/* Encabezado de Sección */}
@@ -23,7 +28,7 @@ export default function EjemplosSection() {
       {/* Nota docente: para qué sirven estos niveles en el aula */}
       <div className="p-5 rounded-2xl bg-blue-50/70 border border-blue-200/70 flex items-start gap-3">
         <GraduationCap className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
-        <p className="text-sm md:text-base text-blue-900 leading-relaxed">{EJEMPLOS_NOTA_DOCENTE}</p>
+        <p className="text-sm md:text-base text-blue-900 leading-relaxed">{nota}</p>
       </div>
 
       {/* Tarjetas de los 3 Niveles en Light Mode */}

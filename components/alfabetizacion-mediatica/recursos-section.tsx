@@ -4,6 +4,7 @@ import { BookMarked, CheckSquare } from 'lucide-react';
 import { SourceCite } from './source-cite';
 import { MediaViewer } from './media-viewer';
 import { CHECKLIST_ITEMS, FUENTES_COMPLETAS } from '@/lib/alfabetizacion-mediatica-content';
+import { useAudienciaStore } from '@/lib/audiencia-store';
 
 interface RecursosSectionProps {
   checkedItems: Set<string>;
@@ -12,6 +13,8 @@ interface RecursosSectionProps {
 
 export function RecursosSection({ checkedItems, onCheckboxChange }: RecursosSectionProps) {
   const checkedCount = checkedItems.size;
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual);
+  const esFamilias = audienciaActual === 'familias';
 
   return (
     <section id="recursos" className="scroll-mt-20 space-y-8 sm:space-y-10">
@@ -21,7 +24,7 @@ export function RecursosSection({ checkedItems, onCheckboxChange }: RecursosSect
           <span>09 · Centro de Recursos</span>
         </div>
         <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-          Checklist, Infografía y Material para el Aula
+          {esFamilias ? 'Checklist, Infografía y Material para la Familia' : 'Checklist, Infografía y Material para el Aula'}
         </h2>
       </div>
 
@@ -34,8 +37,9 @@ export function RecursosSection({ checkedItems, onCheckboxChange }: RecursosSect
           <div>
             <h3 className="font-display text-xl sm:text-2xl font-bold text-slate-900">Analizador de Viabilidad</h3>
             <p className="text-slate-500 text-sm sm:text-base">
-              Ejecutá esta matriz de validación antes de confirmar la distribución de cualquier dato — funciona igual
-              de bien antes de compartir algo en el grupo del curso o de las familias.
+              {esFamilias
+                ? 'Ejecutá esta matriz de validación antes de confirmar la distribución de cualquier dato — funciona igual de bien antes de compartir algo en el grupo familiar o con amistades.'
+                : 'Ejecutá esta matriz de validación antes de confirmar la distribución de cualquier dato — funciona igual de bien antes de compartir algo en el grupo del curso o de las familias.'}
             </p>
           </div>
         </div>

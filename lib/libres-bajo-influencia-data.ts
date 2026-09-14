@@ -25,6 +25,14 @@ export interface LibresSection {
   heading: string
   paragraphs: string[]
   quote?: string
+  // Variantes por audiencia 'familias' — opcionales porque, de las 6 temáticas
+  // del grupo, por ahora solo subculturas-digitales las escribió (ver
+  // SubculturasDigitalesPage.tsx). Si están ausentes (como en las otras 5),
+  // se sigue usando heading/paragraphs/quote de siempre — el fallback vive en
+  // el componente que renderiza, no acá.
+  headingFamilias?: string
+  paragraphsFamilias?: string[]
+  quoteFamilias?: string
 }
 
 export interface LibresCaseStudy {
@@ -47,6 +55,10 @@ export interface LibresSubtopicContent {
   description: string
   authors: string[]
   intro: string
+  // Variante por audiencia 'familias' del intro — mismo criterio que
+  // LibresSection.headingFamilias/etc: opcional, ausente en las otras 5
+  // temáticas del grupo, fallback al valor de siempre en el componente.
+  introFamilias?: string
   sections: LibresSection[]
   caseStudy?: LibresCaseStudy
   closingQuote: string
@@ -85,6 +97,8 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
     authors: ['danah boyd', 'Edward Deci y Richard Ryan', 'Henri Tajfel y John Turner', 'Robert Cialdini', 'Albert Bandura', 'Ross Haenfler', 'Dick Hebdige', 'Sarah Thornton'],
     intro:
       'Durante años dijimos que las personas "usan" la tecnología, como quien agarra un martillo, hace algo y lo deja. Pero hoy lo digital se parece menos a una herramienta y más a un territorio: un lugar donde se aprende, se juega, se compra, se discute, se construye reputación, se participa. La investigadora danah boyd estudió las redes como "públicos conectados" — espacios donde las tecnologías, las prácticas y las personas producen formas nuevas de encontrarse. Un conflicto que empezó anoche en un grupo de chat entra al aula el lunes a la mañana, entero, con toda su carga. Y también pasa lo contrario: una comunidad en línea puede sostener a un chico que la está pasando mal. No se acompañan dispositivos: se acompañan formas de habitar.',
+    introFamilias:
+      'Durante años dijimos que las personas "usan" la tecnología, como quien agarra un martillo, hace algo y lo deja. Pero hoy lo digital se parece menos a una herramienta y más a un territorio: un lugar donde se aprende, se juega, se compra, se discute, se construye reputación, se participa. La investigadora danah boyd estudió las redes como "públicos conectados" — espacios donde las tecnologías, las prácticas y las personas producen formas nuevas de encontrarse. Un conflicto que empezó anoche en un grupo de chat sigue en casa al día siguiente, entero, con toda su carga. Y también pasa lo contrario: una comunidad en línea puede sostener a un chico que la está pasando mal. No se acompañan dispositivos: se acompañan formas de habitar.',
     sections: [
       {
         heading: 'Qué necesidad encuentra ahí',
@@ -99,6 +113,10 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
         paragraphs: [
           'Una comunidad reúne gente alrededor de un interés. Una subcultura digital hace algo más grande: crea códigos propios — lenguaje, símbolos, referentes, estéticas, rituales, normas y formas de reconocimiento. Henri Tajfel y John Turner mostraron que una parte de quiénes somos se construye con los grupos a los que pertenecemos: el grupo da cuidado y sentido, pero el mismo grupo puede empezar a marcar qué se puede decir, qué hay que celebrar y qué hay que rechazar para seguir siendo parte.',
           'Pertenecer no es el problema. Una subcultura puede ser creativa, educativa, incluso protectora. El riesgo aparece cuando una sola comunidad se queda con toda la identidad de la persona, o cuando convierte la diferencia en traición. Es la misma dinámica que se puede ver, a escala reducida, en el grupo de WhatsApp de un curso.',
+        ],
+        paragraphsFamilias: [
+          'Una comunidad reúne gente alrededor de un interés. Una subcultura digital hace algo más grande: crea códigos propios — lenguaje, símbolos, referentes, estéticas, rituales, normas y formas de reconocimiento. Henri Tajfel y John Turner mostraron que una parte de quiénes somos se construye con los grupos a los que pertenecemos: el grupo da cuidado y sentido, pero el mismo grupo puede empezar a marcar qué se puede decir, qué hay que celebrar y qué hay que rechazar para seguir siendo parte.',
+          'Pertenecer no es el problema. Una subcultura puede ser creativa, educativa, incluso protectora. El riesgo aparece cuando una sola comunidad se queda con toda la identidad de la persona, o cuando convierte la diferencia en traición. Es la misma dinámica que se puede ver, a escala reducida, en el grupo de WhatsApp de la familia o entre amigos.',
         ],
         quote: 'Las subculturas digitales no solo reúnen personas: enseñan cómo mirar, cómo hablar y qué conductas reciben aplausos.',
       },
@@ -117,6 +135,10 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
           '¿Cómo se aprenden esas normas, si casi nunca están escritas en ningún lado? Se aprenden mirando. Una publicación con miles de reproducciones y aprobaciones ya envía una señal antes de que nadie la analice: esto importa, esto gusta, esto pertenece. Robert Cialdini lo llamó prueba social — la tendencia a mirar a los demás cuando no sabemos bien qué pensar o hacer. Albert Bandura mostró que aprendemos observando modelos y observando qué les pasa a esos modelos.',
           'Las métricas, entonces, no solo cuentan la popularidad: también la fabrican. Lo repetido se vuelve familiar. Lo aprobado se vuelve deseable. Lo compartido, poco a poco, se vuelve normal. Reconocer esta lógica ayuda a leer lo que pasa en la propia aula, sin necesidad de entender cada plataforma en detalle.',
         ],
+        paragraphsFamilias: [
+          '¿Cómo se aprenden esas normas, si casi nunca están escritas en ningún lado? Se aprenden mirando. Una publicación con miles de reproducciones y aprobaciones ya envía una señal antes de que nadie la analice: esto importa, esto gusta, esto pertenece. Robert Cialdini lo llamó prueba social — la tendencia a mirar a los demás cuando no sabemos bien qué pensar o hacer. Albert Bandura mostró que aprendemos observando modelos y observando qué les pasa a esos modelos.',
+          'Las métricas, entonces, no solo cuentan la popularidad: también la fabrican. Lo repetido se vuelve familiar. Lo aprobado se vuelve deseable. Lo compartido, poco a poco, se vuelve normal. Reconocer esta lógica ayuda a leer lo que pasa en casa, sin necesidad de entender cada plataforma en detalle.',
+        ],
         quote: 'Las normas más influyentes casi nunca están escritas: están a la vista, en aquello que recibe atención.',
       },
       {
@@ -124,6 +146,10 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
         paragraphs: [
           'Si algo define a una subcultura es la autenticidad: la pregunta constante por quién pertenece de verdad y quién solo imita. Con el crecimiento de internet, más personas tienen la posibilidad de acercarse a una subcultura, y eso vuelve la pregunta más intensa, no menos. El sociólogo Patrick Williams estudió la subcultura straightedge — que rechaza el alcohol y otras drogas — y encontró que sus integrantes usan la música e internet para identificarse y defender su identidad; en un foro dedicado a ella, los participantes gestionan sus propias afiliaciones y cuestionan las de los demás. Internet apareció así como un espacio subcultural nuevo, pero disputado.',
           'Esto conecta con el capital subcultural: dentro del grupo, el estatus se gana demostrando que uno conoce los códigos, la historia, los referentes. Y ahí aparece una paradoja propia de lo digital: la misma apertura que permite que cualquiera se sume vuelve más difícil controlar quién es auténtico, y como ese control se vuelve difícil, se vuelve también más ruidoso. De ahí las discusiones interminables sobre quién es un miembro real y quién un impostor — tensiones que cualquier docente reconoce entre sus estudiantes.',
+        ],
+        paragraphsFamilias: [
+          'Si algo define a una subcultura es la autenticidad: la pregunta constante por quién pertenece de verdad y quién solo imita. Con el crecimiento de internet, más personas tienen la posibilidad de acercarse a una subcultura, y eso vuelve la pregunta más intensa, no menos. El sociólogo Patrick Williams estudió la subcultura straightedge — que rechaza el alcohol y otras drogas — y encontró que sus integrantes usan la música e internet para identificarse y defender su identidad; en un foro dedicado a ella, los participantes gestionan sus propias afiliaciones y cuestionan las de los demás. Internet apareció así como un espacio subcultural nuevo, pero disputado.',
+          'Esto conecta con el capital subcultural: dentro del grupo, el estatus se gana demostrando que uno conoce los códigos, la historia, los referentes. Y ahí aparece una paradoja propia de lo digital: la misma apertura que permite que cualquiera se sume vuelve más difícil controlar quién es auténtico, y como ese control se vuelve difícil, se vuelve también más ruidoso. De ahí las discusiones interminables sobre quién es un miembro real y quién un impostor — tensiones que cualquier familia reconoce en sus hijos e hijas.',
         ],
         quote: 'Cuanto más fácil es sumarse a una subcultura, más ruidosa se vuelve la pregunta de quién pertenece de verdad.',
       },
@@ -152,6 +178,12 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
           'De ahí se desprenden algunas orientaciones concretas. Comprender la pertenencia antes de juzgarla: cuando un estudiante se sumerge en una subcultura, casi siempre está resolviendo una necesidad genuina de autonomía, competencia o pertenencia. Leer los códigos como un ejercicio de alfabetización mediática: preguntar quién define los códigos de una comunidad, qué se valora en ella, cómo se aprenden sus normas. Usar la subcultura como puente pedagógico, aprovechando el capital de conocimiento que los estudiantes ya traen. Y mantener la mirada atenta sin patologizar: estar disponible para conversar, sin ridiculizar ni prohibir de entrada, y articular con otros adultos si aparecen señales de aislamiento o de captura por una comunidad dañina.',
         ],
         quote: 'Comprender la pertenencia, leer sus códigos, tender puentes y cuidar sin patologizar: ese es el arco completo para acompañar una subcultura digital.',
+        headingFamilias: 'Qué significa esto para tu casa',
+        paragraphsFamilias: [
+          'Conviene decirlo con todas las letras, para no caer en el alarmismo: la enorme mayoría de la pertenencia subcultural es creativa, afirmativa y protectora. Para muchos chicos — sobre todo para quienes cargan con un interés muy de nicho, una identidad minoritaria o una experiencia de exclusión — encontrar una comunidad en línea que los entienda puede ser una tabla de salvación. Al mismo tiempo, sería ingenuo ignorar que el mismo mecanismo — pertenencia, códigos compartidos, validación del grupo — puede canalizarse hacia comunidades tóxicas o directamente extremistas. La actitud útil no es la desconfianza general: es el discernimiento, distinguir la comunidad que sostiene de la que captura.',
+          'De ahí se desprenden algunas orientaciones concretas. Comprender la pertenencia antes de juzgarla: cuando tu hijo o hija se sumerge en una subcultura, casi siempre está resolviendo una necesidad genuina de autonomía, competencia o pertenencia. Leer los códigos junto a ellos, como un ejercicio compartido: preguntar quién define los códigos de una comunidad, qué se valora en ella, cómo se aprenden sus normas. Usar ese interés como puente para conversar, aprovechando lo que tus hijos ya saben y podés aprender de ellos. Y mantener la mirada atenta sin patologizar: estar disponible para conversar, sin ridiculizar ni prohibir de entrada, y buscar ayuda si aparecen señales de aislamiento o de captura por una comunidad dañina.',
+        ],
+        quoteFamilias: 'Comprender la pertenencia, leer sus códigos, tender puentes y cuidar sin patologizar: ese es el arco completo para acompañar una subcultura digital, en casa como en cualquier otro lugar.',
       },
     ],
     pdfUrl: '/img/tematicas/subculturas-digitales/presentacion.pdf',
@@ -177,7 +209,7 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
       { id: 9, question: 'En el caso de Sofía, ¿qué está pasando "en paralelo" mientras ella aprende los códigos de la comunidad?', options: ['Nada, la plataforma es neutral', 'La plataforma está aprendiendo sobre ella: qué mira, qué guarda, qué repite y qué la hace volver', 'Sofía deja de dibujar por completo', 'La comunidad le exige pagar una membresía'], correctIndex: 1 },
       { id: 10, question: '¿Por qué dice la charla que "las métricas no solo cuentan la popularidad, también la fabrican"?', options: ['Porque los números de likes y vistas son siempre falsos', 'Porque lo repetido se vuelve familiar, lo aprobado deseable y lo compartido, normal — las métricas moldean lo que después se imita', 'Porque las plataformas prohíben mostrar métricas', 'Porque la popularidad no tiene relación con el contenido'], correctIndex: 1 },
     ],
-    audiencias: ['docentes'],
+    audiencias: ['docentes', 'familias'],
   },
 
   // =============================================
@@ -194,6 +226,8 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
     authors: ['Shoshana Zuboff', 'Daniel Solove', 'Michel Foucault', 'Eli Pariser'],
     intro:
       'Cuando pensamos en "datos personales" imaginamos el nombre, el domicilio, la fecha de nacimiento. Pero comunicamos muchísimo más con nuestras acciones: buscar, mirar, pausar, descartar, comentar, volver. Ninguno de esos gestos revela exactamente quiénes somos, pero juntos permiten encontrar regularidades. Shoshana Zuboff usa una expresión fuerte para describir esto: capitalismo de vigilancia — modelos de negocio que toman experiencias humanas y las transforman en datos, y esos datos en productos de predicción. Y esto conviene tenerlo claro, porque desactiva un poco el miedo: no hace falta imaginar una plataforma que lo sabe todo. Le alcanza con estimar qué es lo que probablemente va a captar nuestra atención. No adivina el alma. Calcula la probabilidad. Esto también pasa en el aula: la mayoría de las plataformas educativas que un estudiante usa hoy —desde una app de tareas hasta un sistema de gestión de aula— también recolecta señales y construye, aunque no lo diga con esas palabras, un perfil.',
+    introFamilias:
+      'Cuando pensamos en "datos personales" imaginamos el nombre, el domicilio, la fecha de nacimiento. Pero comunicamos muchísimo más con nuestras acciones: buscar, mirar, pausar, descartar, comentar, volver. Ninguno de esos gestos revela exactamente quiénes somos, pero juntos permiten encontrar regularidades. Shoshana Zuboff usa una expresión fuerte para describir esto: capitalismo de vigilancia — modelos de negocio que toman experiencias humanas y las transforman en datos, y esos datos en productos de predicción. Y esto conviene tenerlo claro, porque desactiva un poco el miedo: no hace falta imaginar una plataforma que lo sabe todo. Le alcanza con estimar qué es lo que probablemente va a captar nuestra atención. No adivina el alma. Calcula la probabilidad. Esto también pasa en casa: la mayoría de las apps que tus hijos usan hoy —desde juegos hasta redes sociales— también recolecta señales y construye, aunque no lo diga con esas palabras, un perfil.',
     sections: [
       {
         heading: 'De la señal al perfil',
@@ -226,6 +260,12 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
           'De ahí se desprenden algunas orientaciones concretas. Explicar que los datos no son solo lo que se completa en un formulario, sino también lo que se hace: buscar, mirar, pausar, volver. Proponer un ejercicio simple y revelador: comparar el feed de dos estudiantes frente al mismo tema y notar cuánto cambia, para que la burbuja de filtros deje de ser un concepto abstracto y se vuelva algo visible. Trabajar la pregunta "¿por qué me está mostrando esto?" como un hábito crítico, no como paranoia. Y nombrar, sin dramatismo, que la discriminación algorítmica más difícil de ver es la que nunca muestra una oportunidad, para que un estudiante entienda que no todo lo que no aparece es azar.',
         ],
         quote: 'En el aula, tal como en cualquier plataforma, cada clic construye una versión probable de quién es cada estudiante — enseñar a notarlo es el primer paso para no quedar del todo a merced de esa versión.',
+        headingFamilias: 'Qué significa esto para tu casa',
+        paragraphsFamilias: [
+          'Ayudar a tus hijos a leer esto es, ni más ni menos, una forma de alfabetización algorítmica: entender que cada clic, cada pausa y cada búsqueda deja una huella que alguien, en algún lugar, está interpretando.',
+          'De ahí se desprenden algunas orientaciones concretas. Explicarles que los datos no son solo lo que se completa en un formulario, sino también lo que se hace: buscar, mirar, pausar, volver. Proponer un ejercicio simple y revelador en casa: comparar el feed de dos personas de la familia frente al mismo tema y notar cuánto cambia, para que la burbuja de filtros deje de ser un concepto abstracto y se vuelva algo visible. Trabajar la pregunta "¿por qué me está mostrando esto?" como un hábito crítico, no como paranoia. Y nombrar, sin dramatismo, que la discriminación algorítmica más difícil de ver es la que nunca muestra una oportunidad, para que tu hijo o hija entienda que no todo lo que no aparece es azar.',
+        ],
+        quoteFamilias: 'En casa, tal como en cualquier plataforma, cada clic construye una versión probable de quién es cada uno de tus hijos — enseñarles a notarlo es el primer paso para no quedar del todo a merced de esa versión.',
       },
     ],
     caseStudy: {
@@ -251,6 +291,7 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
     pdfLabel: 'Presentación — Algoritmos y perfilado',
     infografiaUrl: '/img/tematicas/algoritmos-perfilado/infografia.webp',
     infografiaAlt: 'Infografía de Algoritmos y perfilado',
+    audiencias: ['docentes', 'familias'],
   },
 
   // =============================================
@@ -267,6 +308,8 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
     authors: ['BJ Fogg', 'Harry Brignull', 'Daniel Kahneman', 'Edward Deci y Richard Ryan'],
     intro:
       'La influencia digital rara vez llega como una orden. Casi nunca una plataforma nos dice "tenés que hacer esto". Funciona de otra manera, más suave: haciendo que una conducta sea más fácil, más visible y más oportuna. BJ Fogg estudió las tecnologías diseñadas para cambiar comportamientos y encontró una fórmula sencilla: cuando coinciden motivación, facilidad y un disparador en el momento justo, sube la probabilidad de que actuemos. Los estudiantes se cruzan con esto todos los días, en los mismos juegos y apps que usan para divertirse: reconocerlo es una habilidad que se puede enseñar.',
+    introFamilias:
+      'La influencia digital rara vez llega como una orden. Casi nunca una plataforma nos dice "tenés que hacer esto". Funciona de otra manera, más suave: haciendo que una conducta sea más fácil, más visible y más oportuna. BJ Fogg estudió las tecnologías diseñadas para cambiar comportamientos y encontró una fórmula sencilla: cuando coinciden motivación, facilidad y un disparador en el momento justo, sube la probabilidad de que actuemos. Tus hijos se cruzan con esto todos los días, en los mismos juegos y apps que usan para divertirse: reconocerlo es una habilidad que se puede enseñar.',
     sections: [
       {
         heading: 'Ni bueno ni malo por sí mismo',
@@ -297,6 +340,11 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
           'De ahí se desprenden algunas orientaciones concretas. Usar el caso de Epic Games como disparador de conversación, con el número real de reembolsos, no como una anécdota abstracta. Compartir la pregunta de Fogg y de Deci y Ryan como una herramienta que se puede aplicar a cualquier app: ¿este diseño apoya algo que yo ya quería hacer, o me está empujando hacia algo que no elegí? Y animarse a mirar con la misma lupa las propias herramientas educativas: varias apps de estudio usan rachas, insignias y cuentas regresivas con la misma lógica, y vale la pena preguntarse si en ese caso la técnica está del lado del estudiante o en su contra.',
         ],
         quote: 'Nombrar la técnica —"esto es una racha", "esto es una cuenta regresiva"— es el primer paso para dejar de estar solo del lado de quien la sufre.',
+        headingFamilias: 'Qué significa esto para tu casa',
+        paragraphsFamilias: [
+          'El caso de Epic Games no es un ejemplo lejano: es exactamente el tipo de mecánica —rachas, cuentas regresivas, recompensas— que aparece todos los días en los juegos y apps que tus hijos ya usan. Nombrar la técnica cuando aparece le quita buena parte de su poder: no es lo mismo sentir la presión de una racha que se rompe que poder decir "esto es una racha, está diseñada para que no la corte".',
+          'De ahí se desprenden algunas orientaciones concretas. Usar el caso de Epic Games como disparador de conversación en casa, con el número real de reembolsos, no como una anécdota abstracta. Compartir la pregunta de Fogg y de Deci y Ryan como una herramienta que se puede aplicar a cualquier app: ¿este diseño apoya algo que yo ya quería hacer, o me está empujando hacia algo que no elegí? Y animarse a mirar con la misma lupa las apps que tus hijos usan para estudiar: varias usan rachas, insignias y cuentas regresivas con la misma lógica, y vale la pena preguntarse si en ese caso la técnica está de su lado o en su contra.',
+        ],
       },
     ],
     caseStudy: {
@@ -322,6 +370,7 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
     pdfLabel: 'Presentación — Diseño persuasivo y patrones oscuros',
     infografiaUrl: '/img/tematicas/diseno-persuasivo-patrones-oscuros/infografia.webp',
     infografiaAlt: 'Infografía de Diseño persuasivo y patrones oscuros',
+    audiencias: ['docentes', 'familias'],
   },
 
   // =============================================

@@ -47,7 +47,19 @@ import {
 import { useAppStore } from "@/lib/ciudadania/app-store"
 import { useTematicaProgress } from "@/lib/hooks/use-tematica-progress"
 import { TematicaCompletarButton } from "@/components/tematica-completar-button"
-import { AULA_ROL } from "@/lib/estafas-digitales-content"
+import {
+  AULA_ROL,
+  ROL_SECCION_BADGE,
+  ROL_SECCION_TITULO,
+  PEDAGOGIA_CUIDADO_SUBTITULO,
+  PEDAGOGIA_CUIDADO_PARRAFO_PRE,
+  PEDAGOGIA_CUIDADO_PARRAFO_POST,
+  PEDAGOGIA_CUIDADO_BULLET2,
+  PROTOCOLO_TITULO,
+  PROTOCOLO_PASOS_TEXTO,
+} from "@/lib/estafas-digitales-content"
+import { resolveTexto, type AudienciaTexto } from "@/lib/audiencia-texto"
+import { useAudienciaStore } from "@/lib/audiencia-store"
 
 const INFOGRAFIA_PATH = "/weekly-content/2026-W23/infografia%205.svg"
 
@@ -80,7 +92,9 @@ const itemVariants = {
 export function EstafasDigitalesContent() {
   const userId = useAppStore((s) => s.user?.id ?? null)
   const progress = useTematicaProgress({ tematicaId: "estafas-digitales", userId })
-  
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual)
+  const t = (texto: AudienciaTexto) => resolveTexto(texto, audienciaActual, "docentes")
+
   // Progress Bar de lectura superior
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.4 })
@@ -1155,13 +1169,13 @@ export function EstafasDigitalesContent() {
           >
             <motion.div variants={itemVariants} className="text-center max-w-3xl mx-auto mb-14">
               <span className="inline-block text-xs sm:text-sm font-bold text-brand-blue tracking-widest uppercase mb-2 bg-brand-blue/10 px-4 py-1.5 rounded-full border border-brand-blue/20">
-                Abordaje Pedagógico
+                {t(ROL_SECCION_BADGE)}
               </span>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-extrabold mb-4 text-brand-navy">
-                El Rol Docente: De la Prohibición a la Pausa Cognitiva
+                {t(ROL_SECCION_TITULO)}
               </h2>
               <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
-                {AULA_ROL.notaDocente}
+                {audienciaActual === "familias" ? AULA_ROL.notaFamilias : AULA_ROL.notaDocente}
               </p>
             </motion.div>
 
@@ -1175,10 +1189,10 @@ export function EstafasDigitalesContent() {
                       Pedagogía del Cuidado
                     </div>
                     <h3 className="text-2xl sm:text-3xl font-display font-bold mb-4">
-                      Promover la Pausa Cognitiva en la Escuela
+                      {t(PEDAGOGIA_CUIDADO_SUBTITULO)}
                     </h3>
                     <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-                      La respuesta didáctica más efectiva ante la urgencia artificial del delito es entrenar la <strong>pausa cognitiva</strong>: ante cualquier notificación que exija clave, dinero o decisiones inmediatas, la consigna del aula es pausar, desconfiar y validar con un adulto de confianza.
+                      {t(PEDAGOGIA_CUIDADO_PARRAFO_PRE)} <strong>pausa cognitiva</strong>{t(PEDAGOGIA_CUIDADO_PARRAFO_POST)}
                     </p>
                   </div>
 
@@ -1192,7 +1206,7 @@ export function EstafasDigitalesContent() {
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
                       <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
-                        <strong>Educación entre pares:</strong> Analizar capturas de pantalla de fraudes reales en talleres de debate escolar para aguzar el sentido crítico.
+                        {t(PEDAGOGIA_CUIDADO_BULLET2)}
                       </p>
                     </div>
                   </div>
@@ -1203,7 +1217,7 @@ export function EstafasDigitalesContent() {
             {/* Protocolo de Acción Escolar */}
             <motion.div variants={itemVariants}>
               <h3 className="text-xl sm:text-2xl font-display font-bold mb-8 text-brand-navy text-center">
-                Protocolo de Acción Escolar ante un Estudiante Damnificado
+                {t(PROTOCOLO_TITULO)}
               </h3>
 
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1232,7 +1246,9 @@ export function EstafasDigitalesContent() {
                           {item.titulo}
                         </h4>
                         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                          {item.desc}
+                          {item.paso in PROTOCOLO_PASOS_TEXTO
+                            ? t(PROTOCOLO_PASOS_TEXTO[item.paso as "01" | "03" | "04"])
+                            : item.desc}
                         </p>
                       </div>
                     </div>

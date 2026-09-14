@@ -1,7 +1,9 @@
 // Datos citados de la temática "Violencia Digital en Infancias" — marco legal, origen de la
 // Línea 137 y magnitud del problema. Mismo patrón que lib/huella-digital-content.ts
 // (arrays/objetos tipados, separados de la JSX). violenceTypesData, alertSignsData y
-// actionStepsData quedan en el propio componente — son contenido ya adaptado que no se toca.
+// actionStepsData quedan en el propio componente — son contenido ya adaptado que no se toca
+// salvo los bloques con voz docente (ver TEXTOS CON VARIANTE POR AUDIENCIA más abajo).
+import type { AudienciaTexto } from './audiencia-texto';
 
 export interface Source {
   author: string;
@@ -85,3 +87,40 @@ export const FUENTES_CITADAS: Source[] = [
   MAGNITUD_KIDS_ONLINE,
   MAGNITUD_ENCUESTA_GROOMING.source,
 ];
+
+// ── Textos con variante por audiencia (docentes / familias) — fallback 'docentes' ──
+
+export const HERO_PARRAFO_CIERRE: AudienciaTexto = {
+  docentes: 'prevenir y actuar frente a situaciones de ciberacoso y grooming — desde el aula, muchas veces usted es la primera persona en posición de notar que algo cambió.',
+  familias: 'prevenir y actuar frente a situaciones de ciberacoso y grooming — en casa, muchas veces usted es la primera persona en posición de notar que algo cambió.',
+};
+
+export const ACTION_STEP_1_DESC: AudienciaTexto = {
+  docentes: 'Escuche a la víctima y ofrezca apoyo emocional incondicional. No la responsabilice, no la avergüence y evite retirarle el dispositivo como medida de castigo. Si es docente, esta primera escucha no reemplaza avisar a la familia y a la institución: es el paso inicial, no el único.',
+  familias: 'Escuche a la víctima y ofrezca apoyo emocional incondicional. No la responsabilice, no la avergüence y evite retirarle el dispositivo como medida de castigo. Esta primera escucha no reemplaza avisar a la escuela y activar los pasos siguientes: es el paso inicial, no el único.',
+};
+
+export const ACTION_STEP_5_TITLE: AudienciaTexto = {
+  docentes: 'Activar el protocolo escolar',
+  familias: 'Coordinar con la escuela',
+};
+
+export const ACTION_STEP_5_DESC: AudienciaTexto = {
+  docentes: 'Si es docente, informe lo sucedido al equipo de orientación o a la dirección de su institución y coordine con la familia los pasos siguientes. La escuela tiene su propio protocolo de protección, que se suma —no reemplaza— a la denuncia formal.',
+  familias: 'Informe lo sucedido a la escuela de su hijo o hija —al equipo de orientación o a la dirección— y pida que se active el protocolo de protección institucional. Ese protocolo se suma a la denuncia formal, no la reemplaza.',
+};
+
+export const CIERRE_SIGNIFICADO: AudienciaTexto = {
+  docentes: 'El crecimiento de denuncias (de 8.840 a 120.162 en 8 años) no es solo "más casos" — también refleja que cada vez más víctimas y adultos de referencia saben que pueden y deben denunciar. Un docente que conoce el protocolo es parte de ese cambio.',
+  familias: 'El crecimiento de denuncias (de 8.840 a 120.162 en 8 años) no es solo "más casos" — también refleja que cada vez más víctimas y adultos de referencia saben que pueden y deben denunciar. Una familia que conoce el protocolo es parte de ese cambio.',
+};
+
+export const CARRUSEL_LABEL: AudienciaTexto = {
+  docentes: 'Material para el aula',
+  familias: 'Material para la familia',
+};
+
+export const CARRUSEL_TITULO: AudienciaTexto = {
+  docentes: 'Violencia Digital en Infancias — Recursos para el Aula',
+  familias: 'Violencia Digital en Infancias — Recursos para la Familia',
+};

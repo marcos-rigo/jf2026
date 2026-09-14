@@ -45,6 +45,7 @@ import { Footer } from '@/components/footer'
 import { useLibresSubtopic } from '@/lib/hooks/use-libres-subtopic'
 import { getLibresSubtopicBySlug } from '@/lib/libres-bajo-influencia-data'
 import { hexToRgba } from '@/lib/utils'
+import { useAudienciaStore } from '@/lib/audiencia-store'
 
 import { WebpSlideCarousel } from '@/components/tematicas/WebpSlideCarousel'
 
@@ -494,6 +495,8 @@ function EditorialImageFrame({ imageSrc, altText, icon: Icon, colorA, colorB, la
 
 export default function SubculturasDigitalesPage() {
   const shouldReduceMotion = useReducedMotion() ?? false
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual)
+  const introTexto = audienciaActual === 'familias' && data.introFamilias ? data.introFamilias : data.intro
   const { quiz, lightbox } = useLibresSubtopic(data)
   const {
     showQuiz, currentQuestionIdx, selectedAnswers, showResults,
@@ -720,7 +723,7 @@ export default function SubculturasDigitalesPage() {
                 </div>
 
                 <p className="sd-fraunces text-xl sm:text-2xl md:text-3xl leading-relaxed text-[#0F172A] font-bold mb-8">
-                  {data.intro}
+                  {introTexto}
                 </p>
 
                 <div className="p-5 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-4">
@@ -746,6 +749,13 @@ export default function SubculturasDigitalesPage() {
           const isCommunities = section.heading === 'Cómo se estudian estas comunidades'
           const isAuth = section.heading === 'Autenticidad: quién pertenece de verdad'
           const isAula = section.heading === 'Qué significa esto para el aula'
+
+          // Resuelto por audiencia: si hay paragraphsFamilias y la audiencia
+          // activa es 'familias', se usa esa variante; si no, el contenido de
+          // siempre. Aplica a las 4 secciones que tienen esta variante escrita
+          // (De comunidad a subcultura, Normas, Autenticidad, Aula) — en el
+          // resto (sin paragraphsFamilias) resuelve siempre al mismo valor.
+          const paragraphs = audienciaActual === 'familias' && section.paragraphsFamilias ? section.paragraphsFamilias : section.paragraphs
 
           const visual = SECTION_VISUALS[i] || {
             imageSrc: `/img/tematicas/subculturas-digitales/seccion_${i+1}.png`,
@@ -802,7 +812,7 @@ export default function SubculturasDigitalesPage() {
                       </div>
 
                       <div className="space-y-4 text-slate-800 font-extrabold text-base sm:text-lg md:text-xl leading-relaxed">
-                        {section.paragraphs.map((p, pi) => (
+                        {paragraphs.map((p, pi) => (
                           <p key={pi}>{p}</p>
                         ))}
                       </div>
@@ -906,7 +916,7 @@ export default function SubculturasDigitalesPage() {
                       </div>
 
                       <div className="space-y-4 text-slate-800 font-extrabold text-base sm:text-lg md:text-xl leading-relaxed">
-                        {section.paragraphs.map((p, pi) => (
+                        {paragraphs.map((p, pi) => (
                           <p key={pi}>{p}</p>
                         ))}
                       </div>
@@ -999,8 +1009,8 @@ export default function SubculturasDigitalesPage() {
           // ── C. Autenticidad Accordion with Text Wrap ──
           if (isAuth) {
             const cards = [
-              { title: 'El caso straightedge', body: section.paragraphs[0] },
-              { title: 'La paradoja del capital subcultural', body: section.paragraphs[1] },
+              { title: 'El caso straightedge', body: paragraphs[0] },
+              { title: 'La paradoja del capital subcultural', body: paragraphs[1] },
             ]
             return (
               <section key={section.heading} id={`seccion-${i}`} className="relative py-20 sm:py-28 md:py-32 px-4 sm:px-6 bg-slate-50/80">
@@ -1085,6 +1095,12 @@ export default function SubculturasDigitalesPage() {
 
           // ── D. Qué significa para el aula with Text Wrap ──
           if (isAula) {
+            // Única sección del grupo con headingFamilias/quoteFamilias escritos —
+            // key del <section> se deja en section.heading (sin resolver) para no
+            // remontar el bloque (y perder el estado de los acordeones) al cambiar
+            // de audiencia en caliente.
+            const headingAula = audienciaActual === 'familias' && section.headingFamilias ? section.headingFamilias : section.heading
+            const quoteAula = audienciaActual === 'familias' && section.quoteFamilias ? section.quoteFamilias : section.quote
             return (
               <section key={section.heading} id={`seccion-${i}`} className="relative py-20 sm:py-28 md:py-36 px-4 sm:px-6 bg-white">
                 <div className="max-w-6xl mx-auto relative z-10">
@@ -1094,14 +1110,14 @@ export default function SubculturasDigitalesPage() {
                       <span className="sd-mono sd-cyber-badge-teal inline-block text-xs uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full font-bold">
                         // Aplicación pedagógica · Ministerio de Educación & UNESCO
                       </span>
-                      <h2 className="sd-fraunces text-3xl md:text-5xl font-black mb-6 text-[#0F172A]">{section.heading}</h2>
+                      <h2 className="sd-fraunces text-3xl md:text-5xl font-black mb-6 text-[#0F172A]">{headingAula}</h2>
                       <div className="w-24 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-600 mx-auto rounded-full mb-8" />
                     </motion.div>
 
                     <div className="sd-cyber-card p-6 sm:p-10 md:p-14 border-2 mb-12">
                       <EditorialImageFrame
                         imageSrc={visual.imageSrc}
-                        altText={section.heading}
+                        altText={headingAula}
                         icon={GraduationCap}
                         colorA={EMERALD}
                         colorB={TEAL}
@@ -1121,7 +1137,7 @@ export default function SubculturasDigitalesPage() {
                       </div>
 
                       <div className="space-y-4 text-slate-800 font-extrabold text-base sm:text-lg md:text-xl leading-relaxed">
-                        {section.paragraphs.map((p, pi) => (
+                        {paragraphs.map((p, pi) => (
                           <p key={pi}>{p}</p>
                         ))}
                       </div>
@@ -1161,9 +1177,9 @@ export default function SubculturasDigitalesPage() {
                       })}
                     </div>
 
-                    {section.quote && (
+                    {quoteAula && (
                       <p className="sd-fraunces text-center italic text-xl md:text-2xl font-bold mt-16 max-w-3xl mx-auto text-[#0F172A]">
-                        "{section.quote}"
+                        "{quoteAula}"
                       </p>
                     )}
                   </motion.div>
@@ -1204,7 +1220,7 @@ export default function SubculturasDigitalesPage() {
                     <h2 className="sd-fraunces text-2xl sm:text-3xl md:text-4xl font-black mb-6 leading-tight text-[#0F172A]">{section.heading}</h2>
                     
                     <div className="space-y-4 text-slate-800 font-extrabold text-base sm:text-lg md:text-xl leading-relaxed">
-                      {section.paragraphs.map((p, pi) => (
+                      {paragraphs.map((p, pi) => (
                         <p key={pi}>{p}</p>
                       ))}
                     </div>

@@ -82,14 +82,15 @@ export const MAGNITUD_ARGENTINA = {
   } as Source,
   notaDocente:
     'Este dato es clave para entender por qué la pregunta de "qué hacer si una alumna te lo cuenta" importa tanto: la mayoría de quienes atraviesan esto no lo denuncian ni lo cuentan formalmente. Que confíe en un docente puede ser la única vez que lo cuenta.',
-  // Sin escribir todavía — ver investigación "contenido con variantes por
-  // audiencia". Campo hermano de notaDocente, mismo patrón: opcional, y si
-  // no está no se muestra nada (sin fallback a la nota de otra audiencia).
-  notaFamilias: undefined as string | undefined,
+  notaFamilias:
+    'Este dato es clave para entender por qué importa saber qué hacer si tu hija o alguien de tu familia te lo cuenta: la mayoría de quienes atraviesan esto no lo denuncian ni lo cuentan formalmente. Que confíe en vos puede ser la única vez que lo cuenta.',
 };
 
 export const FAQ3_AMPLIACION =
   'Todo lo anterior cubre el caso de una alumna o la familia de un estudiante contándole esto a un docente. Falta contemplar el caso más directo: si la propia estudiante lo atraviesa y se lo cuenta a un docente en primera persona. El mismo criterio aplica (no investigar por tu cuenta, activar el protocolo institucional), pero con un matiz: si es menor de edad, probablemente corresponda involucrar también a la familia y al equipo de orientación, a diferencia de un caso entre adultas.';
+
+export const FAQ3_AMPLIACION_FAMILIAS =
+  'Si sos familiar de la persona que atraviesa esto (tu hija, tu hermana, una sobrina), el mismo criterio aplica: no investigues por tu cuenta ni confrontes al agresor, y acompañala a activar el protocolo de arriba. Si es menor de edad, correspondería también involucrar a la escuela y, si el caso lo amerita, a la Línea 137. El rol de la familia es sostener, no resolver sola.';
 
 export const ALL_SOURCES: Source[] = [
   CONCEPTO_QUOTES[0].source,

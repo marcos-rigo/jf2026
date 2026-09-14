@@ -110,7 +110,7 @@ export const groups: TematicaGroup[] = [
         icon: Search,
         color: "#00D4AA",
         locked: true,
-        audiencias: ["docentes"],
+        audiencias: ["docentes", "familias"],
       },
       {
         id: "ia-etica-ciudadania",
@@ -123,7 +123,7 @@ export const groups: TematicaGroup[] = [
         icon: Scale,
         color: "#00A99D",
         locked: false,
-        audiencias: ["docentes"],
+        audiencias: ["docentes", "familias"],
       },
     ],
   },
@@ -142,6 +142,7 @@ export const groups: TematicaGroup[] = [
         icon: AlertTriangle,
         color: "#F59E0B",
         locked: true,
+        audiencias: ["docentes", "familias"],
       },
     ],
   },
@@ -160,7 +161,7 @@ export const groups: TematicaGroup[] = [
         icon: Lock,
         color: "#FF6B35",
         locked: true,
-        audiencias: ["mujeres"],
+        audiencias: ["mujeres", "docentes", "familias"],
       },
       {
         id: "violencia-digital-infancias",
@@ -205,6 +206,7 @@ export const groups: TematicaGroup[] = [
         icon: ScanEye,
         color: "#2563EB",
         locked: true,
+        audiencias: ["docentes", "familias"],
       },
       {
         id: "diseno-persuasivo-patrones-oscuros",
@@ -217,6 +219,7 @@ export const groups: TematicaGroup[] = [
         icon: MousePointerClick,
         color: "#DB2777",
         locked: true,
+        audiencias: ["docentes", "familias"],
       },
       {
         id: "caldos-de-cultivo",

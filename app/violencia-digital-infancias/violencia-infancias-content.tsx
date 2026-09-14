@@ -16,7 +16,16 @@ import {
   MAGNITUD_KIDS_ONLINE,
   MAGNITUD_ENCUESTA_GROOMING,
   FUENTES_CITADAS,
+  HERO_PARRAFO_CIERRE,
+  ACTION_STEP_1_DESC,
+  ACTION_STEP_5_TITLE,
+  ACTION_STEP_5_DESC,
+  CIERRE_SIGNIFICADO,
+  CARRUSEL_LABEL,
+  CARRUSEL_TITULO,
 } from "@/lib/violencia-digital-infancias-content"
+import { resolveTexto, type AudienciaTexto } from "@/lib/audiencia-texto"
+import { useAudienciaStore } from "@/lib/audiencia-store"
 import {
   ShieldAlert,
   Smartphone,
@@ -299,6 +308,8 @@ function useCountUp(target: number, duration = 2, start = false) {
 export function ViolenciaInfanciasContent() {
   const userId = useAppStore((s) => s.user?.id ?? null)
   const progress = useTematicaProgress({ tematicaId: "violencia-digital-infancias", userId })
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual)
+  const t = (texto: AudienciaTexto) => resolveTexto(texto, audienciaActual, "docentes")
   const [activeTab, setActiveTab] = useState<"alertas" | "protocolo">("alertas")
   const [expandedAlert, setExpandedAlert] = useState<string | null>(alertSignsData[0].id)
   const heroRef = useRef<HTMLDivElement>(null)
@@ -472,9 +483,8 @@ export function ViolenciaInfanciasContent() {
               </motion.h1>
 
               <motion.p variants={fadeUp} className="text-lg md:text-xl text-slate-500 max-w-xl leading-relaxed">
-                Las interacciones en el entorno digital conllevan responsabilidades y riesgos. Aprenda a identificar,
-                prevenir y actuar frente a situaciones de ciberacoso y grooming — desde el aula, muchas veces usted es
-                la primera persona en posición de notar que algo cambió.
+                Las interacciones en el entorno digital conllevan responsabilidades y riesgos. Aprenda a identificar,{" "}
+                {t(HERO_PARRAFO_CIERRE)}
               </motion.p>
 
               <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
@@ -908,8 +918,12 @@ export function ViolenciaInfanciasContent() {
                           </span>
                         </div>
                         <div className="flex-1">
-                          <h3 className="text-xl font-bold text-brand-navy mb-2 group-hover:text-brand-blue transition-colors duration-300">{step.title}</h3>
-                          <p className="text-slate-600 leading-relaxed text-base">{step.description}</p>
+                          <h3 className="text-xl font-bold text-brand-navy mb-2 group-hover:text-brand-blue transition-colors duration-300">
+                            {step.id === 5 ? t(ACTION_STEP_5_TITLE) : step.title}
+                          </h3>
+                          <p className="text-slate-600 leading-relaxed text-base">
+                            {step.id === 1 ? t(ACTION_STEP_1_DESC) : step.id === 5 ? t(ACTION_STEP_5_DESC) : step.description}
+                          </p>
                         </div>
                       </motion.div>
                     ))}
@@ -1001,7 +1015,7 @@ export function ViolenciaInfanciasContent() {
               <BookOpen className="w-5 h-5" />
             </div>
             <p className="text-slate-600 text-lg leading-relaxed">
-              El crecimiento de denuncias (de 8.840 a 120.162 en 8 años) no es solo "más casos" — también refleja que cada vez más víctimas y adultos de referencia saben que pueden y deben denunciar. Un docente que conoce el protocolo es parte de ese cambio.
+              {t(CIERRE_SIGNIFICADO)}
             </p>
           </motion.div>
         </div>
@@ -1125,8 +1139,8 @@ export function ViolenciaInfanciasContent() {
                     <Images className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-brand-pink tracking-widest uppercase mb-0.5">Material para el aula</p>
-                    <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 font-display">Violencia Digital en Infancias — Recursos para el Aula</h2>
+                    <p className="text-xs font-bold text-brand-pink tracking-widest uppercase mb-0.5">{t(CARRUSEL_LABEL)}</p>
+                    <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 font-display">{t(CARRUSEL_TITULO)}</h2>
                   </div>
                 </div>
                 <span className="text-slate-400 text-sm font-mono shrink-0 bg-slate-50/80 px-3 py-1.5 rounded-full">

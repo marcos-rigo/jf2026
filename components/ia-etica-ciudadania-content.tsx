@@ -14,6 +14,8 @@ import { useAppStore } from "@/lib/ciudadania/app-store"
 import { useTematicaProgress } from "@/lib/hooks/use-tematica-progress"
 import { TematicaCompletarButton } from "@/components/tematica-completar-button"
 import { BackToDashboardButton } from "@/components/tematicas/back-to-dashboard-button"
+import { resolveTexto, type AudienciaTexto } from "@/lib/audiencia-texto"
+import { useAudienciaStore } from "@/lib/audiencia-store"
 import {
   Scale,
   Users,
@@ -116,6 +118,11 @@ interface NivelAccion {
   icono: React.ElementType
   descripcion: string
   acciones: string[]
+  /** 5º ítem de acciones, docente-voiced en origen — separado del array
+   * porque acciones es string[] y no puede alojar un objeto AudienciaTexto
+   * sin romper el tipo. Los primeros 4 ítems de acciones son universales y
+   * no llevan variante. */
+  accionExtra: AudienciaTexto
   color: string
 }
 
@@ -393,8 +400,13 @@ const nivelesAccion: NivelAccion[] = [
       "Desarrollar alfabetización algorítmica propia: entender cómo los sistemas te clasifican",
       "Ejercer derechos ARCO frente a decisiones automatizadas que te afecten",
       "Cultivar lo irreemplazable: sensibilidad, juicio ético, presencia genuina",
-      "Modelar frente a tus estudiantes tu propia soberanía digital: explicar en voz alta por qué desconfiás de una fuente o por qué revisás un dato antes de darlo por cierto.",
     ],
+    accionExtra: {
+      docentes:
+        "Modelar frente a tus estudiantes tu propia soberanía digital: explicar en voz alta por qué desconfiás de una fuente o por qué revisás un dato antes de darlo por cierto.",
+      familias:
+        "Modelar frente a tus hijos tu propia soberanía digital: explicar en voz alta por qué desconfiás de una fuente o por qué revisás un dato antes de darlo por cierto.",
+    },
     color: "var(--brand-blue)",
   },
   {
@@ -407,8 +419,13 @@ const nivelesAccion: NivelAccion[] = [
       "Crear comités de ética con perspectiva de género e interculturalidad",
       "Garantizar explicabilidad en decisiones automatizadas que afecten personas",
       "Priorizar bienestar humano sobre eficiencia algorítmica en cada diseño",
-      "Llevar estas preguntas a tu institución: ¿qué herramientas de IA usa la escuela y con qué criterios de transparencia?",
     ],
+    accionExtra: {
+      docentes:
+        "Llevar estas preguntas a tu institución: ¿qué herramientas de IA usa la escuela y con qué criterios de transparencia?",
+      familias:
+        "Llevar estas preguntas a la escuela de tus hijos: ¿qué herramientas de IA usa y con qué criterios de transparencia?",
+    },
     color: "#059669",
   },
   {
@@ -421,8 +438,13 @@ const nivelesAccion: NivelAccion[] = [
       "Fortalecer la ciudadanía digital como derecho, no solo habilidad técnica",
       "Proteger comunidades vulnerables de la violencia algorítmica sistémica",
       "Construir IA desde perspectivas diversas: género, cultura, territorio y clase",
-      "Formar en el aula la próxima generación de ciudadanos digitales: la alfabetización algorítmica que trabajás hoy con tus estudiantes es, a escala, la construcción de esa ciudadanía.",
     ],
+    accionExtra: {
+      docentes:
+        "Formar en el aula la próxima generación de ciudadanos digitales: la alfabetización algorítmica que trabajás hoy con tus estudiantes es, a escala, la construcción de esa ciudadanía.",
+      familias:
+        "Formar en casa la próxima generación de ciudadanos digitales: la alfabetización algorítmica que trabajás hoy con tus hijos es, a escala, la construcción de esa ciudadanía.",
+    },
     color: "var(--brand-pink)",
   },
 ]
@@ -471,6 +493,47 @@ const fuentes: Fuente[] = [
     url: "https://www8.cao.go.jp/cstp/english/society5_0/index.html",
   },
 ]
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TEXTOS CON VARIANTE POR AUDIENCIA (docentes / familias) — fallback 'docentes'
+// ─────────────────────────────────────────────────────────────────────────────
+
+const HERO_SUBTITULO_CIERRE: AudienciaTexto = {
+  docentes: "con que la usamos — y la escuela es uno de los lugares donde esa brújula se construye, clase a clase.",
+  familias: "con que la usamos — y la casa es uno de los lugares donde esa brújula se construye, día a día.",
+}
+
+const S1_TITULO: AudienciaTexto = {
+  docentes: "Alfabetización Digital: tu Rol en el Aula",
+  familias: "Alfabetización Digital: tu Rol en Casa",
+}
+
+const S1_PARRAFO_INICIO: AudienciaTexto = {
+  docentes: "Ya no alcanza con enseñar a leer y escribir. Como docente, tenés un rol central en formar ciudadanos capaces de",
+  familias: "Ya no alcanza con enseñar a leer y escribir. Como familia, tenés un rol central en formar ciudadanos capaces de",
+}
+
+const ESCUELA_CALLOUT_TITULO: AudienciaTexto = {
+  docentes: "Tu aula como garante de equidad digital:",
+  familias: "Tu casa como garante de equidad digital:",
+}
+
+const ESCUELA_CALLOUT_TEXTO: AudienciaTexto = {
+  docentes:
+    "sin formación crítica en ciudadanía digital, las brechas tecnológicas se convierten en brechas de poder. Cada clase donde trabajás esto de forma explícita achica esa brecha. La alfabetización digital no es una competencia técnica; es un derecho político.",
+  familias:
+    "sin formación crítica en ciudadanía digital, las brechas tecnológicas se convierten en brechas de poder. Cada conversación donde trabajás esto de forma explícita achica esa brecha. La alfabetización digital no es una competencia técnica; es un derecho político.",
+}
+
+const S2_CIERRE: AudienciaTexto = {
+  docentes: "— y es exactamente la conversación que tus estudiantes van a necesitar tener sobre su propio futuro profesional.",
+  familias: "— y es exactamente la conversación que tus hijos van a necesitar tener sobre su propio futuro profesional.",
+}
+
+const CIERRE_FINAL: AudienciaTexto = {
+  docentes: "docente, sos parte de quienes forman a esos ciudadanos, antes de que lo hagan los algoritmos.",
+  familias: "familia, sos parte de quienes forman a esos ciudadanos, antes de que lo hagan los algoritmos.",
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // STYLES
@@ -654,6 +717,8 @@ function SectionLabel({
 export function IaEticaCiudadaniaContent() {
   const userId = useAppStore((s) => s.user?.id ?? null)
   const progress = useTematicaProgress({ tematicaId: "ia-etica-ciudadania", userId })
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual)
+  const t = (texto: AudienciaTexto) => resolveTexto(texto, audienciaActual, "docentes")
   const [iaActiva, setIaActiva] = useState<"no-autonoma" | "autonoma">(
     "no-autonoma"
   )
@@ -790,8 +855,7 @@ export function IaEticaCiudadaniaContent() {
                 >
                   brújula ética y el enfoque antropocéntrico
                 </span>{" "}
-                con que la usamos — y la escuela es uno de los lugares donde esa brújula se construye,
-                clase a clase.
+                {t(HERO_SUBTITULO_CIERRE)}
               </motion.p>
 
               {/* Society tags */}
@@ -912,11 +976,10 @@ export function IaEticaCiudadaniaContent() {
                   className="font-display font-bold text-brand-navy leading-tight mb-5"
                   style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
                 >
-                  Alfabetización Digital: tu Rol en el Aula
+                  {t(S1_TITULO)}
                 </h2>
                 <p className="text-slate-600 text-xl leading-relaxed max-w-2xl font-medium">
-                  Ya no alcanza con enseñar a leer y escribir. Como docente, tenés un rol central en
-                  formar ciudadanos capaces de{" "}
+                  {t(S1_PARRAFO_INICIO)}{" "}
                   <span className="font-bold text-brand-navy">
                     comprender, usar, pensar y crear
                   </span>{" "}
@@ -1036,11 +1099,9 @@ export function IaEticaCiudadaniaContent() {
                 <School className="w-9 h-9 text-brand-blue flex-shrink-0" />
                 <p className="text-slate-700 text-xl font-medium leading-relaxed">
                   <span className="font-bold text-brand-navy">
-                    Tu aula como garante de equidad digital:
+                    {t(ESCUELA_CALLOUT_TITULO)}
                   </span>{" "}
-                  sin formación crítica en ciudadanía digital, las brechas tecnológicas se convierten en brechas de poder.
-                  Cada clase donde trabajás esto de forma explícita achica esa brecha. La alfabetización digital no es una
-                  competencia técnica; es un derecho político.
+                  {t(ESCUELA_CALLOUT_TEXTO)}
                 </p>
               </motion.div>
             </motion.div>
@@ -1082,8 +1143,7 @@ export function IaEticaCiudadaniaContent() {
                 <p className="text-xl leading-relaxed font-medium max-w-2xl" style={{ color: "rgba(255,255,255,0.85)" }}>
                   ¿La IA desplaza o amplía? La respuesta depende del tipo de
                   sistema y del perfil profesional. El relato del reemplazo total
-                  es más simple que la realidad — y es exactamente la
-                  conversación que tus estudiantes van a necesitar tener sobre su propio futuro profesional.
+                  es más simple que la realidad {t(S2_CIERRE)}
                 </p>
               </motion.div>
 
@@ -2027,6 +2087,16 @@ export function IaEticaCiudadaniaContent() {
                             {accion}
                           </li>
                         ))}
+                        <li
+                          className="flex items-start gap-3 text-lg font-medium"
+                          style={{ color: "rgba(255,255,255,0.88)" }}
+                        >
+                          <CheckCircle2
+                            className="w-5 h-5 flex-shrink-0 mt-0.5"
+                            style={{ color: nivel.color }}
+                          />
+                          {t(nivel.accionExtra)}
+                        </li>
                       </ul>
                     </motion.div>
                   )
@@ -2058,8 +2128,7 @@ export function IaEticaCiudadaniaContent() {
                   La Sociedad 5.0 exige ciudadanos capaces de entender los
                   sistemas que los gobiernan y ejercer su soberanía digital. Ese
                   es el horizonte del marco humanista: tecnología al servicio de
-                  la dignidad, no al revés. Como
-                  docente, sos parte de quienes forman a esos ciudadanos, antes de que lo hagan los algoritmos.
+                  la dignidad, no al revés. Como {t(CIERRE_FINAL)}
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <a

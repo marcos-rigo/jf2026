@@ -2,6 +2,7 @@
 // lib/ciudadania-digital-content.ts, lib/huella-digital-content.ts y
 // lib/hiperconectividad-digital-content.ts: cada afirmación factual/estadística
 // se atribuye a una fuente vía SourceCite, en vez de presentarse como hecho suelto.
+import type { AudienciaTexto } from './audiencia-texto';
 
 export interface Source {
   author: string;
@@ -174,8 +175,12 @@ export const EJEMPLOS = {
   },
 };
 
-export const EJEMPLOS_NOTA_DOCENTE =
-  'Estos tres niveles sirven para dos cosas a la vez: para que puedas autoevaluar tu propia alfabetización digital como docente, y para calibrar expectativas realistas sobre en qué nivel está cada estudiante — no todo el curso llega al aula en el mismo punto de partida.';
+export const EJEMPLOS_NOTA_DOCENTE: AudienciaTexto = {
+  docentes:
+    'Estos tres niveles sirven para dos cosas a la vez: para que puedas autoevaluar tu propia alfabetización digital como docente, y para calibrar expectativas realistas sobre en qué nivel está cada estudiante — no todo el curso llega al aula en el mismo punto de partida.',
+  familias:
+    'Estos niveles sirven tanto para que evalúes tu propia alfabetización digital como para calibrar expectativas realistas sobre en qué nivel está cada uno de tus hijos — no todos van a estar en el mismo lugar, y eso es esperable.',
+};
 
 // ── 06 · Ventajas — retorno socioeconómico ──
 
@@ -217,22 +222,85 @@ export const RIESGOS = [
   },
 ];
 
-// ── 08 · Para el aula — rol docente ──
+// ── 08 · Para el aula / para la casa — rol mediador ──
 
-export const AULA_PUNTOS = [
+export const AULA_EYEBROW: AudienciaTexto = {
+  docentes: '08 · Por qué es Importante Saberlo como Docentes (El Rol en el Aula)',
+  familias: '08 · Por qué es Importante Saberlo en Casa (El Rol de la Familia)',
+};
+
+export const AULA_TITULO: AudienciaTexto = {
+  docentes: 'El Docente como Mediador y Andamio de la Transición Digital',
+  familias: 'La Familia como Mediadora y Andamio de la Transición Digital',
+};
+
+export const AULA_INTRO: AudienciaTexto = {
+  docentes:
+    'La escuela es la institución igualadora por excelencia. La alfabetización digital del cuerpo docente es la condición previa para convertir el aula en un espacio de diseño crítico y ético.',
+  familias:
+    'El hogar es el primer espacio de socialización digital. Tu propia alfabetización digital como madre, padre o tutor es la condición previa para acompañar a tus hijos con criterio crítico y ético.',
+};
+
+export const AULA_EJE_LABEL: AudienciaTexto = {
+  docentes: 'Eje Docente',
+  familias: 'Eje Familiar',
+};
+
+export interface AulaPunto {
+  titulo: AudienciaTexto;
+  desc: AudienciaTexto;
+}
+
+export const AULA_PUNTOS: AulaPunto[] = [
   {
-    titulo: 'Apropiación pedagógica',
-    desc: 'El docente alfabetizado digitalmente diseña experiencias de aprendizaje contextualizadas, en vez de imponer tecnología por imposición institucional sin sentido pedagógico propio.',
+    titulo: {
+      docentes: 'Apropiación pedagógica',
+      familias: 'Apropiación cotidiana',
+    },
+    desc: {
+      docentes:
+        'El docente alfabetizado digitalmente diseña experiencias de aprendizaje contextualizadas, en vez de imponer tecnología por imposición institucional sin sentido pedagógico propio.',
+      familias:
+        'La familia alfabetizada digitalmente acompaña con criterio propio las actividades digitales de sus hijos, en vez de imponer o prohibir tecnología sin un sentido claro para la vida en casa.',
+    },
   },
   {
-    titulo: 'Superación de barreras familiares',
-    desc: 'La escuela cumple un rol mediador clave para mitigar la falta de andamiaje y competencias digitales en los hogares más vulnerables.',
+    titulo: {
+      docentes: 'Superación de barreras familiares',
+      familias: 'Superación de barreras del hogar',
+    },
+    desc: {
+      docentes:
+        'La escuela cumple un rol mediador clave para mitigar la falta de andamiaje y competencias digitales en los hogares más vulnerables.',
+      familias:
+        'Vos cumplís un rol mediador clave en casa: cuanto más andamiaje y competencias digitales tengas, mejor podés sostener a tus hijos frente a lo que la escuela sola no alcanza a cubrir.',
+    },
   },
   {
-    titulo: 'Desarrollo profesional continuo',
-    desc: 'Formación permanente en comunidades de práctica docente: evaluación digital formativa, alfabetización mediática frente a desinformación y deepfakes, y uso ético de la IA en la enseñanza.',
+    titulo: {
+      docentes: 'Desarrollo profesional continuo',
+      familias: 'Aprendizaje continuo en familia',
+    },
+    desc: {
+      docentes:
+        'Formación permanente en comunidades de práctica docente: evaluación digital formativa, alfabetización mediática frente a desinformación y deepfakes, y uso ético de la IA en la enseñanza.',
+      familias:
+        'Actualización permanente como familia: aprender a reconocer desinformación y deepfakes, y acompañar a tus hijos en un uso ético de la IA, tanto en casa como en la escuela.',
+    },
   },
 ];
+
+export const AULA_COMUNIDAD_TITULO: AudienciaTexto = {
+  docentes: 'Comunidades de Práctica e Inteligencia Artificial en Educación',
+  familias: 'Acompañar el Uso de la Inteligencia Artificial en Casa',
+};
+
+export const AULA_COMUNIDAD_PARRAFO: AudienciaTexto = {
+  docentes:
+    'El desarrollo profesional continuo requiere que los docentes experimenten con evaluación formativa mediada por tecnología y entiendan el impacto de la IA generativa en el aula, para así guiar a sus alumnos en el uso ético, transparente y citatorio de los algoritmos.',
+  familias:
+    'No hace falta ser experto/a en tecnología: entender el impacto de la IA generativa en la vida cotidiana de tus hijos te permite guiarlos en un uso ético, transparente y responsable de los algoritmos, dentro y fuera de la escuela.',
+};
 
 // ── 09 · Centro de recursos — casos de política pública ──
 

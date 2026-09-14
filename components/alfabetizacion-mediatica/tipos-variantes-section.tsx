@@ -2,7 +2,8 @@
 
 import { Layers, GraduationCap, ShieldAlert, AlertTriangle, EyeOff } from 'lucide-react';
 import { SourceCite } from './source-cite';
-import { DISORDER_TYPES, DISORDER_SOURCE, DISORDER_NOTA_DOCENTE } from '@/lib/alfabetizacion-mediatica-content';
+import { DISORDER_TYPES, DISORDER_SOURCE, DISORDER_NOTA_DOCENTE, DISORDER_NOTA_FAMILIAS, pickFamilias } from '@/lib/alfabetizacion-mediatica-content';
+import { useAudienciaStore } from '@/lib/audiencia-store';
 
 const ICONS = [ShieldAlert, AlertTriangle, EyeOff];
 const ACCENTS = [
@@ -12,6 +13,10 @@ const ACCENTS = [
 ];
 
 export function TiposVariantesSection() {
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual);
+  const esFamilias = audienciaActual === 'familias';
+  const notaAudiencia = pickFamilias(DISORDER_NOTA_DOCENTE, DISORDER_NOTA_FAMILIAS, audienciaActual);
+
   return (
     <section id="tipos-variantes" className="scroll-mt-20 space-y-6">
       <div className="space-y-2">
@@ -49,12 +54,14 @@ export function TiposVariantesSection() {
 
       <SourceCite source={DISORDER_SOURCE} />
 
-      {/* Nota docente — "tip para el aula" */}
+      {/* Nota docente/familias — "tip para el aula" / "tip para casa" */}
       <div className="bg-gradient-to-br from-brand-pink/10 via-white to-transparent border border-brand-pink/30 rounded-2xl p-5 sm:p-6 flex items-start gap-3.5">
         <GraduationCap className="w-5 h-5 text-brand-pink shrink-0 mt-0.5" />
         <div className="space-y-1">
-          <span className="text-xs font-bold text-brand-pink uppercase tracking-wider font-mono">Tip para el aula</span>
-          <p className="text-sm sm:text-base text-slate-700 leading-relaxed">{DISORDER_NOTA_DOCENTE}</p>
+          <span className="text-xs font-bold text-brand-pink uppercase tracking-wider font-mono">
+            {esFamilias ? 'Tip para casa' : 'Tip para el aula'}
+          </span>
+          <p className="text-sm sm:text-base text-slate-700 leading-relaxed">{notaAudiencia}</p>
         </div>
       </div>
     </section>

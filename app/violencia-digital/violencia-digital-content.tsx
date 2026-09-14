@@ -59,8 +59,10 @@ import {
   DEEPFAKES_NOTE,
   MAGNITUD_ARGENTINA,
   FAQ3_AMPLIACION,
+  FAQ3_AMPLIACION_FAMILIAS,
   ALL_SOURCES,
 } from "@/lib/violencia-digital-content"
+import { useAudienciaStore } from "@/lib/audiencia-store"
 
 const INFOGRAFIA_PATH = "/weekly-content/2026-W22/violenciapng.png"
 
@@ -136,9 +138,6 @@ const FAQS: { id: FaqId; q: string; a: string | React.ReactNode }[] = [
         investigar por tu cuenta—. Compartile este mismo protocolo y acompañala a activar el equipo de
         orientación o el protocolo de tu institución. Si es una situación de riesgo inmediato, comunicate
         con las líneas de ayuda correspondientes en lugar de intentar resolverlo solo con lo que sabés.
-        <br />
-        <br />
-        {FAQ3_AMPLIACION}
       </>
     ),
   },
@@ -225,6 +224,13 @@ export default function ViolenciaDigitalContent() {
   const [copied, setCopied] = useState(false)
   const [openFaq, setOpenFaq] = useState<FaqId>(null)
   const [showScrollTop, setShowScrollTop] = useState(false)
+
+  // Única variación por audiencia de esta temática: si no hay filtro o es
+  // "mujeres", se muestra el contenido docente como fallback (comportamiento
+  // actual, sin regresión); solo "familias" cambia el texto.
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual)
+  const notaMagnitud = audienciaActual === "familias" ? MAGNITUD_ARGENTINA.notaFamilias : MAGNITUD_ARGENTINA.notaDocente
+  const faq3Ampliacion = audienciaActual === "familias" ? FAQ3_AMPLIACION_FAMILIAS : FAQ3_AMPLIACION
 
   useEffect(() => {
     const handleScroll = () => setShowScrollTop(window.scrollY > 400)
@@ -881,7 +887,7 @@ export default function ViolenciaDigitalContent() {
 
             <div className="bg-slate-50 rounded-xl p-5 border border-slate-200 flex gap-3 items-start">
               <GraduationCap className="w-5 h-5 text-slate-500 shrink-0 mt-0.5" />
-              <p className="text-sm text-slate-600 leading-relaxed">{MAGNITUD_ARGENTINA.notaDocente}</p>
+              <p className="text-sm text-slate-600 leading-relaxed">{notaMagnitud}</p>
             </div>
           </section>
           </Reveal>
@@ -1007,6 +1013,13 @@ export default function ViolenciaDigitalContent() {
                       >
                         <p className="px-5 pb-5 pt-3 text-sm text-slate-600 border-t border-slate-100 bg-slate-50/50">
                           {faq.a}
+                          {faq.id === "faq3" && (
+                            <>
+                              <br />
+                              <br />
+                              {faq3Ampliacion}
+                            </>
+                          )}
                         </p>
                       </motion.div>
                     )}

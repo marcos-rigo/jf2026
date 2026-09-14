@@ -4,26 +4,37 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { GraduationCap, Zap } from 'lucide-react';
 import { SourceCite } from './source-cite';
-import { AULA_SINTESIS, AULA_SINTESIS_SOURCE, FAQ_ITEMS, SECUENCIA_ARRANQUE } from '@/lib/alfabetizacion-mediatica-content';
+import {
+  AULA_SINTESIS,
+  AULA_SINTESIS_FAMILIAS,
+  AULA_SINTESIS_SOURCE,
+  FAQ_ITEMS,
+  SECUENCIA_ARRANQUE,
+  pickFamilias,
+} from '@/lib/alfabetizacion-mediatica-content';
+import { useAudienciaStore } from '@/lib/audiencia-store';
 
 export function AulaSection() {
   const [openFaq, setOpenFaq] = useState<string | null>(null);
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual);
+  const esFamilias = audienciaActual === 'familias';
+  const sintesis = pickFamilias(AULA_SINTESIS, AULA_SINTESIS_FAMILIAS, audienciaActual);
 
   return (
     <section id="aula" className="scroll-mt-20 space-y-8">
       <div className="space-y-2">
         <div className="flex items-center gap-2 text-brand-pink font-mono text-sm uppercase tracking-wider font-semibold">
           <GraduationCap className="w-4 h-4 text-brand-pink" />
-          <span>08 · Qué significa esto para el aula</span>
+          <span>{esFamilias ? '08 · Qué significa esto en casa' : '08 · Qué significa esto para el aula'}</span>
         </div>
         <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-          El Docente como Primer Filtro
+          {esFamilias ? 'La Familia como Primer Filtro' : 'El Docente como Primer Filtro'}
         </h2>
       </div>
 
       {/* Síntesis */}
       <div className="bg-gradient-to-br from-brand-pink/10 via-white to-brand-blue/5 border border-brand-pink/30 rounded-[2rem] p-6 sm:p-8 space-y-4">
-        <p className="text-base sm:text-lg text-slate-700 leading-relaxed">{AULA_SINTESIS}</p>
+        <p className="text-base sm:text-lg text-slate-700 leading-relaxed">{sintesis}</p>
         <SourceCite source={AULA_SINTESIS_SOURCE} />
       </div>
 
@@ -65,7 +76,7 @@ export function AulaSection() {
                       className="overflow-hidden"
                     >
                       <p className="px-5 sm:px-6 pb-5 sm:pb-6 pt-3 sm:pt-4 text-slate-600 bg-slate-50/50 border-t border-slate-100 text-sm sm:text-base leading-relaxed">
-                        {faq.a}
+                        {pickFamilias(faq.a, faq.aFamilias, audienciaActual)}
                       </p>
                     </motion.div>
                   )}
@@ -87,7 +98,7 @@ export function AulaSection() {
               <li key={paso.n} className="flex gap-3 items-start">
                 <span className="bg-white/10 px-2 py-1 rounded-md text-xs font-mono mt-0.5 shrink-0">{paso.n}</span>
                 <span>
-                  <strong className="text-white">{paso.titulo}:</strong> {paso.texto}
+                  <strong className="text-white">{paso.titulo}:</strong> {pickFamilias(paso.texto, paso.textoFamilias, audienciaActual)}
                 </span>
               </li>
             ))}

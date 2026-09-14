@@ -45,6 +45,7 @@ import { useLibresSubtopic } from '@/lib/hooks/use-libres-subtopic'
 import { getLibresSubtopicBySlug } from '@/lib/libres-bajo-influencia-data'
 import { hexToRgba } from '@/lib/utils'
 import { WebpSlideCarousel } from '@/components/tematicas/WebpSlideCarousel'
+import { useAudienciaStore } from '@/lib/audiencia-store'
 
 // ─── Color Tokens for Diseño Persuasivo y Patrones Oscuros ───
 const ROSE = '#DB2777'
@@ -929,6 +930,8 @@ function MiniRecognitionTest() {
 export function DisenoPersuasivoPatronesOscurosPage() {
   const data = getLibresSubtopicBySlug('diseno-persuasivo-patrones-oscuros')!
   const reducedMotion = useReducedMotion()
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual)
+  const introTexto = audienciaActual === 'familias' && data.introFamilias ? data.introFamilias : data.intro
 
   const { progress, quiz, lightbox } = useLibresSubtopic(data)
 
@@ -1083,7 +1086,7 @@ export function DisenoPersuasivoPatronesOscurosPage() {
               </motion.div>
 
               <motion.p variants={fadeUp} transition={spring} className="text-slate-800 font-extrabold text-lg sm:text-xl md:text-2xl leading-relaxed">
-                {data.intro}
+                {introTexto}
               </motion.p>
 
               <motion.blockquote variants={fadeUp} transition={spring} className="border-l-4 border-rose-300 pl-5 py-1 text-slate-600 text-sm sm:text-base italic leading-relaxed">
@@ -1113,10 +1116,20 @@ export function DisenoPersuasivoPatronesOscurosPage() {
         <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-10 bg-white">
           <div className="max-w-5xl mx-auto space-y-20 sm:space-y-28">
             {data.sections.map((sec, i) => {
+              // Resuelto por audiencia (mismo criterio que las demás páginas del
+              // grupo): si hay variante *Familias y la audiencia activa es
+              // 'familias', se usa esa; si no, el contenido de siempre. Hoy solo
+              // "Qué significa esto para el aula" tiene heading/paragraphs
+              // escritos (sin quoteFamilias) — en el resto resuelve siempre al
+              // mismo valor.
+              const heading = audienciaActual === 'familias' && sec.headingFamilias ? sec.headingFamilias : sec.heading
+              const paragraphs = audienciaActual === 'familias' && sec.paragraphsFamilias ? sec.paragraphsFamilias : sec.paragraphs
+              const quote = audienciaActual === 'familias' && sec.quoteFamilias ? sec.quoteFamilias : sec.quote
+
               const visual = SECTION_VISUALS[i] || {
                 imageSrc: '/img/tematicas/diseno-persuasivo-patrones-oscuros/hero.webp',
                 icon: Ban,
-                label: sec.heading,
+                label: heading,
                 source: 'Referencia Teórica',
                 sourceUrl: 'https://josefarhat.com',
               }
@@ -1135,7 +1148,7 @@ export function DisenoPersuasivoPatronesOscurosPage() {
                 >
                   <EditorialImageFrame
                     imageSrc={visual.imageSrc}
-                    altText={sec.heading}
+                    altText={heading}
                     icon={visual.icon}
                     colorA={accentColor}
                     colorB={isEven ? AMBER : VIOLET}
@@ -1151,19 +1164,19 @@ export function DisenoPersuasivoPatronesOscurosPage() {
                     </span>
 
                     <h2 className="dp-fraunces text-3xl sm:text-4xl md:text-5xl font-black text-[#170a12] leading-tight">
-                      {sec.heading}
+                      {heading}
                     </h2>
 
                     <div className="space-y-4 text-slate-800 font-extrabold text-base sm:text-lg md:text-xl leading-relaxed">
-                      {sec.paragraphs.map((p, idx) => (
+                      {paragraphs.map((p, idx) => (
                         <p key={idx}>{p}</p>
                       ))}
                     </div>
 
-                    {sec.quote && (
+                    {quote && (
                       <blockquote className="mt-6 p-6 rounded-2xl bg-rose-50/80 border-l-4 text-slate-900 font-bold italic text-base sm:text-lg" style={{ borderLeftColor: accentColor }}>
                         <Quote className="w-6 h-6 mb-2" style={{ color: accentText }} />
-                        "{sec.quote}"
+                        "{quote}"
                       </blockquote>
                     )}
                   </div>

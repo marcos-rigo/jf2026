@@ -1,6 +1,19 @@
 // Contenido y citas de la temática "Alfabetización Mediática". Mismo patrón que
 // lib/alfabetizacion-digital-content.ts: cada afirmación factual/estadística se
 // atribuye a una fuente vía SourceCite, en vez de presentarse como hecho suelto.
+//
+// A diferencia de alfabetizacion-digital-content.ts (que usa AudienciaTexto en
+// un mismo campo), este archivo usa consts sueltas — así que la variante por
+// audiencia se replica como "const hermana opcional" (ej. MIL_DOCENTES_QUOTE /
+// MIL_FAMILIAS_QUOTE) en vez de un objeto AudienciaTexto único.
+import type { Audiencia } from './audiencias';
+
+/** Helper ad-hoc de resolución para el patrón "const hermana opcional" de este
+ * archivo: si la audiencia activa es 'familias' y existe variante, la usa;
+ * si no, cae al valor de docentes (audiencia base de esta temática). */
+export function pickFamilias<T>(docenteValue: T, familiaValue: T | undefined, audienciaActual: Audiencia | null): T {
+  return audienciaActual === 'familias' && familiaValue !== undefined ? familiaValue : docenteValue;
+}
 
 export interface Source {
   author: string;
@@ -28,6 +41,14 @@ export const MIL_ORIGEN_QUOTE: Quote = {
 
 export const MIL_DOCENTES_QUOTE: Quote = {
   text: 'UNESCO tiene un marco específico llamado "Media and Information Literacy Competency Framework for Teachers" — un documento oficial pensado exactamente para este público.',
+  source: { author: 'UNESCO', url: 'https://www.unesco.org/en/ami' },
+};
+
+// No existe un marco MIL con nombre propio para familias como el que sí existe
+// para docentes (arriba) — esta variante es honesta sobre esa diferencia en
+// vez de inventar un documento que no existe.
+export const MIL_FAMILIAS_QUOTE: Quote = {
+  text: 'UNESCO impulsa la alfabetización mediática e informacional como una competencia clave para cualquier adulto que acompañe a chicos y chicas en su consumo de información — no es una competencia exclusiva del aula, empieza en casa.',
   source: { author: 'UNESCO', url: 'https://www.unesco.org/en/ami' },
 };
 
@@ -127,6 +148,9 @@ export const DISORDER_TYPES = [
 export const DISORDER_NOTA_DOCENTE =
   'Esta distinción es más útil en el aula que hablar genéricamente de "fake news" — los propios autores del marco evitan ese término a propósito, porque simplifica demasiado un fenómeno donde intención y veracidad son dos ejes independientes.';
 
+export const DISORDER_NOTA_FAMILIAS =
+  'Esta distinción es más útil en casa que hablar genéricamente de "fake news" — los propios autores del marco evitan ese término a propósito, porque simplifica demasiado un fenómeno donde intención y veracidad son dos ejes independientes.';
+
 // ── 05 · Ejemplos concretos — Las 3 fases (sin cambios) ──
 
 export interface FaseEjemplo {
@@ -140,6 +164,7 @@ export interface FaseEjemplo {
   caso: string;
   labTitulo: string;
   labTexto: string;
+  labTextoFamilias?: string;
   labBoton: string;
   accentClass: string;
   gradClass: string;
@@ -163,6 +188,8 @@ export const EJEMPLOS_FASES: FaseEjemplo[] = [
     labTitulo: 'Laboratorio Práctico',
     labTexto:
       'Identificá la primera noticia que veas en tus redes. Antes de leerla, abrí una pestaña nueva y buscá el nombre del sitio + "credibilidad". Podés repetir el mismo ejercicio con tu curso, usando una noticia que ellos mismos hayan visto circular esa semana.',
+    labTextoFamilias:
+      'Identificá la primera noticia que veas en tus redes. Antes de leerla, abrí una pestaña nueva y buscá el nombre del sitio + "credibilidad". Podés repetir el mismo ejercicio con tus hijos, usando una noticia que ellos mismos hayan visto circular esa semana.',
     labBoton: 'Misión Aceptada',
     accentClass: 'text-brand-blue',
     gradClass: 'from-brand-blue to-brand-navy',
@@ -184,6 +211,8 @@ export const EJEMPLOS_FASES: FaseEjemplo[] = [
     labTitulo: 'Laboratorio Práctico',
     labTexto:
       'Tomá un mensaje polémico reciente —puede ser uno que haya circulado en el grupo de WhatsApp del curso o entre las familias— y aplicá la matriz de 3 puntos: 1. Autoría, 2. Evidencia documentada, 3. Ganancia emocional del emisor.',
+    labTextoFamilias:
+      'Tomá un mensaje polémico reciente —puede ser uno que haya circulado en el grupo de WhatsApp de la familia o entre las amistades de tus hijos— y aplicá la matriz de 3 puntos: 1. Autoría, 2. Evidencia documentada, 3. Ganancia emocional del emisor.',
     labBoton: 'Aplicar Matriz',
     accentClass: 'text-brand-pink',
     gradClass: 'from-brand-pink to-brand-navy',
@@ -205,6 +234,8 @@ export const EJEMPLOS_FASES: FaseEjemplo[] = [
     labTitulo: 'Laboratorio Práctico',
     labTexto:
       'Configurá mentalmente un "Delay de 10 segundos". Ante un contenido que genere ira o urgencia, contá hasta 10 antes de tocar compartir — y proponeles a tus estudiantes la misma pausa antes de reenviar algo al grupo del curso.',
+    labTextoFamilias:
+      'Configurá mentalmente un "Delay de 10 segundos". Ante un contenido que genere ira o urgencia, contá hasta 10 antes de tocar compartir — y proponeles a tus hijos la misma pausa antes de reenviar algo al grupo familiar.',
     labBoton: 'Activar Delay',
     accentClass: 'text-cyan-500',
     gradClass: 'from-cyan-600 to-brand-navy',
@@ -276,11 +307,11 @@ export const VULNERABILITIES = [
 export const AULA_SINTESIS =
   'UNESCO tiene un marco específico para esto — el MIL Competency Framework for Teachers — que confirma que dirigir esta temática a docentes no es una adaptación forzada: la alfabetización mediática e informacional está pensada, desde su origen institucional, para formar primero a quien va a formar a otros. El framework C.A.F.E. y el checklist de 5 ítems son exactamente el tipo de herramienta operativa que ese marco pide — y la distinción entre misinformación/desinformación/malinformación le da al docente un vocabulario más preciso que "fake news" para trabajar con el curso.';
 
-// Sin escribir todavía — ver investigación "contenido con variantes por
-// audiencia". Sibling de AULA_SINTESIS para la audiencia "familias" (este
-// archivo usa consts sueltas en vez de campos de un mismo objeto, así que el
-// patrón "campo hermano opcional" se replica como const hermana opcional).
-export const AULA_SINTESIS_FAMILIAS: string | undefined = undefined;
+// Sibling de AULA_SINTESIS para la audiencia "familias" (este archivo usa
+// consts sueltas en vez de campos de un mismo objeto, así que el patrón
+// "campo hermano opcional" se replica como const hermana opcional).
+export const AULA_SINTESIS_FAMILIAS: string | undefined =
+  'La alfabetización mediática e informacional no es una competencia que se aprende solo en la escuela: empieza en casa, con lo que se comparte en el grupo familiar de WhatsApp o lo que circula entre amigos de tus hijos. El framework C.A.F.E. y el checklist de 5 ítems son herramientas simples que podés usar vos misma/o antes de reenviar algo, y después enseñarles el mismo hábito — la distinción entre misinformación/desinformación/malinformación te da un vocabulario más preciso que "fake news" para hablarlo en casa.';
 
 export const AULA_SINTESIS_SOURCE: Source = { author: 'UNESCO', url: 'https://www.unesco.org/en/ami' };
 
@@ -288,6 +319,7 @@ export interface FaqItem {
   id: string;
   q: string;
   a: string;
+  aFamilias?: string;
 }
 
 export const FAQ_ITEMS: FaqItem[] = [
@@ -300,14 +332,25 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: 'faq2',
     q: 'Manejo de conflictos al corregir a un estudiante',
     a: 'Sé amable al corregir: separar a la persona del error hace que sea más fácil que lo acepte, sobre todo frente al resto del curso. Formato sugerido: "Esta noticia está armada de forma confusa; veamos juntos qué dicen las fuentes originales..."',
+    aFamilias:
+      'Sé amable al corregir: separar a la persona del error hace que sea más fácil que lo acepte, sobre todo si hay hermanos o amigos delante. Formato sugerido: "Esta noticia está armada de forma confusa; veamos juntos qué dicen las fuentes originales..."',
   },
 ];
 
-export const SECUENCIA_ARRANQUE = [
+export interface PasoArranque {
+  n: string;
+  titulo: string;
+  texto: string;
+  textoFamilias?: string;
+}
+
+export const SECUENCIA_ARRANQUE: PasoArranque[] = [
   {
     n: '01',
     titulo: 'Limpiá tus redes',
     texto: 'Dejá de seguir al menos 3 cuentas que compartan información sin citar fuentes confiables (podés proponerles a tus estudiantes que hagan el mismo ejercicio con sus propias redes).',
+    textoFamilias:
+      'Dejá de seguir al menos 3 cuentas que compartan información sin citar fuentes confiables (podés proponerles a tus hijos que hagan el mismo ejercicio con sus propias redes).',
   },
   {
     n: '02',
