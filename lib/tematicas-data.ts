@@ -193,7 +193,7 @@ export const groups: TematicaGroup[] = [
         icon: Users,
         color: "#9333EA",
         locked: true,
-        audiencias: ["docentes"],
+        audiencias: ["docentes", "familias"],
       },
       {
         id: "algoritmos-perfilado",
