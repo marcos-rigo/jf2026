@@ -108,7 +108,7 @@ export function TematicasDashboardContent() {
   }
 
   const matchesAudienceFilter = (tema: { audiencias?: Audiencia[] }) =>
-    !selectedAudiencia || !!tema.audiencias?.includes(selectedAudiencia)
+    !!selectedAudiencia && !!tema.audiencias?.includes(selectedAudiencia)
 
   useEffect(() => {
     if (!userId) return
@@ -379,7 +379,13 @@ export function TematicasDashboardContent() {
             </motion.div>
           </motion.div>
 
-          {groups.map((group, gi) => {
+          {!selectedAudiencia && (
+            <p className="text-sm text-slate-400 text-center py-10">
+              Elegí un público (Docentes o Familias) para ver las temáticas disponibles.
+            </p>
+          )}
+
+          {selectedAudiencia && groups.map((group, gi) => {
             const isOpen = !!openGroups[group.label]
             // Cuenta solo temáticas con `completada: true` — no confundir con
             // "tiene algo de porcentaje": el contador del header refleja

@@ -1,13 +1,11 @@
 "use client"
 
-import { useMemo } from "react"
-import { motion } from "framer-motion"
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowDown, ArrowRight, LockKeyhole, Check } from "lucide-react"
+import { ArrowDown, ArrowRight, LockKeyhole, ChevronDown } from "lucide-react"
 import { groups } from "@/lib/tematicas-data"
-import { AUDIENCIAS_ORDENADAS, AUDIENCIA_LABELS, type Audiencia } from "@/lib/audiencias"
-import { useAudienciaStore, useSyncAudienciaFromQuery } from "@/lib/audiencia-store"
 
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
@@ -20,31 +18,13 @@ const containerVariants = {
 }
 
 export function TematicasContent() {
-  // Filtro de públicos: selección única. Ninguno activo = se listan todas las
-  // temáticas, incluidas las que no tienen `audiencias` definido (contenido
-  // ambiguo/sin clasificar — ver content-management/PROPUESTA-AUDIENCIAS.md).
-  // Nota: una temática puede seguir teniendo varias audiencias en su dato
-  // (`audiencias: Audiencia[]`) — lo que es de selección única es la elección
-  // del usuario en el filtro, no la clasificación de contenido.
-  // Estado global (lib/audiencia-store.ts) en vez de useState local, para que
-  // la selección viaje al navegar a una temática individual.
-  const selectedAudiencia = useAudienciaStore((s) => s.audienciaActual)
-  const setSelectedAudienciaGlobal = useAudienciaStore((s) => s.setAudiencia)
-  useSyncAudienciaFromQuery()
-
-  const selectAudiencia = (audiencia: Audiencia) => {
-    setSelectedAudienciaGlobal(selectedAudiencia === audiencia ? null : audiencia)
+  // Grupos comprimidos (acordeón) por defecto — solo en esta página. Estado
+  // local, no el store global de audiencias (el filtro de público se sacó
+  // de esta página).
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({})
+  const toggleGroup = (label: string) => {
+    setOpenGroups((prev) => ({ ...prev, [label]: !prev[label] }))
   }
-
-  const filteredGroups = useMemo(() => {
-    if (!selectedAudiencia) return groups
-    return groups
-      .map((group) => ({
-        ...group,
-        items: group.items.filter((tema) => tema.audiencias?.includes(selectedAudiencia)),
-      }))
-      .filter((group) => group.items.length > 0)
-  }, [selectedAudiencia])
 
   return (
     <main className="min-h-screen bg-[#F2F6FF]">
@@ -273,51 +253,9 @@ export function TematicasContent() {
       <section id="tematicas-list" className="py-16 md:py-24">
         <div className="container mx-auto px-6 lg:px-16 xl:px-24 space-y-14">
 
-          {/* Filtro de públicos */}
-          <div>
-            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">
-              Filtrar por público
-            </p>
-            <div className="flex flex-wrap gap-2.5" role="tablist" aria-label="Filtrar temáticas por público">
-              {AUDIENCIAS_ORDENADAS.map((audiencia) => {
-                const active = selectedAudiencia === audiencia
-                return (
-                  <button
-                    key={audiencia}
-                    type="button"
-                    role="tab"
-                    onClick={() => selectAudiencia(audiencia)}
-                    aria-selected={active}
-                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide border transition-colors duration-200 ${
-                      active
-                        ? "bg-brand-blue border-brand-blue text-white"
-                        : "bg-white border-slate-200 text-slate-500 hover:border-brand-blue/40 hover:text-brand-blue"
-                    }`}
-                  >
-                    {active && <Check className="w-3.5 h-3.5" />}
-                    {AUDIENCIA_LABELS[audiencia]}
-                  </button>
-                )
-              })}
-              {selectedAudiencia && (
-                <button
-                  type="button"
-                  onClick={() => setSelectedAudienciaGlobal(null)}
-                  className="inline-flex items-center px-4 py-2 rounded-full text-xs font-semibold text-slate-400 hover:text-brand-navy transition-colors duration-200"
-                >
-                  Limpiar filtro
-                </button>
-              )}
-            </div>
-          </div>
-
-          {filteredGroups.length === 0 && (
-            <p className="text-sm text-slate-400">
-              Ninguna temática clasificada coincide con el público seleccionado todavía.
-            </p>
-          )}
-
-          {filteredGroups.map((group, gi) => (
+          {groups.map((group, gi) => {
+            const isOpen = !!openGroups[group.label]
+            return (
             <motion.div
               key={group.label}
               initial={{ opacity: 0, y: 32 }}
@@ -325,8 +263,13 @@ export function TematicasContent() {
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.55, delay: gi * 0.04 }}
             >
-              {/* Group divider */}
-              <div className="flex items-center gap-3 mb-7">
+              {/* Group header — acordeón, comprimido por defecto */}
+              <button
+                type="button"
+                onClick={() => toggleGroup(group.label)}
+                aria-expanded={isOpen}
+                className="w-full flex items-center gap-3 mb-0 py-2 group/header"
+              >
                 <div
                   className="w-1.5 h-7 rounded-full flex-shrink-0"
                   style={{ backgroundColor: group.accent }}
@@ -334,31 +277,40 @@ export function TematicasContent() {
                 <h2 className="text-lg font-display font-bold text-brand-navy">{group.label}</h2>
                 <div className="flex-1 h-px bg-slate-200" />
                 <span
-                  className="text-xs font-bold px-3 py-1 rounded-full"
+                  className="text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap"
                   style={{ backgroundColor: `${group.accent}18`, color: group.accent }}
                 >
                   {group.items.length} {group.items.length === 1 ? "tema" : "temas"}
                 </span>
-              </div>
+                <motion.div
+                  animate={{ rotate: isOpen ? 180 : 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="flex-shrink-0 text-slate-400 group-hover/header:text-brand-blue transition-colors"
+                >
+                  <ChevronDown className="w-5 h-5" />
+                </motion.div>
+              </button>
 
               {/* Cards */}
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-40px" }}
-                className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
-              >
-                {group.items.map((tema) => {
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    key="content"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <motion.div
+                      variants={containerVariants}
+                      initial="hidden"
+                      animate="visible"
+                      className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-7"
+                    >
+                      {group.items.map((tema) => {
                   const IconComponent = tema.icon
-                  // El filtro activo viaja en la URL para que el link a la
-                  // temática individual sea compartible y autocontenido, sin
-                  // depender solo de lo persistido en el store.
-                  const linkHref = tema.locked
-                    ? "/ciudadania-presente/modulos"
-                    : selectedAudiencia
-                      ? `${tema.href}?audiencia=${selectedAudiencia}`
-                      : tema.href
+                  const linkHref = tema.locked ? "/ciudadania-presente/modulos" : tema.href
                   return (
                     <motion.div key={tema.title} variants={cardVariants}>
                       <Link href={linkHref} scroll={true} className="group block h-full">
@@ -440,10 +392,14 @@ export function TematicasContent() {
                       </Link>
                     </motion.div>
                   )
-                })}
-              </motion.div>
+                      })}
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
-          ))}
+            )
+          })}
         </div>
       </section>
 

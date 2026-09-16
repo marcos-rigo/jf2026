@@ -44,6 +44,7 @@ import { BackToDashboardButton } from '@/components/tematicas/back-to-dashboard-
 import { Footer } from '@/components/footer'
 import { useLibresSubtopic } from '@/lib/hooks/use-libres-subtopic'
 import { getLibresSubtopicBySlug } from '@/lib/libres-bajo-influencia-data'
+import { useAudienciaStore } from '@/lib/audiencia-store'
 import { hexToRgba } from '@/lib/utils'
 import { WebpSlideCarousel } from '@/components/tematicas/WebpSlideCarousel'
 
@@ -926,6 +927,7 @@ function StatsDashboard() {
 export function PoliedroCiudadaniaDigitalPage() {
   const data = getLibresSubtopicBySlug('poliedro-ciudadania-digital')!
   const reducedMotion = useReducedMotion()
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual)
 
   const { progress, quiz, lightbox } = useLibresSubtopic(data)
 
@@ -1119,6 +1121,7 @@ export function PoliedroCiudadaniaDigitalPage() {
               const isEven = i % 2 === 0
               const accentColor = i % 3 === 0 ? BLUE : i % 3 === 1 ? CYAN : INDIGO
               const accentText = i % 3 === 0 ? BLUE_TEXT : i % 3 === 1 ? CYAN_TEXT : INDIGO_TEXT
+              const paragraphs = audienciaActual === 'familias' && sec.paragraphsFamilias ? sec.paragraphsFamilias : sec.paragraphs
 
               return (
                 <motion.article
@@ -1151,7 +1154,7 @@ export function PoliedroCiudadaniaDigitalPage() {
                     </h2>
 
                     <div className="space-y-4 text-slate-800 font-extrabold text-base sm:text-lg md:text-xl leading-relaxed">
-                      {sec.paragraphs.map((p, idx) => (
+                      {paragraphs.map((p, idx) => (
                         <p key={idx}>{p}</p>
                       ))}
                     </div>

@@ -7,12 +7,23 @@ import { useAppStore } from "@/lib/ciudadania/app-store"
 import { useTematicaProgress } from "@/lib/hooks/use-tematica-progress"
 import { TematicaCompletarButton } from "@/components/tematica-completar-button"
 import { SourceCite } from "@/components/nnya-entorno-digital/source-cite"
+import { useAudienciaStore } from "@/lib/audiencia-store"
+import { resolveTexto, type AudienciaTexto } from "@/lib/audiencia-texto"
+import type { Audiencia } from "@/lib/audiencias"
 import {
   FILTER_BUBBLE_QUOTE,
   GLOBAL_KIDS_ONLINE_SOURCE,
   UNICEF_BENEFICIOS_QUOTE,
   FUENTES_CITADAS,
 } from "@/lib/nnya-entorno-digital-content"
+
+// Resuelve un campo que puede ser texto neutro (string) o con variante por
+// audiencia (AudienciaTexto). Fallback 'familias': es la voz original de
+// esta página (mismo criterio que app/tematicas/cibercrianza).
+function ta(texto: string | AudienciaTexto, audienciaActual: Audiencia | null): string {
+  if (typeof texto === "string") return texto
+  return resolveTexto(texto, audienciaActual, "familias")
+}
 import {
   Smartphone, ShieldCheck, HeartPulse, MessageCircle, Users, Eye, Lightbulb,
   ChevronRight, BookOpen, Settings, Download, Fingerprint, Baby, Wifi, Brain,
@@ -260,17 +271,17 @@ const pasosMediacion = [
   { id: 3, titulo: "Chequeá su huella digital", desc: "Búscalos en Google juntos: revisá qué fotos, comentarios o perfiles son visibles para cualquier persona. Esa información conforma su reputación digital y puede acompañarlos durante años.", icono: Fingerprint, color: "bg-gradient-to-br from-cyan-500 to-brand-blue" },
   { id: 4, titulo: "Pensamiento crítico", desc: "Ayudalos a dudar. ¿Esa noticia es real? ¿Ese influencer está sponsoreado? Fomentar la duda es la mejor defensa contra la desinformación y el grooming (cuando un adulto se gana la confianza de un menor en línea con fines de abuso).", icono: Lightbulb, color: "bg-gradient-to-br from-amber-400 to-orange-500" },
   { id: 5, titulo: "Confianza cero", desc: "Enseñales a no compartir datos personales —dirección, colegio, número de teléfono— con desconocidos en línea, aunque parezcan amigos. En Internet, la identidad de alguien no siempre es la que muestra.", icono: Lock, color: "bg-gradient-to-br from-rose-400 to-pink-500" },
-  { id: 6, titulo: "Higiene digital", desc: "Establecé rutinas saludables: sin pantallas durante las comidas, activar el modo descanso antes de dormir y reservar espacios offline en familia. Si sos docente, podés proponer lo mismo como acuerdo de curso: momentos sin pantallas compartidos en clase. Pequeños hábitos que mejoran la concentración y el bienestar general.", icono: HeartPulse, color: "bg-gradient-to-br from-indigo-400 to-violet-500" },
+  { id: 6, titulo: "Higiene digital", desc: { familias: "Establecé rutinas saludables: sin pantallas durante las comidas, activar el modo descanso antes de dormir y reservar espacios offline en familia. Pequeños hábitos que mejoran la concentración y el bienestar general.", docentes: "Establecé rutinas saludables: sin pantallas durante las comidas, activar el modo descanso antes de dormir y reservar espacios offline en familia. Si sos docente, podés proponer lo mismo como acuerdo de curso: momentos sin pantallas compartidos en clase. Pequeños hábitos que mejoran la concentración y el bienestar general." } as string | AudienciaTexto, icono: HeartPulse, color: "bg-gradient-to-br from-indigo-400 to-violet-500" },
   { id: 7, titulo: "Pacten los límites", desc: "La prohibición total rara vez funciona. Es mejor acordar horarios libres de pantallas (ej: durante la cena o antes de dormir) para cuidar su calidad del sueño.", icono: ShieldCheck, color: "bg-gradient-to-br from-brand-pink to-violet-500" },
 ]
 const herramientas = [
-  { titulo: "Guía de Privacidad", desc: "Paso a paso para configurar la seguridad en TikTok, Instagram y WhatsApp junto a tus estudiantes.", icono: ShieldCheck, gradient: "from-brand-blue to-cyan-400", tag: "Descargable" },
+  { titulo: "Guía de Privacidad", desc: { familias: "Paso a paso para configurar la seguridad en TikTok, Instagram y WhatsApp junto a tus hijos.", docentes: "Paso a paso para configurar la seguridad en TikTok, Instagram y WhatsApp junto a tus estudiantes." } as string | AudienciaTexto, icono: ShieldCheck, gradient: "from-brand-blue to-cyan-400", tag: "Descargable" },
   { titulo: "Glosario Digital", desc: "Grooming, Sharenting, Sexting... ¿Qué significan y cómo detectarlos antes de que sea tarde?", icono: BookOpen, gradient: "from-brand-pink to-orange-400", tag: "Lectura" },
   { titulo: "Control Parental", desc: "Apps y configuraciones recomendadas para acompañar sin invadir. El equilibrio entre protección y autonomía.", icono: Smartphone, gradient: "from-violet-500 to-brand-blue", tag: "Herramientas" },
 ]
 const consejosRapidos = [
-  { texto: "Cuidá las fotos y videos de tus estudiantes que se publican desde la escuela o el grupo del curso", icono: "📸" },
-  { texto: "Publicar fotos de estudiantes sin autorización expone su identidad digital sin que ellos lo elijan", icono: "🧒" },
+  { texto: { familias: "Cuidá las fotos y videos que publicás de tus hijos", docentes: "Cuidá las fotos y videos de tus estudiantes que se publican desde la escuela o el grupo del curso" } as string | AudienciaTexto, icono: "📸" },
+  { texto: { familias: "El sharenting expone la identidad digital de tus hijos sin que ellos lo elijan", docentes: "Publicar fotos de estudiantes sin autorización expone su identidad digital sin que ellos lo elijan" } as string | AudienciaTexto, icono: "🧒" },
   { texto: "Enseñales a bloquear y reportar", icono: "🚫" },
   { texto: "El modo avión ayuda a desconectar", icono: "✈️" },
   { texto: "Tu ejemplo también educa: los hábitos digitales se aprenden mirándote a vos", icono: "⭐" },
@@ -288,6 +299,7 @@ const señalesAlerta = [
 
 // ── Main component ──────────────────────────────────────────────────────
 export function NnyaEntornoDigitalContent() {
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual)
   const userId = useAppStore((s) => s.user?.id ?? null)
   const progress = useTematicaProgress({ tematicaId: "nnya-entorno-digital", userId })
   const [pasoActivo, setPasoActivo] = useState(1)
@@ -959,7 +971,7 @@ export function NnyaEntornoDigitalContent() {
                             <div className={`flex-shrink-0 flex h-12 w-12 items-center justify-center rounded-2xl ${paso.color} text-white shadow-lg`}>
                               <Icon className="w-6 h-6" />
                             </div>
-                            <p className="text-sm leading-7 text-slate-600">{paso.desc}</p>
+                            <p className="text-sm leading-7 text-slate-600">{ta(paso.desc, audienciaActual)}</p>
                           </div>
                           <div className="mt-4 rounded-xl bg-brand-navy/95 px-4 py-3 text-white">
                             <p className="text-[10px] uppercase tracking-[0.25em] text-slate-400 mb-1">Tip clave</p>
@@ -1043,7 +1055,7 @@ export function NnyaEntornoDigitalContent() {
                             <Icon className="w-8 h-8" />
                           </div>
                         </div>
-                        <p className="text-base xl:text-lg leading-8 text-slate-600">{paso.desc}</p>
+                        <p className="text-base xl:text-lg leading-8 text-slate-600">{ta(paso.desc, audienciaActual)}</p>
 
                         {/* Progress dots */}
                         <div className="flex gap-2 mt-8">
@@ -1145,7 +1157,7 @@ export function NnyaEntornoDigitalContent() {
                 className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-100/80 shadow-sm hover:shadow-xl hover:border-brand-blue/20 hover:bg-white transition-all duration-300 flex items-start gap-4"
               >
                 <span className="text-3xl shrink-0 group-hover:scale-110 transition-transform duration-200">{consejo.icono}</span>
-                <p className="font-semibold text-brand-navy text-base leading-relaxed">{consejo.texto}</p>
+                <p className="font-semibold text-brand-navy text-base leading-relaxed">{ta(consejo.texto, audienciaActual)}</p>
               </motion.div>
             ))}
           </div>
@@ -1436,7 +1448,7 @@ export function NnyaEntornoDigitalContent() {
             </h2>
 
             <p className="text-xl text-blue-100/70 max-w-2xl mb-10 leading-relaxed">
-              La tecnología avanza rápido, pero el diálogo y el acompañamiento no pasan de moda. Involucrate hoy en la vida digital de tus estudiantes.
+              {ta({ familias: "La tecnología avanza rápido, pero el diálogo y el acompañamiento no pasan de moda. Involucrate hoy en la vida digital de tus hijos.", docentes: "La tecnología avanza rápido, pero el diálogo y el acompañamiento no pasan de moda. Involucrate hoy en la vida digital de tus estudiantes." }, audienciaActual)}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">

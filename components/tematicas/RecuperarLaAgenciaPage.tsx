@@ -46,6 +46,7 @@ import { BackToDashboardButton } from '@/components/tematicas/back-to-dashboard-
 import { Footer } from '@/components/footer'
 import { useLibresSubtopic } from '@/lib/hooks/use-libres-subtopic'
 import { getLibresSubtopicBySlug } from '@/lib/libres-bajo-influencia-data'
+import { useAudienciaStore } from '@/lib/audiencia-store'
 import { hexToRgba } from '@/lib/utils'
 
 import { WebpSlideCarousel } from '@/components/tematicas/WebpSlideCarousel'
@@ -892,6 +893,7 @@ const spring = { type: 'spring' as const, stiffness: 260, damping: 20 }
 export function RecuperarLaAgenciaPage() {
   const data = getLibresSubtopicBySlug('recuperar-la-agencia')!
   const reducedMotion = useReducedMotion()
+  const audienciaActual = useAudienciaStore((s) => s.audienciaActual)
 
   const { progress, quiz, lightbox } = useLibresSubtopic(data)
   const {
@@ -1188,6 +1190,7 @@ export function RecuperarLaAgenciaPage() {
               const floatSide = i % 2 === 0 ? 'right' : 'left'
               const icons = [Compass, ScanEye, EyeOff]
               const Icon = icons[i] || Compass
+              const paragraphs = audienciaActual === 'familias' && sec.paragraphsFamilias ? sec.paragraphsFamilias : sec.paragraphs
 
               return (
                 <motion.article
@@ -1218,7 +1221,7 @@ export function RecuperarLaAgenciaPage() {
                       {sec.heading}
                     </h2>
                     <div className="space-y-4 text-slate-800 font-extrabold text-base sm:text-lg md:text-xl leading-relaxed">
-                      {sec.paragraphs.map((p, idx) => <p key={idx}>{p}</p>)}
+                      {paragraphs.map((p, idx) => <p key={idx}>{p}</p>)}
                     </div>
                     {sec.quote && (
                       <blockquote className="mt-6 p-6 rounded-2xl bg-emerald-50/80 border-l-4 border-emerald-600 text-slate-900 font-bold italic text-base sm:text-lg clear-both">

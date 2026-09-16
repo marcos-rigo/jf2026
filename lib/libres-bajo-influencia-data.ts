@@ -504,6 +504,10 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
           '¿Cómo se entrena esa capacidad, justo en el momento del impulso, que es el momento difícil? Con una secuencia de tres verbos: pausar, preguntar, elegir. Pausar crea una distancia mínima entre el estímulo y la respuesta. Preguntar convierte una reacción automática en una evaluación. Y elegir devuelve el protagonismo. Dejar el teléfono treinta segundos antes de responder algo que da bronca parece una nimiedad, pero cambia por completo la situación.',
           'Cinco preguntas simples pueden acompañar esa pausa, para adultos y para chicos: ¿por qué me aparece esto justo a mí? ¿Qué quiere que yo haga? ¿Qué emoción me está tocando? ¿Qué dato estoy entregando? ¿Qué otra opción tengo? Convertir estas cinco preguntas en un cartel o una rutina fija antes de usar el celular en clase es una forma simple de instalar la pausa como hábito, no como excepción.',
         ],
+        paragraphsFamilias: [
+          '¿Cómo se entrena esa capacidad, justo en el momento del impulso, que es el momento difícil? Con una secuencia de tres verbos: pausar, preguntar, elegir. Pausar crea una distancia mínima entre el estímulo y la respuesta. Preguntar convierte una reacción automática en una evaluación. Y elegir devuelve el protagonismo. Dejar el teléfono treinta segundos antes de responder algo que da bronca parece una nimiedad, pero cambia por completo la situación.',
+          'Cinco preguntas simples pueden acompañar esa pausa, para adultos y para chicos: ¿por qué me aparece esto justo a mí? ¿Qué quiere que yo haga? ¿Qué emoción me está tocando? ¿Qué dato estoy entregando? ¿Qué otra opción tengo? Convertir estas cinco preguntas en un cartel o una rutina fija en casa antes de usar el celular es una forma simple de instalar la pausa como hábito, no como excepción.',
+        ],
         quote: 'La agencia no es controlar todo: es poder decidir mejor.',
       },
       {
@@ -511,6 +515,10 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
         paragraphs: [
           'Para lo que leemos, Mike Caulfield propone algo muy práctico llamado lectura lateral: en vez de quedarse dentro de una página tratando de decidir si es confiable mirándola por dentro, salir de ella — abrir otra pestaña, buscar quién publica eso, contrastar, rastrear hasta la fuente original. Los verificadores profesionales no leen hacia abajo: leen hacia los costados. Preguntar, en este sentido, no es desconfiar de todo ni volverse cínico: es aprender a confiar con razones.',
           'Algunas prácticas concretas ayudan a sostener esto en el tiempo: revisar los permisos que dimos, ordenar las notificaciones, crear pausas reales, diversificar las fuentes, conversar antes de reaccionar. Trabajar la lectura lateral con una noticia real que haya circulado esa semana en el curso convierte la técnica en algo tangible, en vez de una instrucción abstracta.',
+        ],
+        paragraphsFamilias: [
+          'Para lo que leemos, Mike Caulfield propone algo muy práctico llamado lectura lateral: en vez de quedarse dentro de una página tratando de decidir si es confiable mirándola por dentro, salir de ella — abrir otra pestaña, buscar quién publica eso, contrastar, rastrear hasta la fuente original. Los verificadores profesionales no leen hacia abajo: leen hacia los costados. Preguntar, en este sentido, no es desconfiar de todo ni volverse cínico: es aprender a confiar con razones.',
+          'Algunas prácticas concretas ayudan a sostener esto en el tiempo: revisar los permisos que dimos, ordenar las notificaciones, crear pausas reales, diversificar las fuentes, conversar antes de reaccionar. Trabajar la lectura lateral con una noticia real que haya circulado esa semana en la familia convierte la técnica en algo tangible, en vez de una instrucción abstracta.',
         ],
         quote: 'Preguntar también es una forma de cuidado. Y es ciudadanía digital.',
       },
@@ -589,6 +597,10 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
           'Amartya Sen enseñó a entender la libertad de un modo que lo cambia todo: la libertad son las capacidades reales para hacer y para ser. No alcanza con que una opción exista en el papel — para ser realmente libre hacen falta conocimientos, derechos, apoyos y posibilidades efectivas de actuar. Eso es exactamente lo que hace una escuela: la escuela reparte capacidades, la escuela reparte libertad.',
           'Las plataformas influyen, pero no determinan del todo. Los algoritmos organizan, pero se pueden interrogar. Los diseños empujan, pero se puede uno detener. Las culturas influyen, pero también se pueden transformar. Formar ciudadanía digital es formar personas capaces de comprender, elegir, convivir, cuidar, participar y transformar.',
         ],
+        paragraphsFamilias: [
+          'Amartya Sen enseñó a entender la libertad de un modo que lo cambia todo: la libertad son las capacidades reales para hacer y para ser. No alcanza con que una opción exista en el papel — para ser realmente libre hacen falta conocimientos, derechos, apoyos y posibilidades efectivas de actuar. Eso es exactamente lo que hace una familia: la familia reparte capacidades, la familia reparte libertad.',
+          'Las plataformas influyen, pero no determinan del todo. Los algoritmos organizan, pero se pueden interrogar. Los diseños empujan, pero se puede uno detener. Las culturas influyen, pero también se pueden transformar. Formar ciudadanía digital es formar personas capaces de comprender, elegir, convivir, cuidar, participar y transformar.',
+        ],
       },
     ],
     closingQuote: 'No se trata de vivir libres de toda influencia. Se trata de aprender a ser libres bajo influencia.',
@@ -608,7 +620,7 @@ export const LIBRES_BAJO_INFLUENCIA_DATA: LibresSubtopicContent[] = [
     pdfLabel: 'Presentación — Ciudadanía digital: el poliedro',
     infografiaUrl: '/img/tematicas/poliedro-ciudadania-digital/infografia.webp',
     infografiaAlt: 'Infografía de Ciudadanía digital: el poliedro',
-    audiencias: ['docentes'],
+    audiencias: ['docentes', 'familias'],
   },
 ]
 

@@ -19,14 +19,20 @@ export const AUDIENCIA_LABELS: Record<Audiencia, string> = {
   'mujeres': 'Mujeres',
 }
 
-// Orden de despliegue en el filtro de UI. 'adultos-mayores' se mantiene acá
-// aunque hoy ninguna temática la tenga asignada — es intencional, no un bug.
+// Orden de despliegue en el filtro de UI. 'ninas-ninos-adolescentes', 'mujeres'
+// y 'adultos-mayores' quedan comentadas a propósito: todavía no hay contenido
+// específico escrito para esos públicos (a diferencia de 'docentes'/'familias',
+// que ya tienen variantes reales en varias temáticas). El resto de la
+// infraestructura (tipo `Audiencia`, labels, íconos, colores, y el
+// `audiencias: Audiencia[]` ya asignado en algunas temáticas de
+// `lib/tematicas-data.ts`) se deja intacta para cuando se sume ese contenido:
+// alcanza con descomentar las líneas de abajo.
 export const AUDIENCIAS_ORDENADAS: Audiencia[] = [
   'docentes',
   'familias',
-  'ninas-ninos-adolescentes',
-  'mujeres',
-  'adultos-mayores',
+  // 'ninas-ninos-adolescentes',
+  // 'mujeres',
+  // 'adultos-mayores',
 ]
 
 // Ícono y color distintivo por público, para que el filtro se lea de un
