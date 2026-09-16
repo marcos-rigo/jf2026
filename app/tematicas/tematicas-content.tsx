@@ -4,7 +4,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowDown, ArrowRight, LockKeyhole, ChevronDown } from "lucide-react"
+import { ArrowDown, ArrowRight, ChevronDown } from "lucide-react"
 import { groups } from "@/lib/tematicas-data"
 
 const cardVariants = {
@@ -308,12 +308,11 @@ export function TematicasContent() {
                       animate="visible"
                       className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-7"
                     >
-                      {group.items.map((tema) => {
+                      {group.items.filter((tema) => !tema.locked).map((tema) => {
                   const IconComponent = tema.icon
-                  const linkHref = tema.locked ? "/ciudadania-presente/modulos" : tema.href
                   return (
                     <motion.div key={tema.title} variants={cardVariants}>
-                      <Link href={linkHref} scroll={true} className="group block h-full">
+                      <Link href={tema.href} scroll={true} className="group block h-full">
                         <div
                           className="relative h-full bg-white rounded-2xl overflow-hidden flex flex-col border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
                           style={{ borderTop: `3px solid ${tema.color}` }}
@@ -326,23 +325,10 @@ export function TematicasContent() {
                               fill
                               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                               loading="lazy"
-                              className={`object-cover transition-transform duration-500 group-hover:scale-105${tema.locked ? " grayscale opacity-50" : ""}`}
+                              className="object-cover transition-transform duration-500 group-hover:scale-105"
                             />
                             {/* Light gradient overlay */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-
-                            {tema.locked && (
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="flex flex-col items-center gap-2">
-                                  <div className="w-10 h-10 rounded-full bg-white/95 shadow flex items-center justify-center">
-                                    <LockKeyhole className="w-4 h-4 text-slate-500" />
-                                  </div>
-                                  <span className="text-xs font-semibold text-white bg-slate-800/70 backdrop-blur-sm px-3 py-1 rounded-full">
-                                    Próximamente
-                                  </span>
-                                </div>
-                              </div>
-                            )}
 
                             {/* Category badge */}
                             <div className="absolute top-3 left-3">
@@ -366,20 +352,13 @@ export function TematicasContent() {
                             </p>
 
                             <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                              {tema.locked ? (
-                                <span className="text-xs font-medium text-slate-400 flex items-center gap-1.5">
-                                  <LockKeyhole className="w-3.5 h-3.5" />
-                                  Disponible próximamente
-                                </span>
-                              ) : (
-                                <span
-                                  className="text-sm font-semibold flex items-center gap-1.5 group-hover:gap-2.5 transition-all duration-200"
-                                  style={{ color: tema.color }}
-                                >
-                                  Explorar
-                                  <ArrowRight className="w-4 h-4" />
-                                </span>
-                              )}
+                              <span
+                                className="text-sm font-semibold flex items-center gap-1.5 group-hover:gap-2.5 transition-all duration-200"
+                                style={{ color: tema.color }}
+                              >
+                                Explorar
+                                <ArrowRight className="w-4 h-4" />
+                              </span>
                               <div
                                 className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
                                 style={{ backgroundColor: `${tema.color}15` }}
@@ -393,6 +372,46 @@ export function TematicasContent() {
                     </motion.div>
                   )
                       })}
+
+                      {(() => {
+                        const lockedItems = group.items.filter((tema) => tema.locked)
+                        if (lockedItems.length === 0) return null
+                        return (
+                          <motion.div variants={cardVariants}>
+                            <Link href="/ciudadania-presente/login" scroll={true} className="group block h-full">
+                              <div className="relative h-full min-h-[260px] rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50/60 hover:bg-white hover:border-brand-blue/40 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col items-center justify-center text-center p-6 gap-3">
+                                {/* Sneak peek: mini stack of icons from the hidden temas */}
+                                <div className="flex -space-x-2 mb-1">
+                                  {lockedItems.slice(0, 4).map((tema) => {
+                                    const Icon = tema.icon
+                                    return (
+                                      <div
+                                        key={tema.id}
+                                        className="w-9 h-9 rounded-full flex items-center justify-center border-2 border-white shadow-sm"
+                                        style={{ backgroundColor: `${tema.color}18` }}
+                                      >
+                                        <Icon className="w-4 h-4" style={{ color: tema.color }} />
+                                      </div>
+                                    )
+                                  })}
+                                </div>
+
+                                <p className="text-sm font-display font-bold text-brand-navy leading-snug">
+                                  +{lockedItems.length} {lockedItems.length === 1 ? "temática más" : "temáticas más"}
+                                </p>
+                                <p className="text-xs text-slate-400 leading-relaxed max-w-[20ch]">
+                                  Iniciá sesión o registrate para desbloquearlas
+                                </p>
+
+                                <span className="mt-1 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold text-white bg-brand-blue group-hover:bg-brand-blue/90 transition-colors duration-200">
+                                  Ver más
+                                  <ArrowRight className="w-3.5 h-3.5" />
+                                </span>
+                              </div>
+                            </Link>
+                          </motion.div>
+                        )
+                      })()}
                     </motion.div>
                   </motion.div>
                 )}
