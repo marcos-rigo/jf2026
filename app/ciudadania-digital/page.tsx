@@ -1,15 +1,17 @@
 import type { Metadata } from 'next';
 import CiudadaniaDigitalContent from '@/app/ciudadania-digital/ciudadania-digital-content';
 
+const TITLE = 'Ciudadanía Digital: de usuario a ciudadano';
+const DESCRIPTION =
+  'El módulo base de la plataforma: qué significa ejercer ciudadanía en un mundo mediado por tecnología, y el mapa de las 10 capacidades para hacerlo.';
+
 export const metadata: Metadata = {
-  title: 'Kit de Acción del Ciudadano Digital | José Farhat',
-  description:
-    'Toma el control de tu vida en línea. Aprende sobre seguridad digital, netiqueta, IA y cómo detectar desinformación. Un protocolo interactivo para ciudadanía digital responsable.',
-  keywords: ['ciudadanía digital', 'seguridad digital', 'privacidad online', 'desinformación', 'netiqueta'],
+  title: TITLE,
+  description: DESCRIPTION,
+  keywords: ['ciudadanía digital', 'Poliedro de la Ciudadanía Digital', 'territorio híbrido', 'derechos digitales', 'docentes'],
   openGraph: {
-    title: 'Kit de Acción del Ciudadano Digital | José Farhat',
-    description:
-      'Toma el control de tu vida en línea. Aprende sobre seguridad digital, netiqueta, IA y cómo detectar desinformación.',
+    title: TITLE,
+    description: DESCRIPTION,
     type: 'website',
     locale: 'es_AR',
   },

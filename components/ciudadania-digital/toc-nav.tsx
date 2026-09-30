@@ -12,7 +12,7 @@ function scrollToSection(id: string) {
 // cuál está visible (scroll-spy vía IntersectionObserver).
 //
 // Desktop: sidebar vertical fijo (igual look que el nav anterior).
-// Mobile: barra horizontal compacta y scrolleable — 9 secciones no entran como
+// Mobile: barra horizontal compacta y scrolleable — 10 secciones no entran como
 // texto completo en una fila, así que acá se usan las etiquetas cortas
 // (`shortLabel`) en vez del label completo que usa desktop.
 export function TocNav() {
@@ -45,7 +45,7 @@ export function TocNav() {
 
   return (
     <>
-      {/* ── Desktop: sidebar vertical fijo y compacto — las 9 secciones entran
+      {/* ── Desktop: sidebar vertical fijo y compacto — las 10 secciones entran
           sin scroll interno en una pantalla de laptop estándar (~800px de alto útil) ── */}
       <nav className="hidden md:flex w-64 pt-20 backdrop-blur-xl bg-white/80 border-r border-slate-200 flex-col shadow-xl h-screen sticky top-0 shrink-0 z-10 overflow-y-auto">
         <div className="px-5 py-4 border-b border-slate-200 bg-slate-50/70">
