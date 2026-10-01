@@ -1,4 +1,4 @@
-import { Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, Scale, BookOpen, ScanEye, MousePointerClick, Flame, Compass, Hexagon, type LucideIcon } from "lucide-react"
+import { Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, Scale, BookOpen, ScanEye, MousePointerClick, Flame, Compass, Hexagon, Microscope, type LucideIcon } from "lucide-react"
 import type { Audiencia } from "./audiencias"
 
 export interface TematicaItem {
@@ -64,6 +64,20 @@ export const groups: TematicaGroup[] = [
         image: "/img/cards/ciudDig.jpg",
         imageAlt: "Banner Instrumental y Acceso",
         icon: Shield,
+        color: "#4272BB",
+        locked: false,
+        audiencias: ["docentes"],
+      },
+      {
+        id: "cognitivo-intelectual-e-informacional",
+        href: "/tematicas/cognitivo-intelectual-e-informacional",
+        category: "Kit de Acción",
+        title: "Cognitivo-Intelectual e Informacional",
+        description: "La segunda dimensión del Poliedro de Ciudadanía Digital: cómo evaluar la calidad de la información, aplicar la lectura lateral y ajustar cuánto verificar según lo que está en juego.",
+        // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
+        image: "/img/cards/ciudDig.jpg",
+        imageAlt: "Banner Cognitivo-Intelectual e Informacional",
+        icon: Microscope,
         color: "#4272BB",
         locked: false,
         audiencias: ["docentes"],

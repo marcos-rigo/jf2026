@@ -158,6 +158,11 @@ export interface Contenido {
     seguiParrafo: string;
     seguiLinkTexto: string;
     seguiLinkHref: string;
+    // Enlace a la siguiente dimensión del Poliedro. No está en el docx fuente de esta
+    // temática (content-management/Dimension_Instrumental_y_Acceso.docx): es un agregado
+    // posterior de navegación cruzada entre temáticas, no un faltante de cobertura.
+    siguienteDimensionTexto: string;
+    siguienteDimensionHref: string;
     cierreTitulo: string;
     cierreParrafo: string;
   };
@@ -668,6 +673,8 @@ const DOCENTES: Contenido = {
     seguiParrafo: 'Esta fue la primera de las 10 dimensiones.',
     seguiLinkTexto: 'Volver al módulo Ciudadanía Digital',
     seguiLinkHref: '/ciudadania-digital',
+    siguienteDimensionTexto: 'Siguiente dimensión: Cognitivo-Intelectual e Informacional',
+    siguienteDimensionHref: '/tematicas/cognitivo-intelectual-e-informacional',
     cierreTitulo: 'Cierre',
     cierreParrafo:
       'Nadie es "malo con la tecnología". Hay capacidades que todavía no se desarrollaron, y hay diseños que excluyen sin necesidad. Distinguir entre las dos cosas es lo que te permite ayudar de verdad — sin volverte la solución permanente de nadie, y sin dejar pasar un diseño que debería mejorarse.',

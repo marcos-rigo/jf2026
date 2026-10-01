@@ -2,13 +2,13 @@
 
 import Link from 'next/link';
 import { Section, P, H3, Note, TextArea, useContenido } from './ui';
-import { useInstrumentalAccesoStore } from '@/lib/instrumental-acceso-store';
+import { useCognitivoInformacionalStore } from '@/lib/cognitivo-informacional-store';
 
 export default function RecursosYCierreSection() {
   const c = useContenido().recursosYCierre;
-  const respuestaGancho = useInstrumentalAccesoStore((s) => s.respuestaGancho);
-  const explicacionFinal = useInstrumentalAccesoStore((s) => s.explicacionFinal);
-  const setExplicacionFinal = useInstrumentalAccesoStore((s) => s.setExplicacionFinal);
+  const respuestaGancho = useCognitivoInformacionalStore((s) => s.respuestaGancho);
+  const explicacionFinal = useCognitivoInformacionalStore((s) => s.explicacionFinal);
+  const setExplicacionFinal = useCognitivoInformacionalStore((s) => s.setExplicacionFinal);
 
   return (
     <Section id="recursos-y-cierre" number="10" title={c.titulo}>
@@ -48,22 +48,17 @@ export default function RecursosYCierreSection() {
 
       {/* ── Seguí recorriendo el Poliedro ── */}
       <H3>{c.seguiTitulo}</H3>
-      <P>{c.seguiParrafo}</P>
-      <div className="flex flex-wrap gap-3">
-        <Link
-          href={c.seguiLinkHref}
-          className="inline-flex items-center gap-2 rounded-lg border-2 border-brand-blue px-4 py-2 text-sm font-semibold text-brand-blue transition hover:bg-brand-blue hover:text-white"
-        >
-          {c.seguiLinkTexto} →
+      <P>
+        {c.seguiAntes}
+        <Link href={c.seguiEnlace1Href} className="text-brand-blue font-semibold hover:underline">
+          {c.seguiEnlace1Texto}
         </Link>
-        {/* No está en el docx fuente de esta temática (ver comentario en lib/instrumental-acceso-content.ts) */}
-        <Link
-          href={c.siguienteDimensionHref}
-          className="inline-flex items-center gap-2 rounded-lg border-2 border-brand-blue px-4 py-2 text-sm font-semibold text-brand-blue transition hover:bg-brand-blue hover:text-white"
-        >
-          {c.siguienteDimensionTexto} →
+        {c.seguiEntre}
+        <Link href={c.seguiEnlace2Href} className="text-brand-blue font-semibold hover:underline">
+          {c.seguiEnlace2Texto}
         </Link>
-      </div>
+        {c.seguiDespues}
+      </P>
 
       {/* ── Cierre ── */}
       <div className="pt-6 space-y-5 text-center">

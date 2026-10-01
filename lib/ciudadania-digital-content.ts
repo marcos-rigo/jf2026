@@ -60,6 +60,7 @@ export const DIMENSIONES: DimensionInfo[] = [
       'construir criterio frente a la abundancia de información: evaluar fuentes, calidad y grado de confianza de lo que se lee.',
     linea: 'Construir criterio dentro de la abundancia de información.',
     capacidad: 'Evaluar fuentes, calidad y confiabilidad de la información',
+    href: '/tematicas/cognitivo-intelectual-e-informacional',
   },
   {
     id: 'socio-comunicacional',
