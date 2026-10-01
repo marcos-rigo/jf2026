@@ -82,7 +82,7 @@ export default function PoliedroSection() {
       <H3>{nivel3.tablaTitulo}</H3>
       <TablaDimensiones
         cols={[nivel3.colDimension, nivel3.colLinea, nivel3.colEnlace]}
-        filas={DIMENSIONES.map((d) => ({ nombre: d.nombre, texto: d.linea }))}
+        filas={DIMENSIONES.map((d) => ({ nombre: d.nombre, texto: d.linea, href: d.href }))}
         enlaceTexto={nivel3.enlaceTexto}
       />
 

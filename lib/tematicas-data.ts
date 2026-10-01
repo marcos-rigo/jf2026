@@ -55,6 +55,20 @@ export const groups: TematicaGroup[] = [
         audiencias: ["docentes", "familias"],
       },
       {
+        id: "instrumental-y-acceso",
+        href: "/tematicas/instrumental-y-acceso",
+        category: "Kit de Acción",
+        title: "Instrumental y Acceso",
+        description: "La primera dimensión del Poliedro de Ciudadanía Digital: qué es la capacidad instrumental y cómo distinguir si una dificultad es de la persona o del diseño del servicio.",
+        // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
+        image: "/img/cards/ciudDig.jpg",
+        imageAlt: "Banner Instrumental y Acceso",
+        icon: Shield,
+        color: "#4272BB",
+        locked: false,
+        audiencias: ["docentes"],
+      },
+      {
         id: "huella-digital",
         href: "/huella-digital",
         category: "Privacidad",

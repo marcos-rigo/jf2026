@@ -1,12 +1,11 @@
 'use client';
 
 import { useState, type ReactNode } from 'react';
-import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
-import { resolveContenido } from '@/lib/ciudadania-digital-content';
+import { resolveContenido } from '@/lib/instrumental-acceso-content';
 import { useAudienciaStore } from '@/lib/audiencia-store';
 
-// Contenido de la página para la audiencia activa (fallback 'docentes', ver lib/ciudadania-digital-content.ts).
+// Contenido de la página para la audiencia activa (fallback 'docentes', ver lib/instrumental-acceso-content.ts).
 export function useContenido() {
   const audienciaActual = useAudienciaStore((s) => s.audienciaActual);
   return resolveContenido(audienciaActual);
@@ -21,7 +20,9 @@ export function Section({
   id: string;
   number: string;
   title: string;
-  children: ReactNode;
+  // Opcional acá (a diferencia de components/ciudadania-digital/ui.tsx): en el Prompt 1
+  // las 10 secciones todavía no tienen cuerpo, solo título — se completan en los Prompts 2 y 3.
+  children?: ReactNode;
 }) {
   return (
     <section id={id} className="scroll-mt-28 md:scroll-mt-32 space-y-6">
@@ -158,54 +159,5 @@ export function SelectField({
         </option>
       ))}
     </select>
-  );
-}
-
-// Tabla de dimensiones. Cada fila puede traer un `href` propio (ver DIMENSIONES en
-// lib/ciudadania-digital-content.ts): con href usa next/link (navegación interna, sin
-// recarga ni scroll al tope); sin href sigue como placeholder href="#" hasta que esa
-// temática exista.
-export function TablaDimensiones({
-  cols,
-  filas,
-  enlaceTexto,
-}: {
-  cols: [string, string, string];
-  filas: { nombre: string; texto: string; href?: string }[];
-  enlaceTexto: string;
-}) {
-  return (
-    <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-      <table className="w-full text-sm text-left">
-        <thead className="bg-slate-50 text-slate-600">
-          <tr>
-            {cols.map((c) => (
-              <th key={c} className="px-4 py-3 font-semibold">
-                {c}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-slate-100">
-          {filas.map((f) => (
-            <tr key={f.nombre} className="align-top">
-              <td className="px-4 py-3 font-semibold text-brand-navy min-w-[10rem]">{f.nombre}</td>
-              <td className="px-4 py-3 text-slate-700 min-w-[14rem]">{f.texto}</td>
-              <td className="px-4 py-3">
-                {f.href ? (
-                  <Link href={f.href} className="text-brand-blue font-medium hover:underline whitespace-nowrap">
-                    {enlaceTexto}
-                  </Link>
-                ) : (
-                  <a href="#" className="text-brand-blue font-medium hover:underline whitespace-nowrap">
-                    {enlaceTexto}
-                  </a>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
   );
 }

@@ -76,7 +76,7 @@ export default function RecursosYCierreSection() {
       <H3>{c.mapaTitulo}</H3>
       <TablaDimensiones
         cols={[c.mapaColDimension, c.mapaColCapacidad, c.mapaColEnlace]}
-        filas={DIMENSIONES.map((d) => ({ nombre: d.nombre, texto: d.capacidad }))}
+        filas={DIMENSIONES.map((d) => ({ nombre: d.nombre, texto: d.capacidad, href: d.href }))}
         enlaceTexto={c.mapaEnlaceTexto}
       />
 

@@ -38,6 +38,9 @@ export interface DimensionInfo {
   descripcion: string; // Sección 5, nivel 1
   linea: string; // Sección 5, nivel 3
   capacidad: string; // Sección 10, mapa de competencias
+  // Temática real de esta dimensión, si ya existe (ver TablaDimensiones en ui.tsx).
+  // Ausente = placeholder href="#", se completa cuando se cree esa temática.
+  href?: string;
 }
 
 export const DIMENSIONES: DimensionInfo[] = [
@@ -48,6 +51,7 @@ export const DIMENSIONES: DimensionInfo[] = [
       'usar la tecnología con autonomía y seguir aprendiendo cuando cambia, no solo saber tocar una pantalla conocida.',
     linea: 'Convertir la tecnología en capacidad real de acción, no solo en manejo de una interfaz conocida.',
     capacidad: 'Usar la tecnología con autonomía y seguir aprendiendo cuando cambia',
+    href: '/tematicas/instrumental-y-acceso',
   },
   {
     id: 'cognitivo',
