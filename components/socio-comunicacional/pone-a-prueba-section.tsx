@@ -1,7 +1,7 @@
 'use client';
 
 import { CheckCircle2, XCircle } from 'lucide-react';
-import { Section, P, Note, TablaDosColumnas, useContenido } from './ui';
+import { Section, P, Note, useContenido } from './ui';
 import { useSocioComunicacionalStore } from '@/lib/socio-comunicacional-store';
 
 export default function PoneAPruebaSection() {
@@ -73,10 +73,24 @@ export default function PoneAPruebaSection() {
       <div className="space-y-3">
         <p className="font-display font-bold text-brand-navy">{c.rubricaTitulo}</p>
         <P>{c.rubricaIntro}</P>
-        <TablaDosColumnas
-          encabezados={[c.rubricaColNivel, c.rubricaColMuestra]}
-          filas={c.rubrica.map((r) => ({ celdas: [r.nivel, r.muestra] }))}
-        />
+        <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+          <table className="w-full text-sm text-left">
+            <thead className="bg-slate-50 text-slate-600">
+              <tr>
+                <th className="px-4 py-3 font-semibold">{c.rubricaColNivel}</th>
+                <th className="px-4 py-3 font-semibold">{c.rubricaColMuestra}</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {c.rubrica.map((r) => (
+                <tr key={r.nivel} className="align-top">
+                  <td className="px-4 py-3 font-semibold text-brand-navy whitespace-nowrap">{r.nivel}</td>
+                  <td className="px-4 py-3 text-slate-700">{r.muestra}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         <Note>{c.rubricaCierre}</Note>
       </div>
     </Section>

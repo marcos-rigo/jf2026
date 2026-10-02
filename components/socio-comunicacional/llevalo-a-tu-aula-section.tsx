@@ -15,7 +15,7 @@ export default function LlevaloATuAulaSection() {
     <Section id="llevalo-a-tu-aula" number="09" title={c.titulo}>
       <P>{c.parrafo1}</P>
       <Callout tone="pink">
-        <p>{c.accionSemana}</p>
+        <P>{c.accionSemana}</P>
       </Callout>
 
       <P>{c.parrafo3}</P>
@@ -37,8 +37,8 @@ export default function LlevaloATuAulaSection() {
         <TextArea value={reflexionAula} onChange={setReflexionAula} placeholder={c.campoEtiqueta} rows={3} label={c.campoEtiqueta} />
       </div>
 
-      {c.fichas.map((ficha) => (
-        <FichaAula key={ficha.titulo} {...ficha} />
+      {c.fichas.map((f) => (
+        <FichaAula key={f.titulo} {...f} />
       ))}
     </Section>
   );

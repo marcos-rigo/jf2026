@@ -59,21 +59,19 @@ export default function RecursosYCierreSection() {
         </Link>
         {c.seguiDespues}
       </P>
-      {/* No está en el docx fuente de esta temática (ver comentario en lib/cognitivo-informacional-content.ts) */}
+      {/* No están en el docx fuente de esta temática (ver comentario en lib/cognitivo-informacional-content.ts) */}
       <div className="flex flex-wrap gap-3">
         <Link
-          href={c.siguienteDimensionHref}
+          href={c.siguienteDimensionEmocionalHref}
           className="inline-flex items-center gap-2 rounded-lg border-2 border-brand-blue px-4 py-2 text-sm font-semibold text-brand-blue transition hover:bg-brand-blue hover:text-white"
         >
-          {c.siguienteDimensionTexto} →
+          {c.siguienteDimensionEmocionalTexto} →
         </Link>
-        {/* Agregado al construir /tematicas/socio-comunicacional-e-identidad; tampoco está
-            en el docx fuente (ver comentario en lib/cognitivo-informacional-content.ts). */}
         <Link
-          href={c.siguienteDimension2Href}
+          href={c.siguienteDimensionSocioComunicacionalHref}
           className="inline-flex items-center gap-2 rounded-lg border-2 border-brand-blue px-4 py-2 text-sm font-semibold text-brand-blue transition hover:bg-brand-blue hover:text-white"
         >
-          {c.siguienteDimension2Texto} →
+          {c.siguienteDimensionSocioComunicacionalTexto} →
         </Link>
       </div>
 

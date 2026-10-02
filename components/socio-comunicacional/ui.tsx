@@ -1,6 +1,7 @@
 'use client';
 
-import { type ReactNode, Fragment } from 'react';
+import { useState, type ReactNode } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { resolveContenido } from '@/lib/socio-comunicacional-content';
 import { useAudienciaStore } from '@/lib/audiencia-store';
 
@@ -11,30 +12,36 @@ export function useContenido() {
   return resolveContenido(audienciaActual);
 }
 
-// Parser mínimo de énfasis Markdown (**negrita**, *cursiva*) para que el contenido
-// transcripto de los prompts se renderice como negrita/cursiva real y nunca como
-// asteriscos literales. No usa dangerouslySetInnerHTML.
-export function parseRichText(text: string): ReactNode[] {
+// El contenido de esta página trae negritas y cursivas de Word (**negrita**,
+// *cursiva*) incrustadas en párrafos, listas, citas y recuadros. RichText las
+// convierte a <strong>/<em> sin dangerouslySetInnerHTML y sin dejar asteriscos
+// literales. Usala en cualquier componente que muestre texto de contenido.
+export function RichText({ text }: { text: string }) {
+  return <>{parseRichText(text)}</>;
+}
+
+function parseRichText(text: string): ReactNode[] {
+  const nodes: ReactNode[] = [];
   const regex = /\*\*(.+?)\*\*|\*(.+?)\*/g;
-  const parts: ReactNode[] = [];
   let lastIndex = 0;
   let match: RegExpExecArray | null;
   let key = 0;
+
   while ((match = regex.exec(text)) !== null) {
-    if (match.index > lastIndex) parts.push(text.slice(lastIndex, match.index));
+    if (match.index > lastIndex) {
+      nodes.push(text.slice(lastIndex, match.index));
+    }
     if (match[1] !== undefined) {
-      parts.push(<strong key={key++}>{match[1]}</strong>);
+      nodes.push(<strong key={key++}>{match[1]}</strong>);
     } else if (match[2] !== undefined) {
-      parts.push(<em key={key++}>{match[2]}</em>);
+      nodes.push(<em key={key++}>{match[2]}</em>);
     }
     lastIndex = regex.lastIndex;
   }
-  if (lastIndex < text.length) parts.push(text.slice(lastIndex));
-  return parts;
-}
-
-export function RichText({ text }: { text: string }) {
-  return <Fragment>{parseRichText(text)}</Fragment>;
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+  return nodes;
 }
 
 export function Section({
@@ -46,6 +53,8 @@ export function Section({
   id: string;
   number: string;
   title: string;
+  // Opcional acá (a diferencia de components/ciudadania-digital/ui.tsx): en el Prompt 1
+  // las 10 secciones todavía no tienen cuerpo, solo título — se completan en los Prompts 2 y 3.
   children?: ReactNode;
 }) {
   return (
@@ -63,18 +72,18 @@ export function H3({ children }: { children: ReactNode }) {
   return <h3 className="font-display text-lg md:text-xl font-bold text-brand-navy pt-2">{children}</h3>;
 }
 
-export function P({ children, className = '' }: { children: string; className?: string }) {
+export function P({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
     <p className={`leading-relaxed text-slate-700 ${className}`}>
-      <RichText text={children} />
+      {typeof children === 'string' ? <RichText text={children} /> : children}
     </p>
   );
 }
 
-export function Note({ children }: { children: string }) {
+export function Note({ children }: { children: ReactNode }) {
   return (
     <p className="text-sm italic text-slate-500 leading-relaxed">
-      <RichText text={children} />
+      {typeof children === 'string' ? <RichText text={children} /> : children}
     </p>
   );
 }
@@ -97,6 +106,36 @@ export function Callout({
     <div className={`rounded-xl border-l-4 p-5 shadow-sm ${tones[tone]}`}>
       {title && <p className="font-display font-bold mb-2">{title}</p>}
       <div className="space-y-2 leading-relaxed">{children}</div>
+    </div>
+  );
+}
+
+// Bloque de cita destacada (ej. respuesta de "Un caso resuelto", citas de
+// "Encontrá el error"). El texto puede traer una etiqueta en negrita incrustada
+// (ej. "**Análisis A:** ...") — se resuelve con RichText, no con un label aparte.
+export function Cita({ children, tone = 'blue' }: { children: string; tone?: 'blue' | 'pink' }) {
+  const tones = { blue: 'border-brand-blue', pink: 'border-brand-pink' };
+  return (
+    <blockquote className={`rounded-xl border-l-4 ${tones[tone]} bg-white p-5 italic leading-relaxed text-slate-800 shadow-sm`}>
+      <RichText text={children} />
+    </blockquote>
+  );
+}
+
+export function Reveal({ label, hideLabel, children }: { label: string; hideLabel: string; children: ReactNode }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className="inline-flex items-center gap-2 rounded-lg bg-brand-blue px-4 py-2 text-sm font-semibold text-white hover:opacity-90 transition"
+      >
+        {open ? hideLabel : label}
+        <ChevronDown className={`w-4 h-4 transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {open && <div className="mt-4 rounded-xl border border-slate-200 bg-white p-5 space-y-3">{children}</div>}
     </div>
   );
 }
@@ -129,7 +168,55 @@ export function TextArea({
   );
 }
 
-// Recuadro destacado con título y varios párrafos cortos (ej. "Lo que convivir NO es").
+export function TextInput({
+  value,
+  onChange,
+  placeholder,
+  label,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+  label?: string;
+}) {
+  return (
+    <input
+      aria-label={label ?? placeholder}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder={placeholder}
+      className={fieldClass}
+    />
+  );
+}
+
+export function SelectField({
+  value,
+  onChange,
+  options,
+  placeholder,
+  label,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  options: { value: string; label: string }[];
+  placeholder: string;
+  label?: string;
+}) {
+  return (
+    <select aria-label={label ?? placeholder} value={value} onChange={(e) => onChange(e.target.value)} className={fieldClass}>
+      <option value="">{placeholder}</option>
+      {options.map((o) => (
+        <option key={o.value} value={o.value}>
+          {o.label}
+        </option>
+      ))}
+    </select>
+  );
+}
+
+// Recuadro destacado con título y varios párrafos cortos
+// (ej. "Lo que la netiqueta NO es").
 export function RecuadroDestacado({ title, paragraphs }: { title: string; paragraphs: string[] }) {
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-5 md:p-6 shadow-sm space-y-3">
@@ -143,38 +230,25 @@ export function RecuadroDestacado({ title, paragraphs }: { title: string; paragr
   );
 }
 
-// Lista numerada simple. Cada instancia es su propio <ol>, así que cuando aparece
-// más de una vez en la misma sección (sección 5 de esta página) cada una reinicia
-// en 1 por sí sola — no hace falta manejar un `start` explícito.
+// Lista numerada simple, mismo estilo que la lista de objetivos de
+// lo-que-vas-a-lograr-section. Reinicia en 1 en cada instancia (no comparte
+// contador entre apariciones).
 export function ListaNumerada({ items }: { items: string[] }) {
   return (
     <ol className="space-y-2">
       {items.map((item, i) => (
         <li key={item} className="flex gap-3 rounded-xl bg-white border border-slate-200 p-4">
           <span className="font-display font-bold text-brand-blue w-6 shrink-0">{i + 1}</span>
-          <p className="leading-relaxed text-slate-700">
-            <RichText text={item} />
-          </p>
+          <P>{item}</P>
         </li>
       ))}
     </ol>
   );
 }
 
-// Lista con viñetas, con énfasis real (ej. "Audiencia:", "Persistencia:", "Circulación:").
-export function ListaViñetas({ items }: { items: string[] }) {
-  return (
-    <ul className="list-disc pl-5 space-y-1.5 text-slate-700">
-      {items.map((item) => (
-        <li key={item} className="leading-relaxed">
-          <RichText text={item} />
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-// Tabla reutilizable de 2 columnas (ej. rúbrica de desempeño).
+// Tabla de 2 columnas (ej. rúbrica de desempeño: nivel / qué muestra el docente).
+// overflow-x-auto va en el propio contenedor de la tabla para mobile; el
+// overflow-x-hidden general sigue viviendo en <main> (ver CLAUDE.md).
 export function TablaDosColumnas({
   encabezados,
   filas,
@@ -197,9 +271,7 @@ export function TablaDosColumnas({
         <tbody className="divide-y divide-slate-100">
           {filas.map((f, i) => (
             <tr key={i} className="align-top">
-              <td className="px-4 py-3 font-semibold text-brand-navy whitespace-nowrap">
-                <RichText text={f.celdas[0]} />
-              </td>
+              <td className="px-4 py-3 font-semibold text-brand-navy whitespace-nowrap">{f.celdas[0]}</td>
               <td className="px-4 py-3 text-slate-700">
                 <RichText text={f.celdas[1]} />
               </td>
@@ -208,5 +280,19 @@ export function TablaDosColumnas({
         </tbody>
       </table>
     </div>
+  );
+}
+
+// Card destacada de cierre ("Para llevarte").
+export function CardParaLlevarte({ titulo, parrafos }: { titulo: string; parrafos: string[] }) {
+  return (
+    <article className="rounded-3xl bg-brand-navy text-white p-6 md:p-8 shadow-lg space-y-4">
+      <h4 className="font-display text-2xl font-bold">{titulo}</h4>
+      {parrafos.map((p) => (
+        <p key={p} className="leading-relaxed text-white/90">
+          <RichText text={p} />
+        </p>
+      ))}
+    </article>
   );
 }

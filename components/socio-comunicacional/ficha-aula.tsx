@@ -4,21 +4,17 @@ import { useId, useState } from 'react';
 import { ChevronDown, BookOpen } from 'lucide-react';
 import { RichText } from './ui';
 
-type Bloque = { tipo: 'parrafo'; texto: string } | { tipo: 'lista'; items: string[] };
-
-export interface FichaAulaActividad {
-  titulo: string;
-  bloques: Bloque[];
-}
+export type Bloque = { tipo: 'parrafo'; texto: string } | { tipo: 'lista'; items: string[] };
 
 export interface FichaAulaProps {
   titulo: string;
   objetivo: string;
   desarrollo: Bloque[];
   preguntaDetonadora: string;
-  actividades: FichaAulaActividad[];
+  actividades: { titulo: string; bloques: Bloque[] }[];
   frase: string;
   glosario: string[];
+  // Texto plano: si alguna referencia contiene un dominio, no se convierte en link.
   referencias: string[];
 }
 
@@ -47,9 +43,8 @@ function Bloques({ bloques }: { bloques: Bloque[] }) {
 // Tarjeta desplegable para las fichas didácticas de aula. Colapsada por defecto,
 // mostrando solo el título y la etiqueta "Ficha para llevar al aula". Las referencias
 // van como texto plano (sin SourceCite ni links, ver CLAUDE.md para esta página).
-// A diferencia de components/cognitivo-informacional/ficha-aula.tsx, acá tanto el
-// desarrollo como cada actividad admiten bloques de párrafo/lista (las actividades
-// de esta dimensión traen viñetas), y todo el texto pasa por RichText.
+// Accesible: botón con aria-expanded/aria-controls, disparable por teclado (es un
+// <button> nativo, foco y Enter/Espacio funcionan sin handlers extra).
 export function FichaAula({
   titulo,
   objetivo,
@@ -116,9 +111,7 @@ export function FichaAula({
               <ul className="space-y-3">
                 {actividades.map((a) => (
                   <li key={a.titulo} className="rounded-xl bg-slate-50 border border-slate-200 p-4 space-y-2">
-                    <p className="font-display font-semibold text-brand-navy mb-1">
-                      <RichText text={a.titulo} />
-                    </p>
+                    <p className="font-display font-semibold text-brand-navy">{a.titulo}</p>
                     <Bloques bloques={a.bloques} />
                   </li>
                 ))}
@@ -150,9 +143,7 @@ export function FichaAula({
               <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-2">Referencias</p>
               <ul className="space-y-1 text-sm text-slate-500">
                 {referencias.map((r) => (
-                  <li key={r}>
-                    <RichText text={r} />
-                  </li>
+                  <li key={r}>{r}</li>
                 ))}
               </ul>
             </div>

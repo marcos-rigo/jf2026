@@ -10,10 +10,11 @@ export default function DeDondePartimosSection() {
       {c.parrafos.map((p) => (
         <P key={p}>{p}</P>
       ))}
-      <p className="font-display text-lg md:text-xl font-bold text-brand-navy leading-snug">{c.preguntaDestacada}</p>
 
-      {c.fichas.map((ficha) => (
-        <FichaAula key={ficha.titulo} {...ficha} />
+      <p className="font-display text-xl md:text-2xl font-bold text-brand-navy leading-snug">{c.preguntaDestacada}</p>
+
+      {c.fichas.map((f) => (
+        <FichaAula key={f.titulo} {...f} />
       ))}
     </Section>
   );

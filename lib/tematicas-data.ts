@@ -87,7 +87,7 @@ export const groups: TematicaGroup[] = [
         href: "/tematicas/socio-comunicacional-e-identidad",
         category: "Kit de Acción",
         title: "Socio-Comunicacional e Identidad",
-        description: "La tercera dimensión del Poliedro de Ciudadanía Digital: cómo anticipar la audiencia, la persistencia y la circulación de lo que decimos, distinguir la netiqueta de la convivencia, y aprender a reparar.",
+        description: "La tercera dimensión del Poliedro de Ciudadanía Digital: cómo anticipar la audiencia, la persistencia y la circulación de lo que decimos, distinguir la netiqueta de la convivencia y aprender a reparar.",
         // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
         image: "/img/cards/ciudDig.jpg",
         imageAlt: "Banner Socio-Comunicacional e Identidad",

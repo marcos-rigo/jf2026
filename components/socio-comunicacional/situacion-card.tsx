@@ -1,7 +1,7 @@
 'use client';
 
 import { ChevronDown } from 'lucide-react';
-import { P, Note } from './ui';
+import { P, Note, RichText } from './ui';
 import {
   useSocioComunicacionalStore,
   type EleccionSituacion,
@@ -9,9 +9,10 @@ import {
 } from '@/lib/socio-comunicacional-store';
 
 // Bloque de situación de "Practicá vos": selector de 3 opciones excluyentes
-// (Audiencia / Persistencia / Circulación). El botón "Ver análisis" solo se habilita
-// con una opción elegida, y el análisis se muestra igual sin importar cuál se eligió —
-// mismo mecanismo que components/cognitivo-informacional/situacion-card.tsx.
+// (Audiencia / Persistencia / Circulación). El botón "Ver análisis" solo se
+// habilita con una opción elegida, y el análisis se muestra igual sin importar
+// cuál se eligió — mismo mecanismo que components/cognitivo-informacional/situacion-card.tsx,
+// adaptado a las 3 nociones de esta dimensión.
 const OPCIONES: { value: NonNullable<EleccionSituacion>; label: string }[] = [
   { value: 'audiencia', label: 'Audiencia' },
   { value: 'persistencia', label: 'Persistencia' },
@@ -33,10 +34,12 @@ export function SituacionCard({ clave, enunciado, analisis, nota, revelarLabel }
 
   return (
     <article className="rounded-2xl bg-white border border-slate-200 p-5 md:p-6 shadow-sm space-y-4">
-      <p className="leading-relaxed text-slate-800">{enunciado}</p>
+      <p className="leading-relaxed text-slate-800">
+        <RichText text={enunciado} />
+      </p>
 
       <fieldset className="space-y-2">
-        <legend className="text-sm font-semibold text-slate-600 mb-1">¿Qué pesa más en esta situación?</legend>
+        <legend className="text-sm font-semibold text-slate-600 mb-1">¿Qué harías primero?</legend>
         <div className="flex flex-wrap gap-2">
           {OPCIONES.map((o) => (
             <label

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Section, P, H3, Note, TextArea, useContenido } from './ui';
+import { Section, P, H3, Note, TextArea, CardParaLlevarte, useContenido } from './ui';
 import { useSocioComunicacionalStore } from '@/lib/socio-comunicacional-store';
 
 export default function RecursosYCierreSection() {
@@ -37,18 +37,11 @@ export default function RecursosYCierreSection() {
 
       {/* ── Para llevarte ── */}
       <H3>{c.llevarteTitulo}</H3>
-      <article className="rounded-3xl bg-brand-navy text-white p-6 md:p-8 shadow-lg space-y-4">
-        <h4 className="font-display text-2xl font-bold">{c.tarjeta.titulo}</h4>
-        {c.tarjeta.parrafos.map((p) => (
-          <p key={p} className="leading-relaxed text-white/90">
-            {p}
-          </p>
-        ))}
-      </article>
+      <CardParaLlevarte titulo={c.tarjeta.titulo} parrafos={c.tarjeta.parrafos} />
 
       {/* ── Seguí recorriendo el Poliedro ── */}
       <H3>{c.seguiTitulo}</H3>
-      <p className="leading-relaxed text-slate-700">
+      <P>
         {c.seguiAntes}
         <Link href={c.seguiEnlace1Href} className="text-brand-blue font-semibold hover:underline">
           {c.seguiEnlace1Texto}
@@ -58,7 +51,7 @@ export default function RecursosYCierreSection() {
           {c.seguiEnlace2Texto}
         </Link>
         {c.seguiDespues}
-      </p>
+      </P>
 
       {/* ── Cierre ── */}
       <div className="pt-6 space-y-5 text-center">

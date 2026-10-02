@@ -1,13 +1,14 @@
 'use client';
 
 import { ChevronDown } from 'lucide-react';
-import { P, RichText } from './ui';
+import { P, Cita } from './ui';
 import { useSocioComunicacionalStore } from '@/lib/socio-comunicacional-store';
 
-// Bloque de error doble de "Practicá vos": dos citas destacadas etiquetadas "Análisis A"
-// y "Análisis B", con un único botón "Ver los errores" que revela el texto de los dos
-// errores al mismo tiempo, con la misma transición. Adaptado de
-// components/cognitivo-informacional/error-doble.tsx.
+// Bloque de error doble de "Practicá vos": dos citas destacadas ("Análisis A" /
+// "Análisis B"), cada una con su etiqueta en negrita incrustada en el propio
+// texto de la cita (ej. "**Análisis A:** ..."), y un único botón "Ver los
+// errores" que revela el texto de los dos errores al mismo tiempo, con la
+// misma transición. Adaptado de components/cognitivo-informacional/error-doble.tsx.
 export interface ErrorDobleProps {
   citaA: string;
   citaB: string;
@@ -24,14 +25,8 @@ export function ErrorDoble({ citaA, citaB, botonLabel, errorIntro, errorA, error
 
   return (
     <div className="space-y-4">
-      <blockquote className="rounded-xl border-l-4 border-brand-pink bg-white p-5 italic leading-relaxed text-slate-800 shadow-sm">
-        <p className="text-xs not-italic font-semibold uppercase tracking-wide text-brand-pink mb-2">Análisis A</p>
-        &ldquo;<RichText text={citaA} />&rdquo;
-      </blockquote>
-      <blockquote className="rounded-xl border-l-4 border-brand-pink bg-white p-5 italic leading-relaxed text-slate-800 shadow-sm">
-        <p className="text-xs not-italic font-semibold uppercase tracking-wide text-brand-pink mb-2">Análisis B</p>
-        &ldquo;<RichText text={citaB} />&rdquo;
-      </blockquote>
+      <Cita tone="pink">{citaA}</Cita>
+      <Cita tone="pink">{citaB}</Cita>
 
       {!errorRevelado ? (
         <button

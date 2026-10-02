@@ -8,8 +8,12 @@ function scrollToSection(id: string) {
 }
 
 // Índice de navegación por scroll (mismo mecanismo que components/cognitivo-informacional/toc-nav.tsx
-// e components/instrumental-acceso/toc-nav.tsx). Nunca oculta/muestra contenido — solo hace scroll
+// y components/instrumental-acceso/toc-nav.tsx). Nunca oculta/muestra contenido — solo hace scroll
 // a cada sección y resalta cuál está visible (scroll-spy vía IntersectionObserver).
+//
+// Desktop: sidebar vertical fijo. Mobile: barra horizontal compacta y scrolleable —
+// 10 secciones no entran como texto completo en una fila, así que acá se usan las
+// etiquetas cortas (`shortLabel`) en vez del label completo que usa desktop.
 export function TocNav() {
   const [activeId, setActiveId] = useState(TOC_SECTIONS[0].id);
   const mobileItemRefs = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -40,7 +44,8 @@ export function TocNav() {
 
   return (
     <>
-      {/* ── Desktop: sidebar vertical fijo y compacto ── */}
+      {/* ── Desktop: sidebar vertical fijo y compacto — las 10 secciones entran
+          sin scroll interno en una pantalla de laptop estándar (~800px de alto útil) ── */}
       <nav className="hidden md:flex w-64 pt-20 backdrop-blur-xl bg-white/80 border-r border-slate-200 flex-col shadow-xl h-screen sticky top-0 shrink-0 z-10 overflow-y-auto">
         <div className="px-5 py-4 border-b border-slate-200 bg-slate-50/70">
           <h1 className="text-base font-bold text-brand-navy flex items-center gap-2.5 font-display">
@@ -48,7 +53,7 @@ export function TocNav() {
               <span className="text-sm">💬</span>
             </div>
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-navy to-slate-600">
-              Socio-Comunicacional
+              Socio-Com
             </span>
           </h1>
         </div>

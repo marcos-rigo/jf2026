@@ -170,19 +170,18 @@ export interface Contenido {
     seguiEnlace2Texto: string;
     seguiEnlace2Href: string;
     seguiDespues: string;
-    // Enlace a la siguiente dimensión del Poliedro. No está en el docx fuente de esta
+    // Dos enlaces de "siguiente dimensión" — ninguno está en el docx fuente de esta
     // temática (content-management/2 Dimension Cognitivo-Intelectual e Informacional.docx):
-    // es un agregado posterior de navegación cruzada entre temáticas, no un faltante de
+    // son agregados posteriores de navegación cruzada entre temáticas, no un faltante de
     // cobertura (mismo patrón que siguienteDimensionTexto/Href en instrumental-acceso-content.ts).
-    siguienteDimensionTexto: string;
-    siguienteDimensionHref: string;
-    // Segundo enlace de "siguiente dimensión", agregado cuando se construyó
-    // /tematicas/socio-comunicacional-e-identidad (la dimensión 3, Capítulo 17): esta
-    // página ya enlazaba a Emocional (dimensión 4) porque esa se construyó primero y
-    // saltó la 3. No está en el docx fuente de esta temática — mismo motivo que el
-    // comentario de arriba, no es un faltante de cobertura.
-    siguienteDimension2Texto: string;
-    siguienteDimension2Href: string;
+    // Emocional (dimensión 4) se construyó primero y saltó la 3, así que esta página
+    // enlazaba solo a Emocional; cuando se construyó Socio-Comunicacional e Identidad
+    // (dimensión 3, Capítulo 17) se sumó el segundo enlace. Ver comentario en
+    // components/cognitivo-informacional/recursos-y-cierre-section.tsx.
+    siguienteDimensionEmocionalTexto: string;
+    siguienteDimensionEmocionalHref: string;
+    siguienteDimensionSocioComunicacionalTexto: string;
+    siguienteDimensionSocioComunicacionalHref: string;
     cierreTitulo: string;
     cierreParrafo: string;
   };
@@ -720,10 +719,10 @@ const DOCENTES: Contenido = {
     seguiEnlace2Texto: 'Instrumental y Acceso',
     seguiEnlace2Href: '/tematicas/instrumental-y-acceso',
     seguiDespues: '.',
-    siguienteDimensionTexto: 'Siguiente dimensión: Emocional',
-    siguienteDimensionHref: '/tematicas/emocional',
-    siguienteDimension2Texto: 'Siguiente dimensión: Socio-Comunicacional e Identidad',
-    siguienteDimension2Href: '/tematicas/socio-comunicacional-e-identidad',
+    siguienteDimensionEmocionalTexto: 'Siguiente dimensión: Emocional',
+    siguienteDimensionEmocionalHref: '/tematicas/emocional',
+    siguienteDimensionSocioComunicacionalTexto: 'Siguiente dimensión: Socio-Comunicacional e Identidad',
+    siguienteDimensionSocioComunicacionalHref: '/tematicas/socio-comunicacional-e-identidad',
     cierreTitulo: 'Cierre',
     cierreParrafo:
       'Pensar críticamente no es desconfiar de todo ni creerle a todo: es saber cuánta confianza merece cada cosa. Es hacer las preguntas antes de compartir, graduar el esfuerzo según lo que está en juego y, cuando después de buscar no alcanza, animarse a decir "todavía no sé".',

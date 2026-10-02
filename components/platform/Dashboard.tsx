@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useAppStore } from '@/lib/ciudadania/app-store'
 import { SUBTOPICS_DATA } from '@/lib/ciudadania/mock-data'
@@ -153,9 +153,11 @@ export default function Dashboard() {
         <div className="space-y-3 sm:space-y-4">
           {subtopics.map((subtopicState, index) => {
             const data   = SUBTOPICS_DATA[index]
-            const cfg    = STATUS_CONFIG[subtopicState.status as SubtopicStatus]
+            const isIdeayUser = user?.email?.toLowerCase() === 'ideay@gmail.com'
+            const isLocked   = !isIdeayUser && subtopicState.status === 'locked'
+            const effectiveStatus = isIdeayUser && subtopicState.status === 'locked' ? 'in-progress' : subtopicState.status
+            const cfg    = STATUS_CONFIG[effectiveStatus as SubtopicStatus]
             const StatusIcon = cfg.icon
-            const isLocked   = subtopicState.status === 'locked'
 
             return (
               <div key={subtopicState.id} className={[
