@@ -1,14 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { Section, P, H3, Note, TextArea, useContenido } from './ui';
-import { useCognitivoInformacionalStore } from '@/lib/cognitivo-informacional-store';
+import { Section, P, H3, Note, TextArea, CardParaLlevarte, useContenido } from './ui';
+import { useSocioComunicacionalStore } from '@/lib/socio-comunicacional-store';
 
 export default function RecursosYCierreSection() {
   const c = useContenido().recursosYCierre;
-  const respuestaGancho = useCognitivoInformacionalStore((s) => s.respuestaGancho);
-  const explicacionFinal = useCognitivoInformacionalStore((s) => s.explicacionFinal);
-  const setExplicacionFinal = useCognitivoInformacionalStore((s) => s.setExplicacionFinal);
+  const respuestaGancho = useSocioComunicacionalStore((s) => s.respuestaGancho);
+  const explicacionFinal = useSocioComunicacionalStore((s) => s.explicacionFinal);
+  const setExplicacionFinal = useSocioComunicacionalStore((s) => s.setExplicacionFinal);
 
   return (
     <Section id="recursos-y-cierre" number="10" title={c.titulo}>
@@ -37,14 +37,7 @@ export default function RecursosYCierreSection() {
 
       {/* ── Para llevarte ── */}
       <H3>{c.llevarteTitulo}</H3>
-      <article className="rounded-3xl bg-brand-navy text-white p-6 md:p-8 shadow-lg space-y-4">
-        <h4 className="font-display text-2xl font-bold">{c.tarjeta.titulo}</h4>
-        {c.tarjeta.parrafos.map((p) => (
-          <p key={p} className="leading-relaxed text-white/90">
-            {p}
-          </p>
-        ))}
-      </article>
+      <CardParaLlevarte titulo={c.tarjeta.titulo} parrafos={c.tarjeta.parrafos} />
 
       {/* ── Seguí recorriendo el Poliedro ── */}
       <H3>{c.seguiTitulo}</H3>
@@ -59,15 +52,6 @@ export default function RecursosYCierreSection() {
         </Link>
         {c.seguiDespues}
       </P>
-      {/* No está en el docx fuente de esta temática (ver comentario en lib/cognitivo-informacional-content.ts) */}
-      <div className="flex flex-wrap gap-3">
-        <Link
-          href={c.siguienteDimensionHref}
-          className="inline-flex items-center gap-2 rounded-lg border-2 border-brand-blue px-4 py-2 text-sm font-semibold text-brand-blue transition hover:bg-brand-blue hover:text-white"
-        >
-          {c.siguienteDimensionTexto} →
-        </Link>
-      </div>
 
       {/* ── Cierre ── */}
       <div className="pt-6 space-y-5 text-center">

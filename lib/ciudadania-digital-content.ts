@@ -69,6 +69,7 @@ export const DIMENSIONES: DimensionInfo[] = [
       'encontrarnos y convivir en espacios mediados, donde lo que decimos tiene audiencia, persistencia y consecuencias reales.',
     linea: 'Encontrarnos y convivir en espacios mediados por pantallas.',
     capacidad: 'Convivir y construir identidad en espacios mediados',
+    href: '/tematicas/socio-comunicacional-e-identidad',
   },
   {
     id: 'emocional',
