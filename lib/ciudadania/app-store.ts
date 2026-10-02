@@ -85,7 +85,8 @@ export const useAppStore = create<AppStore>()(
 
       startSubtopic: (id) => {
         const st = get().subtopics.find((s) => s.id === id)
-        if (!st || st.status === 'locked') return
+        const isIdeayUser = get().user?.email?.toLowerCase() === 'ideay@gmail.com'
+        if (!st || (!isIdeayUser && st.status === 'locked')) return
         set({ activeSubtopicId: id, screen: 'wizard' })
       },
 
