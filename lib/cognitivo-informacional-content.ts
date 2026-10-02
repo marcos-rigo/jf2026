@@ -170,6 +170,12 @@ export interface Contenido {
     seguiEnlace2Texto: string;
     seguiEnlace2Href: string;
     seguiDespues: string;
+    // No están en el docx fuente de esta temática (content-management/2 Dimension
+    // Cognitivo-Intelectual e Informacional.docx): se agregaron en el Prompt 5 de
+    // la dimensión 3 para enlazar hacia adelante. Ver comentario en
+    // components/cognitivo-informacional/recursos-y-cierre-section.tsx.
+    siguienteDimensionTexto: string;
+    siguienteDimensionHref: string;
     cierreTitulo: string;
     cierreParrafo: string;
   };
@@ -707,6 +713,8 @@ const DOCENTES: Contenido = {
     seguiEnlace2Texto: 'Instrumental y Acceso',
     seguiEnlace2Href: '/tematicas/instrumental-y-acceso',
     seguiDespues: '.',
+    siguienteDimensionTexto: 'Siguiente dimensión: Socio-Comunicacional e Identidad',
+    siguienteDimensionHref: '/tematicas/socio-comunicacional-e-identidad',
     cierreTitulo: 'Cierre',
     cierreParrafo:
       'Pensar críticamente no es desconfiar de todo ni creerle a todo: es saber cuánta confianza merece cada cosa. Es hacer las preguntas antes de compartir, graduar el esfuerzo según lo que está en juego y, cuando después de buscar no alcanza, animarse a decir "todavía no sé".',

@@ -71,7 +71,10 @@ const UNLOCK_ALL_LOCAL =
   process.env.NEXT_PUBLIC_UNLOCK_ALL_LOCAL === 'true'
 
 export function TematicasDashboardContent() {
-  const userId = useAppStore((s) => s.user?.id ?? null)
+  const user = useAppStore((s) => s.user)
+  const userId = user?.id ?? null
+  const userEmail = user?.email?.toLowerCase() ?? ''
+  const isIdeayUser = userEmail === 'ideay@gmail.com'
   const [progresoMap, setProgresoMap] = useState<Record<string, ProgresoTematica>>({})
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({})
   // Filtro de públicos: selección única. El desbloqueo secuencial de cada
@@ -449,7 +452,7 @@ export function TematicasDashboardContent() {
                           if (!group.items[pi].sinContenido) { prevTema = group.items[pi]; break }
                         }
                         const prevProg = prevTema ? progresoMap[prevTema.id] : undefined
-                        const unlocked = !sinContenido && (UNLOCK_ALL_LOCAL || group.label === 'Libres bajo influencia' || !prevTema || !!prevProg?.completada)
+                        const unlocked = !sinContenido && (UNLOCK_ALL_LOCAL || isIdeayUser || group.label === 'Libres bajo influencia' || !prevTema || !!prevProg?.completada)
                         return { tema, sinContenido, prevTema, unlocked }
                       })
                       const cardsVisibles = cardsCalculados.filter(({ tema }) => matchesAudienceFilter(tema))

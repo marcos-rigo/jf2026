@@ -6,6 +6,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { ArrowDown, ArrowRight, ChevronDown } from "lucide-react"
 import { groups } from "@/lib/tematicas-data"
+import { useAppStore } from "@/lib/ciudadania/app-store"
 
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
@@ -18,6 +19,9 @@ const containerVariants = {
 }
 
 export function TematicasContent() {
+  const user = useAppStore((s) => s.user)
+  const isIdeayUser = user?.email?.toLowerCase() === 'ideay@gmail.com'
+
   // Grupos comprimidos (acordeón) por defecto — solo en esta página. Estado
   // local, no el store global de audiencias (el filtro de público se sacó
   // de esta página).
@@ -308,7 +312,7 @@ export function TematicasContent() {
                       animate="visible"
                       className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-7"
                     >
-                      {group.items.filter((tema) => !tema.locked).map((tema) => {
+                      {group.items.filter((tema) => isIdeayUser || !tema.locked).map((tema) => {
                   const IconComponent = tema.icon
                   return (
                     <motion.div key={tema.title} variants={cardVariants}>
@@ -374,7 +378,7 @@ export function TematicasContent() {
                       })}
 
                       {(() => {
-                        const lockedItems = group.items.filter((tema) => tema.locked)
+                        const lockedItems = group.items.filter((tema) => !isIdeayUser && tema.locked)
                         if (lockedItems.length === 0) return null
                         return (
                           <motion.div variants={cardVariants}>
