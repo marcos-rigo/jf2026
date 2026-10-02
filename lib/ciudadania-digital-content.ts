@@ -69,6 +69,7 @@ export const DIMENSIONES: DimensionInfo[] = [
       'encontrarnos y convivir en espacios mediados, donde lo que decimos tiene audiencia, persistencia y consecuencias reales.',
     linea: 'Encontrarnos y convivir en espacios mediados por pantallas.',
     capacidad: 'Convivir y construir identidad en espacios mediados',
+    href: '/tematicas/socio-comunicacional-e-identidad',
   },
   {
     id: 'emocional',
@@ -77,6 +78,7 @@ export const DIMENSIONES: DimensionInfo[] = [
       'reconocer cómo el miedo, la urgencia o el deseo de pertenencia influyen en nuestras decisiones digitales, sin patologizarlas.',
     linea: 'Comprender lo que sentimos dentro de entornos diseñados para hacernos reaccionar rápido.',
     capacidad: 'Reconocer cómo la urgencia y la pertenencia influyen en las decisiones digitales',
+    href: '/tematicas/emocional',
   },
   {
     id: 'salud-bienestar',

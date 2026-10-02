@@ -1,14 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { Section, P, H3, Note, TextArea, useContenido } from './ui';
-import { useCognitivoInformacionalStore } from '@/lib/cognitivo-informacional-store';
+import { Section, P, H3, Note, TextArea, Enfasis, useContenido } from './ui';
+import { useEmocionalStore } from '@/lib/emocional-store';
 
 export default function RecursosYCierreSection() {
   const c = useContenido().recursosYCierre;
-  const respuestaGancho = useCognitivoInformacionalStore((s) => s.respuestaGancho);
-  const explicacionFinal = useCognitivoInformacionalStore((s) => s.explicacionFinal);
-  const setExplicacionFinal = useCognitivoInformacionalStore((s) => s.setExplicacionFinal);
+  const respuestaGancho = useEmocionalStore((s) => s.respuestaGancho);
+  const explicacionFinal = useEmocionalStore((s) => s.explicacionFinal);
+  const setExplicacionFinal = useEmocionalStore((s) => s.setExplicacionFinal);
 
   return (
     <Section id="recursos-y-cierre" number="10" title={c.titulo}>
@@ -41,7 +41,7 @@ export default function RecursosYCierreSection() {
         <h4 className="font-display text-2xl font-bold">{c.tarjeta.titulo}</h4>
         {c.tarjeta.parrafos.map((p) => (
           <p key={p} className="leading-relaxed text-white/90">
-            {p}
+            <Enfasis>{p}</Enfasis>
           </p>
         ))}
       </article>
@@ -59,23 +59,6 @@ export default function RecursosYCierreSection() {
         </Link>
         {c.seguiDespues}
       </P>
-      {/* No está en el docx fuente de esta temática (ver comentario en lib/cognitivo-informacional-content.ts) */}
-      <div className="flex flex-wrap gap-3">
-        <Link
-          href={c.siguienteDimensionHref}
-          className="inline-flex items-center gap-2 rounded-lg border-2 border-brand-blue px-4 py-2 text-sm font-semibold text-brand-blue transition hover:bg-brand-blue hover:text-white"
-        >
-          {c.siguienteDimensionTexto} →
-        </Link>
-        {/* Agregado al construir /tematicas/socio-comunicacional-e-identidad; tampoco está
-            en el docx fuente (ver comentario en lib/cognitivo-informacional-content.ts). */}
-        <Link
-          href={c.siguienteDimension2Href}
-          className="inline-flex items-center gap-2 rounded-lg border-2 border-brand-blue px-4 py-2 text-sm font-semibold text-brand-blue transition hover:bg-brand-blue hover:text-white"
-        >
-          {c.siguienteDimension2Texto} →
-        </Link>
-      </div>
 
       {/* ── Cierre ── */}
       <div className="pt-6 space-y-5 text-center">

@@ -1,4 +1,4 @@
-import { Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, Scale, BookOpen, ScanEye, MousePointerClick, Flame, Compass, Hexagon, Microscope, type LucideIcon } from "lucide-react"
+import { Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, Scale, BookOpen, ScanEye, MousePointerClick, Flame, Compass, Hexagon, Microscope, Heart, MessageCircle, type LucideIcon } from "lucide-react"
 import type { Audiencia } from "./audiencias"
 
 export interface TematicaItem {
@@ -78,6 +78,34 @@ export const groups: TematicaGroup[] = [
         image: "/img/cards/ciudDig.jpg",
         imageAlt: "Banner Cognitivo-Intelectual e Informacional",
         icon: Microscope,
+        color: "#4272BB",
+        locked: false,
+        audiencias: ["docentes"],
+      },
+      {
+        id: "socio-comunicacional-e-identidad",
+        href: "/tematicas/socio-comunicacional-e-identidad",
+        category: "Kit de Acción",
+        title: "Socio-Comunicacional e Identidad",
+        description: "La tercera dimensión del Poliedro de Ciudadanía Digital: cómo anticipar la audiencia, la persistencia y la circulación de lo que decimos, distinguir la netiqueta de la convivencia, y aprender a reparar.",
+        // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
+        image: "/img/cards/ciudDig.jpg",
+        imageAlt: "Banner Socio-Comunicacional e Identidad",
+        icon: MessageCircle,
+        color: "#4272BB",
+        locked: false,
+        audiencias: ["docentes"],
+      },
+      {
+        id: "emocional",
+        href: "/tematicas/emocional",
+        category: "Kit de Acción",
+        title: "Emocional",
+        description: "La cuarta dimensión del Poliedro de Ciudadanía Digital: cómo las emociones participan de nuestras decisiones digitales, cómo los entornos las amplifican, y cuándo pausar, pedir una segunda mirada o pedir ayuda.",
+        // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
+        image: "/img/cards/ciudDig.jpg",
+        imageAlt: "Banner Emocional",
+        icon: Heart,
         color: "#4272BB",
         locked: false,
         audiencias: ["docentes"],
