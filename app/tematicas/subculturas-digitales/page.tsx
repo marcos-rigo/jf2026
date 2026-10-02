@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import SubculturasDigitalesPage from '@/components/tematicas/SubculturasDigitalesPage'
 import { getLibresSubtopicBySlug } from '@/lib/libres-bajo-influencia-data'
+import { RequireAuth } from '@/components/tematicas/require-auth'
 
 const data = getLibresSubtopicBySlug('subculturas-digitales')!
 
@@ -16,5 +17,9 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  return <SubculturasDigitalesPage />
+  return (
+    <RequireAuth>
+      <SubculturasDigitalesPage />
+    </RequireAuth>
+  )
 }

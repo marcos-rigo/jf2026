@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { IaEticaCiudadaniaContent } from "@/components/ia-etica-ciudadania-content"
+import { RequireAuth } from "@/components/tematicas/require-auth"
 
 export const metadata: Metadata = {
   title: "IA, Ética y Ciudadanía Digital | José Farhat",
@@ -15,5 +16,9 @@ export const metadata: Metadata = {
 }
 
 export default function IaEticaCiudadaniaPage() {
-  return <IaEticaCiudadaniaContent />
+  return (
+    <RequireAuth>
+      <IaEticaCiudadaniaContent />
+    </RequireAuth>
+  )
 }

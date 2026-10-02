@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import CiudadaniaDigitalContent from '@/app/ciudadania-digital/ciudadania-digital-content';
+import { RequireAuth } from '@/components/tematicas/require-auth';
 
 const TITLE = 'Ciudadanía Digital: de usuario a ciudadano';
 const DESCRIPTION =
@@ -18,5 +19,9 @@ export const metadata: Metadata = {
 };
 
 export default function CiudadaniaDigitalPage() {
-  return <CiudadaniaDigitalContent />;
+  return (
+    <RequireAuth>
+      <CiudadaniaDigitalContent />
+    </RequireAuth>
+  );
 }

@@ -3,6 +3,7 @@ import { Navbar } from "@/components/navbar"
 import { BackToDashboardButton } from "@/components/tematicas/back-to-dashboard-button"
 import { Footer } from "@/components/footer"
 import { ViolenciaInfanciasContent } from "./violencia-infancias-content"
+import { RequireAuth } from "@/components/tematicas/require-auth"
 
 export const metadata: Metadata = {
   title: "Violencia Digital en Infancias y Adolescencias | José Farhat",
@@ -27,11 +28,11 @@ export const metadata: Metadata = {
 
 export default function ViolenciaInfanciasPage() {
   return (
-    <>
+    <RequireAuth>
       <Navbar />
       <BackToDashboardButton />
       <ViolenciaInfanciasContent />
       <Footer />
-    </>
+    </RequireAuth>
   )
 }

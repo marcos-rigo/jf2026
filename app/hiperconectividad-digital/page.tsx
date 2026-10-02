@@ -3,6 +3,7 @@ import { Navbar } from "@/components/navbar"
 import { BackToDashboardButton } from "@/components/tematicas/back-to-dashboard-button"
 import { Footer } from "@/components/footer"
 import { HiperconectividadContent } from "./hiperconectividad-content"
+import { RequireAuth } from "@/components/tematicas/require-auth"
 
 export const metadata: Metadata = {
   title: "Hiperconectividad Digital y Desarrollo Adolescente | José Farhat",
@@ -28,11 +29,11 @@ export const metadata: Metadata = {
 
 export default function HiperconectividadPage() {
   return (
-    <>
+    <RequireAuth>
       <Navbar />
       <BackToDashboardButton />
       <HiperconectividadContent />
       <Footer />
-    </>
+    </RequireAuth>
   )
 }

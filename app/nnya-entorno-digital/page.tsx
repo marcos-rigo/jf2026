@@ -3,6 +3,7 @@ import { Navbar } from "@/components/navbar"
 import { BackToDashboardButton } from "@/components/tematicas/back-to-dashboard-button"
 import { Footer } from "@/components/footer"
 import { NnyaEntornoDigitalContent } from "./nnya-entorno-digital-content"
+import { RequireAuth } from "@/components/tematicas/require-auth"
 
 export const metadata: Metadata = {
   title: "Cómo interpretan los NNyA el Entorno Digital | José Farhat",
@@ -27,11 +28,11 @@ export const metadata: Metadata = {
 
 export default function NnyaEntornoDigitalPage() {
   return (
-    <>
+    <RequireAuth>
       <Navbar />
       <BackToDashboardButton />
       <NnyaEntornoDigitalContent />
       <Footer />
-    </>
+    </RequireAuth>
   )
 }

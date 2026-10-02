@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { RecuperarLaAgenciaPage } from '@/components/tematicas/RecuperarLaAgenciaPage'
 import { getLibresSubtopicBySlug } from '@/lib/libres-bajo-influencia-data'
+import { RequireAuth } from '@/components/tematicas/require-auth'
 
 const data = getLibresSubtopicBySlug('recuperar-la-agencia')!
 
@@ -16,5 +17,9 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  return <RecuperarLaAgenciaPage />
+  return (
+    <RequireAuth>
+      <RecuperarLaAgenciaPage />
+    </RequireAuth>
+  )
 }

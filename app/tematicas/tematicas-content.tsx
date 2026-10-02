@@ -6,7 +6,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { ArrowDown, ArrowRight, ChevronDown } from "lucide-react"
 import { groups } from "@/lib/tematicas-data"
-import { useAppStore } from "@/lib/ciudadania/app-store"
+import { RequireAuth } from "@/components/tematicas/require-auth"
 
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
@@ -19,9 +19,6 @@ const containerVariants = {
 }
 
 export function TematicasContent() {
-  const user = useAppStore((s) => s.user)
-  const isIdeayUser = user?.email?.toLowerCase() === 'ideay@gmail.com'
-
   // Grupos comprimidos (acordeón) por defecto — solo en esta página. Estado
   // local, no el store global de audiencias (el filtro de público se sacó
   // de esta página).
@@ -31,6 +28,7 @@ export function TematicasContent() {
   }
 
   return (
+    <RequireAuth>
     <main className="min-h-screen bg-[#F2F6FF]">
 
       {/* ── Hero ── */}
@@ -312,7 +310,7 @@ export function TematicasContent() {
                       animate="visible"
                       className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-7"
                     >
-                      {group.items.filter((tema) => isIdeayUser || !tema.locked).map((tema) => {
+                      {group.items.map((tema) => {
                   const IconComponent = tema.icon
                   return (
                     <motion.div key={tema.title} variants={cardVariants}>
@@ -376,46 +374,6 @@ export function TematicasContent() {
                     </motion.div>
                   )
                       })}
-
-                      {(() => {
-                        const lockedItems = group.items.filter((tema) => !isIdeayUser && tema.locked)
-                        if (lockedItems.length === 0) return null
-                        return (
-                          <motion.div variants={cardVariants}>
-                            <Link href="/ciudadania-presente/login" scroll={true} className="group block h-full">
-                              <div className="relative h-full min-h-[260px] rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50/60 hover:bg-white hover:border-brand-blue/40 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col items-center justify-center text-center p-6 gap-3">
-                                {/* Sneak peek: mini stack of icons from the hidden temas */}
-                                <div className="flex -space-x-2 mb-1">
-                                  {lockedItems.slice(0, 4).map((tema) => {
-                                    const Icon = tema.icon
-                                    return (
-                                      <div
-                                        key={tema.id}
-                                        className="w-9 h-9 rounded-full flex items-center justify-center border-2 border-white shadow-sm"
-                                        style={{ backgroundColor: `${tema.color}18` }}
-                                      >
-                                        <Icon className="w-4 h-4" style={{ color: tema.color }} />
-                                      </div>
-                                    )
-                                  })}
-                                </div>
-
-                                <p className="text-sm font-display font-bold text-brand-navy leading-snug">
-                                  +{lockedItems.length} {lockedItems.length === 1 ? "temática más" : "temáticas más"}
-                                </p>
-                                <p className="text-xs text-slate-400 leading-relaxed max-w-[20ch]">
-                                  Iniciá sesión o registrate para desbloquearlas
-                                </p>
-
-                                <span className="mt-1 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold text-white bg-brand-blue group-hover:bg-brand-blue/90 transition-colors duration-200">
-                                  Ver más
-                                  <ArrowRight className="w-3.5 h-3.5" />
-                                </span>
-                              </div>
-                            </Link>
-                          </motion.div>
-                        )
-                      })()}
                     </motion.div>
                   </motion.div>
                 )}
@@ -462,5 +420,6 @@ export function TematicasContent() {
       </section>
 
     </main>
+    </RequireAuth>
   )
 }

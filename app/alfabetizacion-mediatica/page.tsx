@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import AlfabetizacionMediaticaContent from './alfabetizacion-mediatica-content'
+import { RequireAuth } from '@/components/tematicas/require-auth'
 
 export const metadata: Metadata = {
   title: 'Alfabetización Mediática e Informacional | José Farhat',
@@ -23,5 +24,9 @@ export const metadata: Metadata = {
 }
 
 export default function AlfabetizacionMediaticaPage() {
-  return <AlfabetizacionMediaticaContent />
+  return (
+    <RequireAuth>
+      <AlfabetizacionMediaticaContent />
+    </RequireAuth>
+  )
 }

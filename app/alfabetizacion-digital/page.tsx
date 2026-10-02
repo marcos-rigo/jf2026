@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import AlfabetizacionDigitalContent from './alfabetizacion-digital-content';
+import { RequireAuth } from '@/components/tematicas/require-auth';
 
 export const metadata: Metadata = {
   title: 'Alfabetización Digital: Del Acceso Técnico a la Autonomía Cognitiva | José Farhat',
@@ -26,5 +27,9 @@ export const metadata: Metadata = {
 };
 
 export default function AlfabetizacionDigitalPage() {
-  return <AlfabetizacionDigitalContent />;
+  return (
+    <RequireAuth>
+      <AlfabetizacionDigitalContent />
+    </RequireAuth>
+  );
 }

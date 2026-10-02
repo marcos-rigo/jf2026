@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import SocioComunicacionalEIdentidadContent from './socio-comunicacional-e-identidad-content';
+import { RequireAuth } from '@/components/tematicas/require-auth';
 
 const TITLE = 'Socio-Comunicacional e Identidad: de publicar a convivir';
 const DESCRIPTION =
@@ -17,5 +18,9 @@ export const metadata: Metadata = {
 };
 
 export default function SocioComunicacionalEIdentidadPage() {
-  return <SocioComunicacionalEIdentidadContent />;
+  return (
+    <RequireAuth>
+      <SocioComunicacionalEIdentidadContent />
+    </RequireAuth>
+  );
 }

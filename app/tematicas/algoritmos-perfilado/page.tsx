@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { AlgoritmosPerfiladoPage } from '@/components/tematicas/AlgoritmosPerfiladoPage'
 import { getLibresSubtopicBySlug } from '@/lib/libres-bajo-influencia-data'
+import { RequireAuth } from '@/components/tematicas/require-auth'
 
 const data = getLibresSubtopicBySlug('algoritmos-perfilado')!
 
@@ -16,6 +17,10 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  return <AlgoritmosPerfiladoPage />
+  return (
+    <RequireAuth>
+      <AlgoritmosPerfiladoPage />
+    </RequireAuth>
+  )
 }
 

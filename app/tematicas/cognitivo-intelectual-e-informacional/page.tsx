@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import CognitivoIntelectualEInformacionalContent from './cognitivo-intelectual-e-informacional-content';
+import { RequireAuth } from '@/components/tematicas/require-auth';
 
 const TITLE = 'Cognitivo-Intelectual e Informacional: de encontrar información a juzgarla';
 const DESCRIPTION =
@@ -17,5 +18,9 @@ export const metadata: Metadata = {
 };
 
 export default function CognitivoIntelectualEInformacionalPage() {
-  return <CognitivoIntelectualEInformacionalContent />;
+  return (
+    <RequireAuth>
+      <CognitivoIntelectualEInformacionalContent />
+    </RequireAuth>
+  );
 }

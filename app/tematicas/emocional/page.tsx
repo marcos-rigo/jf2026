@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import EmocionalContent from './emocional-content';
+import { RequireAuth } from '@/components/tematicas/require-auth';
 
 const TITLE = 'Emocional: de reaccionar a elegir';
 const DESCRIPTION =
@@ -17,5 +18,9 @@ export const metadata: Metadata = {
 };
 
 export default function EmocionalPage() {
-  return <EmocionalContent />;
+  return (
+    <RequireAuth>
+      <EmocionalContent />
+    </RequireAuth>
+  );
 }

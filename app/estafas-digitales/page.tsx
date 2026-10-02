@@ -3,6 +3,7 @@ import { Navbar } from "@/components/navbar"
 import { BackToDashboardButton } from "@/components/tematicas/back-to-dashboard-button"
 import { Footer } from "@/components/footer"
 import { EstafasDigitalesContent } from "./estafas-digitales-content"
+import { RequireAuth } from "@/components/tematicas/require-auth"
 
 export const metadata: Metadata = {
   title: "Estafas Digitales - Cómo Protegerte | José Farhat",
@@ -26,11 +27,11 @@ export const metadata: Metadata = {
 
 export default function EstafasDigitalesPage() {
   return (
-    <>
+    <RequireAuth>
       <Navbar />
       <BackToDashboardButton />
       <EstafasDigitalesContent />
       <Footer />
-    </>
+    </RequireAuth>
   )
 }

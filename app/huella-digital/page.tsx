@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import HuellaDigitalContent from './huella-digital-content'
+import { RequireAuth } from '@/components/tematicas/require-auth'
 
 export const metadata: Metadata = {
   title: 'Huella Digital: Recuperá el Control de tu Identidad | José Farhat',
@@ -23,5 +24,9 @@ export const metadata: Metadata = {
 }
 
 export default function HuellaDigitalPage() {
-  return <HuellaDigitalContent />
+  return (
+    <RequireAuth>
+      <HuellaDigitalContent />
+    </RequireAuth>
+  )
 }

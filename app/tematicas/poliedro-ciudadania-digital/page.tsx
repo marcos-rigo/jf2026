@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { PoliedroCiudadaniaDigitalPage } from '@/components/tematicas/PoliedroCiudadaniaDigitalPage'
 import { getLibresSubtopicBySlug } from '@/lib/libres-bajo-influencia-data'
+import { RequireAuth } from '@/components/tematicas/require-auth'
 
 const data = getLibresSubtopicBySlug('poliedro-ciudadania-digital')!
 
@@ -16,5 +17,9 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  return <PoliedroCiudadaniaDigitalPage />
+  return (
+    <RequireAuth>
+      <PoliedroCiudadaniaDigitalPage />
+    </RequireAuth>
+  )
 }

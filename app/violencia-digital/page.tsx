@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import ViolenciaDigitalContent from './violencia-digital-content'
+import { RequireAuth } from '@/components/tematicas/require-auth'
 
 export const metadata: Metadata = {
   title: 'Violencia Digital hacia la Mujer: Protocolo de Protección | José Farhat',
@@ -23,5 +24,9 @@ export const metadata: Metadata = {
 }
 
 export default function ViolenciaDigitalPage() {
-  return <ViolenciaDigitalContent />
+  return (
+    <RequireAuth>
+      <ViolenciaDigitalContent />
+    </RequireAuth>
+  )
 }

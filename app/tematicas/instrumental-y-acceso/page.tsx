@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import InstrumentalYAccesoContent from './instrumental-y-acceso-content';
+import { RequireAuth } from '@/components/tematicas/require-auth';
 
 const TITLE = 'Instrumental y Acceso: de saber tocar pantallas a tener capacidad real';
 const DESCRIPTION =
@@ -17,5 +18,9 @@ export const metadata: Metadata = {
 };
 
 export default function InstrumentalYAccesoPage() {
-  return <InstrumentalYAccesoContent />;
+  return (
+    <RequireAuth>
+      <InstrumentalYAccesoContent />
+    </RequireAuth>
+  );
 }

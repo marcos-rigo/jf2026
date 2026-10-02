@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { CaldosDeCultivoPage } from '@/components/tematicas/CaldosDeCultivoPage'
 import { getLibresSubtopicBySlug } from '@/lib/libres-bajo-influencia-data'
+import { RequireAuth } from '@/components/tematicas/require-auth'
 
 const data = getLibresSubtopicBySlug('caldos-de-cultivo')!
 
@@ -16,5 +17,9 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  return <CaldosDeCultivoPage />
+  return (
+    <RequireAuth>
+      <CaldosDeCultivoPage />
+    </RequireAuth>
+  )
 }

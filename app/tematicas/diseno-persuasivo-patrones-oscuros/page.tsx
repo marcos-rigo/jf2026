@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { DisenoPersuasivoPatronesOscurosPage } from '@/components/tematicas/DisenoPersuasivoPatronesOscurosPage'
 import { getLibresSubtopicBySlug } from '@/lib/libres-bajo-influencia-data'
+import { RequireAuth } from '@/components/tematicas/require-auth'
 
 const data = getLibresSubtopicBySlug('diseno-persuasivo-patrones-oscuros')!
 
@@ -16,5 +17,9 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  return <DisenoPersuasivoPatronesOscurosPage />
+  return (
+    <RequireAuth>
+      <DisenoPersuasivoPatronesOscurosPage />
+    </RequireAuth>
+  )
 }

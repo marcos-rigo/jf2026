@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { CibercrianzaContent } from "./cibercrianza-content"
+import { RequireAuth } from "@/components/tematicas/require-auth"
 
 export const metadata: Metadata = {
   title: "¿Sabés dónde interactúan tus estudiantes? | Cibercrianza",
@@ -15,5 +16,9 @@ export const metadata: Metadata = {
 }
 
 export default function CibercrianzaPage() {
-  return <CibercrianzaContent />
+  return (
+    <RequireAuth>
+      <CibercrianzaContent />
+    </RequireAuth>
+  )
 }
