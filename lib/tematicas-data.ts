@@ -1,4 +1,4 @@
-import { Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, Scale, BookOpen, ScanEye, MousePointerClick, Flame, Compass, Hexagon, Microscope, Heart, MessageCircle, type LucideIcon } from "lucide-react"
+import { Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, Scale, BookOpen, ScanEye, MousePointerClick, Flame, Compass, Hexagon, Microscope, Heart, HeartPulse, MessageCircle, type LucideIcon } from "lucide-react"
 import type { Audiencia } from "./audiencias"
 
 export interface TematicaItem {
@@ -135,6 +135,20 @@ export const groups: TematicaGroup[] = [
         color: "#6366F1",
         locked: true,
         audiencias: ["docentes", "familias"],
+      },
+      {
+        id: "salud-y-bienestar-digital",
+        href: "/tematicas/salud-y-bienestar-digital",
+        category: "Kit de Acción",
+        title: "Salud y Bienestar Digital",
+        description: "La quinta dimensión del Poliedro de Ciudadanía Digital: por qué el bienestar digital no se mide en horas de pantalla, qué factores pesan y qué depende de la persona y qué del entorno.",
+        // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
+        image: "/img/cards/ciudDig.jpg",
+        imageAlt: "Banner Salud y Bienestar Digital",
+        icon: HeartPulse,
+        color: "#059669",
+        locked: false,
+        audiencias: ["docentes"],
       },
     ],
   },

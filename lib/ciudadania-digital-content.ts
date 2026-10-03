@@ -87,6 +87,7 @@ export const DIMENSIONES: DimensionInfo[] = [
       'sostener una relación con la tecnología que fortalezca, y no deteriore, el descanso, el aprendizaje y los vínculos.',
     linea: 'Sostener una relación sana y sostenible con la tecnología.',
     capacidad: 'Sostener una relación sana con la tecnología',
+    href: '/tematicas/salud-y-bienestar-digital',
   },
   {
     id: 'etico-normativa',

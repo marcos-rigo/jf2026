@@ -160,6 +160,9 @@ export interface Contenido {
     seguiEnlace2Texto: string;
     seguiEnlace2Href: string;
     seguiDespues: string;
+    // Adición que no figura en el contenido fuente (.docx) de esta página.
+    siguienteDimensionTexto: string;
+    siguienteDimensionHref: string;
     cierreTitulo: string;
     cierreParrafo: string;
   };
@@ -693,6 +696,8 @@ const DOCENTES: Contenido = {
     seguiEnlace2Texto: 'Cognitivo-Intelectual e Informacional',
     seguiEnlace2Href: '/tematicas/cognitivo-intelectual-e-informacional',
     seguiDespues: '.',
+    siguienteDimensionTexto: 'Siguiente dimensión: Salud y Bienestar Digital',
+    siguienteDimensionHref: '/tematicas/salud-y-bienestar-digital',
     cierreTitulo: 'Cierre',
     cierreParrafo:
       'Sentir no es el problema. Lo importante es elegir qué hacer con lo que sentimos, sobre todo en entornos diseñados para que decidamos antes de pensar. Pausar, pedir una segunda mirada y pedir ayuda no son señales de debilidad: son, en estos entornos, la forma más concreta de seguir eligiendo vos.',
