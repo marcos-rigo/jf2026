@@ -1,4 +1,4 @@
-import { Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, Scale, BookOpen, ScanEye, MousePointerClick, Flame, Compass, Hexagon, Microscope, Heart, HeartPulse, MessageCircle, type LucideIcon } from "lucide-react"
+import { Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, Scale, BookOpen, ScanEye, MousePointerClick, Flame, Compass, Hexagon, Microscope, Heart, HeartPulse, Gavel, MessageCircle, type LucideIcon } from "lucide-react"
 import type { Audiencia } from "./audiencias"
 
 export interface TematicaItem {
@@ -147,6 +147,20 @@ export const groups: TematicaGroup[] = [
         imageAlt: "Banner Salud y Bienestar Digital",
         icon: HeartPulse,
         color: "#059669",
+        locked: false,
+        audiencias: ["docentes"],
+      },
+      {
+        id: "etico-normativa-y-derechos",
+        href: "/tematicas/etico-normativa-y-derechos",
+        category: "Kit de Acción",
+        title: "Ético-Normativa y Derechos",
+        description: "La sexta dimensión del Poliedro de Ciudadanía Digital: por qué que la tecnología lo permita no vuelve legítima una acción, cómo distinguir valores, reglas sociales, reglas de plataforma y normas jurídicas, y qué criterios usar para decidir.",
+        // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
+        image: "/img/cards/ciudDig.jpg",
+        imageAlt: "Banner Ético-Normativa y Derechos",
+        icon: Gavel,
+        color: "#7C3AED",
         locked: false,
         audiencias: ["docentes"],
       },

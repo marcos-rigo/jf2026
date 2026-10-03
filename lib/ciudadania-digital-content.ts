@@ -96,6 +96,7 @@ export const DIMENSIONES: DimensionInfo[] = [
       'distinguir qué es legítimo de qué es simplemente posible, y saber cuándo una situación necesita una lectura de derechos.',
     linea: 'Orientar lo técnicamente posible con criterios de legitimidad.',
     capacidad: 'Distinguir lo legítimo de lo simplemente posible',
+    href: '/tematicas/etico-normativa-y-derechos',
   },
   {
     id: 'seguridad',

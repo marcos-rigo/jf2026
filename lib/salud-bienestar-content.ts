@@ -159,6 +159,9 @@ export interface Contenido {
     seguiEnlace2Texto: string;
     seguiEnlace2Href: string;
     seguiDespues: string;
+    // Adición que no figura en el contenido fuente de esta página.
+    siguienteDimensionTexto: string;
+    siguienteDimensionHref: string;
     cierreTitulo: string;
     cierreParrafo: string;
   };
@@ -695,6 +698,8 @@ const DOCENTES: Contenido = {
     seguiEnlace2Texto: 'Emocional',
     seguiEnlace2Href: '/tematicas/emocional',
     seguiDespues: '.',
+    siguienteDimensionTexto: 'Siguiente dimensión: Ético-Normativa y Derechos',
+    siguienteDimensionHref: '/tematicas/etico-normativa-y-derechos',
     cierreTitulo: 'Cierre',
     cierreParrafo:
       'Conectarse no es el problema. El objetivo es una relación con la tecnología que se pueda sostener: que no te quite el descanso, la atención ni los vínculos, y que no dependa solo de tu fuerza de voluntad. Poner un límite, acordarlo con otros y pedir ayuda cuando hace falta no es abandonar nada: es cuidar lo que necesitás para estar bien.',

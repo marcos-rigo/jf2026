@@ -2,13 +2,13 @@
 
 import Link from 'next/link';
 import { Section, P, H3, Note, TextArea, Enfasis, useContenido } from './ui';
-import { useSaludBienestarStore } from '@/lib/salud-bienestar-store';
+import { useEticoNormativaStore } from '@/lib/etico-normativa-store';
 
 export default function RecursosYCierreSection() {
   const c = useContenido().recursosYCierre;
-  const respuestaGancho = useSaludBienestarStore((s) => s.respuestaGancho);
-  const explicacionFinal = useSaludBienestarStore((s) => s.explicacionFinal);
-  const setExplicacionFinal = useSaludBienestarStore((s) => s.setExplicacionFinal);
+  const respuestaGancho = useEticoNormativaStore((s) => s.respuestaGancho);
+  const explicacionFinal = useEticoNormativaStore((s) => s.explicacionFinal);
+  const setExplicacionFinal = useEticoNormativaStore((s) => s.setExplicacionFinal);
 
   return (
     <Section id="recursos-y-cierre" number="10" title={c.titulo}>
@@ -59,16 +59,6 @@ export default function RecursosYCierreSection() {
         </Link>
         {c.seguiDespues}
       </P>
-
-      {/* Adición que no figura en el contenido fuente de esta página. */}
-      <div className="flex flex-wrap gap-3">
-        <Link
-          href={c.siguienteDimensionHref}
-          className="inline-flex items-center gap-2 rounded-lg border-2 border-brand-blue px-4 py-2 text-sm font-semibold text-brand-blue transition hover:bg-brand-blue hover:text-white"
-        >
-          {c.siguienteDimensionTexto} →
-        </Link>
-      </div>
 
       {/* ── Cierre ── */}
       <div className="pt-6 space-y-5 text-center">
