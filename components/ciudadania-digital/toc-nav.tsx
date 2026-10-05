@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { TOC_SECTIONS } from '@/lib/ciudadania-digital-content';
 
 function scrollToSection(id: string) {
@@ -12,12 +13,14 @@ function scrollToSection(id: string) {
 // cuál está visible (scroll-spy vía IntersectionObserver).
 //
 // Desktop: sidebar vertical fijo (igual look que el nav anterior).
-// Mobile: barra horizontal compacta y scrolleable — 10 secciones no entran como
-// texto completo en una fila, así que acá se usan las etiquetas cortas
-// (`shortLabel`) en vez del label completo que usa desktop.
+// Mobile: selector desplegable — un botón sticky con la sección activa que, al
+// tocarlo, abre la lista completa en vertical (en vez de una tira horizontal
+// con scroll, difícil de leer con 10 secciones amontonadas).
 export function TocNav() {
   const [activeId, setActiveId] = useState(TOC_SECTIONS[0].id);
-  const mobileItemRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const activeIndex = Math.max(0, TOC_SECTIONS.findIndex((s) => s.id === activeId));
+  const activeSection = TOC_SECTIONS[activeIndex];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -39,8 +42,10 @@ export function TocNav() {
     return () => observer.disconnect();
   }, []);
 
+  // Cierra el desplegable mobile cuando el scroll-spy cambia de sección
+  // (el usuario sigue desplazándose por la página con el menú abierto).
   useEffect(() => {
-    mobileItemRefs.current[activeId]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    setMobileOpen(false);
   }, [activeId]);
 
   return (
@@ -78,28 +83,60 @@ export function TocNav() {
         </div>
       </nav>
 
-      {/* ── Mobile: barra horizontal compacta, sticky bajo el navbar ── */}
-      <nav className="md:hidden sticky top-20 z-20 backdrop-blur-xl bg-white/90 border-b border-slate-200 overflow-x-auto">
-        <div className="flex gap-2 px-4 py-3 w-max">
-          {TOC_SECTIONS.map((section) => (
-            <button
-              key={section.id}
-              ref={(el) => {
-                mobileItemRefs.current[section.id] = el;
-              }}
-              onClick={() => scrollToSection(section.id)}
-              aria-current={activeId === section.id ? 'true' : undefined}
-              className={`shrink-0 whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium transition-all border font-sans ${
-                activeId === section.id
-                  ? 'bg-[#0E7490]/15 border-[#0E7490]/50 text-brand-navy'
-                  : 'bg-slate-100 border-slate-200 text-slate-600'
-              }`}
-            >
-              <span className="opacity-80 mr-1.5 text-xs text-[#0E7490]">{section.number}</span>
-              {section.shortLabel}
-            </button>
-          ))}
-        </div>
+      {/* ── Mobile: selector desplegable, sticky bajo el navbar. Al tocar el botón
+          (con el indicador neón que marca que es interactivo) despliega la lista completa
+          empujando el contenido hacia abajo — nunca lo tapa. Elegir una sección cierra el
+          menú al instante y deja el contenido visible. ── */}
+      <nav className="md:hidden sticky top-20 z-20">
+        <button
+          type="button"
+          onClick={() => setMobileOpen((o) => !o)}
+          aria-expanded={mobileOpen}
+          className="w-full flex items-center justify-between gap-3 px-4 py-3 backdrop-blur-xl bg-white/90 border-b border-slate-200"
+        >
+          <span className="flex items-center gap-2.5 min-w-0">
+            <span className="shrink-0 text-xs font-mono font-semibold text-[#0E7490]">
+              {activeIndex + 1}/{TOC_SECTIONS.length}
+            </span>
+            <span className="truncate text-sm font-semibold text-brand-navy">{activeSection.label}</span>
+          </span>
+          <span
+            className="relative shrink-0 inline-flex items-center justify-center w-7 h-7 rounded-full"
+            style={{ backgroundColor: '#0E7490', boxShadow: '0 0 12px #0E7490aa, 0 0 2px #0E7490' }}
+          >
+            <span
+              className="absolute inset-0 rounded-full animate-ping"
+              style={{ backgroundColor: '#0E7490', opacity: 0.55 }}
+              aria-hidden
+            />
+            <ChevronDown
+              className={`relative w-4 h-4 text-white transition-transform duration-300 ${mobileOpen ? 'rotate-180' : ''}`}
+            />
+          </span>
+        </button>
+
+        {mobileOpen && (
+          <div className="bg-white border-b border-slate-200 shadow-lg max-h-[60vh] overflow-y-auto">
+            {TOC_SECTIONS.map((section) => (
+              <button
+                key={section.id}
+                onClick={() => {
+                  scrollToSection(section.id);
+                  setMobileOpen(false);
+                }}
+                aria-current={activeId === section.id ? 'true' : undefined}
+                className={`w-full flex items-center gap-3 text-left px-4 py-3 border-b border-slate-100 last:border-b-0 font-sans text-sm transition-colors ${
+                  activeId === section.id
+                    ? 'bg-[#0E7490]/10 text-brand-navy font-semibold'
+                    : 'text-slate-600 hover:bg-slate-50'
+                }`}
+              >
+                <span className="w-6 shrink-0 text-xs font-mono text-[#0E7490]">{section.number}</span>
+                {section.label}
+              </button>
+            ))}
+          </div>
+        )}
       </nav>
     </>
   );

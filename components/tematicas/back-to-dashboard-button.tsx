@@ -20,7 +20,10 @@ export function BackToDashboardButton() {
   return (
     <Link
       href="/ciudadania-presente/dashboard/tematicas"
-      className="fixed top-24 right-4 md:right-6 z-40 inline-flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-lg shadow-slate-900/5 text-sm font-semibold text-brand-navy hover:border-brand-blue hover:text-brand-blue hover:-translate-x-0.5 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2"
+      // top-36 en mobile para quedar debajo del selector desplegable de secciones
+      // (sticky top-20, con su propio alto) — en desktop ese selector no existe
+      // (es el sidebar lateral), así que ahí vuelve a top-24.
+      className="fixed top-36 md:top-24 right-4 md:right-6 z-30 inline-flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-lg shadow-slate-900/5 text-sm font-semibold text-brand-navy hover:border-brand-blue hover:text-brand-blue hover:-translate-x-0.5 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2"
     >
       <ArrowLeft className="w-4 h-4 shrink-0" />
       <span>Volver a mis temáticas</span>

@@ -1,4 +1,4 @@
-import { Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, Scale, BookOpen, ScanEye, MousePointerClick, Flame, Compass, Hexagon, Microscope, Heart, HeartPulse, Gavel, MessageCircle, ShieldCheck, GraduationCap, Vote, Wallet, type LucideIcon } from "lucide-react"
+import { Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, Scale, BookOpen, ScanEye, MousePointerClick, Flame, Compass, Hexagon, Microscope, Heart, HeartPulse, Gavel, MessageCircle, ShieldCheck, GraduationCap, Vote, Wallet, Bot, type LucideIcon } from "lucide-react"
 import type { Audiencia } from "./audiencias"
 
 export interface TematicaItem {
@@ -398,6 +398,26 @@ export const groups: TematicaGroup[] = [
         icon: Hexagon,
         color: "#0EA5E9",
         locked: true,
+        audiencias: ["docentes"],
+      },
+    ],
+  },
+  {
+    label: "Inteligencia Artificial",
+    accent: "#4F46E5",
+    items: [
+      {
+        id: "usar-la-ia-sin-perder-criterio",
+        href: "/ia/usar-la-ia-sin-perder-criterio",
+        category: "Inteligencia Artificial",
+        title: "Usar la IA sin perder criterio",
+        description: "Primera temática del módulo Inteligencia Artificial: cuándo usar una IA es ampliar tu capacidad y cuándo es delegar un criterio que te corresponde conservar.",
+        // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía.
+        image: "/img/cards/ciudDig.jpg",
+        imageAlt: "Banner Usar la IA sin perder criterio",
+        icon: Bot,
+        color: "#4F46E5",
+        locked: false,
         audiencias: ["docentes"],
       },
     ],
