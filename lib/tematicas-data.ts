@@ -59,7 +59,7 @@ export const groups: TematicaGroup[] = [
         href: "/tematicas/instrumental-y-acceso",
         category: "Kit de Acción",
         title: "Instrumental y Acceso",
-        description: "La primera dimensión del Poliedro de Ciudadanía Digital: qué es la capacidad instrumental y cómo distinguir si una dificultad es de la persona o del diseño del servicio.",
+        description: "Primera dimensión del Poliedro: herramientas simples para distinguir si una dificultad digital es de la persona o del diseño, y ganar autonomía real.",
         // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
         image: "/img/cards/ciudDig.jpg",
         imageAlt: "Banner Instrumental y Acceso",
@@ -73,7 +73,7 @@ export const groups: TematicaGroup[] = [
         href: "/tematicas/cognitivo-intelectual-e-informacional",
         category: "Kit de Acción",
         title: "Cognitivo-Intelectual e Informacional",
-        description: "La segunda dimensión del Poliedro de Ciudadanía Digital: cómo evaluar la calidad de la información, aplicar la lectura lateral y ajustar cuánto verificar según lo que está en juego.",
+        description: "Segunda dimensión del Poliedro: claves para evaluar la calidad de la información, aplicar la lectura lateral y saber cuánto verificar en cada caso.",
         // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
         image: "/img/cards/ciudDig.jpg",
         imageAlt: "Banner Cognitivo-Intelectual e Informacional",
@@ -87,7 +87,7 @@ export const groups: TematicaGroup[] = [
         href: "/tematicas/socio-comunicacional-e-identidad",
         category: "Kit de Acción",
         title: "Socio-Comunicacional e Identidad",
-        description: "La tercera dimensión del Poliedro de Ciudadanía Digital: cómo anticipar la audiencia, la persistencia y la circulación de lo que decimos, distinguir la netiqueta de la convivencia y aprender a reparar.",
+        description: "Tercera dimensión del Poliedro: cómo anticipar la audiencia, la persistencia y la circulación de lo que decimos, y aprender a reparar cuando algo sale mal.",
         // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
         image: "/img/cards/ciudDig.jpg",
         imageAlt: "Banner Socio-Comunicacional e Identidad",
@@ -101,7 +101,7 @@ export const groups: TematicaGroup[] = [
         href: "/tematicas/emocional",
         category: "Kit de Acción",
         title: "Emocional",
-        description: "La cuarta dimensión del Poliedro de Ciudadanía Digital: cómo las emociones participan de nuestras decisiones digitales, cómo los entornos las amplifican, y cuándo pausar, pedir una segunda mirada o pedir ayuda.",
+        description: "Cuarta dimensión del Poliedro: cómo las emociones guían nuestras decisiones digitales y cuándo conviene pausar, pedir una segunda mirada o pedir ayuda.",
         // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
         image: "/img/cards/ciudDig.jpg",
         imageAlt: "Banner Emocional",
@@ -141,7 +141,7 @@ export const groups: TematicaGroup[] = [
         href: "/tematicas/salud-y-bienestar-digital",
         category: "Kit de Acción",
         title: "Salud y Bienestar Digital",
-        description: "La quinta dimensión del Poliedro de Ciudadanía Digital: por qué el bienestar digital no se mide en horas de pantalla, qué factores pesan y qué depende de la persona y qué del entorno.",
+        description: "Quinta dimensión del Poliedro: por qué el bienestar digital no se mide en horas de pantalla, y qué depende de cada persona y qué del entorno.",
         // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
         image: "/img/cards/ciudDig.jpg",
         imageAlt: "Banner Salud y Bienestar Digital",
@@ -155,7 +155,7 @@ export const groups: TematicaGroup[] = [
         href: "/tematicas/etico-normativa-y-derechos",
         category: "Kit de Acción",
         title: "Ético-Normativa y Derechos",
-        description: "La sexta dimensión del Poliedro de Ciudadanía Digital: por qué que la tecnología lo permita no vuelve legítima una acción, cómo distinguir valores, reglas sociales, reglas de plataforma y normas jurídicas, y qué criterios usar para decidir.",
+        description: "Sexta dimensión del Poliedro: criterios claros para decidir qué está bien, más allá de lo que la tecnología permite hacer.",
         // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
         image: "/img/cards/ciudDig.jpg",
         imageAlt: "Banner Ético-Normativa y Derechos",
@@ -169,7 +169,7 @@ export const groups: TematicaGroup[] = [
         href: "/tematicas/seguridad-privacidad-y-proteccion-digital",
         category: "Kit de Acción",
         title: "Seguridad, Privacidad y Protección Digital",
-        description: "La séptima dimensión del Poliedro de Ciudadanía Digital: qué se protege hoy, qué es la confianza informada y cómo usar Pausar–Verificar–Decidir frente a la urgencia y la autoridad aparente.",
+        description: "Séptima dimensión del Poliedro: qué proteger hoy y cómo usar Pausar–Verificar–Decidir frente a la urgencia y la autoridad aparente.",
         // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
         image: "/img/cards/ciudDig.jpg",
         imageAlt: "Banner Seguridad, Privacidad y Protección Digital",
@@ -183,7 +183,7 @@ export const groups: TematicaGroup[] = [
         href: "/tematicas/pedagogica-y-creativa",
         category: "Kit de Acción",
         title: "Pedagógica y Creativa",
-        description: "La octava dimensión del Poliedro de Ciudadanía Digital: cómo aprender y crear con tecnología, distinguir la capacidad aumentada de la sustitución cognitiva y decidir qué capacidad querés preservar o desarrollar.",
+        description: "Octava dimensión del Poliedro: cómo aprender y crear con tecnología sin perder la capacidad de pensar por cuenta propia.",
         // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
         image: "/img/cards/ciudDig.jpg",
         imageAlt: "Banner Pedagógica y Creativa",
@@ -197,7 +197,7 @@ export const groups: TematicaGroup[] = [
         href: "/tematicas/participacion-y-democracia",
         category: "Kit de Acción",
         title: "Participación y Democracia",
-        description: "La novena dimensión del Poliedro de Ciudadanía Digital: la diferencia entre interacción e incidencia, las condiciones de una participación democrática de calidad y qué hacer cuando una decisión importante la toma un sistema automatizado.",
+        description: "Novena dimensión del Poliedro: la diferencia entre opinar y lograr que una voz incida de verdad en una decisión colectiva.",
         // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
         image: "/img/cards/ciudDig.jpg",
         imageAlt: "Banner Participación y Democracia",
@@ -211,7 +211,7 @@ export const groups: TematicaGroup[] = [
         href: "/tematicas/economica-productiva-y-de-consumo",
         category: "Kit de Acción",
         title: "Económica, Productiva y de Consumo",
-        description: "La décima y última dimensión del Poliedro de Ciudadanía Digital: las condiciones reales detrás de una compra, una suscripción o una herramienta de trabajo automatizada, y cómo decidir con autonomía.",
+        description: "Décima y última dimensión del Poliedro: las condiciones reales detrás de una compra, una suscripción o una herramienta de trabajo automatizada.",
         // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
         image: "/img/cards/ciudDig.jpg",
         imageAlt: "Banner Económica, Productiva y de Consumo",
