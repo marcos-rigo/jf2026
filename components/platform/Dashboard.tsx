@@ -5,6 +5,14 @@ import { SUBTOPICS_DATA } from '@/lib/ciudadania/mock-data'
 import { Shield, Lock, CheckCircle2, Circle, ChevronRight, Award, Brain } from 'lucide-react'
 import type { SubtopicStatus } from '@/lib/ciudadania/types'
 
+// Mismo flag dev-only que tematicas-dashboard-content.tsx: requiere NODE_ENV === 'development'
+// explícito (nunca es 'production' en un build de Vercel) Y la variable opt-in en
+// .env.development.local — no toca la lógica de desbloqueo que corre en producción. Hace que
+// cualquier cuenta en local vea el módulo base igual que ideay@gmail.com en producción.
+const UNLOCK_ALL_LOCAL =
+  process.env.NODE_ENV === 'development' &&
+  process.env.NEXT_PUBLIC_UNLOCK_ALL_LOCAL === 'true'
+
 const STATUS_CONFIG = {
   locked: {
     label: 'Bloqueado',
@@ -154,8 +162,9 @@ export default function Dashboard() {
           {subtopics.map((subtopicState, index) => {
             const data   = SUBTOPICS_DATA[index]
             const isIdeayUser = user?.email?.toLowerCase() === 'ideay@gmail.com'
-            const isLocked   = !isIdeayUser && subtopicState.status === 'locked'
-            const effectiveStatus = isIdeayUser && subtopicState.status === 'locked' ? 'in-progress' : subtopicState.status
+            const isUnlockedUser = isIdeayUser || UNLOCK_ALL_LOCAL
+            const isLocked   = !isUnlockedUser && subtopicState.status === 'locked'
+            const effectiveStatus = isUnlockedUser && subtopicState.status === 'locked' ? 'in-progress' : subtopicState.status
             const cfg    = STATUS_CONFIG[effectiveStatus as SubtopicStatus]
             const StatusIcon = cfg.icon
 

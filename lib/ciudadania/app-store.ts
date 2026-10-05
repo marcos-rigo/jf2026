@@ -32,11 +32,24 @@ const INITIAL_SUBTOPICS: SubtopicState[] = [
   { id: 3, status: 'locked',      currentStep: 'intro', score: null, passed: false, introRead: false, videoWatched: false, podcastListened: false },
 ]
 
+// Mismo flag dev-only que components/platform/Dashboard.tsx y
+// tematicas-dashboard-content.tsx: requiere NODE_ENV === 'development' explícito (nunca es
+// 'production' en un build de Vercel) Y la variable opt-in en .env.development.local — no
+// toca la lógica de desbloqueo que corre en producción.
+const UNLOCK_ALL_LOCAL =
+  process.env.NODE_ENV === 'development' &&
+  process.env.NEXT_PUBLIC_UNLOCK_ALL_LOCAL === 'true'
+
+// Cuenta de prueba que carga por defecto en desarrollo (bypass de login). Coincide con la
+// fila real de la cuenta admin `ideay@gmail.com` insertada en la base MySQL local
+// (ciudadania_presente_local), para que el id matchee y las llamadas a
+// /api/ciudadania/* (progreso-tematicas, progress/sync) apunten al usuario correcto en vez
+// de a un id inventado.
 const DEV_USER: UserData = {
-  id:             0,
-  fullName:       'Usuario de Prueba',
-  dni:            '12345678',
-  email:          'test@test.com',
+  id:             6,
+  fullName:       'Ideay',
+  dni:            '00000000',
+  email:          'ideay@gmail.com',
   consent:        true,
   ciudad:         'San Miguel de Tucumán',
   pais:           'Argentina',
@@ -46,7 +59,7 @@ const DEV_USER: UserData = {
   nivelEducativo: null,
   genero:         null,
   fotoPerfil:     null,
-  emailVerified:  false,
+  emailVerified:  true,
   memberSince:    new Date().toISOString(),
 }
 
@@ -86,7 +99,8 @@ export const useAppStore = create<AppStore>()(
       startSubtopic: (id) => {
         const st = get().subtopics.find((s) => s.id === id)
         const isIdeayUser = get().user?.email?.toLowerCase() === 'ideay@gmail.com'
-        if (!st || (!isIdeayUser && st.status === 'locked')) return
+        const isUnlockedUser = isIdeayUser || UNLOCK_ALL_LOCAL
+        if (!st || (!isUnlockedUser && st.status === 'locked')) return
         set({ activeSubtopicId: id, screen: 'wizard' })
       },
 

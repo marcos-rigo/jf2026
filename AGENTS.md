@@ -26,6 +26,7 @@ npx tsc --noEmit         # type-check separately (build does NOT check types)
 - **Extra routes**: `/hiperconectividad-digital`, `/nnya-entorno-digital`, `/violencia-digital-infancias` — present in Navbar but not in manual route tables.
 - **Home page**: `app/page.tsx` currently does not render `WeeklyModalLoader` or `QuickContactSection` (both still exist as components but are unmounted). It now includes `<NarrativeSection />` from `components/sections/narrative-section.tsx` between `Hero` and `PillarsSection`.
 - **New unlinked route**: `/alfabetizacion-digital` exists (two-file pattern) but isn't linked from the Navbar yet.
+- **New module outside the Poliedro**: `/ia/usar-la-ia-sin-perder-criterio` (module "Inteligencia Artificial", its own `TematicaGroup` in `lib/tematicas-data.ts`, not under `/tematicas/*`). Same scroll-continuous pattern as the Poliedro dimension topics, copied from `components/participacion-democracia/`. See `CLAUDE.md` for details.
 - **Cited-sources pattern**: `/huella-digital`, `/hiperconectividad-digital` each have their own `lib/<route>-content.ts` (`Source`/`Quote` types) and `components/<route>/source-cite.tsx` (deliberately duplicated per route, not shared — different themes). `unverified: true` renders a "sin verificar" badge. `/huella-digital` was rebuilt as a 9-section scroll landing with a `toc-nav.tsx` sticky sidebar — keep `overflow-x-hidden` on `<main>`, never on the flex wrapper that also holds the sidebar, or `position: sticky` silently breaks. See `CLAUDE.md` for the full writeup.
 
 ## Weekly modal workflow

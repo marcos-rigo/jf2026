@@ -110,8 +110,11 @@ export function TematicasDashboardContent() {
     setSelectedAudienciaGlobal(selectedAudiencia === audiencia ? null : audiencia)
   }
 
+  // La cuenta admin (isIdeayUser) tiene que ver absolutamente todo, incluidas las
+  // temáticas nuevas que todavía no tienen `audiencias` clasificadas — el filtro de
+  // público no le aplica.
   const matchesAudienceFilter = (tema: { audiencias?: Audiencia[] }) =>
-    !!selectedAudiencia && !!tema.audiencias?.includes(selectedAudiencia)
+    isIdeayUser || (!!selectedAudiencia && !!tema.audiencias?.includes(selectedAudiencia))
 
   useEffect(() => {
     if (!userId) return
@@ -382,13 +385,13 @@ export function TematicasDashboardContent() {
             </motion.div>
           </motion.div>
 
-          {!selectedAudiencia && (
+          {!selectedAudiencia && !isIdeayUser && (
             <p className="text-sm text-slate-400 text-center py-10">
               Elegí un público (Docentes o Familias) para ver las temáticas disponibles.
             </p>
           )}
 
-          {selectedAudiencia && groups.map((group, gi) => {
+          {(selectedAudiencia || isIdeayUser) && groups.map((group, gi) => {
             const isOpen = !!openGroups[group.label]
             // Cuenta solo temáticas con `completada: true` — no confundir con
             // "tiene algo de porcentaje": el contador del header refleja
