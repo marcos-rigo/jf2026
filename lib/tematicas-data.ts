@@ -1,4 +1,4 @@
-import { Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, Scale, BookOpen, ScanEye, MousePointerClick, Flame, Compass, Hexagon, Microscope, Heart, HeartPulse, Gavel, MessageCircle, ShieldCheck, GraduationCap, Vote, type LucideIcon } from "lucide-react"
+import { Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, Scale, BookOpen, ScanEye, MousePointerClick, Flame, Compass, Hexagon, Microscope, Heart, HeartPulse, Gavel, MessageCircle, ShieldCheck, GraduationCap, Vote, Wallet, type LucideIcon } from "lucide-react"
 import type { Audiencia } from "./audiencias"
 
 export interface TematicaItem {
@@ -203,6 +203,20 @@ export const groups: TematicaGroup[] = [
         imageAlt: "Banner Participación y Democracia",
         icon: Vote,
         color: "#BE185D",
+        locked: false,
+        audiencias: ["docentes"],
+      },
+      {
+        id: "economica-productiva-y-de-consumo",
+        href: "/tematicas/economica-productiva-y-de-consumo",
+        category: "Kit de Acción",
+        title: "Económica, Productiva y de Consumo",
+        description: "La décima y última dimensión del Poliedro de Ciudadanía Digital: las condiciones reales detrás de una compra, una suscripción o una herramienta de trabajo automatizada, y cómo decidir con autonomía.",
+        // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
+        image: "/img/cards/ciudDig.jpg",
+        imageAlt: "Banner Económica, Productiva y de Consumo",
+        icon: Wallet,
+        color: "#166534",
         locked: false,
         audiencias: ["docentes"],
       },

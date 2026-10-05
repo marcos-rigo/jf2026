@@ -131,6 +131,7 @@ export const DIMENSIONES: DimensionInfo[] = [
       'moverse con autonomía en mercados digitales: pagos, suscripciones, publicidad personalizada y trabajo mediado por plataformas.',
     linea: 'Ejercer autonomía dentro de mercados digitalizados.',
     capacidad: 'Moverse con autonomía en mercados digitalizados',
+    href: '/tematicas/economica-productiva-y-de-consumo',
   },
 ];
 
