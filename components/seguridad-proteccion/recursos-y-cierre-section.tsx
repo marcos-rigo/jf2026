@@ -2,13 +2,13 @@
 
 import Link from 'next/link';
 import { Section, P, H3, Note, TextArea, Enfasis, useContenido } from './ui';
-import { useEticoNormativaStore } from '@/lib/etico-normativa-store';
+import { useSeguridadProteccionStore } from '@/lib/seguridad-proteccion-store';
 
 export default function RecursosYCierreSection() {
   const c = useContenido().recursosYCierre;
-  const respuestaGancho = useEticoNormativaStore((s) => s.respuestaGancho);
-  const explicacionFinal = useEticoNormativaStore((s) => s.explicacionFinal);
-  const setExplicacionFinal = useEticoNormativaStore((s) => s.setExplicacionFinal);
+  const respuestaGancho = useSeguridadProteccionStore((s) => s.respuestaGancho);
+  const explicacionFinal = useSeguridadProteccionStore((s) => s.explicacionFinal);
+  const setExplicacionFinal = useSeguridadProteccionStore((s) => s.setExplicacionFinal);
 
   return (
     <Section id="recursos-y-cierre" number="10" title={c.titulo}>
@@ -63,10 +63,10 @@ export default function RecursosYCierreSection() {
       {/* Adición que no figura en el contenido fuente de esta página. */}
       <div className="flex flex-wrap gap-3">
         <Link
-          href="/tematicas/seguridad-privacidad-y-proteccion-digital"
+          href="/tematicas/pedagogica-y-creativa"
           className="inline-flex items-center gap-2 rounded-lg border-2 border-brand-blue px-4 py-2 text-sm font-semibold text-brand-blue transition hover:bg-brand-blue hover:text-white"
         >
-          Siguiente dimensión: Seguridad, Privacidad y Protección Digital →
+          Siguiente dimensión: Pedagógica y Creativa →
         </Link>
       </div>
 

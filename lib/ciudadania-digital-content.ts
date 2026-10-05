@@ -105,6 +105,7 @@ export const DIMENSIONES: DimensionInfo[] = [
       'sostener una confianza informada en los sistemas que usamos, combinando autocuidado con exigencia institucional.',
     linea: 'Sostener una confianza informada en los sistemas que usamos.',
     capacidad: 'Sostener una confianza informada en los sistemas',
+    href: '/tematicas/seguridad-privacidad-y-proteccion-digital',
   },
   {
     id: 'pedagogica-creativa',
@@ -113,6 +114,7 @@ export const DIMENSIONES: DimensionInfo[] = [
       'aprender a aprender en un mundo que sigue cambiando, y usar la tecnología para crear, no solo para consumir.',
     linea: 'Aprender a habitar un mundo que va a seguir cambiando.',
     capacidad: 'Aprender a aprender, crear y no solo consumir',
+    href: '/tematicas/pedagogica-y-creativa',
   },
   {
     id: 'participacion',
@@ -120,6 +122,7 @@ export const DIMENSIONES: DimensionInfo[] = [
     descripcion: 'transformar la conexión en incidencia real sobre asuntos colectivos, no solo comentar.',
     linea: 'Transformar la conexión en incidencia real.',
     capacidad: 'Transformar la conexión en incidencia real',
+    href: '/tematicas/participacion-y-democracia',
   },
   {
     id: 'economica',

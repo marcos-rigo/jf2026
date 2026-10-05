@@ -1,4 +1,4 @@
-import { Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, Scale, BookOpen, ScanEye, MousePointerClick, Flame, Compass, Hexagon, Microscope, Heart, HeartPulse, Gavel, MessageCircle, type LucideIcon } from "lucide-react"
+import { Shield, Eye, Lock, AlertTriangle, Search, Baby, ShieldAlert, Brain, Users, Scale, BookOpen, ScanEye, MousePointerClick, Flame, Compass, Hexagon, Microscope, Heart, HeartPulse, Gavel, MessageCircle, ShieldCheck, GraduationCap, Vote, type LucideIcon } from "lucide-react"
 import type { Audiencia } from "./audiencias"
 
 export interface TematicaItem {
@@ -161,6 +161,48 @@ export const groups: TematicaGroup[] = [
         imageAlt: "Banner Ético-Normativa y Derechos",
         icon: Gavel,
         color: "#7C3AED",
+        locked: false,
+        audiencias: ["docentes"],
+      },
+      {
+        id: "seguridad-privacidad-y-proteccion-digital",
+        href: "/tematicas/seguridad-privacidad-y-proteccion-digital",
+        category: "Kit de Acción",
+        title: "Seguridad, Privacidad y Protección Digital",
+        description: "La séptima dimensión del Poliedro de Ciudadanía Digital: qué se protege hoy, qué es la confianza informada y cómo usar Pausar–Verificar–Decidir frente a la urgencia y la autoridad aparente.",
+        // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
+        image: "/img/cards/ciudDig.jpg",
+        imageAlt: "Banner Seguridad, Privacidad y Protección Digital",
+        icon: ShieldCheck,
+        color: "#0E7490",
+        locked: false,
+        audiencias: ["docentes"],
+      },
+      {
+        id: "pedagogica-y-creativa",
+        href: "/tematicas/pedagogica-y-creativa",
+        category: "Kit de Acción",
+        title: "Pedagógica y Creativa",
+        description: "La octava dimensión del Poliedro de Ciudadanía Digital: cómo aprender y crear con tecnología, distinguir la capacidad aumentada de la sustitución cognitiva y decidir qué capacidad querés preservar o desarrollar.",
+        // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
+        image: "/img/cards/ciudDig.jpg",
+        imageAlt: "Banner Pedagógica y Creativa",
+        icon: GraduationCap,
+        color: "#EA580C",
+        locked: false,
+        audiencias: ["docentes"],
+      },
+      {
+        id: "participacion-y-democracia",
+        href: "/tematicas/participacion-y-democracia",
+        category: "Kit de Acción",
+        title: "Participación y Democracia",
+        description: "La novena dimensión del Poliedro de Ciudadanía Digital: la diferencia entre interacción e incidencia, las condiciones de una participación democrática de calidad y qué hacer cuando una decisión importante la toma un sistema automatizado.",
+        // Reutiliza el banner de Ciudadanía Digital a falta de arte propio todavía (misma familia del Poliedro).
+        image: "/img/cards/ciudDig.jpg",
+        imageAlt: "Banner Participación y Democracia",
+        icon: Vote,
+        color: "#BE185D",
         locked: false,
         audiencias: ["docentes"],
       },
