@@ -5,9 +5,10 @@ import { P, Enfasis } from './ui';
 import { useUniversidadIaStore } from '@/lib/universidad-ia-store';
 
 // Bloque de error doble de "Practicá vos": dos citas destacadas etiquetadas "Análisis A"
-// y "Análisis B", con un único botón "Ver los errores" que revela el texto de los dos
-// errores al mismo tiempo, con una transición breve de expand. Adaptado de
-// components/ia-criterio/error-doble.tsx. No está conectado a ninguna sección todavía.
+// y "Análisis B" (cada una con su etiqueta en negrita al inicio del texto de la cita),
+// con un único botón "Ver los errores" que revela el texto de los dos errores al mismo
+// tiempo, con una transición breve de expand. Adaptado de
+// components/ia-criterio/error-doble.tsx.
 export interface ErrorDobleProps {
   citaA: string;
   citaB: string;

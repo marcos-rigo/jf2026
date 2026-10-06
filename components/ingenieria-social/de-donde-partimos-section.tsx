@@ -1,9 +1,18 @@
 'use client';
 
-import { Section } from './ui';
+import { Section, P, useContenido } from './ui';
+import { FichaAula } from './ficha-aula';
 
-// Scaffold: por ahora esta sección solo muestra su encabezado. El contenido real se
-// carga en un prompt posterior (ver lib/ingenieria-social-content.ts).
 export default function DeDondePartimosSection() {
-  return <Section id="de-donde-partimos" number="04" title="De dónde partimos" />;
+  const c = useContenido().deDondePartimos;
+  return (
+    <Section id="de-donde-partimos" number="04" title={c.titulo}>
+      {c.parrafos.map((p) => (
+        <P key={p}>{p}</P>
+      ))}
+      <p className="font-display text-xl font-bold text-brand-navy leading-snug">{c.preguntaCierre}</p>
+
+      <FichaAula {...c.fichaAula1} />
+    </Section>
+  );
 }

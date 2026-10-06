@@ -6,15 +6,11 @@ import { useRiesgoProteccionStore, type EleccionSituacion, type SituacionClave }
 
 // Bloque de situación de "Practicá vos": selector de 3 opciones excluyentes. El botón
 // "Ver análisis" solo se habilita con una opción elegida, y el análisis se muestra igual
-// sin importar cuál se eligió — mismo mecanismo que components/ia-criterio/situacion-card.tsx.
-//
-// Placeholder: las 3 opciones todavía no tienen las etiquetas reales de esta temática
-// (no hay contenido cargado todavía) — se van a renombrar cuando se cargue el contenido.
-// Este componente no está conectado a ninguna sección todavía.
+// sin importar cuál se eligió — mismo mecanismo que components/victimologia-digital/situacion-card.tsx.
 const OPCIONES: { value: NonNullable<EleccionSituacion>; label: string }[] = [
-  { value: 'a', label: 'Opción A' },
-  { value: 'b', label: 'Opción B' },
-  { value: 'c', label: 'Opción C' },
+  { value: 'no-modificable', label: 'No modificable (edad/historia)' },
+  { value: 'modificable', label: 'Modificable (acompañamiento/procedimientos)' },
+  { value: 'fortaleza', label: 'Fortaleza/activo comunitario' },
 ];
 
 export interface SituacionCardProps {

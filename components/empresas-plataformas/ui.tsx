@@ -201,3 +201,35 @@ export function ListaViñetas({ items }: { items: string[] }) {
     </ul>
   );
 }
+
+// Tabla de rúbrica de 2 columnas (Nivel / Qué muestra el docente).
+export function TablaRubrica({
+  colNivel,
+  colMuestra,
+  filas,
+}: {
+  colNivel: string;
+  colMuestra: string;
+  filas: { nivel: string; muestra: string }[];
+}) {
+  return (
+    <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+      <table className="w-full text-sm text-left">
+        <thead className="bg-slate-50 text-slate-600">
+          <tr>
+            <th className="px-4 py-3 font-semibold">{colNivel}</th>
+            <th className="px-4 py-3 font-semibold">{colMuestra}</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-slate-100">
+          {filas.map((r) => (
+            <tr key={r.nivel} className="align-top">
+              <td className="px-4 py-3 font-semibold text-brand-navy whitespace-nowrap">{r.nivel}</td>
+              <td className="px-4 py-3 text-slate-700">{r.muestra}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}

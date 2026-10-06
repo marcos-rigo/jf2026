@@ -4,17 +4,15 @@ import { ChevronDown } from 'lucide-react';
 import { P, Note } from './ui';
 import { useEmpresasPlataformasStore, type EleccionSituacion, type SituacionClave } from '@/lib/empresas-plataformas-store';
 
-// Bloque de situación de "Practicá vos": selector de 3 opciones excluyentes. El botón
-// "Ver análisis" solo se habilita con una opción elegida, y el análisis se muestra igual
-// sin importar cuál se eligió — mismo mecanismo que components/ia-criterio/situacion-card.tsx.
-//
-// Placeholder: las 3 opciones todavía no tienen las etiquetas reales de esta temática
-// (no hay contenido cargado todavía) — se van a renombrar cuando se cargue el contenido.
-// Este componente no está conectado a ninguna sección todavía.
+// Bloque de situación de "Practicá vos": selector de 3 opciones excluyentes
+// (Proporcionalidad del monitoreo laboral / Responsabilidad de diseño de una plataforma /
+// Seguridad y derechos por diseño). El botón "Ver análisis" solo se habilita con una
+// opción elegida, y el análisis se muestra igual sin importar cuál se eligió — mismo
+// mecanismo que components/ia-criterio/situacion-card.tsx.
 const OPCIONES: { value: NonNullable<EleccionSituacion>; label: string }[] = [
-  { value: 'a', label: 'Opción A' },
-  { value: 'b', label: 'Opción B' },
-  { value: 'c', label: 'Opción C' },
+  { value: 'monitoreo-laboral', label: 'Proporcionalidad del monitoreo laboral' },
+  { value: 'diseno-plataforma', label: 'Responsabilidad de diseño de una plataforma' },
+  { value: 'seguridad-por-diseno', label: 'Seguridad y derechos por diseño' },
 ];
 
 export interface SituacionCardProps {

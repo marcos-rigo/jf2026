@@ -1,9 +1,8 @@
 'use client'
 
-// Estado local de /la-persona-no-es-un-dato (gancho, situaciones, error doble, quiz, aula, cierre).
-// Scaffold sin contenido todavía — mismo patrón que lib/ia-criterio-store.ts: persist a
-// localStorage, sin backend. El tipo literal de `eleccion` se va a ajustar cuando se
-// cargue el contenido real de las situaciones de Practicá vos.
+// Estado local de /tematicas/la-persona-no-es-un-dato (gancho, situaciones, error doble,
+// quiz, aula, cierre). Mismo patrón que lib/ia-criterio-store.ts: persist a localStorage,
+// sin backend.
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 

@@ -621,7 +621,7 @@ export function TematicasDashboardContent() {
 
                   return (
                     <motion.div
-                      key={tema.title}
+                      key={tema.id}
                       layout
                       variants={cardVariants}
                       initial="hidden"

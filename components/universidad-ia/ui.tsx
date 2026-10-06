@@ -163,7 +163,7 @@ export function TextInput({
   );
 }
 
-// Recuadro destacado con título y varios párrafos cortos.
+// Recuadro destacado con título y varios párrafos cortos (ej. "Lo que esto NO es").
 export function RecuadroDestacado({ title, paragraphs }: { title: string; paragraphs: string[] }) {
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-5 md:p-6 shadow-sm space-y-3">
@@ -199,5 +199,37 @@ export function ListaViñetas({ items }: { items: string[] }) {
         </li>
       ))}
     </ul>
+  );
+}
+
+// Tabla de rúbrica de 2 columnas (Nivel / Qué muestra el docente).
+export function TablaRubrica({
+  colNivel,
+  colMuestra,
+  filas,
+}: {
+  colNivel: string;
+  colMuestra: string;
+  filas: { nivel: string; muestra: string }[];
+}) {
+  return (
+    <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+      <table className="w-full text-sm text-left">
+        <thead className="bg-slate-50 text-slate-600">
+          <tr>
+            <th className="px-4 py-3 font-semibold">{colNivel}</th>
+            <th className="px-4 py-3 font-semibold">{colMuestra}</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-slate-100">
+          {filas.map((r) => (
+            <tr key={r.nivel} className="align-top">
+              <td className="px-4 py-3 font-semibold text-brand-navy whitespace-nowrap">{r.nivel}</td>
+              <td className="px-4 py-3 text-slate-700">{r.muestra}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

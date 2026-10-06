@@ -9,8 +9,8 @@ function scrollToSection(id: string) {
 }
 
 // Índice de navegación por scroll (mismo mecanismo que
-// components/ia-criterio/toc-nav.tsx). Nunca oculta/muestra contenido — solo hace scroll
-// a cada sección y resalta cuál está visible (scroll-spy vía IntersectionObserver).
+// components/ia-criterio/toc-nav.tsx). Nunca oculta/muestra contenido — solo
+// hace scroll a cada sección y resalta cuál está visible (scroll-spy vía IntersectionObserver).
 //
 // Desktop: sidebar vertical fijo. Mobile: selector desplegable.
 export function TocNav() {
@@ -50,11 +50,11 @@ export function TocNav() {
       <nav className="hidden md:flex w-64 pt-20 backdrop-blur-xl bg-white/80 border-r border-slate-200 flex-col shadow-xl h-screen sticky top-0 shrink-0 z-10 overflow-y-auto">
         <div className="px-5 py-4 border-b border-slate-200 bg-slate-50/70">
           <h1 className="text-base font-bold text-brand-navy flex items-center gap-2.5 font-display">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#4F46E5] to-brand-blue flex items-center justify-center shadow-[0_0_15px_rgba(0,0,0,0.15)] shrink-0">
-              <span className="text-sm">📚</span>
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#4F46E5] to-brand-blue flex items-center justify-center shadow-[0_0_15px_rgba(79,70,229,0.3)] shrink-0">
+              <span className="text-sm">🎓</span>
             </div>
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-navy to-slate-600">
-              La Universidad ante la Inteligencia Artificial
+              Inteligencia Artificial
             </span>
           </h1>
         </div>

@@ -1,15 +1,14 @@
 'use client'
 
-// Estado local de /tematicas/gobiernos-locales-y-administracion-publica (gancho, situaciones, error doble, quiz, aula, cierre).
-// Scaffold sin contenido todavía — mismo patrón que lib/ia-criterio-store.ts: persist a
-// localStorage, sin backend. El tipo literal de `eleccion` se va a ajustar cuando se
-// cargue el contenido real de las situaciones de Practicá vos.
+// Estado local de /tematicas/gobiernos-locales-y-administracion-publica (gancho,
+// situaciones, error doble, quiz, aula, cierre). Mismo patrón que
+// lib/riesgo-proteccion-store.ts: persist a localStorage, sin backend.
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 export const QUIZ_LENGTH = 4
 
-export type EleccionSituacion = string | null
+export type EleccionSituacion = 'accesibilidad' | 'gobierno-abierto' | 'responsabilidad' | null
 
 export interface SituacionEntrada {
   eleccion: EleccionSituacion
@@ -78,7 +77,7 @@ export const useGobiernosLocalesStore = create<GobiernosLocalesStore>()(
       name: 'gobiernos-locales-state',
       // Merge defensivo: el estado persistido puede venir de una versión anterior
       // (claves de situación distintas, campos faltantes). Se parte siempre de los
-      // defaults y solo se pisa lo conocido (mismo patrón que lib/ia-criterio-store.ts).
+      // defaults y solo se pisa lo conocido (mismo patrón que lib/riesgo-proteccion-store.ts).
       merge: (persisted, current) => {
         const p = (persisted ?? {}) as Partial<GobiernosLocalesState>
         const situaciones = { ...current.situaciones }

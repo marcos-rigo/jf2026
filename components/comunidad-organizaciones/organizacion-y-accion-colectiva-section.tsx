@@ -1,9 +1,35 @@
 'use client';
 
-import { Section } from './ui';
+import { Section, H3, P, ListaNumerada, RecuadroDestacado, useContenido } from './ui';
 
-// Scaffold: por ahora esta sección solo muestra su encabezado. El contenido real se
-// carga en un prompt posterior (ver lib/comunidad-organizaciones-content.ts).
+// A diferencia de otras dimensiones, esta sección (05) no lleva ninguna ficha de aula
+// (ver CLAUDE.md del prompt).
 export default function OrganizacionYAccionColectivaSection() {
-  return <Section id="organizacion-y-accion-colectiva" number="05" title="Organización y acción colectiva" />;
+  const c = useContenido().organizacionYAccionColectiva;
+  const { recordar, comprender, aplicar } = c;
+
+  return (
+    <Section id="organizacion-y-accion-colectiva" number="05" title={c.titulo}>
+      <div className="space-y-4">
+        <H3>{recordar.subtitulo}</H3>
+        {recordar.parrafos.map((p) => (
+          <P key={p}>{p}</P>
+        ))}
+      </div>
+
+      <div className="space-y-4">
+        <H3>{comprender.subtitulo}</H3>
+        {comprender.parrafos.map((p) => (
+          <P key={p}>{p}</P>
+        ))}
+        <RecuadroDestacado title={comprender.recuadro.titulo} paragraphs={comprender.recuadro.parrafos} />
+      </div>
+
+      <div className="space-y-4">
+        <H3>{aplicar.subtitulo}</H3>
+        <P>{aplicar.parrafoPreguntas}</P>
+        <ListaNumerada items={aplicar.preguntas} />
+      </div>
+    </Section>
+  );
 }

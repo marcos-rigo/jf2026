@@ -9,8 +9,8 @@ function scrollToSection(id: string) {
 }
 
 // Índice de navegación por scroll (mismo mecanismo que
-// components/ia-criterio/toc-nav.tsx). Nunca oculta/muestra contenido — solo hace scroll
-// a cada sección y resalta cuál está visible (scroll-spy vía IntersectionObserver).
+// components/gobiernos-locales/toc-nav.tsx). Nunca oculta/muestra contenido — solo hace
+// scroll a cada sección y resalta cuál está visible (scroll-spy vía IntersectionObserver).
 //
 // Desktop: sidebar vertical fijo. Mobile: selector desplegable.
 export function TocNav() {
@@ -51,7 +51,7 @@ export function TocNav() {
         <div className="px-5 py-4 border-b border-slate-200 bg-slate-50/70">
           <h1 className="text-base font-bold text-brand-navy flex items-center gap-2.5 font-display">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#1D4ED8] to-brand-blue flex items-center justify-center shadow-[0_0_15px_rgba(0,0,0,0.15)] shrink-0">
-              <span className="text-sm">🤲</span>
+              <span className="text-sm">🤝</span>
             </div>
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-navy to-slate-600">
               Comunidad y Organizaciones Sociales

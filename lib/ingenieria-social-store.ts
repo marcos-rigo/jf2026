@@ -1,15 +1,14 @@
 'use client'
 
-// Estado local de /ingenieria-social-y-confianza (gancho, situaciones, error doble, quiz, aula, cierre).
-// Scaffold sin contenido todavía — mismo patrón que lib/ia-criterio-store.ts: persist a
-// localStorage, sin backend. El tipo literal de `eleccion` se va a ajustar cuando se
-// cargue el contenido real de las situaciones de Practicá vos.
+// Estado local de /tematicas/ingenieria-social (gancho, situaciones, error doble, quiz,
+// aula, cierre). Mismo patrón que lib/ciberdelitos-store.ts: persist a localStorage, sin
+// backend.
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 export const QUIZ_LENGTH = 4
 
-export type EleccionSituacion = string | null
+export type EleccionSituacion = 'pausar' | 'verificar' | 'decidir' | null
 
 export interface SituacionEntrada {
   eleccion: EleccionSituacion
@@ -78,7 +77,7 @@ export const useIngenieriaSocialStore = create<IngenieriaSocialStore>()(
       name: 'ingenieria-social-state',
       // Merge defensivo: el estado persistido puede venir de una versión anterior
       // (claves de situación distintas, campos faltantes). Se parte siempre de los
-      // defaults y solo se pisa lo conocido (mismo patrón que lib/ia-criterio-store.ts).
+      // defaults y solo se pisa lo conocido (mismo patrón que lib/ciberdelitos-store.ts).
       merge: (persisted, current) => {
         const p = (persisted ?? {}) as Partial<IngenieriaSocialState>
         const situaciones = { ...current.situaciones }

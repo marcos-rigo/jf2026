@@ -1,15 +1,14 @@
 'use client'
 
-// Estado local de /tematicas/empresas-organizaciones-y-plataformas (gancho, situaciones, error doble, quiz, aula, cierre).
-// Scaffold sin contenido todavía — mismo patrón que lib/ia-criterio-store.ts: persist a
-// localStorage, sin backend. El tipo literal de `eleccion` se va a ajustar cuando se
-// cargue el contenido real de las situaciones de Practicá vos.
+// Estado local de /tematicas/empresas-organizaciones-y-plataformas (gancho, situaciones, error
+// doble, quiz, aula, cierre). Aislado a propósito de todos los demás stores de temáticas —
+// mismo patrón: persist a localStorage, sin backend.
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 export const QUIZ_LENGTH = 4
 
-export type EleccionSituacion = string | null
+export type EleccionSituacion = 'monitoreo-laboral' | 'diseno-plataforma' | 'seguridad-por-diseno' | null
 
 export interface SituacionEntrada {
   eleccion: EleccionSituacion

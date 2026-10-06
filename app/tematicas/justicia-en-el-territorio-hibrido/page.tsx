@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import JusticiaEnElTerritorioHibridoContent from './justicia-hibrida-content';
+import JusticiaEnElTerritorioHibridoContent from './justicia-territorio-hibrido-content';
 import { RequireAuth } from '@/components/tematicas/require-auth';
 
-const TITLE = 'Justicia en el Territorio Híbrido';
+const TITLE = 'Justicia en el Territorio Híbrido: de digitalizar trámites a garantizar comprensión';
 const DESCRIPTION =
-  'Cómo cambia el acceso a la justicia cuando el delito, la prueba o el daño ocurren en entornos digitales.';
+  'Por qué la digitalización judicial puede mejorar el acceso y seguir siendo incomprensible, por qué la evidencia digital exige proporcionalidad y no solo preservación, y qué puede y qué no puede hacer la IA judicial.';
 
 export const metadata: Metadata = {
   title: TITLE,

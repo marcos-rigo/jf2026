@@ -1,0 +1,96 @@
+'use client'
+
+// Estado local de /tematicas/escuela-como-espacio-civico (gancho, situaciones, error
+// doble, quiz, aula, cierre). Aislado a propósito de todos los demás stores de temáticas —
+// mismo patrón que lib/autonomia-familia-store.ts: persist a localStorage, sin backend.
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+
+export const QUIZ_LENGTH = 4
+
+export type EleccionSituacion = 'transversal' | 'protocolo' | 'deriva' | null
+
+export interface SituacionEntrada {
+  eleccion: EleccionSituacion
+  revelada: boolean
+}
+
+export const SITUACION_CLAVES = ['s1', 's2', 's3'] as const
+export type SituacionClave = (typeof SITUACION_CLAVES)[number]
+
+interface EscuelaEspacioCivicoState {
+  respuestaGancho: string
+  situaciones: Record<SituacionClave, SituacionEntrada>
+  errorRevelado: boolean
+  respuestasQuiz: (string | null)[]
+  reflexionAula: string
+  explicacionFinal: string
+}
+
+interface EscuelaEspacioCivicoStore extends EscuelaEspacioCivicoState {
+  setRespuestaGancho: (valor: string) => void
+  setEleccionSituacion: (clave: SituacionClave, valor: EleccionSituacion) => void
+  revelarSituacion: (clave: SituacionClave) => void
+  revelarError: () => void
+  setRespuestaQuiz: (index: number, valor: string | null) => void
+  setReflexionAula: (valor: string) => void
+  setExplicacionFinal: (valor: string) => void
+}
+
+const situacionesIniciales: Record<SituacionClave, SituacionEntrada> = {
+  s1: { eleccion: null, revelada: false },
+  s2: { eleccion: null, revelada: false },
+  s3: { eleccion: null, revelada: false },
+}
+
+export const useEscuelaEspacioCivicoStore = create<EscuelaEspacioCivicoStore>()(
+  persist(
+    (set) => ({
+      respuestaGancho: '',
+      situaciones: situacionesIniciales,
+      errorRevelado: false,
+      respuestasQuiz: Array<string | null>(QUIZ_LENGTH).fill(null),
+      reflexionAula: '',
+      explicacionFinal: '',
+
+      setRespuestaGancho: (valor) => set({ respuestaGancho: valor }),
+      setEleccionSituacion: (clave, valor) =>
+        set((s) => ({
+          situaciones: { ...s.situaciones, [clave]: { ...s.situaciones[clave], eleccion: valor } },
+        })),
+      revelarSituacion: (clave) =>
+        set((s) => ({
+          situaciones: { ...s.situaciones, [clave]: { ...s.situaciones[clave], revelada: true } },
+        })),
+      revelarError: () => set({ errorRevelado: true }),
+      setRespuestaQuiz: (index, valor) =>
+        set((s) => {
+          if (index < 0 || index >= QUIZ_LENGTH) return s
+          const respuestasQuiz = [...s.respuestasQuiz]
+          respuestasQuiz[index] = valor
+          return { respuestasQuiz }
+        }),
+      setReflexionAula: (valor) => set({ reflexionAula: valor }),
+      setExplicacionFinal: (valor) => set({ explicacionFinal: valor }),
+    }),
+    {
+      name: 'escuela-espacio-civico-state',
+      // Merge defensivo: el estado persistido puede venir de una versión anterior
+      // (claves de situación distintas, campos faltantes). Se parte siempre de los
+      // defaults y solo se pisa lo conocido (mismo patrón que lib/autonomia-familia-store.ts).
+      merge: (persisted, current) => {
+        const p = (persisted ?? {}) as Partial<EscuelaEspacioCivicoState>
+        const situaciones = { ...current.situaciones }
+        for (const clave of SITUACION_CLAVES) {
+          if (p.situaciones?.[clave]) situaciones[clave] = { ...situaciones[clave], ...p.situaciones[clave] }
+        }
+        return {
+          ...current,
+          ...p,
+          situaciones,
+          respuestasQuiz: Array.from({ length: QUIZ_LENGTH }, (_, i) => p.respuestasQuiz?.[i] ?? null),
+        }
+      },
+    }
+  )
+)

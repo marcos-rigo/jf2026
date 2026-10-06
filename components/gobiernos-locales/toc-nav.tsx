@@ -9,8 +9,8 @@ function scrollToSection(id: string) {
 }
 
 // Índice de navegación por scroll (mismo mecanismo que
-// components/ia-criterio/toc-nav.tsx). Nunca oculta/muestra contenido — solo hace scroll
-// a cada sección y resalta cuál está visible (scroll-spy vía IntersectionObserver).
+// components/riesgo-proteccion/toc-nav.tsx). Nunca oculta/muestra contenido — solo hace
+// scroll a cada sección y resalta cuál está visible (scroll-spy vía IntersectionObserver).
 //
 // Desktop: sidebar vertical fijo. Mobile: selector desplegable.
 export function TocNav() {
